@@ -6,14 +6,79 @@
     <script defer src="/node_modules/@fortawesome/fontawesome-free/js/brands.js"></script>
     <script defer src="/node_modules/@fortawesome/fontawesome-free/js/solid.js"></script>
     <script defer src="/node_modules/@fortawesome/fontawesome-free/js/fontawesome.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.css">
     <link rel="stylesheet" href="src/styles/app.scss">
 </head>
 <body>
 <div class="container is-fluid is-fullheight m-0 p-2">
+    <div class="columns is-mobile">
+        <div class="column is-1 ml-2">
+            <button class="button is-white">
+                <span class="icon is-small">
+                    <i class="fas fa-search"></i>
+                    <span class="ml-1">55%</span>
+                </span>
+            </button>
+        </div>
+        <div class="column is-1 is-offset-6" style="text-align:right;">
+            <button class="button is-warning">
+                <span class="icon is-small">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </span>
+            </button>
+        </div>
+        <div class="column is-4">
+            <div class="field has-addons">
+                <p class="control">
+                    <button class="button">
+                        <span class="icon is-small">
+                            <i class="fas fa-backward"></i>
+                        </span>
+                        <span>Zurück zum Artikel</span>
+                    </button>
+                </p>
+                <p class="control">
+                    <button class="button">
+                        <span class="icon is-small">
+                            <i class="fas fa-save"></i>
+                        </span>
+                        <span>Entwurf Speichern</span>
+                    </button>
+                </p>
+                <p class="control">
+                    <button class="button">
+                        <span class="icon is-small">
+                            <i class="fas fa-eye"></i>
+                        </span>
+                        <span>Weiter zur Vorschau</span>
+                    </button>
+                </p>
+            </div>
+        </div>
+    </div>
     <div class="columns">
-        <div class="column has-background-light is-3">
+        <div class="column is-1">
+            <div class="columns is-multiline">
+                <div class="column is-12">
+                    <button class="button is-info">
+                        <span class="icon is-small">
+                            <i class="fas fa-greater-than"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="column ml-5">
+                    <div style="transform-origin: 0 0; transform: rotate(90deg)">
+                        <span>Hinweise
+                            <span class="icon is-small">
+                                <i class="fas fa-exclamation"></i>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column has-background-light is-2">
             <div id="three-dee-showroom">
                 <three-dee-shower></three-dee-shower>
             </div>
