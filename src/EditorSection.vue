@@ -1,15 +1,102 @@
 <template>
     <div v-if="this.editorLoaded">
-        <div class="title">{{ editorConfig.draftInfo.masterName }}</div>
-        <variants></variants>
-        <form-fields></form-fields>
-        <assets></assets>
-    </div>
-    <div v-else>
-        Laden....
+        <div @click="toggleSidebarPanel('assets')"
+             :style="{'border': component === 'assets' ? 'black 5px solid': 'transparent 5px solid'}"
+             class="box noselect p-1">
+            <div class="columns is-mobile is-multiline is-centered is-vcentered">
+                <div class="column is-12 has-text-centered">
+                    <span class="icon is-large">
+                        <i class="fas fa-image fa-2x"></i>
+                    </span>
+                </div>
+                <div class="column is-12 has-text-centered">
+                    <span class="is-size-4">Bilder</span>
+                </div>
+            </div>
+        </div>
+        <div @click="toggleSidebarPanel('texts')"
+             :style="{'border': component === 'texts' ? 'black 5px solid': 'transparent 5px solid'}"
+             class="box noselect p-1">
+            <div class="columns is-mobile is-multiline is-centered is-vcentered">
+                <div class="column is-12 has-text-centered">
+                    <span class="icon is-large">
+                        <i class="fas fa-eye fa-2x"></i>
+                    </span>
+                </div>
+                <div class="column is-12 has-text-centered">
+                    <span class="is-size-4">Texte</span>
+                </div>
+            </div>
+        </div>
+        <div @click="toggleSidebarPanel('shapes')"
+             :style="{'border': component === 'shapes' ? 'black 5px solid': 'transparent 5px solid'}"
+             class="box noselect p-1">
+            <div class="columns is-mobile is-multiline is-centered is-vcentered">
+                <div class="column is-12 has-text-centered">
+                    <span class="icon is-large">
+                        <i class="fas fa-square fa-2x"></i>
+                    </span>
+                </div>
+                <div class="column is-12 has-text-centered">
+                    <span class="is-size-4">Formen</span>
+                </div>
+            </div>
+        </div>
+        <div @click="toggleSidebarPanel('variants')"
+             :style="{'border': component === 'variants' ? 'black 5px solid': 'transparent 5px solid'}"
+             class="box noselect p-1">
+            <div class="columns is-mobile is-multiline is-centered is-vcentered">
+                <div class="column is-12 has-text-centered">
+                    <span class="icon is-large">
+                        <i class="fas fa-palette fa-2x"></i>
+                    </span>
+                </div>
+                <div class="column is-12 has-text-centered">
+                    <span class="is-size-4">Varianten</span>
+                </div>
+            </div>
+        </div>
+        <div class="columns is-mobile is-multiline is-centered is-vcentered">
+            <div class="column is-12 has-text-centered">
+                <span class="icon is-large">
+                    <i class="fas fa-step-backward fa-2x"></i>
+                </span>
+                <span class="icon is-large">
+                    <i class="fas fa-step-forward fa-2x"></i>
+                </span>
+            </div>
+        </div>
+        <div class="sidebar">
+            <transition name="slide">
+                <div v-if="isPanelOpen" class="sidebar-panel has-background-light p-2" style="border: 1px solid grey">
+                    <component :is="component"></component>
+                </div>
+            </transition>
+        </div>
     </div>
 </template>
+<style scoped>
+.slide-enter-active,
+.slide-leave-active
+{
+    transition: transform 0.2s ease;
+}
 
+.slide-enter,
+.slide-leave-to {
+    transform: translateX(100%);
+    transition: all 150ms ease-in 0s
+}
+
+.sidebar-panel {
+    overflow-y: auto;
+    position: fixed;
+    right: 160px;
+    top: 70px;
+    height: 1000px;
+    width: 300px;
+}
+</style>
 <script>
 import Events from "@rissc/printformer-editor-client/dist/Events";
 import {mapState} from "vuex";
@@ -34,9 +121,28 @@ export default {
             this.editorLoaded = true;
         });
     },
+    methods: {
+        closeSidebarPanel() {
+            this.isPanelOpen = false
+        },
+        openSidebarPanel() {
+            this.isPanelOpen = true
+        },
+        toggleSidebarPanel(component) {
+            if (this.component !== component) {
+                this.openSidebarPanel();
+                this.component = component;
+            } else {
+                this.closeSidebarPanel();
+                this.component = null;
+            }
+        }
+    },
     data() {
         return {
-            editorLoaded: false
+            component: null,
+            editorLoaded: false,
+            isPanelOpen: false
         }
     }
 }

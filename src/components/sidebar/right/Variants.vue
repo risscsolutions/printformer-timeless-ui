@@ -1,6 +1,5 @@
 <template>
     <div>
-        <hr>
         <div class="content is-small">
             <h1>Varianten</h1>
         </div>

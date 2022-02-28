@@ -11,16 +11,22 @@ import Connector from "@rissc/printformer-editor-client/dist/Connector";
 import PagePreview from "./src/components/PagePreview";
 import FormFields from "./src/components/FormFields";
 import FormField from "./src/components/FormField";
-import Variants from "./src/components/Variants";
-import Assets from "./src/components/Assets";
+import Variants from "./src/components/sidebar/right/Variants";
+import Assets from "./src/components/sidebar/right/Assets";
+import Shapes from "./src/components/sidebar/right/Shapes";
+import Texts from "./src/components/sidebar/right/Texts";
 import CroppingImage from "./src/components/CroppingImage";
-import ThreeDeeShower from "./src/components/ThreeDeeShower";
+import ThreeDeeShower from "./src/components/sidebar/left/ThreeDeeShower";
+import {VueAgile} from "vue-agile";
 
 Vue.use(Vuex);
+Vue.use(VueAgile);
 Vue.component('form-fields', FormFields);
 Vue.component('form-field', FormField);
 Vue.component('variants', Variants);
 Vue.component('assets', Assets);
+Vue.component('texts', Texts);
+Vue.component('shapes', Shapes);
 Vue.component('cropping-image', CroppingImage);
 Vue.component('three-dee-shower', ThreeDeeShower);
 
