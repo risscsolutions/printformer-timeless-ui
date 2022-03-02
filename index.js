@@ -5,9 +5,9 @@ import EventEmitter from 'eventemitter3';
 import makeStore from "./store";
 import {ValidationProvider} from 'vee-validate/dist/vee-validate.full.esm';
 import {configure, ValidationObserver} from 'vee-validate';
-
-import EditorSection from './src/EditorSection';
+import VueAgile from "vue-agile";
 import Connector from "@rissc/printformer-editor-client/dist/Connector";
+
 import PagePreview from "./src/components/PagePreview";
 import FormFields from "./src/components/FormFields";
 import FormField from "./src/components/FormField";
@@ -16,8 +16,9 @@ import Assets from "./src/components/sidebar/right/Assets";
 import Shapes from "./src/components/sidebar/right/Shapes";
 import Texts from "./src/components/sidebar/right/Texts";
 import CroppingImage from "./src/components/CroppingImage";
-import ThreeDeeShower from "./src/components/sidebar/left/ThreeDeeShower";
-import {VueAgile} from "vue-agile";
+import TopBarControls from "./src/components/TopBarControls";
+import Controls from "./src/components/sidebar/right/Controls";
+import Showroom from "./src/components/sidebar/left/Showroom";
 
 Vue.use(Vuex);
 Vue.use(VueAgile);
@@ -28,7 +29,9 @@ Vue.component('assets', Assets);
 Vue.component('texts', Texts);
 Vue.component('shapes', Shapes);
 Vue.component('cropping-image', CroppingImage);
-Vue.component('three-dee-shower', ThreeDeeShower);
+Vue.component('top-bar-controls', TopBarControls);
+Vue.component('controls', Controls);
+Vue.component('showroom', Showroom);
 
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)
@@ -60,17 +63,22 @@ window.onload = () => {
 
         new Vue({
             store,
-            render: createElement => createElement(EditorSection)
-        }).$mount("#main");
+            render: createElement => createElement(TopBarControls)
+        }).$mount("#top-bar-controls");
+
+        new Vue({
+            store,
+            render: createElement => createElement(Showroom)}
+        ).$mount("#showroom");
+
+        new Vue({
+            store,
+            render: createElement => createElement(Controls)
+        }).$mount("#controls");
 
         new Vue({
             store,
             render: createElement => createElement(PagePreview)}
         ).$mount("#pages");
-
-        new Vue({
-            store,
-            render: createElement => createElement(ThreeDeeShower)}
-        ).$mount("#three-dee-showroom");
     });
 }
