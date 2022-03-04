@@ -1,19 +1,19 @@
 <template>
-    <div v-show="this.editorLoaded" :class="{'is-2': !isPanelOpen, 'is-6': isPanelOpen}" class="column has-background-light is-2">
-        <div class="columns p-3">
+    <div v-show="this.editorLoaded" :class="{'is-2': !isPanelOpen, 'is-7': isPanelOpen}" class="column has-background-light is-2" style="display: grid">
+        <div class="columns p-3" style="max-height: calc(100vh - 190px);">
             <transition name="slide">
-                <div v-show="isPanelOpen" class="column has-background-light p-2" style="border: 1px solid grey">
+                <div v-show="isPanelOpen" class="column has-background-light p-2" style="border: 1px solid grey; overflow-x: hidden; overflow-y: scroll">
                     <div class="columns is-multiline is-mobile">
-                        <component class="column is-24" :is="component"></component>
+                        <component class="column is-24 p-5" :is="component"></component>
                     </div>
                 </div>
             </transition>
-            <div class="column has-background-light" :class="{'is-24': !isPanelOpen, 'is-8': isPanelOpen, 'is-offset-2': isPanelOpen}">
-                <div class="columns is-multiline">
+            <div class="column has-background-light" :class="{'is-24': !isPanelOpen, 'is-7': isPanelOpen, 'is-offset-1': isPanelOpen}">
+                <div class="columns is-multiline" style="display: grid">
                     <div @click="toggleSidebarPanel('assets')"
                          :style="{'border': component === 'assets' ? 'black 5px solid': 'transparent 5px solid'}"
                          class="column is-24 box noselect p-1">
-                        <div class="columns is-mobile is-multiline is-centered is-vcentered">
+                        <div class="columns is-gapless is-mobile is-multiline is-centered is-vcentered">
                             <div class="column is-24 has-text-centered">
                                 <span class="icon is-large">
                                     <i class="fas fa-image fa-2x"></i>
@@ -27,7 +27,7 @@
                     <div @click="toggleSidebarPanel('texts')"
                          :style="{'border': component === 'texts' ? 'black 5px solid': 'transparent 5px solid'}"
                          class="column is-24 box noselect p-1">
-                        <div class="columns is-mobile is-multiline is-centered is-vcentered">
+                        <div class="columns is-gapless is-mobile is-multiline is-centered is-vcentered">
                             <div class="column is-24 has-text-centered">
                                 <span class="icon is-large">
                                     <i class="fas fa-eye fa-2x"></i>
@@ -41,7 +41,7 @@
                     <div @click="toggleSidebarPanel('shapes')"
                          :style="{'border': component === 'shapes' ? 'black 5px solid': 'transparent 5px solid'}"
                          class="column is-24 box noselect p-1">
-                        <div class="columns is-mobile is-multiline is-centered is-vcentered">
+                        <div class="columns is-gapless is-mobile is-multiline is-centered is-vcentered">
                             <div class="column is-24 has-text-centered">
                                 <span class="icon is-large">
                                     <i class="fas fa-square fa-2x"></i>
@@ -55,7 +55,7 @@
                     <div @click="toggleSidebarPanel('variants')"
                          :style="{'border': component === 'variants' ? 'black 5px solid': 'transparent 5px solid'}"
                          class="column is-24 box noselect p-1">
-                        <div class="columns is-mobile is-multiline is-centered is-vcentered">
+                        <div class="columns is-gapless is-mobile is-multiline is-centered is-vcentered">
                             <div class="column is-24 has-text-centered">
                                 <span class="icon is-large">
                                     <i class="fas fa-palette fa-2x"></i>
@@ -74,6 +74,20 @@
                             <span class="icon is-large">
                                 <i class="fas fa-step-forward fa-2x"></i>
                             </span>
+                        </div>
+                    </div>
+                    <div @click="toggleSidebarPanel('view')"
+                         :style="{'border': component === 'view' ? 'black 5px solid': 'transparent 5px solid'}"
+                         class="column is-24 box noselect p-1">
+                        <div class="columns is-gapless is-mobile is-multiline is-centered is-vcentered">
+                            <div class="column is-24 has-text-centered">
+                                <span class="icon is-large">
+                                    <i class="fas fa-th fa-2x"></i>
+                                </span>
+                            </div>
+                            <div class="column is-24 has-text-centered">
+                                <span class="is-size-4">Ansicht</span>
+                            </div>
                         </div>
                     </div>
                 </div>

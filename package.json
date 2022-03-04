@@ -10,6 +10,7 @@
     "build": "parcel build index.html"
   },
   "dependencies": {
+    "@creativebulma/bulma-divider": "^1.1.0",
     "@fortawesome/fontawesome-free": "^5.15.3",
     "@rissc/printformer-editor-client": "^1.0.14",
     "@rissc/printformer-ts-common": "^1.0.9",

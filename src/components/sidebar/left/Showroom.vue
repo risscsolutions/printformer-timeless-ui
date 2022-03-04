@@ -1,5 +1,5 @@
 <template>
-    <div v-show="this.editorLoaded" :class="{'is-1': !isPanelOpen, 'is-6': isPanelOpen}" class="column has-background-light">
+    <div v-show="this.editorLoaded" :class="{'is-1': !isPanelOpen, 'is-6': isPanelOpen}" class="column has-background-light" style="display: grid">
         <div class="columns p-3">
             <div class="column has-background-light p-0 is-4">
                 <div class="columns is-multiline">
