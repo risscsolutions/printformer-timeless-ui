@@ -19,6 +19,7 @@ import CroppingImage from "./src/components/CroppingImage";
 import TopBarControls from "./src/components/TopBarControls";
 import Controls from "./src/components/sidebar/right/Controls";
 import Showroom from "./src/components/sidebar/left/Showroom";
+import ViewSettings from "./src/components/sidebar/right/ViewSettings";
 
 Vue.use(Vuex);
 Vue.use(VueAgile);
@@ -32,6 +33,7 @@ Vue.component('cropping-image', CroppingImage);
 Vue.component('top-bar-controls', TopBarControls);
 Vue.component('controls', Controls);
 Vue.component('showroom', Showroom);
+Vue.component('view-settings', ViewSettings);
 
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)

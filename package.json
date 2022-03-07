@@ -16,6 +16,7 @@
     "@rissc/printformer-ts-common": "^1.0.9",
     "bulma": "^0.9.3",
     "bulma-carousel": "^4.0.24",
+    "bulma-switch": "^2.0.4",
     "car": "^0.2.0",
     "eventemitter3": "^4.0.7",
     "lodash": "^4.17.21",

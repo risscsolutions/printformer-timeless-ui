@@ -28,8 +28,8 @@
                 <div class="divider" style="margin: 0 !important;"></div>
             </div>
             <div class="column is-24">
-                <div class="content is-small">
-                    <h1>Bildqualität</h1>
+                <div class="columns is-multiline">
+                    <div class="column"><b>Bildqualität</b></div>
                 </div>
             </div>
             <div class="column is-24">
@@ -39,7 +39,7 @@
                 <div class="content">
                     <div class="columns">
                         <div class="column is-14">
-                            <h3>Bild zoomen</h3>
+                            <b>Bildqualität</b>
                         </div>
                         <div class="column is-3">
                             <i class="fas fa-plus-circle fa-1x"></i>
@@ -48,7 +48,8 @@
                             <i class="fas fa-minus-circle fa-1x"></i>
                         </div>
                         <div class="column is-3">
-                            <i class="fas fa-expand-alt fa-1x"></i>                        </div>
+                            <i class="fas fa-expand-alt fa-1x"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -89,16 +90,16 @@ import Events from "@rissc/printformer-editor-client/dist/Events";
 export default {
     name: "assets",
     created() {
-        this.loadPictures();
+        this.loadAssets();
     },
     mounted() {
         window.events.on(Events.EDITOR_PAGES_PAGED, (pageInfo) => {
             this.currentPage = pageInfo.pageNumber
-            this.loadPictures();
+            this.loadAssets();
         });
     },
     methods: {
-        async loadPictures() {
+        async loadAssets() {
             this.pictures = await this.$editor.findEditorObjects({
                 type: BlockTypes.ASSET
             });

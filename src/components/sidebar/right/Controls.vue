@@ -1,5 +1,5 @@
 <template>
-    <div v-show="this.editorLoaded" :class="{'is-2': !isPanelOpen, 'is-7': isPanelOpen}" class="column has-background-light is-2" style="display: grid">
+    <div v-show="this.editorLoaded" :class="{'is-2': !isPanelOpen, 'is-7': isPanelOpen}" class="column has-background-light" style="display: grid">
         <div class="columns p-3" style="max-height: calc(100vh - 190px);">
             <transition name="slide">
                 <div v-show="isPanelOpen" class="column has-background-light p-2" style="border: 1px solid grey; overflow-x: hidden; overflow-y: scroll">
@@ -76,8 +76,9 @@
                             </span>
                         </div>
                     </div>
-                    <div @click="toggleSidebarPanel('view')"
-                         :style="{'border': component === 'view' ? 'black 5px solid': 'transparent 5px solid'}"
+                    <div @click="toggleSidebarPanel('view-settings')"
+                         :style="{'border': component === 'view-settings' ? 'black 5px solid': 'transparent 5px solid'}"
+                         style="position: fixed; bottom: 140px; width: auto;"
                          class="column is-24 box noselect p-1">
                         <div class="columns is-gapless is-mobile is-multiline is-centered is-vcentered">
                             <div class="column is-24 has-text-centered">
