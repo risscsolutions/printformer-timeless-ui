@@ -5,7 +5,9 @@ export default function makeStore() {
         state: {
             editorConfig: {},
             is3D: false,
-            previewPages: []
+            previewPages: [],
+            fontSizes: null,
+            fonts: []
         },
         mutations: {
             setEditorConfig(state, editorConfig) {
@@ -16,6 +18,12 @@ export default function makeStore() {
             },
             setPreviewPages(state, previewPages) {
                 state.previewPages = previewPages;
+            },
+            setFontSizes(state, fontSizes) {
+                state.fontSizes = fontSizes;
+            },
+            setFonts(state, fonts) {
+                state.fonts = fonts;
             }
         }
     });

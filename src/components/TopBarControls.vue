@@ -1,14 +1,15 @@
 <template>
-    <div class="columns is-mobile">
-        <div class="column is-1 ml-2">
-            <button class="button is-white">
-                <span class="icon is-small">
-                    <i class="fas fa-search"></i>
-                    <span class="ml-1">55%</span>
-                </span>
-            </button>
+    <div class="columns is-mobile is-vcentered is-centered">
+        <div class="column is-2">
+            <span @click="editorZoomIn()">
+                <i class="fas fa-plus"></i>
+            </span>
+            <span>55%</span>
+            <span @click="editorZoomOut()">
+                <i class="fas fa-minus"></i>
+            </span>
         </div>
-        <div class="column is-1 is-offset-13" style="text-align:right;">
+        <div class="column is-1 is-offset-12" style="text-align:right;">
             <button class="button is-warning">
                 <span class="icon is-small">
                     <i class="fas fa-exclamation-triangle"></i>
@@ -57,6 +58,23 @@ export default {
     mounted() {
         window.events.on(Events.EDITOR_LOADED, async (config) => {
             this.$store.commit('setEditorConfig', config);
+
+            // loop through pages to load threedee preview correctly
+            this.wait(2000)
+                .then(async () => {
+                    let pages = await this.$editor.getPager().pages;
+                    await this.$editor.getLoader().show('Loading...');
+
+                    for (let i = 1; i < pages.length; i++) {
+                        if (i < pages.length) {
+                            await this.$editor.getPager().showPage(i);
+                        }
+                    }
+
+                    await this.$editor.getPager().showPage(1);
+                    await this.$editor.getLoader().hide();
+                });
+
             this.editorLoaded = true;
         });
     },
@@ -64,16 +82,31 @@ export default {
         goBack() {
 
         },
-        editorSave() {
-
+        async editorSave() {
+            await this.$editor.getLoader().show('Entwurf wird gespeichert...');
+            await this.$editor.save();
+            await this.$editor.getLoader().hide();
         },
         pagePreview() {
 
+        },
+        editorZoomIn() {
+            this.$editor.getZoom().in();
+        },
+        editorZoomOut() {
+            this.$editor.getZoom().out();
+        },
+        wait(t) {
+            return new Promise(function(resolve) {
+                window.setTimeout(resolve, t)
+            });
         }
     },
     data() {
         return {
-            editorLoaded: false
+            currentActiveObject: null,
+            editorLoaded: false,
+            shouldShowMenu: false
         }
     }
 }

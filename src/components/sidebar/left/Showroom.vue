@@ -28,6 +28,26 @@
                             </span>
                         </div>
                         <div class="column is-24">
+                            <div class="columns is-multiline p-2">
+                                <div class="column is-one-fifth">
+                                    A
+                                </div>
+                                <div class="column is-four-fifths">
+                                    Klicke auf das Textfeld, um Schriften hinzuzufügen und zu formatieren.
+                                </div>
+                                <div class="column is-one-fifth">
+                                    TIPP
+                                </div>
+                                <div class="column is-four-fifths">
+                                    Mit einem <b>einfachem Klick</b> auf das Textfeld kannst du die
+                                    Größe des Rahmens ändern, drehen und verschieben.
+                                    <br>
+                                    Mit einem <b>doppelten Klick</b> in das Textfeld kannst du den Text
+                                    innerhalb der Rahmens beliebig verändern.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-24">
                             <iframe ref="threedeeiframe" style="min-height: 400px; width: 100%; height: 100%; display: none"></iframe>
                         </div>
                     </div>

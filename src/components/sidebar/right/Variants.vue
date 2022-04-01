@@ -1,10 +1,13 @@
 <template>
-    <div>
+    <div v-if="hasVariants">
         <div class="content is-small">
-            <h1>Varianten</h1>
+            <h1>Wähle deine Farbe aus</h1>
+        </div>
+        <div class="column is-24">
+            <div class="divider" style="margin: 0 !important;"></div>
         </div>
         <div class="columns is-multiline is-mobile mb-2">
-            <div v-for="variant in variants" @click="loadVariant(variant, variant.id)" class="column is-2-desktop is-2-tablet">
+            <div v-for="variant in variants" @click="loadVariant(variant, variant.id)" class="column is-half">
                 <div v-if="variant.thumbnail.type === 'color'" class="box variant"
                      :class="{'variant-active': currentId === variant.id}"
                      :style="{'background-color': variant.thumbnail.value}">
@@ -12,8 +15,7 @@
                         <span style="border-style: none; outline-color: transparent"></span>
                     </figure>
                 </div>
-                <div v-else class="box variant p-0"
-                        :class="{'variant-active': currentId === variant.id}">
+                <div v-else class="box variant p-0" :class="{'variant-active': currentId === variant.id}">
                     <figure class="image is-square">
                         <img :src="variant.thumbnail.value" height="70px" width="auto">
                     </figure>
@@ -24,9 +26,11 @@
     </div>
 </template>
 
-<style>
+<style lang="css" scoped>
+@import "@creativebulma/bulma-divider/dist/bulma-divider.min.css";
+
 .variant-active {
-    border: 3px solid red !important;
+    border: 4px solid #000000 !important;
 }
 
 .variant {
@@ -40,23 +44,36 @@ import {mapState} from "vuex";
 export default {
     name: "variants",
     computed: {
-        ...mapState(['editorConfig'])
+        hasVariants() {
+            return this.variants.length > 0;
+        },
+        ...mapState(['editorConfig', 'previewPages'])
     },
-    mounted() {
+    async mounted() {
         this.$editor.getVariants().getActive().then((variant) => {
             if (variant) this.currentId = variant.id;
         });
 
-        this.$editor.getVariants().getAll().then((variants) => {
-            this.variants = variants;
-        });
+        this.variants = await this.$editor.getVariants().getAll();
     },
     methods: {
         async loadVariant(variant, index) {
             if (this.currentId !== index) {
+                this.currentId = index;
                 await this.$editor.getLoader().show("Loading...");
                 await this.$editor.getVariants().apply(variant.id);
                 await this.$editor.save();
+
+                // recommit previewpages after variant change
+                this.$editor.getPager().pages.then(async (pages) => {
+                    let prevPages = await Promise.all(pages.map(async (page) => {
+                        page.previewImage = await this.$editor.getPager().getPagePreview(page.pageNumber);
+                        return page;
+                    }));
+
+                    this.$store.commit('setPreviewPages', prevPages);
+                });
+
                 await this.$editor.getLoader().hide();
                 this.currentId = index;
             }
