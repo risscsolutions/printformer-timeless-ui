@@ -56,3 +56,4 @@ Thumbs.db
 
 /vendor/
 .env
+/src/svg.js
