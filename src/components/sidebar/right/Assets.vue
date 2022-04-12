@@ -10,25 +10,27 @@
                 <div class="divider" style="margin: 0 !important;"></div>
             </div>
             <div class="column is-24">
-                <div class="box" style="cursor: pointer" @click="uploadMediaAsset">
+                <div class="box">
                     <div class="columns is-centered is-multiline">
-                        <div class="column is-24">
+                        <div class="column is-24" style="cursor: pointer" @click="uploadMediaAsset">
                             <span>Neues Bild hochladen</span>
                             <span>
                                 <i class="fas fa-upload"></i>
                             </span>
                         </div>
                         <div class="column is-24">
-                            <span>vom Computer oder per Drag and Drop in die Box ziehen</span>
+                            <div class="p-12" @dragover="dragover" @dragleave="dragleave" @drop="drop">
+                                <input ref="uploadFile" type="file" hidden accept=".jpg,.jpeg,.png" @change="uploadImage">
+                                <span>vom Computer oder per Drag and Drop in die Box ziehen</span>
+                            </div>
                         </div>
-                        <input ref="uploadFile" type="file" hidden @change="uploadImage">
                     </div>
                 </div>
             </div>
-            <div v-if="hasActiveObject" class="column is-24">
+            <div v-if="isAsset" class="column is-24">
                 <div class="divider" style="margin: 0 !important;"></div>
             </div>
-            <div v-if="hasActiveObject" class="column is-24">
+            <div v-if="isAsset" class="column is-24">
                 <div class="columns is-multiline">
                     <div class="column">
                         <b>Bildqualität</b>
@@ -36,10 +38,10 @@
                     </div>
                 </div>
             </div>
-            <div v-if="hasActiveObject" class="column is-24">
+            <div v-if="isAsset" class="column is-24">
                 <div class="divider" style="margin: 0 !important;"></div>
             </div>
-            <div v-if="hasActiveObject" class="column is-24">
+            <div v-if="isAsset" class="column is-24">
                 <div class="content">
                     <div class="columns">
                         <div class="column is-14">
@@ -57,6 +59,33 @@
                     </div>
                 </div>
             </div>
+            <div v-if="isAsset" class="column is-24">
+                <div class="divider" style="margin: 0 !important;"></div>
+            </div>
+            <div v-if="isAsset" class="column is-24">
+                <div class="columns is-multiline">
+                    <div class="column">
+                        <div @click="deleteAssetBox" style="cursor: pointer"><b>Bild löschen</b> <i class="fas fa-trash"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div v-if="isAsset" class="column is-24">
+                <div class="divider" style="margin: 0 !important;"></div>
+            </div>
+            <div v-if="isAsset" class="column is-24">
+                <div class="columns is-multiline">
+                    <div class="column">
+                        <div class="field">
+                            <input id="extendedEditSwitch" :checked="extendedEditSwitchOn" @click="enableExtendedEdit" class="switch is-info"
+                                   name="extendedEditSwitch" type="checkbox">
+                            <label for="extendedEditSwitch">Erweiterte Bearbeitung</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <extended-edit v-if="extendedEditSwitchOn" :active-object="activeObject" :opacity="opacity"
+                           :has-alignment="true" :has-layer="true" :has-opacity="true">
+            </extended-edit>
             <div v-if="hasUserMedias" class="column is-24">
                 <div class="divider" style="margin: 0 !important;"></div>
             </div>
@@ -83,50 +112,49 @@
                     </div>
                 </div>
             </div>
-            <div v-if="hasActiveObject" class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
-            </div>
-            <div v-if="hasActiveObject" class="column is-24">
-                <div class="columns is-multiline">
-                    <div class="column">
-                        <div @click="deleteAssetBox" class="column" style="cursor: pointer"><b>Bild löschen</b> <i class="fas fa-trash"></i></div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </template>
 <style lang="css" scoped>
     @import "@creativebulma/bulma-divider/dist/bulma-divider.min.css";
+    @import "/node_modules/bulma-switch/dist/css/bulma-switch.min.css";
+    @import "/node_modules/bulma-slider/dist/css/bulma-slider.min.css";
 </style>
 <script>
 import BlockTypes from "@rissc/printformer-ts-common/dist/BlockTypes";
 import Events from "@rissc/printformer-editor-client/dist/Events";
-import EditorObject from "@rissc/printformer-editor-client/dist/Objects";
+import EditorObject, {Asset} from "@rissc/printformer-editor-client/dist/Objects";
+import bulmaSlider from "bulma-slider/src/js";
+import ExtendedEdit from "./ExtendedEdit";
 
 export default {
     name: "assets",
     props: {
         activeObject: EditorObject
     },
+    components: {ExtendedEdit},
     created() {
         this.loadAssets();
     },
     mounted() {
+        bulmaSlider.attach();
+
         window.events.on(Events.EDITOR_OBJECT_SELECTED, (block) => {
             this.dpi = block.dpi;
+            this.opacity = (block.opacity * 100)
             this.loadAssets();
         });
 
         window.events.on(Events.EDITOR_OBJECT_UPDATED, (block) => {
             this.dpi = block.dpi;
+            this.opacity = (block.opacity * 100)
         });
 
         this.loadUserMedias();
     },
     methods: {
         async loadAssets() {
-            this.pictures = await this.$editor.findEditorObjects({
+            this.assets = await this.$editor.findEditorObjects({
                 type: BlockTypes.ASSET
             });
         },
@@ -134,12 +162,21 @@ export default {
             this.$refs.uploadFile.click();
         },
         async uploadImage(event) {
-            const file = event.target.files[0];
+            let file;
+            if (typeof event.dataTransfer === 'undefined') {
+                file = event.target.files[0];
+            } else {
+                file = event.dataTransfer.files[0];
+            }
+
             await this.$editor.addAssetBlockFromFile(file);
-            this.loadUserMedias()
+            this.loadUserMedias();
         },
         addUserMedia(media) {
-            if (this.activeObject) {
+            // check has active object and active object is type asset
+            // if it has then replace with selected image
+            // if not just add a new asset block
+            if (this.activeObject && this.isAsset) {
                 this.activeObject.replaceWithMedia('userMedia', media.id)
             } else {
                 this.$editor.addAssetBlockFromMedia('userMedia', media.id)
@@ -154,9 +191,7 @@ export default {
             }
 
             this.$editor.getMediaProvider().getMedia(params).then((userMedias) => {
-                userMedias.forEach((userMedia) => {
-                    this.userMedias.push(userMedia);
-                });
+                this.userMedias = userMedias;
             });
         },
         async assetZoomIn() {
@@ -170,28 +205,78 @@ export default {
         },
         async deleteAssetBox() {
             await this.activeObject.delete();
+        },
+        dragover(event) {
+            event.preventDefault();
+            // Add some visual fluff to show the user can drop its files
+            if (!event.currentTarget.classList.contains('has-background-success')) {
+                event.currentTarget.classList.remove('has-background-white');
+                event.currentTarget.classList.add('has-background-success');
+            }
+        },
+        dragleave(event) {
+            event.currentTarget.classList.add('has-background-white');
+            event.currentTarget.classList.remove('has-background-success');
+        },
+        async drop(event) {
+            event.preventDefault();
+            event.currentTarget.classList.add('has-background-white');
+            event.currentTarget.classList.remove('has-background-success');
+            await this.uploadImage(event);
+        },
+        enableExtendedEdit() {
+            this.opacity = (this.activeObject.opacity * 100);
+            this.extendedEditSwitchOn = !this.extendedEditSwitchOn;
+        },
+        async changeOpacity() {
+            await this.activeObject.setOpacity((parseInt(this.opacity) / 100));
+        },
+        async duplicateAssetBlock() {
+            await this.activeObject.duplicate();
+        },
+        async moveUp(allTheWay) {
+            await this.activeObject.moveZIndexUp(allTheWay);
+        },
+        async moveDown(allTheWay) {
+            await this.activeObject.moveZIndexDown(allTheWay);
+        },
+        openAlignment() {
+            this.openAlignmentSettings = !this.openAlignmentSettings;
+        },
+        openLayer() {
+            this.openLayerSettings = !this.openLayerSettings;
+        },
+        async centerBlockH() {
+            await this.activeObject.centerH();
+        },
+        async centerBlockV() {
+            await this.activeObject.centerV();
         }
     },
     computed: {
         hasAssets() {
-            return this.pictures.length > 0;
+            return this.assets.length > 0;
         },
         hasUserMedias() {
             return this.userMedias.length > 0;
         },
-        hasActiveObject() {
-            return this.activeObject !== null;
+        isAsset() {
+            return this.activeObject && Asset.isAsset(this.activeObject);
         }
     },
     data() {
         return {
-            pictures: {},
+            opacity: 0,
+            assets: {},
             imageUrl: '',
             userMedias: [],
             dpi: 0,
             pagination: {
                 page: 1
-            }
+            },
+            extendedEditSwitchOn: false,
+            openAlignmentSettings: false,
+            openLayerSettings: false
         }
     }
 }

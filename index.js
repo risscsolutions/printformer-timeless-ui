@@ -20,7 +20,9 @@ import TopBarControls from "./src/components/TopBarControls";
 import Controls from "./src/components/sidebar/right/Controls";
 import Showroom from "./src/components/sidebar/left/Showroom";
 import ViewSettings from "./src/components/sidebar/right/ViewSettings";
+import ExtendedEdit from "./src/components/sidebar/right/ExtendedEdit";
 
+Vue.prototype.$svg = require('./src/svg.js');
 Vue.use(Vuex);
 Vue.use(VueAgile);
 Vue.component('form-fields', FormFields);
@@ -34,6 +36,7 @@ Vue.component('top-bar-controls', TopBarControls);
 Vue.component('controls', Controls);
 Vue.component('showroom', Showroom);
 Vue.component('view-settings', ViewSettings);
+Vue.component('extended-edit', ExtendedEdit);
 
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)

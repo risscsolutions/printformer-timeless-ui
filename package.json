@@ -6,6 +6,9 @@
   "author": "Hannes Stefani",
   "license": "ISC",
   "scripts": {
+    "assets": "node ./svg-gen.js",
+    "predev": "npm run assets",
+    "prebuild": "npm run assets",
     "dev": "parcel index.html --no-hmr",
     "build": "parcel build index.html"
   },
@@ -16,8 +19,10 @@
     "@rissc/printformer-ts-common": "^1.0.9",
     "bulma": "^0.9.3",
     "bulma-carousel": "^4.0.24",
+    "bulma-slider": "^2.0.5",
     "bulma-switch": "^2.0.4",
     "car": "^0.2.0",
+    "color-convert": "^2.0.1",
     "eventemitter3": "^4.0.7",
     "lodash": "^4.17.21",
     "vee-validate": "^3.4.11",

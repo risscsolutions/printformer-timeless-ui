@@ -74,7 +74,32 @@
             </div>
             <div v-if="isTextAsset" class="column is-24">
                 <div class="columns is-multiline">
-                    <div class="column"><b>Schriftfarbe</b></div>
+                    <div class="column">
+                        <b>Schriftfarbe</b>
+                        <input type="color" class="mobile-input-faker" v-model="currentColor" :name="'Farbe ' + currentColor + ' gewählt'">
+                    </div>
+                </div>
+            </div>
+            <div v-if="isTextAsset" class="column is-24">
+                <div class="divider" style="margin: 0 !important;"></div>
+            </div>
+            <div v-if="isTextAsset" class="column is-24">
+                <div class="columns is-multiline is-vcentered is-gapless">
+                    <div class="column is-12">
+                        <b>Ausrichtung Text</b>
+                    </div>
+                    <div class="column is-3" style="cursor: pointer" @click="textAlign('justify')">
+                        <span v-html="icon('Texte_Textformatierung_Blocksatz')"></span>
+                    </div>
+                    <div class="column is-3" style="cursor: pointer" @click="textAlign('left')">
+                        <span v-html="icon('Texte_Textformatierung_Linksbuendig')"></span>
+                    </div>
+                    <div class="column is-3" style="cursor: pointer" @click="textAlign('center')">
+                        <span v-html="icon('Texte_Textformatierung_zentriert')"></span>
+                    </div>
+                    <div class="column is-3" style="cursor: pointer" @click="textAlign('')">
+                        <span v-html="icon('Texte_Textformatierung_Rechtsbuendig')"></span>
+                    </div>
                 </div>
             </div>
             <div v-if="isTextAsset" class="column is-24">
@@ -82,15 +107,18 @@
             </div>
             <div v-if="isTextAsset" class="column is-24">
                 <div class="columns is-multiline">
-                    <div class="column"><b>Ausrichtung Text</b></div>
-                </div>
-            </div>
-            <div v-if="isTextAsset" class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
-            </div>
-            <div v-if="isTextAsset" class="column is-24">
-                <div class="columns is-multiline">
-                    <div class="column"><b>Aufzählung</b></div>
+                    <div class="column is-12">
+                        <b>Aufzählung</b>
+                    </div>
+                    <div class="column is-4" style="cursor: pointer" @click="textBulletPoints('alphabetic')">
+                        <span v-html="icon('Texte_Aufzaehlung_Eckig')"></span>
+                    </div>
+                    <div class="column is-4" style="cursor: pointer" @click="textBulletPoints('bullet')">
+                        <span v-html="icon('Texte_Aufzaehlung_Rund')"></span>
+                    </div>
+                    <div class="column is-4" style="cursor: pointer" @click="textBulletPoints('number')">
+                        <span v-html="icon('Texte_Aufzaehlung_Zahlen')"></span>
+                    </div>
                 </div>
             </div>
             <div v-if="isTextAsset" class="column is-24">
@@ -101,6 +129,24 @@
                     <div @click="deleteTextBox" class="column" style="cursor: pointer"><b>Textbox löschen</b> <i class="fas fa-trash"></i></div>
                 </div>
             </div>
+            <div v-if="isTextAsset" class="column is-24">
+                <div class="divider" style="margin: 0 !important;"></div>
+            </div>
+            <div v-if="isTextAsset" class="column is-24">
+                <div class="columns is-multiline">
+                    <div class="column">
+                        <div class="field">
+                            <input id="extendedEditSwitch" :checked="extendedEditSwitchOn" @click="enableExtendedEdit" class="switch is-info"
+                                   name="extendedEditSwitch" type="checkbox">
+                            <label for="extendedEditSwitch">Erweiterte Bearbeitung</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <extended-edit v-if="extendedEditSwitchOn" :active-object="activeObject" :opacity="opacity"
+                           :has-alignment="true" :has-background-color="true"
+                           :has-layer="true" :has-opacity="true" :has-line-height="true">
+            </extended-edit>
         </div>
     </div>
 </template>
@@ -109,18 +155,39 @@
 import CroppingImage from "../../CroppingImage";
 import {BulmaAccordion} from 'vue-bulma-accordion';
 import {mapMutations, mapState} from "vuex";
+import convert from "color-convert";
+import {Text} from "@rissc/printformer-editor-client/dist/Objects/Blocks"
+import EditorObject from "@rissc/printformer-editor-client/dist/Objects";
+import ExtendedEdit from "./ExtendedEdit";
 
 export default {
     name: "texts",
-    components: {CroppingImage, BulmaAccordion},
+    components: {CroppingImage, BulmaAccordion, ExtendedEdit},
     ...mapMutations(['setFontSizes', 'setFonts']),
     ...mapState(['fonts', 'fontSizes', 'editorConfig']),
     props: {
-        activeObject: null
+        activeObject: EditorObject
     },
     computed: {
+        currentColor: {
+            get() {
+                return this.isTextAsset
+                    ? this.activeObject.color.displayColor
+                    : this.activeObject.fill.displayColor;
+            },
+            set(color) {
+                const parsedColor = {
+                    displayColor: color,
+                    colorSpace: 'RGB',
+                    values: convert.hex.rgb(color)
+                }
+                this.isTextAsset
+                    ? this.activeObject.setFontColor(parsedColor)
+                    : this.activeObject.setFillColor(parsedColor);
+            }
+        },
         isTextAsset() {
-            return this.activeObject && this.activeObject.blockType === 'TEXT';
+            return this.activeObject && Text.isText(this.activeObject);
         }
     },
     async updated() {
@@ -197,8 +264,8 @@ export default {
             this.currentFontSize = fontSize;
             await this.activeObject.setFontSize(fontSize);
         },
-        deleteTextBox() {
-            this.activeObject.delete()
+        async deleteTextBox() {
+            await this.activeObject.delete();
         },
         async textAlign(position) {
             await this.activeObject.setFontAlign(position)
@@ -258,17 +325,26 @@ export default {
                 }
             }
         },
+        icon(name) {
+            return this.$svg(name, 'text-and-icons-dark');
+        },
         textBulletPoints(type) {
             // bullet, number, alphabetic
             this.activeObject.addBulletPoint(type)
-        }
+        },
+        enableExtendedEdit() {
+            this.opacity = (this.activeObject.opacity * 100);
+            this.extendedEditSwitchOn = !this.extendedEditSwitchOn;
+        },
     },
     data() {
         return {
             allFontsFlat: null,
             allFontSizes: null,
             currentFont: null,
-            currentFontSize: null
+            currentFontSize: null,
+            extendedEditSwitchOn: false,
+            opacity: 0
         }
     }
 }

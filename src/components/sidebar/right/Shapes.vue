@@ -15,11 +15,11 @@
             <div class="column is-half">
                 <div @click="addShapeBlock('circle')" class="shape-circle"></div>
             </div>
-            <div class="column is-half mt-5">
-                <div @click="addShapeBlock('polygon')" class="shape-polygon"></div>
-            </div>
             <div class="column is-half">
                 <div @click="addShapeBlock('triangle')" class="shape-triangle"></div>
+            </div>
+            <div class="column is-half mt-5">
+<!--                <div @click="addShapeBlock('polygon')" class="shape-polygon"></div>-->
             </div>
             <div class="column is-24 mt-5">
                 <div class="columns is-multiline">
