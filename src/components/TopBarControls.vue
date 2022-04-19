@@ -32,7 +32,9 @@
 </template>
 <script>
 import {mapState, mapGetters} from "vuex";
+import axios from 'axios'
 import Events from "@rissc/printformer-editor-client/dist/Events";
+import {parseSearchPath} from "../helper";
 
 export default {
     name: "top-bar-controls",
@@ -90,7 +92,18 @@ export default {
                 })
         },
         pagePreview() {
+          this.$editor.goToNextStep()
+            .then(() => {
+              this.$editor.getLoader().show();
 
+              const query = parseSearchPath();
+
+                const url = query.api_token
+                  ? `${window.location.origin}/editor/${query['draft']}/preview` + `?api_token=${query['api_token']}`
+                  : `${window.location.origin}/editor/${query['draft']}/preview`;
+
+              axios.get(url).then(() => window.location.assign(window.location.href.replace('index.html', 'preview.html')));
+            }, this.errorToNotification);
         },
         editorZoomIn() {
             this.$editor.getZoom().in().then(zoom => this.zoom = parseInt(zoom * 100));
