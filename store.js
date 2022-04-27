@@ -6,8 +6,10 @@ export default function makeStore() {
             editorConfig: {},
             is3D: false,
             previewPages: [],
+            notifications: [],
             fontSizes: null,
-            fonts: []
+            fonts: [],
+            openControlTab: null,
         },
         mutations: {
             setEditorConfig(state, editorConfig) {
@@ -24,6 +26,21 @@ export default function makeStore() {
             },
             setFonts(state, fonts) {
                 state.fonts = fonts;
+            },
+            setOpenControlTab(state, tab) {
+                state.openControlTab = tab;
+            },
+            setNotifications(state, notifications) {
+                notifications.forEach(notification => {
+                    if (!state.notifications.find(({id}) => id === notification.id)) {
+                        state.notifications.push(notification);
+                    }
+                });
+                state.notifications.reverse().forEach((notification, idx) => {
+                    if (!notifications.find(({id}) => id === notification.id)) {
+                        state.notifications.splice(idx, 1);
+                    }
+                })
             }
         }
     });

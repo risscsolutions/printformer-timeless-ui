@@ -11,40 +11,41 @@
         </div>
         <div class="column is-1 is-offset-11" style="text-align:right;"></div>
         <div class="column buttons">
-            <button class="button is-warning no-radius">
-                <span class="icon is-small">
-                    <i class="fas fa-exclamation-triangle"></i>
-                </span>
+            <button v-if="hasWarnings" class="button no-radius" style="background: #AC5D7A">
+                <span class="icon is-small" v-html="icon('Warnung')"></span>
             </button>
             <button @click="goBack" class="button no-radius is-dark">
                 <span class="icon is-small">
                     <i class="fas fa-backward"></i>
                 </span>
-              <span>Zurück zum Artikel</span>
+                <span>Zurück zum Artikel</span>
             </button>
             <button @click="editorSave" class="button no-radius is-info">
                 <span class="icon is-small">
                     <i class="fas fa-save"></i>
                 </span>
-              <span>Entwurf Speichern</span>
+                <span>Entwurf Speichern</span>
             </button>
             <button @click="pagePreview" class="button no-radius is-info">
                 <span class="icon is-small">
                     <i class="fas fa-eye"></i>
                 </span>
-              <span>Weiter zur Vorschau</span>
+                <span>Weiter zur Vorschau</span>
             </button>
         </div>
     </div>
 </template>
 <script>
-import {mapState} from "vuex";
+import {mapState, mapGetters} from "vuex";
 import Events from "@rissc/printformer-editor-client/dist/Events";
 
 export default {
     name: "top-bar-controls",
     computed: {
-        ...mapState(['editorConfig'])
+        ...mapState(['editorConfig', 'notifications']),
+        hasWarnings() {
+            return this.notifications.some(notification => ['warning', 'error'].includes(notification.type));
+        }
     },
     mounted() {
         window.events.on(Events.EDITOR_LOADED, async (config) => {
@@ -70,6 +71,9 @@ export default {
         });
     },
     methods: {
+        icon(name) {
+            return this.$svg(name);
+        },
         goBack() {
 
         },
@@ -88,7 +92,7 @@ export default {
             this.$editor.getZoom().out();
         },
         wait(t) {
-            return new Promise(function(resolve) {
+            return new Promise(function (resolve) {
                 window.setTimeout(resolve, t)
             });
         }

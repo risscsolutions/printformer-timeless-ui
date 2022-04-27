@@ -6,7 +6,8 @@
                 <div v-show="isPanelOpen || shouldShowMenu" class="column p-2 is-1 mr-3 width-300"
                      style="border: 1px solid grey; overflow-x: hidden; overflow-y: scroll">
                     <div class="columns is-multiline is-mobile">
-                        <component class="column is-24 p-5" :is="component" :activeObject="activeObject"></component>
+                        <component class="column is-24 p-5" :is="openControlTab"
+                                   :activeObject="activeObject"></component>
                     </div>
                 </div>
             </transition>
@@ -128,7 +129,7 @@ export default {
         hasVariants() {
             return this.variants.length > 0;
         },
-        ...mapState(['editorConfig', 'previewPages'])
+        ...mapState(['editorConfig', 'previewPages', 'openControlTab'])
     },
     mounted() {
         window.events.on(Events.EDITOR_LOADED, async (config) => {
@@ -150,7 +151,7 @@ export default {
         let onCancel;
         window.events.on(Events.EDITOR_OBJECT_SELECTED, (block) => {
             this.activeObject = block;
-            this.component = this.blockMenuType;
+            this.$store.commit('setOpenControlTab', this.blockMenuType);
             this.openSidebarPanel();
             let onUpdate = block => this.activeObject = block;
 
@@ -160,7 +161,7 @@ export default {
                 onCancel = debounce(() => {
                     this.activeObject = null;
                     this.closeSidebarPanel();
-                    this.component = null;
+                    this.$store.commit('setOpenControlTab', null);
                     window.events.off(Events.EDITOR_OBJECT_UPDATED, onUpdate);
                 }, 200);
             }
@@ -182,12 +183,12 @@ export default {
             this.shouldShowMenu = true;
         },
         toggleSidebarPanel(component) {
-            if ((this.component !== component) || (this.component === null && this.activeObject !== null)) {
+            if ((this.openControlTab !== component) || (this.openControlTab === null && this.activeObject !== null)) {
                 this.openSidebarPanel();
-                this.component = component;
+                this.$store.commit('setOpenControlTab', component);
             } else {
                 this.closeSidebarPanel();
-                this.component = null;
+                this.$store.commit('setOpenControlTab', null);
             }
         },
         async forward() {
@@ -200,7 +201,6 @@ export default {
     data() {
         return {
             shouldShowMenu: false,
-            component: null,
             editorLoaded: false,
             isPanelOpen: false,
             activeObject: null,

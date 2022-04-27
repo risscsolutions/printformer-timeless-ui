@@ -66,6 +66,8 @@ window.onload = () => {
     connector.connect(editorIframe, window.events).then(editor => {
         Vue.prototype.$editor = editor;
 
+        editor.getNotifications().onChange(notifications => store.commit('setNotifications', notifications));
+
         new Vue({
             store,
             render: createElement => createElement(TopBarControls)

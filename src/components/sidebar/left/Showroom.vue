@@ -4,7 +4,7 @@
         <div class="columns">
             <div class="column has-background-light is-1 width-50">
                 <div class="columns direction-column">
-                    <div class="p-1">
+                    <div>
                         <button v-show="!isPanelOpen" class="button is-info no-radius"
                                 @click="toggleSidebarPanel('threedee')">
                       <span class="icon is-small">
@@ -27,39 +27,22 @@
                 </div>
             </div>
             <transition name="slide">
-                <div v-show="isPanelOpen" class="column has-background-light p-2" style="border: 1px solid grey">
-                    <div class="columns is-multiline is-mobile">
-                        <div class="column is-24">
-                            <span>
-                                KLICKE AUF DIE SYMBOLE IN DER
-                                RECHTEN MENÜLEISTE, UM DEINE
-                                WERBEARTIKEL ZU GESTALTEN
-                            </span>
+                <div v-show="isPanelOpen" class="column p-4 pt-5" style="border: 1px solid grey">
+                    <p v-if="notifications.length === 0" class="mb-1">
+                        KLICKE AUF DIE SYMBOLE IN DER
+                        RECHTEN MENÜLEISTE, UM DEINE
+                        WERBEARTIKEL ZU GESTALTEN
+                    </p>
+                    <div v-if="notifications.length">
+                        <div v-for="notification in notifications">
+                            <b class="has-text-danger">{{ notification.type }}</b>
+                            <p>{{ notification.message }}</p>
                         </div>
-                        <div class="column is-24">
-                            <div class="columns is-multiline p-2">
-                                <div class="column is-one-fifth">
-                                    A
-                                </div>
-                                <div class="column is-four-fifths">
-                                    Klicke auf das Textfeld, um Schriften hinzuzufügen und zu formatieren.
-                                </div>
-                                <div class="column is-one-fifth">
-                                    TIPP
-                                </div>
-                                <div class="column is-four-fifths">
-                                    Mit einem <b>einfachem Klick</b> auf das Textfeld kannst du die
-                                    Größe des Rahmens ändern, drehen und verschieben.
-                                    <br>
-                                    Mit einem <b>doppelten Klick</b> in das Textfeld kannst du den Text
-                                    innerhalb der Rahmens beliebig verändern.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="column is-24">
-                            <iframe ref="threedeeiframe"
-                                    style="min-height: 400px; width: 100%; height: 100%; display: none"></iframe>
-                        </div>
+                    </div>
+                    <component v-else-if="openControlTab" :is="infoComponent"></component>
+                    <div>
+                        <iframe ref="threedeeiframe"
+                                style="min-height: 400px; width: 100%; height: 100%; display: none"></iframe>
                     </div>
                 </div>
             </transition>
@@ -88,11 +71,19 @@
 <script>
 import {mapState} from "vuex";
 import Events from "@rissc/printformer-editor-client/dist/Events";
+import AssetsInfo from "./AssetsInfo";
+import ShapesInfo from "./ShapesInfo";
+import TextsInfo from "./TextsInfo";
 
 export default {
     name: "showroom",
+    components: {AssetsInfo, ShapesInfo, TextsInfo},
+
     computed: {
-        ...mapState(['editorConfig', 'is3D'])
+        ...mapState(['editorConfig', 'is3D', 'notifications', 'openControlTab']),
+        infoComponent() {
+            return `${this.openControlTab}-info`;
+        }
     },
     mounted() {
         window.events.on(Events.EDITOR_LOADED, () => {
@@ -155,7 +146,7 @@ export default {
             has3D: false,
             component: null,
             editorLoaded: false,
-            isPanelOpen: false
+            isPanelOpen: false,
         }
     }
 }
