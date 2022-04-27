@@ -80,7 +80,21 @@ html, div, label, span, p, h1, h2, h3, h4, h5, h6, b, i {
 }
 
 button {
+    background-color: #f5f5f5;
     cursor: pointer;
     border: none;
     outline: none;
+}
+
+.gray-background {
+    background-color: #f5f5f5;
+}
+.svg-20 svg{
+    width: 20px;
+    height: 20px;
+}
+
+.blue-under{
+    color: #8cb4ff;
+    text-decoration: underline;
 }

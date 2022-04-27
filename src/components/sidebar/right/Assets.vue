@@ -2,38 +2,33 @@
     <div>
         <div class="columns is-multiline is-centered">
             <div class="column is-24">
-                <div class="box" style="cursor: pointer" @click="uploadMediaAsset">
-                    Neue Bildbox
+                <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background" style="cursor: pointer" @click="uploadMediaAsset">
+                    <span>Neue Bildbox</span>
+                    <span class="svg-20 m-1" v-html="icon('HinzufuegenPlus')"></span>
                 </div>
             </div>
             <div class="column is-24">
                 <div class="divider" style="margin: 0 !important;"></div>
             </div>
             <div class="column is-24">
-                <div class="box">
-                    <div class="columns is-centered is-multiline">
-                        <div class="column is-24" style="cursor: pointer" @click="uploadMediaAsset">
-                            <span>Neues Bild hochladen</span>
-                            <span>
-                                <i class="fas fa-upload"></i>
-                            </span>
-                        </div>
-                        <div class="column is-24">
-                            <div class="p-12" @dragover="dragover" @dragleave="dragleave" @drop="drop">
-                                <input ref="uploadFile" type="file" hidden accept=".jpg,.jpeg,.png" @change="uploadImage">
-                                <span>vom Computer oder per Drag and Drop in die Box ziehen</span>
-                            </div>
-                        </div>
+                <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background" style="cursor: pointer" @click="uploadMediaAsset">
+                    <span>Bilder hochladen</span>
+                    <span class="svg-20 m-1" v-html="icon('HinzufuegenPlus')"></span>
+                    <div class="columns m-0 is-flex-direction-column has-text-centered" @dragover="dragover" @dragleave="dragleave" @drop="drop">
+                        <input ref="uploadFile" type="file" hidden accept=".jpg,.jpeg,.png,.pdf" @change="uploadImage">
+                        <span>vom <span class="blue-under">Computer</span> oder</span>
+                        <span>per Drag and Drop</span>
+                        <span>in die Box ziehen</span>
                     </div>
                 </div>
             </div>
             <div v-if="isAsset" class="column is-24">
                 <div class="divider" style="margin: 0 !important;"></div>
             </div>
-            <div v-if="isAsset" class="column is-24">
-                <div class="columns is-multiline">
-                    <div class="column">
-                        <b>Bildqualität</b>
+            <div v-if="isAsset && dpi != null" class="column is-24">
+                <div class="columns">
+                    <div class="column is-flex is-justify-content-space-between">
+                        <span>Bildqualität</span>
                         <span>{{ dpi }} dpi</span>
                     </div>
                 </div>
@@ -45,16 +40,16 @@
                 <div class="content">
                     <div class="columns">
                         <div class="column is-14">
-                            <b>Bild zoomen</b>
+                            <span>Bild zoomen</span>
                         </div>
-                        <div class="column is-3" style="cursor: pointer" @click="assetZoomIn">
-                            <i class="fas fa-plus-circle fa-1x"></i>
+                        <div class="column is-3">
+                            <span @click="assetZoomIn" style="cursor: pointer" class="svg-20" v-html="icon('HinzufuegenPlus')">></span>
                         </div>
-                        <div class="column is-3" style="cursor: pointer" @click="assetZoomOut">
-                            <i class="fas fa-minus-circle fa-1x"></i>
+                        <div class="column is-3">
+                            <span @click="assetZoomOut" style="cursor: pointer" class="svg-20" v-html="icon('HinzufuegenMinus')">></span>
                         </div>
-                        <div class="column is-3" style="cursor: pointer" @click="assetFit">
-                            <i class="fas fa-expand-alt fa-1x"></i>
+                        <div class="column is-3">
+                            <span @click="assetFit" style="cursor: pointer" class="svg-20" v-html="icon('vergroessern')">></span>
                         </div>
                     </div>
                 </div>
@@ -64,8 +59,9 @@
             </div>
             <div v-if="isAsset" class="column is-24">
                 <div class="columns is-multiline">
-                    <div class="column">
-                        <div @click="deleteAssetBox" style="cursor: pointer"><b>Bild löschen</b> <i class="fas fa-trash"></i></div>
+                    <div class="column is-flex is-justify-content-space-between">
+                        <span>Bild löschen</span>
+                        <span @click="deleteAssetBox" style="cursor: pointer" class="svg-20" v-html="icon('Loeschen')">></span>
                     </div>
                 </div>
             </div>
@@ -74,10 +70,12 @@
             </div>
             <div v-if="isAsset" class="column is-24">
                 <div class="columns is-multiline">
-                    <div class="column">
+                    <div class="column is-flex is-flex-direction-column is-centered is-vcentered">
+                        <div>
+                        </div>
                         <div class="field">
                             <input id="extendedEditSwitch" :checked="extendedEditSwitchOn" @click="enableExtendedEdit" class="switch is-info"
-                                   name="extendedEditSwitch" type="checkbox">
+                            name="extendedEditSwitch" type="checkbox">
                             <label for="extendedEditSwitch">Erweiterte Bearbeitung</label>
                         </div>
                     </div>
@@ -153,6 +151,9 @@ export default {
         this.loadUserMedias();
     },
     methods: {
+        icon(name) {
+            return this.$svg(name);
+        },
         async loadAssets() {
             this.assets = await this.$editor.findEditorObjects({
                 type: BlockTypes.ASSET
@@ -210,17 +211,17 @@ export default {
             event.preventDefault();
             // Add some visual fluff to show the user can drop its files
             if (!event.currentTarget.classList.contains('has-background-success')) {
-                event.currentTarget.classList.remove('has-background-white');
+                event.currentTarget.classList.remove('gray-background');
                 event.currentTarget.classList.add('has-background-success');
             }
         },
         dragleave(event) {
-            event.currentTarget.classList.add('has-background-white');
+            event.currentTarget.classList.add('gray-background');
             event.currentTarget.classList.remove('has-background-success');
         },
         async drop(event) {
             event.preventDefault();
-            event.currentTarget.classList.add('has-background-white');
+            event.currentTarget.classList.add('gray-background');
             event.currentTarget.classList.remove('has-background-success');
             await this.uploadImage(event);
         },
@@ -270,7 +271,7 @@ export default {
             assets: {},
             imageUrl: '',
             userMedias: [],
-            dpi: 0,
+            dpi: null,
             pagination: {
                 page: 1
             },

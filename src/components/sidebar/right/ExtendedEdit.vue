@@ -37,10 +37,10 @@
             <div v-if="hasOpacity" class="column is-24">
                 <div class="columns is-multiline">
                     <div class="column">
-                        <b>Transparenz</b>
+                        <span>Transparenz</span>
                         <input id="sliderWithValue" class="slider has-output is-fullwidth" v-model="opacityActive"
                                @change="changeOpacity" min="0" max="100" step="1" type="range">
-                        <output for="sliderWithValue">{{ opacityActive }}</output>
+                        <output for="sliderWithValue" class="slider-output">{{ opacityActive }}</output><b>%</b>
                     </div>
                 </div>
             </div>
@@ -49,16 +49,17 @@
             </div>
             <div v-if="hasAlignment" class="column is-24">
                 <div class="columns is-multiline">
-                    <div style="cursor: pointer" @click="openAlignment" class="column is-24">
-                        <b>Ausrichtung</b>
+                    <div class="column is-flex is-justify-content-space-between">
+                        <span>Ausrichtung</span>
+                        <span @click="openAlignment" style="cursor: pointer" class="svg-20" v-html="icon('Abstand2')">></span>
                     </div>
                     <div v-if="openAlignmentSettings" class="column is-24">
                         <div class="columns is-multiline">
-                            <div class="column is-half">
-                                <span style="cursor: pointer" @click="centerBlockH">Horizontale Mittelachse</span>
+                            <div class="column is-half has-text-centered">
+                                <span @click="centerBlockH" style="cursor: pointer" class="svg-20" v-html="icon('Abstand')">></span>
                             </div>
-                            <div class="column is-half">
-                                <span style="cursor: pointer" @click="centerBlockV">Vertikale Mittelachse</span>
+                            <div class="column is-half has-text-centered">
+                                <span @click="centerBlockV" style="cursor: pointer" class="svg-20" v-html="icon('Abstand2')">></span>
                             </div>
                         </div>
                     </div>
@@ -69,22 +70,23 @@
             </div>
             <div v-if="hasLayer" class="column is-24">
                 <div class="columns is-multiline">
-                    <div style="cursor: pointer" @click="openLayer" class="column is-24">
-                        <b>Ebenen</b>
+                    <div class="column is-flex is-justify-content-space-between">
+                        <span>Ebenen</span>
+                        <span @click="openLayer" style="cursor: pointer" class="svg-20" v-html="icon('Ebenen')">></span>
                     </div>
                     <div v-if="openLayerSettings" class="column is-24">
                         <div class="columns is-multiline">
-                            <div class="column is-half">
-                                <span style="cursor: pointer" @click="moveUp(true)">In den Vordergrund</span>
+                            <div class="column is-half has-text-centered">
+                                <span @click="moveUp(true)" style="cursor: pointer" class="svg-20" v-html="icon('Vorne')">></span>
                             </div>
-                            <div class="column is-half">
-                                <span style="cursor: pointer" @click="moveDown(true)">In den Hintergrund</span>
+                            <div class="column is-half has-text-centered">
+                                <span @click="moveDown(true)" style="cursor: pointer" class="svg-20" v-html="icon('Hinten')">></span>
                             </div>
-                            <div class="column is-half">
-                                <span style="cursor: pointer" @click="moveUp(false)">Eine Ebene nach vorne</span>
+                            <div class="column is-half has-text-centered">
+                                <span @click="moveUp(false)" style="cursor: pointer" class="svg-20" v-html="icon('Vorne2')">></span>
                             </div>
-                            <div class="column is-half">
-                                <span style="cursor: pointer" @click="moveDown(false)">Eine Ebene nach hinten</span>
+                            <div class="column is-half has-text-centered">
+                                <span @click="moveDown(false)" style="cursor: pointer" class="svg-20" v-html="icon('Hinten2')">></span>
                             </div>
                         </div>
                     </div>
@@ -95,8 +97,9 @@
             </div>
             <div class="column is-24">
                 <div class="columns is-multiline">
-                    <div class="column">
-                        <div @click="duplicateBlock" style="cursor: pointer"><b>Duplizieren</b> <i class="fas fa-copy"></i></div>
+                    <div class="column is-flex is-justify-content-space-between">
+                        <span>Duplizieren</span>
+                        <span @click="duplicateBlock" style="cursor: pointer" class="svg-20" v-html="icon('Ebenen2')">></span>
                     </div>
                 </div>
             </div>
@@ -107,6 +110,19 @@
 @import "@creativebulma/bulma-divider/dist/bulma-divider.min.css";
 @import "/node_modules/bulma-switch/dist/css/bulma-switch.min.css";
 @import "/node_modules/bulma-slider/dist/css/bulma-slider.min.css";
+
+#sliderWithValue{
+    width: calc(100% - (5rem));
+}
+.slider-output{
+    color: gray;
+    background: none;
+    font-weight: bold;
+    font-size: 16px;
+    padding-right: 0;
+    position: relative;
+    top: -1px;
+}
 </style>
 <script>
 import Events from "@rissc/printformer-editor-client/dist/Events";
@@ -166,6 +182,9 @@ export default {
         });
     },
     methods: {
+        icon(name) {
+            return this.$svg(name);
+        },
         async changeOpacity() {
             await this.activeObject.setOpacity((parseInt(this.opacityActive) / 100));
         },
