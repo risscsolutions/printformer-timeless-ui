@@ -195,11 +195,11 @@ export default {
                 this.$store.commit('setOpenControlTab', null);
             }
         },
-        async forward() {
-            await this.$editor.getPager().next();
+        forward() {
+            this.$catch(this.$editor.getPager().next());
         },
-        async backward() {
-            await this.$editor.getPager().previous();
+        backward() {
+            this.$catch(this.$editor.getPager().previous());
         },
     },
     data() {

@@ -71,10 +71,10 @@ export default {
         goBack() {
 
         },
-        async editorSave() {
-            await this.$editor.getLoader().show('Entwurf wird gespeichert...');
-            await this.$editor.save();
-            await this.$editor.getLoader().hide();
+        editorSave() {
+            this.$editor.getLoader().show('Entwurf wird gespeichert...')
+                .then(() => this.$catch(this.$editor.save()))
+                .then(() => this.$editor.getLoader().hide())
         },
         pagePreview() {
 

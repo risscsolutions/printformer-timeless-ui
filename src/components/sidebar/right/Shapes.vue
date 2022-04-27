@@ -147,7 +147,7 @@ export default {
             });
         },
         addShapeBlock(type) {
-            this.$editor.addShapeBlock(type);
+            this.$catch(this.$editor.addShapeBlock(type));
         },
     },
     computed: {

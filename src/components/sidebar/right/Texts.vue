@@ -2,7 +2,8 @@
     <div>
         <div class="columns is-multiline is-centered">
             <div class="column is-24">
-                <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background" style="cursor: pointer" @click="addTextBlock">
+                <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background"
+                     style="cursor: pointer" @click="addTextBlock">
                     <span>Neue Textbox</span>
                     <span class="svg-20 m-1" v-html="icon('HinzufuegenPlus')"></span>
                 </div>
@@ -36,7 +37,8 @@
                     </div>
                     <div class="control is-expanded">
                         <div class="select is-fullwidth">
-                            <select name="fontSizes" @change="changeFontSize(currentFontSize)" v-model="currentFontSize">
+                            <select name="fontSizes" @change="changeFontSize(currentFontSize)"
+                                    v-model="currentFontSize">
                                 <option v-for="(fontSize, index) in allFontSizes" :key="index" :value="fontSize">
                                     {{ fontSize }} pt
                                 </option>
@@ -77,7 +79,8 @@
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span>Schriftfarbe</span>
-                        <input type="color" class="mobile-input-faker" v-model="currentColor" :name="'Farbe ' + currentColor + ' gewählt'">
+                        <input type="color" class="mobile-input-faker" v-model="currentColor"
+                               :name="'Farbe ' + currentColor + ' gewählt'">
                     </div>
                 </div>
             </div>
@@ -90,7 +93,7 @@
                         <span>Ausrichtung Text</span>
                     </div>
                     <div class="column is-3" style="cursor: pointer" @click="textAlign('justify')">
-                        <span class="svg-20"  v-html="icon('Blocksatz2')"></span>
+                        <span class="svg-20" v-html="icon('Blocksatz2')"></span>
                     </div>
                     <div class="column is-3" style="cursor: pointer" @click="textAlign('left')">
                         <span class="svg-20" v-html="icon('Linksbuendig2')"></span>
@@ -129,7 +132,8 @@
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span>Textbox löschen</span>
-                        <span @click="deleteTextBox" style="cursor: pointer" class="svg-20" v-html="icon('Loeschen')">></span>
+                        <span @click="deleteTextBox" style="cursor: pointer" class="svg-20"
+                              v-html="icon('Loeschen')">></span>
                     </div>
                 </div>
             </div>
@@ -140,7 +144,8 @@
                 <div class="columns is-multiline">
                     <div class="column">
                         <div class="field">
-                            <input id="extendedEditSwitch" :checked="extendedEditSwitchOn" @click="enableExtendedEdit" class="switch is-info"
+                            <input id="extendedEditSwitch" :checked="extendedEditSwitchOn" @click="enableExtendedEdit"
+                                   class="switch is-info"
                                    name="extendedEditSwitch" type="checkbox">
                             <label for="extendedEditSwitch">Erweiterte Bearbeitung</label>
                         </div>
@@ -186,8 +191,8 @@ export default {
                     values: convert.hex.rgb(color)
                 }
                 this.isTextAsset
-                    ? this.activeObject.setFontColor(parsedColor)
-                    : this.activeObject.setFillColor(parsedColor);
+                    ? this.$catch(this.activeObject.setFontColor(parsedColor))
+                    : this.$catch(this.activeObject.setFillColor(parsedColor));
             }
         },
         isTextAsset() {
@@ -195,13 +200,13 @@ export default {
         }
     },
     async updated() {
-        if (this.activeObject) {
+        if (this.activeObject && Text.isText(this.activeObject)) {
             if (this.activeObject.font.indexOf('Bold') !== -1) {
                 let currentFontByName = await this.$editor.getFontService().getFontByPostScriptName(this.currentFont);
                 if (currentFontByName.styles.length === 1 && currentFontByName.styles[0] === 'bold') {
                     // set button disabled if current font is already bold
                     this.$refs.boldButton.disabled = true;
-                } else if(currentFontByName.styles.length === 1 && currentFontByName.styles[0] !== 'bold') {
+                } else if (currentFontByName.styles.length === 1 && currentFontByName.styles[0] !== 'bold') {
                     // set button disabled if current font has no bold family member
                     this.$refs.boldButton.disabled = true;
                 }
@@ -214,7 +219,7 @@ export default {
                 if (currentFontByName.styles.length === 1 && currentFontByName.styles[0] === 'italic') {
                     // set button disabled if current font is already italic
                     this.$refs.italicButton.disabled = true;
-                } else if(currentFontByName.styles.length === 1 && currentFontByName.styles[0] !== 'italic') {
+                } else if (currentFontByName.styles.length === 1 && currentFontByName.styles[0] !== 'italic') {
                     // set button disabled if current font has no italic family member
                     this.$refs.italicButton.disabled = true;
                 }
@@ -256,23 +261,25 @@ export default {
         });
     },
     methods: {
-        async addTextBlock() {
-            let textBlock = await this.$editor.addTextBlock(this.allFontsFlat[0].postscript_name, 16);
-            await textBlock.setContent('Test');
+        addTextBlock() {
+            this.$catch(
+                this.$editor.addTextBlock(this.allFontsFlat[0].postscript_name, 16)
+                    .then(textBlock => textBlock.setContent('Test'))
+            );
         },
-        async changeFont(postscriptName) {
+        changeFont(postscriptName) {
             this.currentFont = postscriptName;
-            await this.activeObject.setFont(postscriptName);
+            this.$catch(this.activeObject.setFont(postscriptName));
         },
-        async changeFontSize(fontSize) {
+        changeFontSize(fontSize) {
             this.currentFontSize = fontSize;
-            await this.activeObject.setFontSize(fontSize);
+            this.$catch(this.activeObject.setFontSize(fontSize));
         },
-        async deleteTextBox() {
-            await this.activeObject.delete();
+        deleteTextBox() {
+            this.$catch(this.activeObject.delete());
         },
-        async textAlign(position) {
-            await this.activeObject.setFontAlign(position)
+        textAlign(position) {
+            this.$catch(this.activeObject.setFontAlign(position));
         },
         async textStyle(type) {
             // bold, italic, undeline
@@ -334,7 +341,7 @@ export default {
         },
         textBulletPoints(type) {
             // bullet, number, alphabetic
-            this.activeObject.addBulletPoint(type)
+            this.$catch(this.activeObject.addBulletPoint(type));
         },
         enableExtendedEdit() {
             this.opacity = (this.activeObject.opacity * 100);

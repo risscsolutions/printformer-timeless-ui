@@ -8,7 +8,8 @@
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span>Hintergrundfarbe</span>
-                        <input type="color" class="mobile-input-faker" v-model="currentColor" :name="'Farbe ' + currentColor + ' gewählt'">
+                        <input type="color" class="mobile-input-faker" v-model="currentColor"
+                               :name="'Farbe ' + currentColor + ' gewählt'">
                     </div>
                 </div>
             </div>
@@ -22,7 +23,8 @@
                     </div>
                     <div class="control is-expanded">
                         <div class="select is-fullwidth">
-                            <select name="fonts" @change="changeLineHeight(currentLineHeight)" v-model="currentLineHeight">
+                            <select name="fonts" @change="changeLineHeight(currentLineHeight)"
+                                    v-model="currentLineHeight">
                                 <option v-for="lineHeight in allLineHeights" :value="lineHeight">
                                     {{ lineHeight }}
                                 </option>
@@ -40,7 +42,8 @@
                         <span>Transparenz</span>
                         <input id="sliderWithValue" class="slider has-output is-fullwidth" v-model="opacityActive"
                                @change="changeOpacity" min="0" max="100" step="1" type="range">
-                        <output for="sliderWithValue" class="slider-output">{{ opacityActive }}</output><b>%</b>
+                        <output for="sliderWithValue" class="slider-output">{{ opacityActive }}</output>
+                        <b>%</b>
                     </div>
                 </div>
             </div>
@@ -51,15 +54,18 @@
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span>Ausrichtung</span>
-                        <span @click="openAlignment" style="cursor: pointer" class="svg-20" v-html="icon('Abstand2')">></span>
+                        <span @click="openAlignment" style="cursor: pointer" class="svg-20"
+                              v-html="icon('Abstand2')">></span>
                     </div>
                     <div v-if="openAlignmentSettings" class="column is-24">
                         <div class="columns is-multiline">
                             <div class="column is-half has-text-centered">
-                                <span @click="centerBlockH" style="cursor: pointer" class="svg-20" v-html="icon('Abstand')">></span>
+                                <span @click="centerBlockH" style="cursor: pointer" class="svg-20"
+                                      v-html="icon('Abstand')">></span>
                             </div>
                             <div class="column is-half has-text-centered">
-                                <span @click="centerBlockV" style="cursor: pointer" class="svg-20" v-html="icon('Abstand2')">></span>
+                                <span @click="centerBlockV" style="cursor: pointer" class="svg-20"
+                                      v-html="icon('Abstand2')">></span>
                             </div>
                         </div>
                     </div>
@@ -77,16 +83,20 @@
                     <div v-if="openLayerSettings" class="column is-24">
                         <div class="columns is-multiline">
                             <div class="column is-half has-text-centered">
-                                <span @click="moveUp(true)" style="cursor: pointer" class="svg-20" v-html="icon('Vorne')">></span>
+                                <span @click="moveUp(true)" style="cursor: pointer" class="svg-20"
+                                      v-html="icon('Vorne')">></span>
                             </div>
                             <div class="column is-half has-text-centered">
-                                <span @click="moveDown(true)" style="cursor: pointer" class="svg-20" v-html="icon('Hinten')">></span>
+                                <span @click="moveDown(true)" style="cursor: pointer" class="svg-20"
+                                      v-html="icon('Hinten')">></span>
                             </div>
                             <div class="column is-half has-text-centered">
-                                <span @click="moveUp(false)" style="cursor: pointer" class="svg-20" v-html="icon('Vorne2')">></span>
+                                <span @click="moveUp(false)" style="cursor: pointer" class="svg-20"
+                                      v-html="icon('Vorne2')">></span>
                             </div>
                             <div class="column is-half has-text-centered">
-                                <span @click="moveDown(false)" style="cursor: pointer" class="svg-20" v-html="icon('Hinten2')">></span>
+                                <span @click="moveDown(false)" style="cursor: pointer" class="svg-20"
+                                      v-html="icon('Hinten2')">></span>
                             </div>
                         </div>
                     </div>
@@ -99,7 +109,8 @@
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span>Duplizieren</span>
-                        <span @click="duplicateBlock" style="cursor: pointer" class="svg-20" v-html="icon('Ebenen2')">></span>
+                        <span @click="duplicateBlock" style="cursor: pointer" class="svg-20"
+                              v-html="icon('Ebenen2')">></span>
                     </div>
                 </div>
             </div>
@@ -111,10 +122,11 @@
 @import "/node_modules/bulma-switch/dist/css/bulma-switch.min.css";
 @import "/node_modules/bulma-slider/dist/css/bulma-slider.min.css";
 
-#sliderWithValue{
+#sliderWithValue {
     width: calc(100% - 5rem) !important;
 }
-.slider-output{
+
+.slider-output {
     color: gray !important;
     background: none !important;
     font-weight: bold !important;
@@ -155,7 +167,7 @@ export default {
                     colorSpace: 'RGB',
                     values: convert.hex.rgb(color)
                 }
-                this.activeObject.setFillColor(parsedColor);
+                this.$catch(this.activeObject.setFillColor(parsedColor));
             }
         },
     },
@@ -185,17 +197,17 @@ export default {
         icon(name) {
             return this.$svg(name);
         },
-        async changeOpacity() {
-            await this.activeObject.setOpacity((parseInt(this.opacityActive) / 100));
+        changeOpacity() {
+            this.$catch(this.activeObject.setOpacity((parseInt(this.opacityActive) / 100)));
         },
-        async duplicateBlock() {
-            await this.activeObject.duplicate();
+        duplicateBlock() {
+            this.$catch(this.activeObject.duplicate());
         },
-        async moveUp(allTheWay) {
-            await this.activeObject.moveZIndexUp(allTheWay);
+        moveUp(allTheWay) {
+            this.$catch(this.activeObject.moveZIndexUp(allTheWay));
         },
-        async moveDown(allTheWay) {
-            await this.activeObject.moveZIndexDown(allTheWay);
+        moveDown(allTheWay) {
+            this.$catch(this.activeObject.moveZIndexDown(allTheWay));
         },
         openAlignment() {
             this.openAlignmentSettings = !this.openAlignmentSettings;
@@ -203,14 +215,14 @@ export default {
         openLayer() {
             this.openLayerSettings = !this.openLayerSettings;
         },
-        async centerBlockH() {
-            await this.activeObject.centerH();
+        centerBlockH() {
+            this.$catch(this.activeObject.centerH());
         },
-        async centerBlockV() {
-            await this.activeObject.centerV();
+        centerBlockV() {
+            this.$catch(this.activeObject.centerV());
         },
-        async changeLineHeight(leading) {
-            await this.activeObject.setFontLeading(leading);
+        changeLineHeight(leading) {
+            this.$catch(this.activeObject.setFontLeading(leading));
         }
     },
     data() {

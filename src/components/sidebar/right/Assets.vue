@@ -2,7 +2,8 @@
     <div>
         <div class="columns is-multiline is-centered">
             <div class="column is-24">
-                <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background" style="cursor: pointer" @click="uploadMediaAsset">
+                <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background"
+                     style="cursor: pointer" @click="uploadMediaAsset">
                     <span>Neue Bildbox</span>
                     <span class="svg-20 m-1" v-html="icon('HinzufuegenPlus')"></span>
                 </div>
@@ -11,10 +12,12 @@
                 <div class="divider" style="margin: 0 !important;"></div>
             </div>
             <div class="column is-24">
-                <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background" style="cursor: pointer" @click="uploadMediaAsset">
+                <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background"
+                     style="cursor: pointer" @click="uploadMediaAsset">
                     <span>Bilder hochladen</span>
                     <span class="svg-20 m-1" v-html="icon('HinzufuegenPlus')"></span>
-                    <div class="columns m-0 is-flex-direction-column has-text-centered" @dragover="dragover" @dragleave="dragleave" @drop="drop">
+                    <div class="columns m-0 is-flex-direction-column has-text-centered" @dragover="dragover"
+                         @dragleave="dragleave" @drop="drop">
                         <input ref="uploadFile" type="file" hidden accept=".jpg,.jpeg,.png,.pdf" @change="uploadImage">
                         <span>vom <span class="blue-under">Computer</span> oder</span>
                         <span>per Drag and Drop</span>
@@ -43,13 +46,16 @@
                             <span>Bild zoomen</span>
                         </div>
                         <div class="column is-3">
-                            <span @click="assetZoomIn" style="cursor: pointer" class="svg-20" v-html="icon('HinzufuegenPlus')">></span>
+                            <span @click="assetZoomIn" style="cursor: pointer" class="svg-20"
+                                  v-html="icon('HinzufuegenPlus')">></span>
                         </div>
                         <div class="column is-3">
-                            <span @click="assetZoomOut" style="cursor: pointer" class="svg-20" v-html="icon('HinzufuegenMinus')">></span>
+                            <span @click="assetZoomOut" style="cursor: pointer" class="svg-20"
+                                  v-html="icon('HinzufuegenMinus')">></span>
                         </div>
                         <div class="column is-3">
-                            <span @click="assetFit" style="cursor: pointer" class="svg-20" v-html="icon('vergroessern')">></span>
+                            <span @click="assetFit" style="cursor: pointer" class="svg-20"
+                                  v-html="icon('vergroessern')">></span>
                         </div>
                     </div>
                 </div>
@@ -61,7 +67,8 @@
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span>Bild löschen</span>
-                        <span @click="deleteAssetBox" style="cursor: pointer" class="svg-20" v-html="icon('Loeschen')">></span>
+                        <span @click="deleteAssetBox" style="cursor: pointer" class="svg-20"
+                              v-html="icon('Loeschen')">></span>
                     </div>
                 </div>
             </div>
@@ -74,8 +81,9 @@
                         <div>
                         </div>
                         <div class="field">
-                            <input id="extendedEditSwitch" :checked="extendedEditSwitchOn" @click="enableExtendedEdit" class="switch is-info"
-                            name="extendedEditSwitch" type="checkbox">
+                            <input id="extendedEditSwitch" :checked="extendedEditSwitchOn" @click="enableExtendedEdit"
+                                   class="switch is-info"
+                                   name="extendedEditSwitch" type="checkbox">
                             <label for="extendedEditSwitch">Erweiterte Bearbeitung</label>
                         </div>
                     </div>
@@ -114,9 +122,9 @@
     </div>
 </template>
 <style lang="css" scoped>
-    @import "@creativebulma/bulma-divider/dist/bulma-divider.min.css";
-    @import "/node_modules/bulma-switch/dist/css/bulma-switch.min.css";
-    @import "/node_modules/bulma-slider/dist/css/bulma-slider.min.css";
+@import "@creativebulma/bulma-divider/dist/bulma-divider.min.css";
+@import "/node_modules/bulma-switch/dist/css/bulma-switch.min.css";
+@import "/node_modules/bulma-slider/dist/css/bulma-slider.min.css";
 </style>
 <script>
 import BlockTypes from "@rissc/printformer-ts-common/dist/BlockTypes";
@@ -170,17 +178,17 @@ export default {
                 file = event.dataTransfer.files[0];
             }
 
-            await this.$editor.addAssetBlockFromFile(file);
-            this.loadUserMedias();
+            this.$catch(this.$editor.addAssetBlockFromFile(file))
+                .then(() => this.loadUserMedias());
         },
         addUserMedia(media) {
             // check has active object and active object is type asset
             // if it has then replace with selected image
             // if not just add a new asset block
             if (this.activeObject && this.isAsset) {
-                this.activeObject.replaceWithMedia('userMedia', media.id)
+                this.$catch(this.activeObject.replaceWithMedia('userMedia', media.id));
             } else {
-                this.$editor.addAssetBlockFromMedia('userMedia', media.id)
+                this.$catch(this.$editor.addAssetBlockFromMedia('userMedia', media.id));
             }
         },
         loadUserMedias() {
@@ -195,17 +203,17 @@ export default {
                 this.userMedias = userMedias;
             });
         },
-        async assetZoomIn() {
-            await this.activeObject.zoomIn();
+        assetZoomIn() {
+            this.$catch(this.activeObject.zoomIn());
         },
-        async assetZoomOut() {
-            await this.activeObject.zoomOut();
+        assetZoomOut() {
+            this.$catch(this.activeObject.zoomOut());
         },
-        async assetFit() {
-            await this.activeObject.fitAsset();
+        assetFit() {
+            this.$catch(this.activeObject.fitAsset());
         },
-        async deleteAssetBox() {
-            await this.activeObject.delete();
+        deleteAssetBox() {
+            this.$catch(this.activeObject.delete());
         },
         dragover(event) {
             event.preventDefault();
@@ -219,27 +227,27 @@ export default {
             event.currentTarget.classList.add('gray-background');
             event.currentTarget.classList.remove('has-background-success');
         },
-        async drop(event) {
+        drop(event) {
             event.preventDefault();
             event.currentTarget.classList.add('gray-background');
             event.currentTarget.classList.remove('has-background-success');
-            await this.uploadImage(event);
+            this.$catch(this.uploadImage(event));
         },
         enableExtendedEdit() {
             this.opacity = (this.activeObject.opacity * 100);
             this.extendedEditSwitchOn = !this.extendedEditSwitchOn;
         },
-        async changeOpacity() {
-            await this.activeObject.setOpacity((parseInt(this.opacity) / 100));
+        changeOpacity() {
+            this.$catch(this.activeObject.setOpacity((parseInt(this.opacity) / 100)));
         },
-        async duplicateAssetBlock() {
-            await this.activeObject.duplicate();
+        duplicateAssetBlock() {
+            this.$catch(this.activeObject.duplicate());
         },
-        async moveUp(allTheWay) {
-            await this.activeObject.moveZIndexUp(allTheWay);
+        moveUp(allTheWay) {
+            this.$catch(this.activeObject.moveZIndexUp(allTheWay));
         },
-        async moveDown(allTheWay) {
-            await this.activeObject.moveZIndexDown(allTheWay);
+        moveDown(allTheWay) {
+            this.$catch(this.activeObject.moveZIndexDown(allTheWay));
         },
         openAlignment() {
             this.openAlignmentSettings = !this.openAlignmentSettings;
@@ -247,11 +255,11 @@ export default {
         openLayer() {
             this.openLayerSettings = !this.openLayerSettings;
         },
-        async centerBlockH() {
-            await this.activeObject.centerH();
+        centerBlockH() {
+            this.$catch(this.activeObject.centerH());
         },
-        async centerBlockV() {
-            await this.activeObject.centerV();
+        centerBlockV() {
+            this.$catch(this.activeObject.centerV());
         }
     },
     computed: {

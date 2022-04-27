@@ -49,6 +49,13 @@ configure({
     }
 });
 
+Vue.prototype.$catch = (promise) => promise.catch(e => {
+    const data = JSON.parse(e.message);
+    if (!data || !data.message) return;
+    console.warn(data);
+    alert(data.message);
+});
+
 window.onload = () => {
     const connector = new Connector();
     const editorIframe = document.getElementById('editor-iframe');
@@ -74,8 +81,9 @@ window.onload = () => {
         }).$mount("#top-bar-controls");
 
         new Vue({
-            store,
-            render: createElement => createElement(Showroom)}
+                store,
+                render: createElement => createElement(Showroom)
+            }
         ).$mount("#showroom");
 
         new Vue({
@@ -84,8 +92,9 @@ window.onload = () => {
         }).$mount("#controls");
 
         new Vue({
-            store,
-            render: createElement => createElement(PagePreview)}
+                store,
+                render: createElement => createElement(PagePreview)
+            }
         ).$mount("#pages");
     });
 }
