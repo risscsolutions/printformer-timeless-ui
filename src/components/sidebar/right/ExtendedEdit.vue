@@ -6,8 +6,8 @@
             </div>
             <div v-if="activeObject && hasBackgroundColor" class="column is-24">
                 <div class="columns is-multiline">
-                    <div class="column">
-                        <b>Hintergrundfarbe</b>
+                    <div class="column is-flex is-justify-content-space-between">
+                        <span>Hintergrundfarbe</span>
                         <input type="color" class="mobile-input-faker" v-model="currentColor" :name="'Farbe ' + currentColor + ' gewählt'">
                     </div>
                 </div>
@@ -112,16 +112,16 @@
 @import "/node_modules/bulma-slider/dist/css/bulma-slider.min.css";
 
 #sliderWithValue{
-    width: calc(100% - (5rem));
+    width: calc(100% - 5rem) !important;
 }
 .slider-output{
-    color: gray;
-    background: none;
-    font-weight: bold;
-    font-size: 16px;
-    padding-right: 0;
-    position: relative;
-    top: -1px;
+    color: gray !important;
+    background: none !important;
+    font-weight: bold !important;
+    font-size: 16px !important;
+    padding-right: 0 !important;
+    position: relative !important;
+    top: -1px !important;
 }
 </style>
 <script>
@@ -145,7 +145,7 @@ export default {
     computed: {
         currentColor: {
             get() {
-                return this.activeObject.is(Text)
+                return Text.isText(this.activeObject)
                     ? this.activeObject.color.displayColor
                     : this.activeObject.fill.displayColor;
             },

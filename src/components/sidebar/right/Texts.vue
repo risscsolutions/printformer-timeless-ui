@@ -2,8 +2,9 @@
     <div>
         <div class="columns is-multiline is-centered">
             <div class="column is-24">
-                <div class="box" style="cursor: pointer" @click="addTextBlock">
-                    Neue Textbox
+                <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background" style="cursor: pointer" @click="addTextBlock">
+                    <span>Neue Textbox</span>
+                    <span class="svg-20 m-1" v-html="icon('HinzufuegenPlus')"></span>
                 </div>
             </div>
             <div v-if="isTextAsset && allFontsFlat" class="column is-24">
@@ -50,7 +51,7 @@
             <div v-if="isTextAsset" class="column is-24">
                 <div class="columns is-vcentered is-multiline is-gapless">
                     <div class="column is-11">
-                        <b>Schriftschnitt</b>
+                        <span>Schriftschnitt</span>
                     </div>
                     <div class="column is-5">
                         <button @click="textStyle('bold')" class="button" ref="boldButton">
@@ -74,8 +75,8 @@
             </div>
             <div v-if="isTextAsset" class="column is-24">
                 <div class="columns is-multiline">
-                    <div class="column">
-                        <b>Schriftfarbe</b>
+                    <div class="column is-flex is-justify-content-space-between">
+                        <span>Schriftfarbe</span>
                         <input type="color" class="mobile-input-faker" v-model="currentColor" :name="'Farbe ' + currentColor + ' gewählt'">
                     </div>
                 </div>
@@ -86,19 +87,19 @@
             <div v-if="isTextAsset" class="column is-24">
                 <div class="columns is-multiline is-vcentered is-gapless">
                     <div class="column is-12">
-                        <b>Ausrichtung Text</b>
+                        <span>Ausrichtung Text</span>
                     </div>
                     <div class="column is-3" style="cursor: pointer" @click="textAlign('justify')">
-                        <span v-html="icon('Texte_Textformatierung_Blocksatz')"></span>
+                        <span class="svg-20"  v-html="icon('Blocksatz2')"></span>
                     </div>
                     <div class="column is-3" style="cursor: pointer" @click="textAlign('left')">
-                        <span v-html="icon('Texte_Textformatierung_Linksbuendig')"></span>
+                        <span class="svg-20" v-html="icon('Linksbuendig2')"></span>
                     </div>
                     <div class="column is-3" style="cursor: pointer" @click="textAlign('center')">
-                        <span v-html="icon('Texte_Textformatierung_zentriert')"></span>
+                        <span class="svg-20" v-html="icon('zentriert2')"></span>
                     </div>
                     <div class="column is-3" style="cursor: pointer" @click="textAlign('')">
-                        <span v-html="icon('Texte_Textformatierung_Rechtsbuendig')"></span>
+                        <span class="svg-20" v-html="icon('rechtsbuendig2')"></span>
                     </div>
                 </div>
             </div>
@@ -108,16 +109,16 @@
             <div v-if="isTextAsset" class="column is-24">
                 <div class="columns is-multiline">
                     <div class="column is-12">
-                        <b>Aufzählung</b>
+                        <span>Aufzählung</span>
                     </div>
                     <div class="column is-4" style="cursor: pointer" @click="textBulletPoints('alphabetic')">
-                        <span v-html="icon('Texte_Aufzaehlung_Eckig')"></span>
+                        <span class="svg-20" v-html="icon('AufzaehlungPunkte2')"></span>
                     </div>
                     <div class="column is-4" style="cursor: pointer" @click="textBulletPoints('bullet')">
-                        <span v-html="icon('Texte_Aufzaehlung_Rund')"></span>
+                        <span class="svg-20" v-html="icon('AufzaehlungPunkte2')"></span>
                     </div>
                     <div class="column is-4" style="cursor: pointer" @click="textBulletPoints('number')">
-                        <span v-html="icon('Texte_Aufzaehlung_Zahlen')"></span>
+                        <span class="svg-20" v-html="icon('AufzaehlungZahlen2')"></span>
                     </div>
                 </div>
             </div>
@@ -126,7 +127,10 @@
             </div>
             <div v-if="isTextAsset" class="column is-24">
                 <div class="columns is-multiline">
-                    <div @click="deleteTextBox" class="column" style="cursor: pointer"><b>Textbox löschen</b> <i class="fas fa-trash"></i></div>
+                    <div class="column is-flex is-justify-content-space-between">
+                        <span>Textbox löschen</span>
+                        <span @click="deleteTextBox" style="cursor: pointer" class="svg-20" v-html="icon('Loeschen')">></span>
+                    </div>
                 </div>
             </div>
             <div v-if="isTextAsset" class="column is-24">
