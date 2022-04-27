@@ -1,11 +1,11 @@
 <template>
     <div class="columns is-mobile is-vcentered is-centered">
         <div class="column is-2">
-            <span @click="editorZoomIn()">
+            <span @click="editorZoomIn()" style="cursor: pointer">
                 <i class="fas fa-plus"></i>
             </span>
             <span>55%</span>
-            <span @click="editorZoomOut()">
+            <span @click="editorZoomOut()" style="cursor: pointer">
                 <i class="fas fa-minus"></i>
             </span>
         </div>
@@ -15,21 +15,15 @@
                 <span class="icon is-small" v-html="icon('Warnung')"></span>
             </button>
             <button @click="goBack" class="button no-radius is-dark">
-                <span class="icon is-small">
-                    <i class="fas fa-backward"></i>
-                </span>
+                <span class="icon is-small" v-html="icon('Zueueck')"></span>
                 <span>Zurück zum Artikel</span>
             </button>
             <button @click="editorSave" class="button no-radius is-info">
-                <span class="icon is-small">
-                    <i class="fas fa-save"></i>
-                </span>
+                <span class="icon is-small" v-html="icon('Soeichern')"></span>
                 <span>Entwurf Speichern</span>
             </button>
             <button @click="pagePreview" class="button no-radius is-info">
-                <span class="icon is-small">
-                    <i class="fas fa-eye"></i>
-                </span>
+                <span class="icon is-small" v-html="icon('Auge')"></span>
                 <span>Weiter zur Vorschau</span>
             </button>
         </div>

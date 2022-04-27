@@ -1,5 +1,5 @@
 <template>
-    <div v-if="previewPages.length > 1" class="columns is-mobile is-centered has-background-light">
+    <div v-if="previewPages.length" class="columns is-mobile is-centered has-background-light">
         <div class="column is-half">
             <agile v-show="previewPages.length > 0" ref="carousel" class="thumbnails" :slidesToShow="4" :dots="false"
                    :infinite="false">
@@ -115,7 +115,7 @@ export default {
         ...mapState(['editorConfig', 'previewPages'])
     },
     mounted() {
-        window.events.on(Events.EDITOR_LOADED, () => {
+        window.events.on(Events.EDITOR_LOADED, (data) => {
             this.currentPage = 1;
         });
 
@@ -127,7 +127,7 @@ export default {
         previewPages(array) {
             const iFrame = document.querySelector('#editor-iframe');
 
-            if (array.length > 1) {
+            if (array.length) {
                 iFrame.classList.add('editor-iframe-with-pager');
                 iFrame.classList.remove('editor-iframe-no-pager');
             } else {

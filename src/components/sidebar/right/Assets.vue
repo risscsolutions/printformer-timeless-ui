@@ -25,7 +25,7 @@
             <div v-if="isAsset" class="column is-24">
                 <div class="divider" style="margin: 0 !important;"></div>
             </div>
-            <div v-if="isAsset && dpi != null" class="column is-24">
+            <div v-if="isAsset" class="column is-24">
                 <div class="columns">
                     <div class="column is-flex is-justify-content-space-between">
                         <span>Bildqualität</span>
@@ -88,21 +88,21 @@
                 <div class="divider" style="margin: 0 !important;"></div>
             </div>
             <div v-if="hasUserMedias" class="column is-24">
-                <div class="box">
+                <div class="box gray-background">
                     <div class="columns is-multiline is-centered">
                         <div class="column is-24">
-                            <div class="content is-align-content-center">
-                                <span>Meine Medien</span>
+                            <div class="content is-align-content-center has-text-centered">
+                                <span>Deine Bilder</span>
                             </div>
                         </div>
                         <div class="column is-24">
                             <div class="tile is-ancestor is-flex-wrap-wrap" style="max-height: 500px; overflow-y: scroll">
-                                <div v-for="media in userMedias" class="tile is-6 is-parent">
-                                    <article style="cursor: pointer" @click="addUserMedia(media)" class="tile is-child">
+                                <div v-for="media in userMedias" class="tile is-6 p-1 is-parent">
+                                    <article style="cursor: pointer" @click="addUserMedia(media)" class="tile is-child is-flex is-align-items-center p-1">
                                         <figure class="image">
                                             <img class="has-ratio" :src="media.src">
                                         </figure>
-                                        <p class="subtitle">{{ media.name }}</p>
+<!--                                        <p class="subtitle">{{ media.name }}</p>-->
                                     </article>
                                 </div>
                             </div>
@@ -271,7 +271,7 @@ export default {
             assets: {},
             imageUrl: '',
             userMedias: [],
-            dpi: null,
+            dpi: 0,
             pagination: {
                 page: 1
             },

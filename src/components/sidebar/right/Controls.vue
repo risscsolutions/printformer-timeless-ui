@@ -5,8 +5,9 @@
             <transition name="slide">
                 <div v-show="isPanelOpen || shouldShowMenu" class="column p-2 is-1 mr-3 width-300"
                      style="border: 1px solid grey; overflow-x: hidden; overflow-y: scroll">
-                    <div class="columns is-multiline is-mobile">
+                    <div class="columns is-multiline is-mobile" style="overflow: hidden">
                         <component class="column is-24 p-5" :is="openControlTab"
+                                   :class="{'sidebar-with-pager': isMultiPage, 'sidebar-no-pager': !isMultiPage}"
                                    :activeObject="activeObject"></component>
                     </div>
                 </div>
@@ -128,6 +129,9 @@ export default {
         },
         hasVariants() {
             return this.variants.length > 0;
+        },
+        isMultiPage() {
+            return this.previewPages.length;
         },
         ...mapState(['editorConfig', 'previewPages', 'openControlTab'])
     },
