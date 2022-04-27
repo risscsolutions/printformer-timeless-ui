@@ -14,22 +14,22 @@
             </transition>
             <div class="column is-1 p-0 width-100" style="overflow: auto">
                 <div class="sidebar-container">
-                    <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered"
+                    <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
                             @click="toggleSidebarPanel('assets')">
                         <span class="mb-1" v-html="icon('Bilder')"></span>
                         <span class="">Bilder</span>
                     </button>
-                    <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered"
+                    <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
                             @click="toggleSidebarPanel('texts')">
                         <span class="mb-1" v-html="icon('Text')"></span>
                         <span class="">Texte</span>
                     </button>
-                    <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered"
+                    <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
                             @click="toggleSidebarPanel('shapes')">
                         <span class="mb-1" v-html="icon('Formen')"></span>
                         <span class="">Formen</span>
                     </button>
-                    <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered"
+                    <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
                             v-if="hasVariants" @click="toggleSidebarPanel('variants')">
                         <span class="mb-1" v-html="icon('Farbpalette')"></span>
                         <span class="">Produktfarbe ändern</span>
@@ -42,7 +42,7 @@
                     </div>
 
 
-                    <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered"
+                    <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
                             style="margin-top: auto;"
                             @click="toggleSidebarPanel('view-settings')">
                         <span class="mb-1" v-html="icon('Raster')"></span>
