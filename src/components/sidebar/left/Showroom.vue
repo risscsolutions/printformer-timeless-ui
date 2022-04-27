@@ -1,20 +1,29 @@
 <template>
-    <div v-show="this.editorLoaded" :class="{'is-1': !isPanelOpen, 'is-6': isPanelOpen}" class="column has-background-light" style="display: grid">
-        <div class="columns p-3">
-            <div class="column has-background-light p-0 is-4">
-                <div class="columns is-multiline">
-                    <div class="column is-24">
-                        <button class="button is-info" @click="toggleSidebarPanel('threedee')">
-                            <span class="icon is-small">
-                                <i class="fas fa-greater-than"></i>
-                            </span>
+    <div v-show="this.editorLoaded" :class="{'is-1 width-50': !isPanelOpen, 'is-6': isPanelOpen}" class="column my-3"
+         style="display: grid">
+        <div class="columns">
+            <div class="column has-background-light is-1 width-50">
+                <div class="columns direction-column">
+                    <div class="p-1">
+                        <button v-show="!isPanelOpen" class="button is-info no-radius"
+                                @click="toggleSidebarPanel('threedee')">
+                      <span class="icon is-small">
+                          <i class="fas fa-greater-than"></i>
+                      </span>
+                        </button>
+                        <button v-show="isPanelOpen" class="button is-dark no-radius"
+                                @click="toggleSidebarPanel('threedee')">
+                      <span class="icon is-small">
+                            <i class="fas fa-less-than"></i>
+                        </span>
                         </button>
                     </div>
-                    <div class="column ml-5">
-                        <div style="transform-origin: 0 0; transform: rotate(90deg)">
-                            <span>Hinweise</span>
-                        </div>
+                    <div style="transform-origin: 52px 40px; transform: rotate(270deg);">
+                        <b>HINWEISE</b>
                     </div>
+                </div>
+                <div class="caution-icon">
+                    <span v-html="icon('Ausrufezeichen')"></span>
                 </div>
             </div>
             <transition name="slide">
@@ -48,7 +57,8 @@
                             </div>
                         </div>
                         <div class="column is-24">
-                            <iframe ref="threedeeiframe" style="min-height: 400px; width: 100%; height: 100%; display: none"></iframe>
+                            <iframe ref="threedeeiframe"
+                                    style="min-height: 400px; width: 100%; height: 100%; display: none"></iframe>
                         </div>
                     </div>
                 </div>
@@ -57,9 +67,15 @@
     </div>
 </template>
 <style scoped>
+
+.caution-icon {
+    position: relative;
+    top: 50px;
+    left: 6px;
+}
+
 .slide-enter-active,
-.slide-leave-active
-{
+.slide-leave-active {
     transition: transform 0.2s ease;
 }
 
@@ -101,6 +117,9 @@ export default {
         });
     },
     methods: {
+        icon(name) {
+            return this.$svg(name);
+        },
         load3DModel() {
             if (this.is3D !== this.has3D) {
                 this.$store.commit('setIs3D', true);

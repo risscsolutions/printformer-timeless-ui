@@ -9,40 +9,31 @@
                 <i class="fas fa-minus"></i>
             </span>
         </div>
-        <div class="column is-1 is-offset-12" style="text-align:right;">
-            <button class="button is-warning">
+        <div class="column is-1 is-offset-11" style="text-align:right;"></div>
+        <div class="column buttons">
+            <button class="button is-warning no-radius">
                 <span class="icon is-small">
                     <i class="fas fa-exclamation-triangle"></i>
                 </span>
             </button>
-        </div>
-        <div class="column">
-            <div class="field has-addons">
-                <p class="control">
-                    <button @click="goBack" class="button">
-                        <span class="icon is-small">
-                            <i class="fas fa-backward"></i>
-                        </span>
-                        <span>Zurück zum Artikel</span>
-                    </button>
-                </p>
-                <p class="control">
-                    <button @click="editorSave" class="button">
-                        <span class="icon is-small">
-                            <i class="fas fa-save"></i>
-                        </span>
-                        <span>Entwurf Speichern</span>
-                    </button>
-                </p>
-                <p class="control">
-                    <button @click="pagePreview" class="button">
-                        <span class="icon is-small">
-                            <i class="fas fa-eye"></i>
-                        </span>
-                        <span>Weiter zur Vorschau</span>
-                    </button>
-                </p>
-            </div>
+            <button @click="goBack" class="button no-radius is-dark">
+                <span class="icon is-small">
+                    <i class="fas fa-backward"></i>
+                </span>
+              <span>Zurück zum Artikel</span>
+            </button>
+            <button @click="editorSave" class="button no-radius is-info">
+                <span class="icon is-small">
+                    <i class="fas fa-save"></i>
+                </span>
+              <span>Entwurf Speichern</span>
+            </button>
+            <button @click="pagePreview" class="button no-radius is-info">
+                <span class="icon is-small">
+                    <i class="fas fa-eye"></i>
+                </span>
+              <span>Weiter zur Vorschau</span>
+            </button>
         </div>
     </div>
 </template>

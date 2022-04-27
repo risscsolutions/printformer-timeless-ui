@@ -1,104 +1,64 @@
 <template>
-    <div v-show="this.editorLoaded" :class="{'is-2': !isPanelOpen, 'is-10': isPanelOpen}"
-         class="column has-background-light" style="display: grid">
-        <div class="columns p-3" style="max-height: calc(100vh - 190px);">
+    <div v-show="this.editorLoaded" :class="{'width-105': !isPanelOpen, 'width-416': isPanelOpen}"
+         class="column is-1 px-0" style="display: grid">
+        <div class="columns p-3">
             <transition name="slide">
-                <div v-show="isPanelOpen || shouldShowMenu" class="column has-background-light p-2"
+                <div v-show="isPanelOpen || shouldShowMenu" class="column p-2 is-1 mr-3 width-300"
                      style="border: 1px solid grey; overflow-x: hidden; overflow-y: scroll">
                     <div class="columns is-multiline is-mobile">
                         <component class="column is-24 p-5" :is="component" :activeObject="activeObject"></component>
                     </div>
                 </div>
             </transition>
-            <div class="column has-background-light"
-                 :class="{'is-24': !isPanelOpen, 'is-7': isPanelOpen, 'is-offset-1': isPanelOpen}">
-                <div class="columns is-multiline" style="display: grid">
-                    <div v-if="hasAssets" @click="toggleSidebarPanel('assets')"
-                         :style="{'border': component === 'assets' ? 'black 5px solid': 'transparent 5px solid'}"
-                         class="column is-24 box noselect p-1">
-                        <div class="columns is-gapless is-mobile is-multiline is-centered is-vcentered">
-                            <div class="column is-24 has-text-centered">
-                                <span class="icon is-large">
-                                    <i class="fas fa-image fa-2x"></i>
-                                </span>
-                            </div>
-                            <div class="column is-24 has-text-centered">
-                                <span class="is-size-4">Bilder</span>
-                            </div>
-                        </div>
+            <div class="column is-1 p-0 width-100" style="overflow: auto">
+                <div class="sidebar-container">
+                    <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered"
+                            @click="toggleSidebarPanel('assets')">
+                        <span class="mb-1" v-html="icon('Bilder')"></span>
+                        <span class="">Bilder</span>
+                    </button>
+                    <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered"
+                            @click="toggleSidebarPanel('texts')">
+                        <span class="mb-1" v-html="icon('Text')"></span>
+                        <span class="">Texte</span>
+                    </button>
+                    <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered"
+                            @click="toggleSidebarPanel('shapes')">
+                        <span class="mb-1" v-html="icon('Formen')"></span>
+                        <span class="">Formen</span>
+                    </button>
+                    <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered"
+                            v-if="hasVariants" @click="toggleSidebarPanel('variants')">
+                        <span class="mb-1" v-html="icon('Farbpalette')"></span>
+                        <span class="">Produktfarbe ändern</span>
+                    </button>
+                    <div class="columns p-0 is-gapless">
+                        <span class="column has-text-centered" v-html="icon('VectorizerPfeilLinks')"
+                              @click="backward"></span>
+                        <span class="column has-text-centered" v-html="icon('VectorizerPfeilRechts')"
+                              @click="forward"></span>
                     </div>
-                    <div @click="toggleSidebarPanel('texts')"
-                         :style="{'border': component === 'texts' ? 'black 5px solid': 'transparent 5px solid'}"
-                         class="column is-24 box noselect p-1">
-                        <div class="columns is-gapless is-mobile is-multiline is-centered is-vcentered">
-                            <div class="column is-24 has-text-centered">
-                                <span class="icon is-large">
-                                    <i class="fas fa-eye fa-2x"></i>
-                                </span>
-                            </div>
-                            <div class="column is-24 has-text-centered">
-                                <span class="is-size-4">Texte</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div @click="toggleSidebarPanel('shapes')"
-                         :style="{'border': component === 'shapes' ? 'black 5px solid': 'transparent 5px solid'}"
-                         class="column is-24 box noselect p-1">
-                        <div class="columns is-gapless is-mobile is-multiline is-centered is-vcentered">
-                            <div class="column is-24 has-text-centered">
-                                <span class="icon is-large">
-                                    <i class="fas fa-square fa-2x"></i>
-                                </span>
-                            </div>
-                            <div class="column is-24 has-text-centered">
-                                <span class="is-size-4">Formen</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div v-if="hasVariants" @click="toggleSidebarPanel('variants')"
-                         :style="{'border': component === 'variants' ? 'black 5px solid': 'transparent 5px solid'}"
-                         class="column is-24 box noselect p-1">
-                        <div class="columns is-gapless is-mobile is-multiline is-centered is-vcentered">
-                            <div class="column is-24 has-text-centered">
-                                <span class="icon is-large">
-                                    <i class="fas fa-palette fa-2x"></i>
-                                </span>
-                            </div>
-                            <div class="column is-24 has-text-centered">
-                                <span class="is-size-4">Varianten</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="columns is-mobile is-multiline is-centered is-vcentered">
-                        <div class="column is-24 has-text-centered">
-                            <span style="cursor: pointer" class="icon is-large" @click="backward">
-                                <i class="fas fa-step-backward fa-2x"></i>
-                            </span>
-                            <span style="cursor: pointer" class="icon is-large" @click="forward">
-                                <i class="fas fa-step-forward fa-2x"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div @click="toggleSidebarPanel('view-settings')"
-                         :style="{'border': component === 'view-settings' ? 'black 5px solid': 'transparent 5px solid'}"
-                         class="column is-24 box noselect p-1">
-                        <div class="columns is-gapless is-mobile is-multiline is-centered is-vcentered">
-                            <div class="column is-24 has-text-centered">
-                                <span class="icon is-large">
-                                    <i class="fas fa-th fa-2x"></i>
-                                </span>
-                            </div>
-                            <div class="column is-24 has-text-centered">
-                                <span class="is-size-4">Ansicht</span>
-                            </div>
-                        </div>
-                    </div>
+
+
+                    <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered"
+                            style="margin-top: auto;"
+                            @click="toggleSidebarPanel('view-settings')">
+                        <span class="mb-1" v-html="icon('Raster')"></span>
+                        <span>Ansicht</span>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </template>
 <style scoped>
+.sidebar-container {
+    height: 100%;
+    flex-direction: column;
+    width: 100%;
+    display: flex;
+}
+
 .slide-enter-active,
 .slide-leave-active {
     transition: transform 0.2s ease;
@@ -210,6 +170,9 @@ export default {
         });
     },
     methods: {
+        icon(name) {
+            return this.$svg(name);
+        },
         closeSidebarPanel() {
             this.isPanelOpen = false;
             this.shouldShowMenu = false;

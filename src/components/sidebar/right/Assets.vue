@@ -1,5 +1,5 @@
 <template>
-    <div v-if="hasAssets">
+    <div>
         <div class="columns is-multiline is-centered">
             <div class="column is-24">
                 <div class="box" style="cursor: pointer" @click="uploadMediaAsset">
