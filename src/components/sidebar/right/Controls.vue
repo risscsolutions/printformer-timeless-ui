@@ -131,7 +131,7 @@ export default {
             return this.variants.length > 0;
         },
         isMultiPage() {
-            return this.previewPages.length;
+            return this.previewPages.length > 1;
         },
         ...mapState(['editorConfig', 'previewPages', 'openControlTab'])
     },
