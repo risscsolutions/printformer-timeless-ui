@@ -78,7 +78,7 @@
             <div v-if="isTextAsset" class="column is-24">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
-                        <span class="dark-gray-color">>Schriftfarbe</span>
+                        <span class="dark-gray-color">Schriftfarbe</span>
                         <input type="color" class="mobile-input-faker" v-model="currentColor"
                                :name="'Farbe ' + currentColor + ' gewählt'">
                     </div>
@@ -90,7 +90,7 @@
             <div v-if="isTextAsset" class="column is-24">
                 <div class="columns is-multiline is-vcentered is-gapless">
                     <div class="column is-12">
-                        <span class="dark-gray-color">>Ausrichtung Text</span>
+                        <span class="dark-gray-color">Ausrichtung Text</span>
                     </div>
                     <div class="column is-3" style="cursor: pointer" @click="textAlign('justify')">
                         <span class="svg-20" v-html="icon('Blocksatz2')"></span>
@@ -112,7 +112,7 @@
             <div v-if="isTextAsset" class="column is-24">
                 <div class="columns is-multiline">
                     <div class="column is-12">
-                        <span class="dark-gray-color">>Aufzählung</span>
+                        <span class="dark-gray-color">Aufzählung</span>
                     </div>
                     <div class="column is-4" style="cursor: pointer" @click="textBulletPoints('alphabetic')">
                         <span class="svg-20" v-html="icon('AufzaehlungPunkte2')"></span>
@@ -131,9 +131,9 @@
             <div v-if="isTextAsset" class="column is-24">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
-                        <span class="dark-gray-color">>Textbox löschen</span>
+                        <span class="dark-gray-color">Textbox löschen</span>
                         <span @click="deleteTextBox" style="cursor: pointer" class="svg-20"
-                              v-html="icon('Loeschen')">></span>
+                              v-html="icon('Loeschen')"></span>
                     </div>
                 </div>
             </div>
@@ -147,7 +147,7 @@
                             <input id="extendedEditSwitch" :checked="extendedEditSwitchOn" @click="enableExtendedEdit"
                                    class="switch is-info"
                                    name="extendedEditSwitch" type="checkbox">
-                            <label for="extendedEditSwitch" class="dark-gray-color">>Erweiterte Bearbeitung</label>
+                            <label for="extendedEditSwitch" class="dark-gray-color">Erweiterte Bearbeitung</label>
                         </div>
                     </div>
                 </div>

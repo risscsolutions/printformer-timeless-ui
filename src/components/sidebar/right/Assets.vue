@@ -47,15 +47,15 @@
                         </div>
                         <div class="column is-3">
                             <span @click="assetZoomIn" style="cursor: pointer" class="svg-20"
-                                  v-html="icon('HinzufuegenPlus')">></span>
+                                  v-html="icon('HinzufuegenPlus')"></span>
                         </div>
                         <div class="column is-3">
                             <span @click="assetZoomOut" style="cursor: pointer" class="svg-20"
-                                  v-html="icon('HinzufuegenMinus')">></span>
+                                  v-html="icon('HinzufuegenMinus')"></span>
                         </div>
                         <div class="column is-3">
                             <span @click="assetFit" style="cursor: pointer" class="svg-20"
-                                  v-html="icon('vergroessern')">></span>
+                                  v-html="icon('vergroessern')"></span>
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Bild löschen</span>
                         <span @click="deleteAssetBox" style="cursor: pointer" class="svg-20"
-                              v-html="icon('Loeschen')">></span>
+                              v-html="icon('Loeschen')"></span>
                     </div>
                 </div>
             </div>

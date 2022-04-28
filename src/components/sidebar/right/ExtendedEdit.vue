@@ -55,17 +55,17 @@
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Ausrichtung</span>
                         <span @click="openAlignment" style="cursor: pointer" class="svg-20"
-                              v-html="icon('Abstand2')">></span>
+                              v-html="icon('Abstand2')"></span>
                     </div>
                     <div v-if="openAlignmentSettings" class="column is-24">
                         <div class="columns is-multiline">
                             <div class="column is-half has-text-centered">
                                 <span @click="centerBlockH" style="cursor: pointer" class="svg-20"
-                                      v-html="icon('Abstand')">></span>
+                                      v-html="icon('Abstand')"></span>
                             </div>
                             <div class="column is-half has-text-centered">
                                 <span @click="centerBlockV" style="cursor: pointer" class="svg-20"
-                                      v-html="icon('Abstand2')">></span>
+                                      v-html="icon('Abstand2')"></span>
                             </div>
                         </div>
                     </div>
@@ -78,25 +78,25 @@
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Ebenen</span>
-                        <span @click="openLayer" style="cursor: pointer" class="svg-20" v-html="icon('Ebenen')">></span>
+                        <span @click="openLayer" style="cursor: pointer" class="svg-20" v-html="icon('Ebenen')"></span>
                     </div>
                     <div v-if="openLayerSettings" class="column is-24">
                         <div class="columns is-multiline">
                             <div class="column is-half has-text-centered">
                                 <span @click="moveUp(true)" style="cursor: pointer" class="svg-20"
-                                      v-html="icon('Vorne')">></span>
+                                      v-html="icon('Vorne')"></span>
                             </div>
                             <div class="column is-half has-text-centered">
                                 <span @click="moveDown(true)" style="cursor: pointer" class="svg-20"
-                                      v-html="icon('Hinten')">></span>
+                                      v-html="icon('Hinten')"></span>
                             </div>
                             <div class="column is-half has-text-centered">
                                 <span @click="moveUp(false)" style="cursor: pointer" class="svg-20"
-                                      v-html="icon('Vorne2')">></span>
+                                      v-html="icon('Vorne2')"></span>
                             </div>
                             <div class="column is-half has-text-centered">
                                 <span @click="moveDown(false)" style="cursor: pointer" class="svg-20"
-                                      v-html="icon('Hinten2')">></span>
+                                      v-html="icon('Hinten2')"></span>
                             </div>
                         </div>
                     </div>
@@ -110,7 +110,7 @@
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Duplizieren</span>
                         <span @click="duplicateBlock" style="cursor: pointer" class="svg-20"
-                              v-html="icon('Ebenen2')">></span>
+                              v-html="icon('Ebenen2')"></span>
                     </div>
                 </div>
             </div>
