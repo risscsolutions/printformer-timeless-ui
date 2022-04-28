@@ -4,7 +4,7 @@
             <div class="column is-24">
                 <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background"
                      style="cursor: pointer" @click="uploadMediaAsset">
-                    <span>Neue Bildbox</span>
+                    <span class="dark-gray-color">Neue Bildbox</span>
                     <span class="svg-20 m-1" v-html="icon('HinzufuegenPlus')"></span>
                 </div>
             </div>
@@ -14,9 +14,9 @@
             <div class="column is-24">
                 <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background"
                      style="cursor: pointer" @click="uploadMediaAsset">
-                    <span>Bilder hochladen</span>
+                    <span class="dark-gray-color">Bilder hochladen</span>
                     <span class="svg-20 m-1" v-html="icon('HinzufuegenPlus')"></span>
-                    <div class="columns m-0 is-flex-direction-column has-text-centered" @dragover="dragover"
+                    <div class="columns m-0 is-flex-direction-column has-text-centered dark-gray-color" @dragover="dragover"
                          @dragleave="dragleave" @drop="drop">
                         <input ref="uploadFile" type="file" hidden accept=".jpg,.jpeg,.png,.pdf" @change="uploadImage">
                         <span>vom <span class="blue-under">Computer</span> oder</span>
@@ -31,8 +31,8 @@
             <div v-if="isAsset" class="column is-24">
                 <div class="columns">
                     <div class="column is-flex is-justify-content-space-between">
-                        <span>Bildqualität</span>
-                        <span>{{ dpi }} dpi</span>
+                        <span class="dark-gray-color">Bildqualität</span>
+                        <span class="dark-gray-color">{{ dpi }} dpi</span>
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                 <div class="content">
                     <div class="columns">
                         <div class="column is-14">
-                            <span>Bild zoomen</span>
+                            <span class="dark-gray-color">Bild zoomen</span>
                         </div>
                         <div class="column is-3">
                             <span @click="assetZoomIn" style="cursor: pointer" class="svg-20"
@@ -66,7 +66,7 @@
             <div v-if="isAsset" class="column is-24">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
-                        <span>Bild löschen</span>
+                        <span class="dark-gray-color">Bild löschen</span>
                         <span @click="deleteAssetBox" style="cursor: pointer" class="svg-20"
                               v-html="icon('Loeschen')">></span>
                     </div>
@@ -84,7 +84,7 @@
                             <input id="extendedEditSwitch" :checked="extendedEditSwitchOn" @click="enableExtendedEdit"
                                    class="switch is-info"
                                    name="extendedEditSwitch" type="checkbox">
-                            <label for="extendedEditSwitch">Erweiterte Bearbeitung</label>
+                            <label class="dark-gray-color" for="extendedEditSwitch">Erweiterte Bearbeitung</label>
                         </div>
                     </div>
                 </div>
@@ -100,7 +100,7 @@
                     <div class="columns is-multiline is-centered">
                         <div class="column is-24">
                             <div class="content is-align-content-center has-text-centered">
-                                <span>Deine Bilder</span>
+                                <span class="dark-gray-color">Deine Bilder</span>
                             </div>
                         </div>
                         <div class="column is-24">

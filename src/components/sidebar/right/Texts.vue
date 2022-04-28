@@ -4,7 +4,7 @@
             <div class="column is-24">
                 <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background"
                      style="cursor: pointer" @click="addTextBlock">
-                    <span>Neue Textbox</span>
+                    <span class="dark-gray-color">Neue Textbox</span>
                     <span class="svg-20 m-1" v-html="icon('HinzufuegenPlus')"></span>
                 </div>
             </div>
@@ -53,7 +53,7 @@
             <div v-if="isTextAsset" class="column is-24">
                 <div class="columns is-vcentered is-multiline is-gapless">
                     <div class="column is-11">
-                        <span>Schriftschnitt</span>
+                        <span class="dark-gray-color">Schriftschnitt</span>
                     </div>
                     <div class="column is-5">
                         <button @click="textStyle('bold')" class="button" ref="boldButton">
@@ -78,7 +78,7 @@
             <div v-if="isTextAsset" class="column is-24">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
-                        <span>Schriftfarbe</span>
+                        <span class="dark-gray-color">>Schriftfarbe</span>
                         <input type="color" class="mobile-input-faker" v-model="currentColor"
                                :name="'Farbe ' + currentColor + ' gewählt'">
                     </div>
@@ -90,7 +90,7 @@
             <div v-if="isTextAsset" class="column is-24">
                 <div class="columns is-multiline is-vcentered is-gapless">
                     <div class="column is-12">
-                        <span>Ausrichtung Text</span>
+                        <span class="dark-gray-color">>Ausrichtung Text</span>
                     </div>
                     <div class="column is-3" style="cursor: pointer" @click="textAlign('justify')">
                         <span class="svg-20" v-html="icon('Blocksatz2')"></span>
@@ -112,7 +112,7 @@
             <div v-if="isTextAsset" class="column is-24">
                 <div class="columns is-multiline">
                     <div class="column is-12">
-                        <span>Aufzählung</span>
+                        <span class="dark-gray-color">>Aufzählung</span>
                     </div>
                     <div class="column is-4" style="cursor: pointer" @click="textBulletPoints('alphabetic')">
                         <span class="svg-20" v-html="icon('AufzaehlungPunkte2')"></span>
@@ -131,7 +131,7 @@
             <div v-if="isTextAsset" class="column is-24">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
-                        <span>Textbox löschen</span>
+                        <span class="dark-gray-color">>Textbox löschen</span>
                         <span @click="deleteTextBox" style="cursor: pointer" class="svg-20"
                               v-html="icon('Loeschen')">></span>
                     </div>
@@ -147,7 +147,7 @@
                             <input id="extendedEditSwitch" :checked="extendedEditSwitchOn" @click="enableExtendedEdit"
                                    class="switch is-info"
                                    name="extendedEditSwitch" type="checkbox">
-                            <label for="extendedEditSwitch">Erweiterte Bearbeitung</label>
+                            <label for="extendedEditSwitch" class="dark-gray-color">>Erweiterte Bearbeitung</label>
                         </div>
                     </div>
                 </div>
@@ -242,7 +242,7 @@ export default {
             if (sizes.length > 1) {
                 this.allFontSizes = sizes;
             } else {
-                this.allFontSizes = [4, 8, 10, 12, 16]
+                this.allFontSizes = [8, 10, 12, 14, 16, 18, 20, 28, 36, 48, 72]
             }
         });
 
@@ -264,7 +264,7 @@ export default {
         addTextBlock() {
             this.$catch(
                 this.$editor.addTextBlock(this.allFontsFlat[0].postscript_name, 16)
-                    .then(textBlock => textBlock.setContent('Test'))
+                    .then(textBlock => textBlock.setContent('Hier steht ein Beispieltext :)'))
             );
         },
         changeFont(postscriptName) {

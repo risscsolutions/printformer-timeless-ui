@@ -7,7 +7,7 @@
             <div v-if="activeObject && hasBackgroundColor" class="column is-24">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
-                        <span>Hintergrundfarbe</span>
+                        <span class="dark-gray-color">Hintergrundfarbe</span>
                         <input type="color" class="mobile-input-faker" v-model="currentColor"
                                :name="'Farbe ' + currentColor + ' gewählt'">
                     </div>
@@ -39,11 +39,11 @@
             <div v-if="hasOpacity" class="column is-24">
                 <div class="columns is-multiline">
                     <div class="column">
-                        <span>Transparenz</span>
+                        <span class="dark-gray-color">Transparenz</span>
                         <input id="sliderWithValue" class="slider has-output is-fullwidth" v-model="opacityActive"
                                @change="changeOpacity" min="0" max="100" step="1" type="range">
-                        <output for="sliderWithValue" class="slider-output">{{ opacityActive }}</output>
-                        <b>%</b>
+                        <output for="sliderWithValue" class="slider-output dark-gray-color">{{ opacityActive }}</output>
+                        <b class="dark-gray-color">%</b>
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@
             <div v-if="hasAlignment" class="column is-24">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
-                        <span>Ausrichtung</span>
+                        <span class="dark-gray-color">Ausrichtung</span>
                         <span @click="openAlignment" style="cursor: pointer" class="svg-20"
                               v-html="icon('Abstand2')">></span>
                     </div>
@@ -77,7 +77,7 @@
             <div v-if="hasLayer" class="column is-24">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
-                        <span>Ebenen</span>
+                        <span class="dark-gray-color">Ebenen</span>
                         <span @click="openLayer" style="cursor: pointer" class="svg-20" v-html="icon('Ebenen')">></span>
                     </div>
                     <div v-if="openLayerSettings" class="column is-24">
@@ -108,7 +108,7 @@
             <div class="column is-24">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
-                        <span>Duplizieren</span>
+                        <span class="dark-gray-color">Duplizieren</span>
                         <span @click="duplicateBlock" style="cursor: pointer" class="svg-20"
                               v-html="icon('Ebenen2')">></span>
                     </div>
@@ -123,11 +123,10 @@
 @import "/node_modules/bulma-slider/dist/css/bulma-slider.min.css";
 
 #sliderWithValue {
-    width: calc(100% - 5rem) !important;
+    width: calc(100% - 5.2rem) !important;
 }
 
 .slider-output {
-    color: gray !important;
     background: none !important;
     font-weight: bold !important;
     font-size: 16px !important;

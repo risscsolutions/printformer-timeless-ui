@@ -1,6 +1,6 @@
 <template>
     <div class="columns is-mobile is-vcentered is-centered">
-        <div class="column is-2">
+        <div class="column is-1 has-text-centered dark-gray-color" style="width: 95px">
             <span @click="editorZoomIn()" style="cursor: pointer">
                 <i class="fas fa-plus"></i>
             </span>
@@ -9,24 +9,24 @@
                 <i class="fas fa-minus"></i>
             </span>
         </div>
-        <div class="column is-1 is-offset-11" style="text-align:right;"></div>
-        <div class="column buttons">
-            <button v-if="hasWarnings" class="button no-radius" style="background: #AC5D7A">
+        <div class="column buttons has-text-right mb-0">
+            <button v-if="hasWarnings" class="button no-radius " style="background: #AC5D7A">
                 <span class="icon is-small" v-html="icon('Warnung')"></span>
             </button>
-            <button @click="goBack" class="button no-radius is-dark">
+            <button @click="goBack" class="button no-radius is-dark dark-gray-background-color">
                 <span class="icon is-small" v-html="icon('Zueueck')"></span>
                 <span>Zurück zum Artikel</span>
             </button>
-            <button @click="editorSave" class="button no-radius is-info">
+            <button @click="editorSave" class="button no-radius is-info ">
                 <span class="icon is-small" v-html="icon('Soeichern')"></span>
                 <span>Entwurf Speichern</span>
             </button>
-            <button @click="pagePreview" class="button no-radius is-info">
+            <button @click="pagePreview" class="button no-radius is-info ">
                 <span class="icon is-small" v-html="icon('Auge')"></span>
                 <span>Weiter zur Vorschau</span>
             </button>
         </div>
+        <div class="column is-2 is-hidden-touch"></div>
     </div>
 </template>
 <script>

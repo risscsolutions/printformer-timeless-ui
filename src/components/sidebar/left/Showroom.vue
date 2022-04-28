@@ -11,7 +11,7 @@
                           <i class="fas fa-greater-than"></i>
                       </span>
                         </button>
-                        <button v-show="isPanelOpen" class="button is-dark no-radius width-50 height-50"
+                        <button v-show="isPanelOpen" class="button is-dark dark-gray-background-color no-radius width-50 height-50"
                                 @click="toggleSidebarPanel('threedee')">
                       <span class="icon is-small">
                             <i class="fas fa-less-than"></i>
@@ -19,7 +19,7 @@
                         </button>
                     </div>
                     <div style="transform-origin: 52px 40px; transform: rotate(270deg);">
-                        <b>HINWEISE</b>
+                        <b class="dark-gray-color">HINWEISE</b>
                     </div>
                 </div>
                 <div class="caution-icon">
@@ -27,12 +27,12 @@
                 </div>
             </div>
             <transition name="slide">
-                <div v-show="isPanelOpen" class="column p-4 pt-5" style="border: 1px solid grey">
-                    <p v-if="notifications.length === 0" class="mb-1">
+                <div v-show="isPanelOpen" class="column p-4 pt-5 dark-gray-color" style="border: 1px solid grey">
+                    <b v-if="notifications.length === 0" class="mb-1">
                         KLICKE AUF DIE SYMBOLE IN DER
                         RECHTEN MENÜLEISTE, UM DEINE
                         WERBEARTIKEL ZU GESTALTEN
-                    </p>
+                    </b>
                     <div v-if="notifications.length">
                         <div v-for="notification in notifications">
                             <b class="has-text-danger">{{ notification.type }}</b>

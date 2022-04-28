@@ -3,7 +3,7 @@
         <div class="columns is-multiline is-centered">
             <div class="column is-24">
                 <div class="content is-small">
-                    <h1>Form auswählen</h1>
+                    <h4 class="dark-gray-color">Form auswählen</h4>
                 </div>
             </div>
             <div class="column is-24">
@@ -21,51 +21,51 @@
             <div class="column is-half mt-5">
 <!--                <div @click="addShapeBlock('polygon')" class="shape-polygon"></div>-->
             </div>
-            <div class="column is-24 mt-5">
-                <div class="columns is-multiline">
-                    <div class="column"><b>Formenfarbe</b></div>
-                </div>
-            </div>
-            <div class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
-            </div>
-            <div class="column is-24">
-                <div class="columns is-multiline">
-                    <div class="column"><b>Transparenz</b></div>
-                </div>
-            </div>
-            <div class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
-            </div>
-            <div class="column is-24">
-                <div class="columns is-multiline">
-                    <div class="column"><b>Formengröße (in mm)</b></div>
-                </div>
-            </div>
-            <div class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
-            </div>
-            <div class="column is-24">
-                <div class="columns is-multiline">
-                    <div class="column"><b>Ausrichtung</b></div>
-                </div>
-            </div>
-            <div class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
-            </div>
-            <div class="column is-24">
-                <div class="columns is-multiline">
-                    <div class="column"><b>Ebene anordnen</b></div>
-                </div>
-            </div>
-            <div class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
-            </div>
-            <div class="column is-24">
-                <div class="columns is-multiline">
-                    <div class="column"><b>Duplizieren</b></div>
-                </div>
-            </div>
+<!--            <div class="column is-24 mt-5">-->
+<!--                <div class="columns is-multiline">-->
+<!--                    <div class="column"><b>Formenfarbe</b></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="column is-24">-->
+<!--                <div class="divider" style="margin: 0 !important;"></div>-->
+<!--            </div>-->
+<!--            <div class="column is-24">-->
+<!--                <div class="columns is-multiline">-->
+<!--                    <div class="column"><b>Transparenz</b></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="column is-24">-->
+<!--                <div class="divider" style="margin: 0 !important;"></div>-->
+<!--            </div>-->
+<!--            <div class="column is-24">-->
+<!--                <div class="columns is-multiline">-->
+<!--                    <div class="column"><b>Formengröße (in mm)</b></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="column is-24">-->
+<!--                <div class="divider" style="margin: 0 !important;"></div>-->
+<!--            </div>-->
+<!--            <div class="column is-24">-->
+<!--                <div class="columns is-multiline">-->
+<!--                    <div class="column"><b>Ausrichtung</b></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="column is-24">-->
+<!--                <div class="divider" style="margin: 0 !important;"></div>-->
+<!--            </div>-->
+<!--            <div class="column is-24">-->
+<!--                <div class="columns is-multiline">-->
+<!--                    <div class="column"><b>Ebene anordnen</b></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="column is-24">-->
+<!--                <div class="divider" style="margin: 0 !important;"></div>-->
+<!--            </div>-->
+<!--            <div class="column is-24">-->
+<!--                <div class="columns is-multiline">-->
+<!--                    <div class="column"><b>Duplizieren</b></div>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
     </div>
 </template>
