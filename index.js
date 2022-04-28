@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VueCropper from 'vue-cropperjs';
 import EventEmitter from 'eventemitter3';
-import makeStore from "./store";
+import makeStore from "./src/store";
 import {ValidationProvider} from 'vee-validate/dist/vee-validate.full.esm';
 import {configure, ValidationObserver} from 'vee-validate';
 import VueAgile from "vue-agile";
@@ -21,6 +21,7 @@ import Controls from "./src/components/sidebar/right/Controls";
 import Showroom from "./src/components/sidebar/left/Showroom";
 import ViewSettings from "./src/components/sidebar/right/ViewSettings";
 import ExtendedEdit from "./src/components/sidebar/right/ExtendedEdit";
+import {parseSearchPath} from "./src/helpers";
 
 Vue.prototype.$svg = require('./src/svg.js');
 Vue.use(Vuex);
@@ -59,7 +60,20 @@ Vue.prototype.$catch = (promise) => promise.catch(e => {
 window.onload = () => {
     const connector = new Connector();
     const editorIframe = document.getElementById('editor-iframe');
-    editorIframe.src = window.pfURL;
+
+    let url = new URL(location.href);
+    let query = parseSearchPath(url);
+
+    if (process.env.NODE_ENV === 'development') {
+        url = new URL(process.env.PF_URL);
+        query = {draft: process.env.PF_DRAFT, api_token: process.env.PF_TOKEN};
+    }
+
+    if (query.api_token) {
+        editorIframe.src = `${url.origin}/editor/${query.draft}/embed?api_token=${query.api_token}`;
+    } else {
+        editorIframe.src = `${url.origin}/editor/${query.draft}/embed`;
+    }
     window.events = new EventEmitter();
 
     // mobile chrome ios fix
