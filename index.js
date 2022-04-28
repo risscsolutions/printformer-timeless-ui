@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import VueCropper from 'vue-cropperjs';
 import EventEmitter from 'eventemitter3';
 import makeStore from "./src/store";
 import {ValidationProvider} from 'vee-validate/dist/vee-validate.full.esm';
@@ -15,7 +14,6 @@ import Variants from "./src/components/sidebar/right/Variants";
 import Assets from "./src/components/sidebar/right/Assets";
 import Shapes from "./src/components/sidebar/right/Shapes";
 import Texts from "./src/components/sidebar/right/Texts";
-import CroppingImage from "./src/components/CroppingImage";
 import TopBarControls from "./src/components/TopBarControls";
 import Controls from "./src/components/sidebar/right/Controls";
 import Showroom from "./src/components/sidebar/left/Showroom";
@@ -32,7 +30,6 @@ Vue.component('variants', Variants);
 Vue.component('assets', Assets);
 Vue.component('texts', Texts);
 Vue.component('shapes', Shapes);
-Vue.component('cropping-image', CroppingImage);
 Vue.component('top-bar-controls', TopBarControls);
 Vue.component('controls', Controls);
 Vue.component('showroom', Showroom);
@@ -41,7 +38,6 @@ Vue.component('extended-edit', ExtendedEdit);
 
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)
-Vue.component('VueCropper', VueCropper);
 
 configure({
     classes: {
@@ -67,12 +63,17 @@ window.onload = () => {
     if (process.env.NODE_ENV === 'development') {
         url = new URL(process.env.PF_URL);
         query = {draft: process.env.PF_DRAFT, api_token: process.env.PF_TOKEN};
-    }
-
-    if (query.api_token) {
-        editorIframe.src = `${url.origin}/editor/${query.draft}/embed?api_token=${query.api_token}`;
+        if (query.api_token) {
+            editorIframe.src = `${url.origin}/editor/${query.draft}/embed?api_token=${query.api_token}`;
+        } else {
+            editorIframe.src = `${url.origin}/editor/${query.draft}/embed`;
+        }
     } else {
-        editorIframe.src = `${url.origin}/editor/${query.draft}/embed`;
+        if (query.api_token) {
+            editorIframe.src = `/editor/${query.draft}/embed?api_token=${query.api_token}`;
+        } else {
+            editorIframe.src = `/editor/${query.draft}/embed`;
+        }
     }
     window.events = new EventEmitter();
 

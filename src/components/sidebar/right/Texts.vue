@@ -161,7 +161,6 @@
 </template>
 
 <script>
-import CroppingImage from "../../CroppingImage";
 import {BulmaAccordion} from 'vue-bulma-accordion';
 import {mapMutations, mapState} from "vuex";
 import convert from "color-convert";
@@ -171,7 +170,7 @@ import ExtendedEdit from "./ExtendedEdit";
 
 export default {
     name: "texts",
-    components: {CroppingImage, BulmaAccordion, ExtendedEdit},
+    components: {BulmaAccordion, ExtendedEdit},
     ...mapMutations(['setFontSizes', 'setFonts']),
     ...mapState(['fonts', 'fontSizes', 'editorConfig']),
     props: {

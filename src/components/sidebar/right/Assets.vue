@@ -108,7 +108,7 @@
                                 <div v-for="media in userMedias" class="tile is-6 p-1 is-parent">
                                     <article style="cursor: pointer" @click="addUserMedia(media)" class="tile is-child is-flex is-align-items-center p-1">
                                         <figure class="image">
-                                            <img class="has-ratio" :src="media.src">
+                                            <img class="has-ratio" :src="media.src" crossorigin="anonymous">
                                         </figure>
 <!--                                        <p class="subtitle">{{ media.name }}</p>-->
                                     </article>

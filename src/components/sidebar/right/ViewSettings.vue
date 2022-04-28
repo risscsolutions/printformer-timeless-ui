@@ -64,13 +64,12 @@
 @import "/node_modules/bulma-switch/dist/css/bulma-switch.min.css";
 </style>
 <script>
-import CroppingImage from "../../CroppingImage";
 import Events from "@rissc/printformer-editor-client/dist/Events";
 import {BulmaAccordion} from 'vue-bulma-accordion';
 
 export default {
     name: "view-settings",
-    components: {CroppingImage, BulmaAccordion},
+    components: {BulmaAccordion},
     created() {
 
     },

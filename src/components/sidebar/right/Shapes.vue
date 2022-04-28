@@ -124,13 +124,12 @@
 </style>
 <script>
 import BlockTypes from "@rissc/printformer-ts-common/dist/BlockTypes";
-import CroppingImage from "../../CroppingImage";
 import Events from "@rissc/printformer-editor-client/dist/Events";
 import {BulmaAccordion} from 'vue-bulma-accordion';
 
 export default {
     name: "shapes",
-    components: {CroppingImage, BulmaAccordion},
+    components: {BulmaAccordion},
     created() {
         this.loadShapes();
     },

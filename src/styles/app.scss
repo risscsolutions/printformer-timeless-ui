@@ -112,12 +112,17 @@ button {
 .dark-gray-background-color {
     background-color: #B2B1B1 !important;
 }
-.svg-20 svg{
+
+.svg-20 svg {
     width: 20px;
     height: 20px;
 }
 
-.blue-under{
+.blue-under {
     color: #8cb4ff;
     text-decoration: underline;
+}
+
+.stroke-white >* {
+    stroke: #ffffff;
 }

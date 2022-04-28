@@ -7,14 +7,12 @@
                     <div>
                         <button v-show="!isPanelOpen" class="button is-info no-radius width-50 height-50"
                                 @click="toggleSidebarPanel('threedee')">
-                      <span class="icon is-small">
-                          <i class="fas fa-greater-than"></i>
+                      <span class="icon is-small" v-html="$svg('Pfeil3', 'stroke-white')">
                       </span>
                         </button>
                         <button v-show="isPanelOpen" class="button is-dark dark-gray-background-color no-radius width-50 height-50"
                                 @click="toggleSidebarPanel('threedee')">
-                      <span class="icon is-small">
-                            <i class="fas fa-less-than"></i>
+                      <span class="icon is-small" v-html="$svg('Pfeil2', 'stroke-white')">
                         </span>
                         </button>
                     </div>

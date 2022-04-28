@@ -1,12 +1,10 @@
 <template>
     <div class="columns is-mobile is-vcentered is-centered">
-        <div class="column is-1 has-text-centered dark-gray-color" style="width: 95px">
-            <span @click="editorZoomIn()" style="cursor: pointer">
-                <i class="fas fa-plus"></i>
+        <div class="column is-1 has-text-centered dark-gray-color" style="width: 105px">
+            <span @click="editorZoomIn()" style="cursor: pointer; vertical-align: middle;" class="svg-20" v-html="icon('Plus')">
             </span>
             <span>55%</span>
-            <span @click="editorZoomOut()" style="cursor: pointer">
-                <i class="fas fa-minus"></i>
+            <span @click="editorZoomOut()" style="cursor: pointer; vertical-align: middle;" class="svg-20" v-html="icon('Minus')">
             </span>
         </div>
         <div class="column buttons has-text-right mb-0">
