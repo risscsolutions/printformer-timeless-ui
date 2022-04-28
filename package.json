@@ -11,7 +11,7 @@
     "prebuild": "npm run assets",
     "dev": "parcel index.html --no-hmr",
     "build": "parcel build index.html --public-url ./",
-    "postbuild": "zip -r ${npm_package_name}-${npm_package_version}.zip dist/*"
+    "postbuild": "cd dist && zip -r ../${npm_package_name}-${npm_package_version}.zip ."
   },
   "dependencies": {
     "@creativebulma/bulma-divider": "^1.1.0",
