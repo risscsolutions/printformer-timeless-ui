@@ -3,7 +3,6 @@ import makeStore from "./store";
 import Vuex from "vuex";
 import TopBar from "./components/sidebar/preview/TopBar";
 import Preview from "./components/sidebar/preview/Preview";
-import EventEmitter from "eventemitter3";
 import Connector from "@rissc/printformer-editor-client/dist/Connector";
 
 Vue.prototype.$svg = require('../src/svg.js');
