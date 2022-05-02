@@ -4,7 +4,7 @@
             <h1>Wähle deine Farbe aus</h1>
         </div>
         <div class="column is-24">
-            <div class="divider" style="margin: 0 !important;"></div>
+            <hr class="divider">
         </div>
         <div class="columns is-multiline is-mobile mb-2">
             <div v-for="variant in variants" @click="loadVariant(variant, variant.id)" class="column is-half">
@@ -27,7 +27,6 @@
 </template>
 
 <style lang="css" scoped>
-@import "@creativebulma/bulma-divider/dist/bulma-divider.min.css";
 
 .variant-active {
     border: 4px solid #000000 !important;

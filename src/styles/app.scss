@@ -126,3 +126,10 @@ button {
 .stroke-white >* {
     stroke: #ffffff;
 }
+
+.divider {
+    background-image: linear-gradient(90deg, #ffffff 25%, #b2b1b1 25%, #b2b1b1 50%, #ffffff 50%, #ffffff 75%, #b2b1b1 75%, #b2b1b1 100%);
+    background-size: 10px;
+    margin: 0;
+    height: 1px;
+}

@@ -9,7 +9,7 @@
                 </div>
             </div>
             <div class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div class="column is-24">
                 <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background"
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div v-if="isAsset" class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div v-if="isAsset" class="column is-24">
                 <div class="columns">
@@ -37,7 +37,7 @@
                 </div>
             </div>
             <div v-if="isAsset" class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div v-if="isAsset" class="column is-24">
                 <div class="content">
@@ -61,7 +61,7 @@
                 </div>
             </div>
             <div v-if="isAsset" class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div v-if="isAsset" class="column is-24">
                 <div class="columns is-multiline">
@@ -73,7 +73,7 @@
                 </div>
             </div>
             <div v-if="isAsset" class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div v-if="isAsset" class="column is-24">
                 <div class="columns is-multiline">
@@ -93,7 +93,7 @@
                            :has-alignment="true" :has-layer="true" :has-opacity="true">
             </extended-edit>
             <div v-if="hasUserMedias" class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div v-if="hasUserMedias" class="column is-24">
                 <div class="box gray-background">
@@ -122,7 +122,6 @@
     </div>
 </template>
 <style lang="css" scoped>
-@import "@creativebulma/bulma-divider/dist/bulma-divider.min.css";
 @import "/node_modules/bulma-switch/dist/css/bulma-switch.min.css";
 @import "/node_modules/bulma-slider/dist/css/bulma-slider.min.css";
 </style>

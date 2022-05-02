@@ -1,5 +1,5 @@
 <template>
-    <div class="columns is-mobile is-vcentered is-centered">
+    <div class="columns is-mobile is-vcentered is-centered mb-0">
         <div class="column is-1 has-text-centered dark-gray-color" style="width: 105px">
             <span @click="editorZoomIn()" style="cursor: pointer; vertical-align: middle;" class="svg-20" v-html="icon('Plus')">
             </span>
@@ -8,18 +8,18 @@
             </span>
         </div>
         <div class="column buttons has-text-right mb-0">
-            <button v-if="hasWarnings" class="button no-radius " style="background: #AC5D7A">
+            <button v-if="hasWarnings" class="button no-radius mb-0" style="background: #AC5D7A">
                 <span class="icon is-small" v-html="icon('Warnung')"></span>
             </button>
-            <button @click="goBack" class="button no-radius is-dark dark-gray-background-color">
+            <button @click="goBack" class="button no-radius is-dark dark-gray-background-color mb-0">
                 <span class="icon is-small" v-html="icon('Zueueck')"></span>
                 <span>Zurück zum Artikel</span>
             </button>
-            <button @click="editorSave" class="button no-radius is-info ">
+            <button @click="editorSave" class="button no-radius is-info mb-0">
                 <span class="icon is-small" v-html="icon('Soeichern')"></span>
                 <span>Entwurf Speichern</span>
             </button>
-            <button @click="pagePreview" class="button no-radius is-info ">
+            <button @click="pagePreview" class="button no-radius is-info mb-0">
                 <span class="icon is-small" v-html="icon('Auge')"></span>
                 <span>Weiter zur Vorschau</span>
             </button>

@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div class="column is-24">
                 <div class="columns is-multiline">
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div v-if="gridSwitchOn" class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div v-if="gridSwitchOn" class="column is-24">
                 <div class="columns is-multiline">
@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div v-if="gridSwitchOn" class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div v-if="gridSwitchOn" class="column is-24">
                 <div class="columns is-multiline">
@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div class="column is-24">
                 <div class="columns is-multiline">
@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
         </div>
     </div>

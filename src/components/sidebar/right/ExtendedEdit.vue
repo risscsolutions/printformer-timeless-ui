@@ -2,7 +2,7 @@
     <div class="column is-24">
         <div class="columns is-multiline is-centered">
             <div v-if="activeObject && hasBackgroundColor" class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div v-if="activeObject && hasBackgroundColor" class="column is-24">
                 <div class="columns is-multiline">
@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div v-if="hasLineHeight" class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div v-if="hasLineHeight" class="column is-24">
                 <div class="field has-addons">
@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div v-if="hasOpacity" class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div v-if="hasOpacity" class="column is-24">
                 <div class="columns is-multiline">
@@ -48,7 +48,7 @@
                 </div>
             </div>
             <div v-if="hasAlignment" class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div v-if="hasAlignment" class="column is-24">
                 <div class="columns is-multiline">
@@ -72,7 +72,7 @@
                 </div>
             </div>
             <div v-if="hasLayer" class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div v-if="hasLayer" class="column is-24">
                 <div class="columns is-multiline">
@@ -103,7 +103,7 @@
                 </div>
             </div>
             <div class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div class="column is-24">
                 <div class="columns is-multiline">
@@ -118,7 +118,6 @@
     </div>
 </template>
 <style lang="css" scoped>
-@import "@creativebulma/bulma-divider/dist/bulma-divider.min.css";
 @import "/node_modules/bulma-switch/dist/css/bulma-switch.min.css";
 @import "/node_modules/bulma-slider/dist/css/bulma-slider.min.css";
 

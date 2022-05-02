@@ -9,7 +9,7 @@
                 </div>
             </div>
             <div v-if="isTextAsset && allFontsFlat" class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div v-if="isTextAsset && allFontsFlat" class="column is-24">
                 <div class="field has-addons">
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div v-if="isTextAsset && allFontSizes" class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div v-if="isTextAsset && allFontSizes" class="column is-24">
                 <div class="field has-addons">
@@ -48,7 +48,7 @@
                 </div>
             </div>
             <div v-if="isTextAsset" class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div v-if="isTextAsset" class="column is-24">
                 <div class="columns is-vcentered is-multiline is-gapless">
@@ -73,7 +73,7 @@
                 </div>
             </div>
             <div v-if="isTextAsset" class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div v-if="isTextAsset" class="column is-24">
                 <div class="columns is-multiline">
@@ -85,7 +85,7 @@
                 </div>
             </div>
             <div v-if="isTextAsset" class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div v-if="isTextAsset" class="column is-24">
                 <div class="columns is-multiline is-vcentered is-gapless">
@@ -107,7 +107,7 @@
                 </div>
             </div>
             <div v-if="isTextAsset" class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div v-if="isTextAsset" class="column is-24">
                 <div class="columns is-multiline">
@@ -126,7 +126,7 @@
                 </div>
             </div>
             <div v-if="isTextAsset" class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div v-if="isTextAsset" class="column is-24">
                 <div class="columns is-multiline">
@@ -138,7 +138,7 @@
                 </div>
             </div>
             <div v-if="isTextAsset" class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
             <div v-if="isTextAsset" class="column is-24">
                 <div class="columns is-multiline">
