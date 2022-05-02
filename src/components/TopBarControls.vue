@@ -81,14 +81,8 @@ export default {
             .then(() => {
               this.$editor.getLoader().show();
 
-              const query = parseSearchPath();
-
-                const url = query.api_token
-                  ? `${window.location.origin}/editor/${query['draft']}/preview` + `?api_token=${query['api_token']}`
-                  : `${window.location.origin}/editor/${query['draft']}/preview`;
-
-              axios.get(url).then(() => window.location.assign(window.location.href.replace('index.html', 'preview.html')));
-            }, this.errorToNotification);
+              window.location.assign(window.location.href.replace('index.html', 'preview.html'));
+            });
         },
         editorZoomIn() {
             this.$editor.getZoom().in();
