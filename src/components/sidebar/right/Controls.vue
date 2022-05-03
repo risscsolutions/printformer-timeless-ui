@@ -17,22 +17,22 @@
                     <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
                             @click="toggleSidebarPanel('assets')">
                         <span class="mb-1" v-html="icon('Bilder')"></span>
-                        <span class="dark-gray-color">Bilder</span>
+                        <span class="dark-gray-color has-text-weight-medium">Bilder</span>
                     </button>
                     <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
                             @click="toggleSidebarPanel('texts')">
                         <span class="mb-1" v-html="icon('Text')"></span>
-                        <span class="dark-gray-color">Texte</span>
+                        <span class="dark-gray-color has-text-weight-medium">Texte</span>
                     </button>
                     <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
                             @click="toggleSidebarPanel('shapes')">
                         <span class="mb-1" v-html="icon('Formen')"></span>
-                        <span class="dark-gray-color">Formen</span>
+                        <span class="dark-gray-color has-text-weight-medium">Formen</span>
                     </button>
                     <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
                             v-if="hasVariants" @click="toggleSidebarPanel('variants')">
                         <span class="mb-1" v-html="icon('Farbpalette')"></span>
-                        <span class="dark-gray-color">Produktfarbe ändern</span>
+                        <span class="dark-gray-color has-text-weight-medium">Produktfarbe ändern</span>
                     </button>
                     <div class="columns p-0 is-gapless">
                         <span class="column has-text-centered" v-html="icon('VectorizerPfeilLinks')" style="cursor: pointer"
@@ -46,7 +46,7 @@
                             style="margin-top: auto;"
                             @click="toggleSidebarPanel('view-settings')">
                         <span class="mb-1" v-html="icon('Raster')"></span>
-                        <span class="dark-gray-color">Ansicht</span>
+                        <span class="dark-gray-color has-text-weight-medium">Ansicht</span>
                     </button>
                 </div>
             </div>

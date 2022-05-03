@@ -4,7 +4,7 @@
             <div v-if="activeObject && hasBackgroundColor" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="activeObject && hasBackgroundColor" class="column is-24">
+            <div v-if="activeObject && hasBackgroundColor" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Hintergrundfarbe</span>
@@ -16,7 +16,7 @@
             <div v-if="hasLineHeight" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="hasLineHeight" class="column is-24">
+            <div v-if="hasLineHeight" class="column is-24 py-0">
                 <div class="field has-addons">
                     <div class="control">
                         <button type="submit" class="button is-info">Zeilenabstand</button>
@@ -36,21 +36,21 @@
             <div v-if="hasOpacity" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="hasOpacity" class="column is-24">
+            <div v-if="hasOpacity" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column">
                         <span class="dark-gray-color">Transparenz</span>
                         <input id="sliderWithValue" class="slider has-output is-fullwidth" v-model="opacityActive"
                                @change="changeOpacity" min="0" max="100" step="1" type="range">
-                        <output for="sliderWithValue" class="slider-output dark-gray-color">{{ opacityActive }}</output>
-                        <b class="dark-gray-color">%</b>
+                        <output for="sliderWithValue" class="slider-output dark-gray-color has-text-weight-semibold">{{ opacityActive }}</output>
+                        <b class="dark-gray-color has-text-weight-semibold">%</b>
                     </div>
                 </div>
             </div>
             <div v-if="hasAlignment" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="hasAlignment" class="column is-24">
+            <div v-if="hasAlignment" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Ausrichtung</span>
@@ -74,7 +74,7 @@
             <div v-if="hasLayer" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="hasLayer" class="column is-24">
+            <div v-if="hasLayer" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Ebenen</span>
@@ -105,7 +105,7 @@
             <div class="column is-24">
                 <hr class="divider">
             </div>
-            <div class="column is-24">
+            <div class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Duplizieren</span>
@@ -127,7 +127,6 @@
 
 .slider-output {
     background: none !important;
-    font-weight: bold !important;
     font-size: 16px !important;
     padding-right: 0 !important;
     position: relative !important;

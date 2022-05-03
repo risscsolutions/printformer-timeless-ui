@@ -106,11 +106,11 @@ button {
 }
 
 .dark-gray-color {
-    color: #B2B1B1 !important;
+    color: #A6A9A9 !important;
 }
 
 .dark-gray-background-color {
-    background-color: #B2B1B1 !important;
+    background-color: #A6A9A9 !important;
 }
 
 .svg-20 svg {
@@ -119,8 +119,13 @@ button {
 }
 
 .blue-under {
-    color: #8cb4ff;
+    color: #0F699B;
     text-decoration: underline;
+}
+
+
+.blue-color {
+    color: #0F699B !important;
 }
 
 .stroke-white >* {
@@ -132,4 +137,8 @@ button {
     background-size: 10px;
     margin: 0;
     height: 1px;
+}
+
+.box {
+    border-radius: 1px;
 }

@@ -13,15 +13,15 @@
             </button>
             <button @click="goBack" class="button no-radius is-dark dark-gray-background-color mb-0">
                 <span class="icon is-small" v-html="icon('Zueueck')"></span>
-                <span>Zurück zum Artikel</span>
+                <span class="has-text-weight-light">Zurück zum Artikel</span>
             </button>
             <button @click="editorSave" class="button no-radius is-info mb-0">
                 <span class="icon is-small" v-html="icon('Soeichern')"></span>
-                <span>Entwurf Speichern</span>
+                <span class="has-text-weight-light">Entwurf Speichern</span>
             </button>
             <button @click="pagePreview" class="button no-radius is-info mb-0">
                 <span class="icon is-small" v-html="icon('Auge')"></span>
-                <span>Weiter zur Vorschau</span>
+                <span class="has-text-weight-light">Weiter zur Vorschau</span>
             </button>
         </div>
         <div class="column is-2 is-hidden-touch"></div>
