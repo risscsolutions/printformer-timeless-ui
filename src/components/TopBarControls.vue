@@ -34,7 +34,7 @@
 import {mapState, mapGetters} from "vuex";
 import axios from 'axios'
 import Events from "@rissc/printformer-editor-client/dist/Events";
-import {parseSearchPath} from "../helper";
+import {urlQueryObject} from "../helper";
 
 export default {
     name: "top-bar-controls",
@@ -95,12 +95,11 @@ export default {
           this.$editor.goToNextStep()
             .then(() => {
               this.$editor.getLoader().show();
+              const queryObject = urlQueryObject();
 
-              const query = parseSearchPath();
-
-                const url = query.api_token
-                  ? `${window.location.origin}/editor/${query['draft']}/preview` + `?api_token=${query['api_token']}`
-                  : `${window.location.origin}/editor/${query['draft']}/preview`;
+                const url = queryObject.query.api_token
+                  ? `${queryObject.url}editor/${queryObject.query.draft}/preview` + `?api_token=${queryObject.query.api_token}`
+                  : `${queryObject.url}editor/${queryObject.query.draft}/preview`;
 
               axios.get(url).then(() => window.location.assign(window.location.href.replace('index.html', 'preview.html')));
             }, this.errorToNotification);

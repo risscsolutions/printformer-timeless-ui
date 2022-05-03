@@ -22,7 +22,7 @@ import Controls from "./src/components/sidebar/right/Controls";
 import Showroom from "./src/components/sidebar/left/Showroom";
 import ViewSettings from "./src/components/sidebar/right/ViewSettings";
 import ExtendedEdit from "./src/components/sidebar/right/ExtendedEdit";
-import {parseSearchPath} from "./src/helpers";
+import {urlQueryObject} from "./src/helper";
 
 Vue.prototype.$svg = require('./src/svg.js');
 Vue.use(Vuex);
@@ -60,12 +60,10 @@ window.onload = () => {
     const connector = new Connector();
     const editorIframe = document.getElementById('editor-iframe');
 
-    let url = new URL(location.href);
-    let query = parseSearchPath(url);
+    let query = urlQueryObject().query
+    let url = urlQueryObject().url
 
     if (process.env.NODE_ENV === 'development') {
-        url = new URL(process.env.PF_URL);
-        query = {draft: process.env.PF_DRAFT, api_token: process.env.PF_TOKEN};
         if (query.api_token) {
             editorIframe.src = `${url.origin}/editor/${query.draft}/embed?api_token=${query.api_token}`;
         } else {
