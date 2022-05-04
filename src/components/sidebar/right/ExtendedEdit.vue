@@ -37,13 +37,17 @@
                 <hr class="divider">
             </div>
             <div v-if="hasOpacity" class="column is-24 py-0">
-                <div class="columns is-multiline">
-                    <div class="column">
-                        <span class="dark-gray-color">Transparenz</span>
-                        <input id="sliderWithValue" class="slider has-output is-fullwidth" v-model="opacityActive"
-                               @change="changeOpacity" min="0" max="100" step="1" type="range">
-                        <output for="sliderWithValue" class="slider-output dark-gray-color has-text-weight-semibold">{{ opacityActive }}</output>
-                        <b class="dark-gray-color has-text-weight-semibold">%</b>
+                <div class="content">
+                    <div class="columns">
+                        <div class="column is-13">
+                            <span class="dark-gray-color">Transparenz</span>
+                        </div>
+                        <div class="column is-flex is-justify-content-space-between">
+                            <input id="sliderWithValue" class="has-output is-fullwidth" v-model="opacityActive"
+                                   @change="changeOpacity" min="0" max="100" step="1" type="range">
+                            <output for="sliderWithValue" class="px-2 slider-output dark-gray-color has-text-weight-semibold">{{ opacityActive }}</output>
+                            <b class="dark-gray-color has-text-weight-semibold">%</b>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -122,15 +126,18 @@
 @import "/node_modules/bulma-slider/dist/css/bulma-slider.min.css";
 
 #sliderWithValue {
-    width: calc(100% - 5.2rem) !important;
+    width: 50px !important;
+    margin: 0 !important;
 }
 
 .slider-output {
     background: none !important;
     font-size: 16px !important;
     padding-right: 0 !important;
-    position: relative !important;
-    top: -1px !important;
+    text-align: right;
+    margin: 0 !important;
+    position: relative;
+    right: -2px;
 }
 </style>
 <script>
