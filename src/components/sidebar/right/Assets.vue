@@ -3,9 +3,9 @@
         <div class="columns is-multiline is-centered">
             <div class="column is-24">
                 <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background"
-                     style="cursor: pointer" @click="uploadMediaAsset">
-                    <span class="dark-gray-color">Neue Bildbox</span>
-                    <span class="svg-20 m-1" v-html="icon('HinzufuegenPlus')"></span>
+                     :style="{'cursor': activeObject ? 'not-allowed' : 'pointer'}" @click="uploadMediaAsset">
+                    <span :style="{'opacity': activeObject ? '50%' : '100%'}" class="dark-gray-color">Neue Bildbox</span>
+                    <span :style="{'opacity': activeObject ? '50%' : '100%'}" class="svg-20 m-1" v-html="icon('HinzufuegenPlus')"></span>
                 </div>
             </div>
             <div class="column is-24">
@@ -26,10 +26,10 @@
                     </div>
                 </div>
             </div>
-            <div v-if="!isGraphic" class="column is-24">
+            <div v-if="isAsset && !isGraphic" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="!isGraphic" class="column is-24 py-0">
+            <div v-if="isAsset && !isGraphic" class="column is-24 py-0">
                 <div class="columns">
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Bildqualität</span>
@@ -78,15 +78,17 @@
             </div>
             <div v-if="isAsset" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-flex-direction-column is-centered is-vcentered">
-                        <div>
-                        </div>
-                        <div class="field">
-                            <input id="extendedEditSwitch" :checked="extendedEditSwitchOn" @click="enableExtendedEdit"
-                                   class="switch is-info"
-                                   name="extendedEditSwitch" type="checkbox">
-                            <label class="has-text-weight-medium blue-color" for="extendedEditSwitch">Erweiterte
-                                Bild-Bearbeitung</label>
+                    <div class="column is-flex is-flex-direction-column is-align-items-center">
+                        <label class="has-text-weight-medium blue-color mb-2" for="extendedEditSwitch">
+                            Erweiterte Bild-Bearbeitung
+                        </label>
+                        <div class="onoffswitch">
+                            <input type="checkbox" :checked="extendedEditSwitchOn" @click="enableExtendedEdit"
+                                   name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" tabindex="0">
+                            <label class="onoffswitch-label" for="myonoffswitch">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -125,11 +127,9 @@
     </div>
 </template>
 <style lang="css" scoped>
-@import "/node_modules/bulma-switch/dist/css/bulma-switch.min.css";
-@import "/node_modules/bulma-slider/dist/css/bulma-slider.min.css";
 
 .dpi-circle {
-    border: 1px solid #A6A9A9;
+    border: 1px solid #4f4d4d;
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 5rem;
@@ -292,13 +292,13 @@ export default {
 
             switch (true) {
                 case (this.dpi < dpi.perfect && this.dpi >= dpi.error):
-                    color = '#d76c33';
+                    color = '#ffc600';
                     break;
                 case (this.dpi < dpi.error):
-                    color = '#B41D1D';
+                    color = '#c61e28';
                     break;
                 default:
-                    color = '#45BE28';
+                    color = '#00ac63';
                     break;
             }
 

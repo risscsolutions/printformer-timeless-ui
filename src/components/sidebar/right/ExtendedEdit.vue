@@ -122,8 +122,6 @@
     </div>
 </template>
 <style lang="css" scoped>
-@import "/node_modules/bulma-switch/dist/css/bulma-switch.min.css";
-@import "/node_modules/bulma-slider/dist/css/bulma-slider.min.css";
 
 #sliderWithValue {
     width: 50px !important;

@@ -61,7 +61,6 @@
     </div>
 </template>
 <style scoped>
-@import "/node_modules/bulma-switch/dist/css/bulma-switch.min.css";
 </style>
 <script>
 import Events from "@rissc/printformer-editor-client/dist/Events";
