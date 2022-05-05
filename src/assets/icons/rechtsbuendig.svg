@@ -1,37 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 26.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="27px" height="27px" viewBox="0 0 27 27" enable-background="new 0 0 27 27" xml:space="preserve">
-<polygon fill="none" stroke="#B2B2B2" stroke-width="0.5" stroke-miterlimit="10" points="0.25,0.55 0.25,26.55 0.25,26.75 
-	0.45,26.75 26.45,26.75 26.75,26.75 26.75,26.55 26.75,0.55 26.75,0.25 26.45,0.25 0.45,0.25 0.25,0.25 "/>
-<path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M3.55,19.15"/>
-<path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M3.55,14.15"/>
-<path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M3.55,12.95"/>
-<path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M3.55,6.65"/>
-<path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M20.95,11.65"/>
-<path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M23.05,14.15"/>
-<path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M20.95,15.45"/>
-<path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M23.05,19.15"/>
-<path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M23.05,6.65"/>
-<path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M23.05,12.95"/>
-<path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M20.95,16.65"/>
-<path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M20.95,17.95"/>
-<g>
-	<path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M5.85,17.65"/>
-	<path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M5.85,16.35"/>
-	<path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M5.85,15.15"/>
-	<path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M5.85,11.35"/>
-	<path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M5.85,8.85"/>
-	<line fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" x1="23.25" y1="7.15" x2="3.75" y2="7.15"/>
-	<line fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" x1="23.25" y1="8.45" x2="8.35" y2="8.45"/>
-	<line fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" x1="23.25" y1="9.65" x2="8.35" y2="9.65"/>
-	<line fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" x1="23.25" y1="10.95" x2="8.35" y2="10.95"/>
-	<line fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" x1="23.25" y1="12.25" x2="3.75" y2="12.25"/>
-	<line fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" x1="23.25" y1="13.55" x2="3.75" y2="13.55"/>
-	<line fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" x1="23.15" y1="14.75" x2="8.25" y2="14.75"/>
-	<line fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" x1="23.25" y1="16.05" x2="3.75" y2="16.05"/>
-	<line fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" x1="23.25" y1="17.35" x2="8.35" y2="17.35"/>
-	<line fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" x1="23.25" y1="18.65" x2="8.35" y2="18.65"/>
-	<line fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" x1="23.25" y1="19.85" x2="3.75" y2="19.85"/>
+     width="27px" height="27px" viewBox="0 0 27 27" enable-background="new 0 0 27 27" xml:space="preserve">
+<polygon fill="none" stroke="#B2B2B2" stroke-width="0.5" stroke-miterlimit="10" points="0.2,0.5 0.2,26.5 0.2,26.7 0.5,26.7
+	26.5,26.7 26.7,26.7 26.7,26.5 26.7,0.5 26.7,0.2 26.5,0.2 0.5,0.2 0.2,0.2 "/>
+    <path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M21,11.7"/>
+    <path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M23,14.2"/>
+    <path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M21,15.4"/>
+    <path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M23,19.2"/>
+    <path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M23,6.6"/>
+    <path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M23,12.9"/>
+    <path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M21,16.7"/>
+    <path fill="none" stroke="#B2B1B1" stroke-width="0.3" stroke-miterlimit="10" d="M21,17.9"/>
+    <g>
+	<line fill="none" stroke="#B2B1B1" stroke-miterlimit="10" x1="23.3" y1="5.9" x2="8.5" y2="5.9"/>
+        <line fill="none" stroke="#B2B1B1" stroke-miterlimit="10" x1="23.2" y1="9.1" x2="3.7" y2="9.1"/>
+        <line fill="none" stroke="#B2B1B1" stroke-miterlimit="10" x1="23.2" y1="12.1" x2="8.4" y2="12.1"/>
+        <line fill="none" stroke="#B2B1B1" stroke-miterlimit="10" x1="23.3" y1="14.9" x2="3.8" y2="14.9"/>
+        <line fill="none" stroke="#B2B1B1" stroke-miterlimit="10" x1="23.2" y1="18.1" x2="8.4" y2="18.1"/>
+        <line fill="none" stroke="#B2B1B1" stroke-miterlimit="10" x1="23.2" y1="21.1" x2="3.7" y2="21.1"/>
 </g>
 </svg>

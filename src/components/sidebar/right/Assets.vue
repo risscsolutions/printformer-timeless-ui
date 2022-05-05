@@ -3,7 +3,7 @@
         <div class="columns is-multiline is-centered">
             <div class="column is-24">
                 <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background"
-                     :style="{'cursor': activeObject ? 'not-allowed' : 'pointer'}" @click="uploadMediaAsset">
+                     style="cursor: pointer" :class="{'no-interaction': activeObject}" @click="uploadMediaAsset">
                     <span :style="{'opacity': activeObject ? '50%' : '100%'}" class="dark-gray-color">Neue Bildbox</span>
                     <span :style="{'opacity': activeObject ? '50%' : '100%'}" class="svg-20 m-1" v-html="icon('HinzufuegenPlus')"></span>
                 </div>

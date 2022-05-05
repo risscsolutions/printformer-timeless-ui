@@ -55,7 +55,9 @@ html, div, label, span, p, h1, h2, h3, h4, h5, h6, b, i {
     -ms-user-select: none;
     user-select: none;
 }
-
+.no-interaction {
+    pointer-events: none !important;
+}
 .height-50 {
     height: 50px !important;
 }

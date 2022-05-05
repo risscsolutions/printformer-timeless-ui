@@ -93,16 +93,16 @@
                         <span class="dark-gray-color">Ausrichtung Text</span>
                     </div>
                     <div class="column is-3" style="cursor: pointer" @click="textAlign('justify')">
-                        <span class="svg-20" v-html="icon('Blocksatz2')"></span>
+                        <span class="svg-20" v-html="icon('Blocksatz')"></span>
                     </div>
                     <div class="column is-3" style="cursor: pointer" @click="textAlign('left')">
-                        <span class="svg-20" v-html="icon('Linksbuendig2')"></span>
+                        <span class="svg-20" v-html="icon('Linksbuendig')"></span>
                     </div>
                     <div class="column is-3" style="cursor: pointer" @click="textAlign('center')">
-                        <span class="svg-20" v-html="icon('zentriert2')"></span>
+                        <span class="svg-20" v-html="icon('zentriert')"></span>
                     </div>
                     <div class="column is-3" style="cursor: pointer" @click="textAlign('')">
-                        <span class="svg-20" v-html="icon('rechtsbuendig2')"></span>
+                        <span class="svg-20" v-html="icon('rechtsbuendig')"></span>
                     </div>
                 </div>
             </div>
@@ -115,13 +115,13 @@
                         <span class="dark-gray-color">Aufzählung</span>
                     </div>
                     <div class="column is-4" style="cursor: pointer" @click="textBulletPoints('alphabetic')">
-                        <span class="svg-20" v-html="icon('AufzaehlungPunkte2')"></span>
+                        <span class="svg-20" v-html="icon('AufzaehlungPunkte')"></span>
                     </div>
                     <div class="column is-4" style="cursor: pointer" @click="textBulletPoints('bullet')">
-                        <span class="svg-20" v-html="icon('AufzaehlungPunkte2')"></span>
+                        <span class="svg-20" v-html="icon('AufzaehlungEcken')"></span>
                     </div>
                     <div class="column is-4" style="cursor: pointer" @click="textBulletPoints('number')">
-                        <span class="svg-20" v-html="icon('AufzaehlungZahlen2')"></span>
+                        <span class="svg-20" v-html="icon('AufzaehlungZahlen')"></span>
                     </div>
                 </div>
             </div>
