@@ -1,3 +1,6 @@
+window.jQuery = window.$ = require('./src/vendor/jquery-ui-1.13.1.custom/external/jquery/jquery');
+require('./src/vendor/jquery-ui-1.13.1.custom/jquery-ui');
+
 import Vue from 'vue';
 import Vuex from 'vuex';
 import EventEmitter from 'eventemitter3';

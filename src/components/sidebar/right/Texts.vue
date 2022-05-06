@@ -3,9 +3,9 @@
         <div class="columns is-multiline is-centered">
             <div class="column is-24">
                 <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background"
-                     style="cursor: pointer" @click="addTextBlock">
-                    <span class="dark-gray-color">Neue Textbox</span>
-                    <span class="svg-20 m-1" v-html="icon('HinzufuegenPlus')"></span>
+                    style="cursor: pointer" :class="{'no-interaction': activeObject}" @click="addTextBlock">
+                    <span :style="{'opacity': activeObject ? '50%' : '100%'}" class="dark-gray-color">Neue Textbox</span>
+                    <span :style="{'opacity': activeObject ? '50%' : '100%'}" class="svg-20 m-1" v-html="icon('HinzufuegenPlus')"></span>
                 </div>
             </div>
             <div v-if="isTextAsset && allFontsFlat" class="column is-24">
