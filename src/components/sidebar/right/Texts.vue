@@ -145,8 +145,8 @@
                     </div>
                 </div>
             </div>
-            <extended-edit v-if="extendedEditSwitchOn" :active-object="activeObject" :opacity="opacity"
-                           :has-alignment="true" :has-background-color="true"
+            <extended-edit v-if="extendedEditSwitchOn" :active-object="activeObject"
+                           :has-alignment="true" :has-background-color="false"
                            :has-layer="true" :has-opacity="true" :has-line-height="true">
             </extended-edit>
             <div v-if="isTextAsset" class="column is-24">
@@ -223,8 +223,8 @@ export default {
             }
 
             this.currentFont = this.activeObject.font;
-            $('#font-family').val(this.activeObject.font);
-            $('#font-size').val(this.activeObject.size);
+            $('#font-family').val(this.activeObject.font).selectmenu('refresh');
+            $('#font-size').val(this.activeObject.size).selectmenu('refresh');
         }
     },
     mounted() {
@@ -407,7 +407,6 @@ export default {
             this.$catch(this.activeObject.addBulletPoint(type));
         },
         enableExtendedEdit() {
-            this.opacity = (this.activeObject.opacity * 100);
             this.extendedEditSwitchOn = !this.extendedEditSwitchOn;
         },
     },
@@ -418,7 +417,6 @@ export default {
             currentFont: null,
             currentFontSize: null,
             extendedEditSwitchOn: false,
-            opacity: 0
         }
     }
 }

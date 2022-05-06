@@ -38,12 +38,9 @@
                             <span class="dark-gray-color">Transparenz</span>
                         </div>
                         <div class="column is-flex is-justify-content-space-between">
-                            <input id="sliderWithValue" class="has-output is-fullwidth" v-model="opacityActive"
-                                   @change="changeOpacity" min="0" max="100" step="1" type="range">
+                            <input id="sliderWithValue" class="has-output is-fullwidth" v-model="opacity" min="0" max="100" step="1" type="range">
                             <output for="sliderWithValue"
-                                    class="px-2 slider-output dark-gray-color has-text-weight-semibold">{{
-                                    opacityActive
-                                }}
+                                    class="px-2 slider-output dark-gray-color has-text-weight-semibold">{{opacity}}
                             </output>
                             <b class="dark-gray-color has-text-weight-semibold">%</b>
                         </div>
@@ -147,7 +144,6 @@ export default {
     name: "extended-edit",
     props: {
         activeObject: EditorObject,
-        opacity: Number,
         hasBackgroundColor: Boolean,
         hasLineHeight: Boolean,
         hasAlignment: Boolean,
@@ -170,6 +166,22 @@ export default {
                 this.$catch(this.activeObject.setFillColor(parsedColor));
             }
         },
+        opacity: {
+            get() {
+                return this.activeObject.opacity * 100;
+            },
+            set(v) {
+                this.$catch(this.activeObject.setOpacity(v / 100));
+            }
+        },
+        leading: {
+            get() {
+                return this.activeObject.leading;
+            },
+            set(v) {
+                this.$catch(this.activeObject.setFontLeading(v));
+            }
+        }
     },
     mounted() {
         const $fontLeading = $('#font-leading');
@@ -181,13 +193,11 @@ export default {
                 if (value === 'Auto') {
                     value = undefined;
                 }
-                this.changeLineHeight(value);
+                this.leading = value;
             }
         });
 
         $fontLeading.selectmenu("menuWidget").addClass(['height-200', 'width-140'])
-
-        this.opacityActive = this.opacity;
 
         this.$editor.getFontService().getSizes().then((sizes) => {
             this.$store.commit('setFontSizes', sizes);
@@ -202,25 +212,14 @@ export default {
         });
 
         window.events.on(Events.EDITOR_OBJECT_SELECTED, (block) => {
-            this.dpi = block.dpi;
-            this.opacityActive = (block.opacity * 100);
-
             let leading = this.activeObject.leading;
             leading = leading === null ? 'Auto' : Number(leading);
-            console.log('leading', leading);
             $fontLeading.val(leading);
-        });
-
-        window.events.on(Events.EDITOR_OBJECT_UPDATED, (block) => {
-            this.dpi = block.dpi;
         });
     },
     methods: {
         icon(name) {
             return this.$svg(name);
-        },
-        changeOpacity() {
-            this.$catch(this.activeObject.setOpacity((parseInt(this.opacityActive) / 100)));
         },
         duplicateBlock() {
             this.$catch(this.activeObject.duplicate());
@@ -249,13 +248,11 @@ export default {
     },
     data() {
         return {
-            opacityActive: 0,
-            dpi: 0,
             openAlignmentSettings: false,
             openLayerSettings: false,
             currentLineHeight: null,
             allLineHeights: null
         }
-    }
+    },
 }
 </script>
