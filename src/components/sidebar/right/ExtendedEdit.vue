@@ -40,7 +40,11 @@
                         <div class="column is-flex is-justify-content-space-between">
                             <input id="sliderWithValue" class="has-output is-fullwidth" v-model="opacityActive"
                                    @change="changeOpacity" min="0" max="100" step="1" type="range">
-                            <output for="sliderWithValue" class="px-2 slider-output dark-gray-color has-text-weight-semibold">{{ opacityActive }}</output>
+                            <output for="sliderWithValue"
+                                    class="px-2 slider-output dark-gray-color has-text-weight-semibold">{{
+                                    opacityActive
+                                }}
+                            </output>
                             <b class="dark-gray-color has-text-weight-semibold">%</b>
                         </div>
                     </div>
@@ -167,20 +171,21 @@ export default {
             }
         },
     },
-    mounted() { const $fontLeading = $('#font-leading');
+    mounted() {
+        const $fontLeading = $('#font-leading');
         $fontLeading.selectmenu({
-            icons: { button: "broken-arrow" },
-            width:140,
+            icons: {button: "broken-arrow"},
+            width: 140,
             change: (event, ui) => {
                 let value = ui.item.value;
-                if (value === 'Auto'){
+                if (value === 'Auto') {
                     value = undefined;
                 }
                 this.changeLineHeight(value);
             }
         });
 
-        $fontLeading.selectmenu( "menuWidget" ).addClass(['height-200', 'width-140'])
+        $fontLeading.selectmenu("menuWidget").addClass(['height-200', 'width-140'])
 
         this.opacityActive = this.opacity;
 
