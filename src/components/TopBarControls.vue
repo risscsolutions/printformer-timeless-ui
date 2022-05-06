@@ -1,10 +1,12 @@
 <template>
     <div class="columns is-mobile is-vcentered is-centered mb-0">
         <div class="column is-1 has-text-centered dark-gray-color" style="width: 105px">
-            <span @click="editorZoomIn()" style="cursor: pointer; vertical-align: middle;" class="svg-20" v-html="icon('Plus')">
+            <span @click="editorZoomIn()" style="cursor: pointer; vertical-align: middle;" class="svg-20"
+                  v-html="icon('Plus')">
             </span>
             <span>55%</span>
-            <span @click="editorZoomOut()" style="cursor: pointer; vertical-align: middle;" class="svg-20" v-html="icon('Minus')">
+            <span @click="editorZoomOut()" style="cursor: pointer; vertical-align: middle;" class="svg-20"
+                  v-html="icon('Minus')">
             </span>
         </div>
         <div class="column buttons has-text-right mb-0">
@@ -17,7 +19,8 @@
             </button>
             <button @click="editorSave" class="button no-radius is-info mb-0">
                 <span class="icon is-small" v-html="icon('Soeichern')"></span>
-                <span class="has-text-weight-light">Entwurf Speichern</span>
+                <span class="has-text-weight-light"
+                      title="Dein Entwurf wurde für dich gespeichert">Entwurf Speichern</span>
             </button>
             <button @click="pagePreview" class="button no-radius is-info mb-0">
                 <span class="icon is-small" v-html="icon('Auge')"></span>
@@ -69,10 +72,21 @@ export default {
         goBack() {
 
         },
-        editorSave() {
+        editorSave(e) {
             this.$editor.getLoader().show('Entwurf wird gespeichert...')
                 .then(() => this.$catch(this.$editor.save()))
                 .then(() => this.$editor.getLoader().hide())
+                .then(() => {
+                    setTimeout(() => $(e.target).tooltip('destroy'), 800);
+                    $(e.target)
+                        .tooltip({
+                            position: {my: "center center", at: "center bottom+35"},
+                            classes: {
+                                'ui-tooltip': 'py-2 px-4 is-size-7 has-arrow-center-top'
+                            }
+                        })
+                        .tooltip("open");
+                })
         },
         pagePreview() {
 

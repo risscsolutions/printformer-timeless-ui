@@ -87,19 +87,19 @@
                     <div v-if="openLayerSettings" class="column is-24">
                         <div class="columns is-multiline">
                             <div class="column is-half has-text-centered">
-                                <span @click="moveUp(true)" style="cursor: pointer" class="svg-20"
+                                <span @click="moveUp(true)" style="cursor: pointer" class="svg-20" title="Vorne"
                                       v-html="icon('Vorne')"></span>
                             </div>
                             <div class="column is-half has-text-centered">
-                                <span @click="moveDown(true)" style="cursor: pointer" class="svg-20"
+                                <span @click="moveDown(true)" style="cursor: pointer" class="svg-20" title="Hinten"
                                       v-html="icon('Hinten')"></span>
                             </div>
                             <div class="column is-half has-text-centered">
-                                <span @click="moveUp(false)" style="cursor: pointer" class="svg-20"
+                                <span @click="moveUp(false)" style="cursor: pointer" class="svg-20" title="Ganz Vorne"
                                       v-html="icon('Vorne2')"></span>
                             </div>
                             <div class="column is-half has-text-centered">
-                                <span @click="moveDown(false)" style="cursor: pointer" class="svg-20"
+                                <span @click="moveDown(false)" style="cursor: pointer" class="svg-20" title="Ganz Hinten"
                                       v-html="icon('Hinten2')"></span>
                             </div>
                         </div>

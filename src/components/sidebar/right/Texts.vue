@@ -3,9 +3,11 @@
         <div class="columns is-multiline is-centered">
             <div class="column is-24">
                 <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background"
-                    style="cursor: pointer" :class="{'no-interaction': activeObject}" @click="addTextBlock">
-                    <span :style="{'opacity': activeObject ? '50%' : '100%'}" class="dark-gray-color">Neue Textbox</span>
-                    <span :style="{'opacity': activeObject ? '50%' : '100%'}" class="svg-20 m-1" v-html="icon('HinzufuegenPlus')"></span>
+                     style="cursor: pointer" :class="{'no-interaction': activeObject}" @click="addTextBlock">
+                    <span :style="{'opacity': activeObject ? '50%' : '100%'}"
+                          class="dark-gray-color">Neue Textbox</span>
+                    <span :style="{'opacity': activeObject ? '50%' : '100%'}" class="svg-20 m-1"
+                          v-html="icon('HinzufuegenPlus')"></span>
                 </div>
             </div>
             <div v-if="isTextAsset && allFontsFlat" class="column is-24">
@@ -56,17 +58,18 @@
                         <span class="dark-gray-color">Schriftschnitt</span>
                     </div>
                     <div class="column is-5">
-                        <button @click="textStyle('bold')" class="button" ref="boldButton">
+                        <button @click="textStyle('bold')" title="bold" class="button" ref="boldButton">
                             <b>B</b>
                         </button>
                     </div>
                     <div class="column is-4">
-                        <button @click="textStyle('italic')" class="button" ref="italicButton">
+                        <button @click="textStyle('italic')" title="italic" class="button" ref="italicButton">
                             <i>I</i>
                         </button>
                     </div>
                     <div class="column is-4">
-                        <button @click="textStyle('underline')" class="button" ref="underlineButton" disabled>
+                        <button @click="textStyle('underline')" title="underline" class="button" ref="underlineButton"
+                                disabled>
                             <u>u</u>
                         </button>
                     </div>
@@ -93,16 +96,16 @@
                         <span class="dark-gray-color">Ausrichtung Text</span>
                     </div>
                     <div class="column is-3" style="cursor: pointer" @click="textAlign('justify')">
-                        <span class="svg-20" v-html="icon('Blocksatz')"></span>
+                        <span class="svg-20" title="Blocksatz" v-html="icon('Blocksatz')"></span>
                     </div>
                     <div class="column is-3" style="cursor: pointer" @click="textAlign('left')">
-                        <span class="svg-20" v-html="icon('Linksbuendig')"></span>
+                        <span class="svg-20" title="Linksbuendig" v-html="icon('Linksbuendig')"></span>
                     </div>
                     <div class="column is-3" style="cursor: pointer" @click="textAlign('center')">
-                        <span class="svg-20" v-html="icon('zentriert')"></span>
+                        <span class="svg-20" title="zentriert" v-html="icon('zentriert')"></span>
                     </div>
                     <div class="column is-3" style="cursor: pointer" @click="textAlign('')">
-                        <span class="svg-20" v-html="icon('rechtsbuendig')"></span>
+                        <span class="svg-20" title="rechtsbuendig" v-html="icon('rechtsbuendig')"></span>
                     </div>
                 </div>
             </div>
@@ -115,13 +118,13 @@
                         <span class="dark-gray-color">Aufzählung</span>
                     </div>
                     <div class="column is-4" style="cursor: pointer" @click="textBulletPoints('alphabetic')">
-                        <span class="svg-20" v-html="icon('AufzaehlungPunkte')"></span>
+                        <span class="svg-20" title="AufzaehlungPunkte" v-html="icon('AufzaehlungPunkte')"></span>
                     </div>
                     <div class="column is-4" style="cursor: pointer" @click="textBulletPoints('bullet')">
-                        <span class="svg-20" v-html="icon('AufzaehlungEcken')"></span>
+                        <span class="svg-20" title="AufzaehlungEcken" v-html="icon('AufzaehlungEcken')"></span>
                     </div>
                     <div class="column is-4" style="cursor: pointer" @click="textBulletPoints('number')">
-                        <span class="svg-20" v-html="icon('AufzaehlungZahlen')"></span>
+                        <span class="svg-20" title="AufzaehlungZahlen" v-html="icon('AufzaehlungZahlen')"></span>
                     </div>
                 </div>
             </div>
@@ -258,6 +261,41 @@ export default {
 
             this.allFontsFlat = flatFonts;
         });
+        $(this.$el).tooltip({
+            classes: {
+                'ui-tooltip': 'p-1 is-size-7'
+            }
+        });
+        const dialog = $('#delete-text-dialog');
+        dialog
+            .dialog({
+                classes: {
+                    "ui-dialog": 'py-4 px-6',
+                    "ui-dialog-titlebar": "is-hidden",
+                },
+                autoOpen: false,
+                resizable: false,
+                height: "auto",
+                width: 384,
+                modal: true,
+                buttons: [
+                    {
+                        text: "LÖSCHEN",
+                        class: "button no-radius is-info my-0",
+                        click: () => {
+                            this.$catch(this.activeObject.delete())
+                                .then(() => dialog.dialog("close"));
+                        }
+                    },
+                    {
+                        text: "ABBRECHEN",
+                        class: "button no-radius is-dark dark-gray-background-color my-0",
+                        click: () => {
+                            dialog.dialog("close");
+                        }
+                    }
+                ]
+            });
     },
     methods: {
         addTextBlock() {
@@ -274,8 +312,10 @@ export default {
             this.currentFontSize = fontSize;
             this.$catch(this.activeObject.setFontSize(fontSize));
         },
-        deleteTextBox() {
-            this.$catch(this.activeObject.delete());
+        deleteTextBox(e) {
+            $('#delete-text-dialog')
+                .dialog('option', 'position', {my: "right center", at: "left-300 center", of: $(e.currentTarget)})
+                .dialog('open');
         },
         textAlign(position) {
             this.$catch(this.activeObject.setFontAlign(position));

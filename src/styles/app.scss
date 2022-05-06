@@ -56,9 +56,11 @@ html, div, label, span, p, h1, h2, h3, h4, h5, h6, b, i {
     -ms-user-select: none;
     user-select: none;
 }
+
 .no-interaction {
     pointer-events: none !important;
 }
+
 .height-50 {
     height: 50px !important;
 }
@@ -134,7 +136,7 @@ button {
     color: #0F699B !important;
 }
 
-.stroke-white >* {
+.stroke-white > * {
     stroke: #ffffff;
 }
 
@@ -149,3 +151,66 @@ button {
     border-radius: 1px;
 }
 
+.has-arrow-center-top::after {
+    content: "";
+    position: absolute;
+    right: 106px;
+    top: -5px;
+
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid white;
+}
+
+[aria-describedby="delete-text-dialog"]::after {
+    content: "";
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 15px solid white;
+    position: absolute;
+    right: -15px;
+    top: 75px;
+}
+
+.has-arrow-center-top::before {
+    content: "";
+    position: absolute;
+    right: 105px;
+    top: -6px;
+
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #c5c5c5;
+}
+
+[aria-describedby="delete-text-dialog"]::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-top: 16px solid transparent;
+    border-bottom: 16px solid transparent;
+    border-left: 16px solid #c5c5c5;
+    position: absolute;
+    right: -16px;
+    top: 74px;
+}
+
+.ui-dialog .ui-dialog-content {
+    padding: 0;
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+    margin: 0;
+    padding: 0;
+    border: 0 none;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+    float: none !important;
+}
