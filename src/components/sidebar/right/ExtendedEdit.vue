@@ -16,20 +16,15 @@
             <div v-if="hasLineHeight" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="hasLineHeight" class="column is-24 py-0">
-                <div class="field has-addons">
-                    <div class="control">
-                        <button type="submit" class="button is-info">Zeilenabstand</button>
-                    </div>
-                    <div class="control is-expanded">
-                        <div class="select is-fullwidth">
-                            <select name="fonts" @change="changeLineHeight(currentLineHeight)"
-                                    v-model="currentLineHeight">
-                                <option v-for="lineHeight in allLineHeights" :value="lineHeight">
-                                    {{ lineHeight }}
-                                </option>
-                            </select>
-                        </div>
+            <div v-show="hasLineHeight" class="column is-24 py-0">
+                <div class="columns is-multiline">
+                    <div class="column is-flex is-justify-content-space-between">
+                        <span class="dark-gray-color">Zeilenabstand</span>
+                        <select name="fonts" id="font-leading">
+                            <option v-for="lineHeight in allLineHeights" :value="lineHeight">
+                                {{ lineHeight }}
+                            </option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -142,7 +137,6 @@
 import Events from "@rissc/printformer-editor-client/dist/Events";
 import EditorObject from "@rissc/printformer-editor-client/dist/Objects";
 import {Text} from "@rissc/printformer-editor-client/dist/Objects/Blocks";
-import bulmaSlider from "bulma-slider/src/js";
 import convert from "color-convert";
 
 export default {
@@ -173,26 +167,47 @@ export default {
             }
         },
     },
-    mounted() {
-        bulmaSlider.attach();
+    mounted() { const $fontLeading = $('#font-leading');
+        $fontLeading.selectmenu({
+            icons: { button: "broken-arrow" },
+            width:140,
+            change: (event, ui) => {
+                let value = ui.item.value;
+                if (value === 'Auto'){
+                    value = undefined;
+                }
+                this.changeLineHeight(value);
+            }
+        });
+
+        $fontLeading.selectmenu( "menuWidget" ).addClass(['height-200', 'width-140'])
+
         this.opacityActive = this.opacity;
 
-        this.$editor.getActiveObject().then((activeObject) => {
-            if (typeof activeObject.leading !== 'undefined') {
-                this.allLineHeights = activeObject.leading;
+        this.$editor.getFontService().getSizes().then((sizes) => {
+            this.$store.commit('setFontSizes', sizes);
+
+            if (sizes.length > 1) {
+                this.allLineHeights = ['Auto', ...sizes];
             } else {
-                this.allLineHeights = [4, 8, 10, 12, 16]
+                this.allLineHeights = ['Auto', 8, 10, 12, 14, 16, 18, 20, 28, 36, 48]
             }
+
+            this.$nextTick(() => $fontLeading.selectmenu('refresh'));
         });
 
         window.events.on(Events.EDITOR_OBJECT_SELECTED, (block) => {
             this.dpi = block.dpi;
             this.opacityActive = (block.opacity * 100);
+
+            let leading = this.activeObject.leading;
+            leading = leading === null ? 'Auto' : Number(leading);
+            console.log('leading', leading);
+            $fontLeading.val(leading);
         });
 
         window.events.on(Events.EDITOR_OBJECT_UPDATED, (block) => {
             this.dpi = block.dpi;
-            this.opacityActive = (block.opacity * 100);
         });
     },
     methods: {

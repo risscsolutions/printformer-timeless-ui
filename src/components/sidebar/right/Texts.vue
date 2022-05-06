@@ -13,64 +13,49 @@
             <div v-if="isTextAsset && allFontsFlat" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="isTextAsset && allFontsFlat" class="column is-24">
-                <div class="field has-addons">
-                    <div class="control">
-                        <button type="submit" class="button is-info">Schriftart</button>
-                    </div>
-                    <div class="control is-expanded">
-                        <div class="select is-fullwidth">
-                            <select name="fonts" @change="changeFont(currentFont)" v-model="currentFont">
-                                <option v-for="font in allFontsFlat" :value="font.postscript_name">
-                                    {{ font.postscript_name }}
-                                </option>
-                            </select>
-                        </div>
+            <div v-show="isTextAsset && allFontsFlat" class="column is-24 py-0">
+                <div class="columns is-multiline">
+                    <div class="column is-flex is-justify-content-space-between">
+                        <span class="dark-gray-color">Schriftart</span>
+                        <select name="fonts" id="font-family">
+                            <option v-for="font in allFontsFlat" :value="font.postscript_name">
+                                {{ font.postscript_name }}
+                            </option>
+                        </select>
                     </div>
                 </div>
             </div>
             <div v-if="isTextAsset && allFontSizes" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="isTextAsset && allFontSizes" class="column is-24">
-                <div class="field has-addons">
-                    <div class="control">
-                        <button type="submit" class="button is-info">Schriftgröße</button>
-                    </div>
-                    <div class="control is-expanded">
-                        <div class="select is-fullwidth">
-                            <select name="fontSizes" @change="changeFontSize(currentFontSize)"
-                                    v-model="currentFontSize">
-                                <option v-for="(fontSize, index) in allFontSizes" :key="index" :value="fontSize">
-                                    {{ fontSize }} pt
-                                </option>
-                            </select>
-                        </div>
+            <div v-show="isTextAsset && allFontSizes" class="column is-24 py-0">
+                <div class="columns is-multiline">
+                    <div class="column is-flex is-justify-content-space-between">
+                        <span class="dark-gray-color">Schriftgröße</span>
+                        <select class="width-140" name="fontSizes" id="font-size">
+                            <option v-for="(fontSize, index) in allFontSizes" :key="index" :value="fontSize">
+                                {{ fontSize }} pt
+                            </option>
+                        </select>
                     </div>
                 </div>
             </div>
             <div v-if="isTextAsset" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="isTextAsset" class="column is-24">
+            <div v-if="isTextAsset" class="column is-24 py-0">
                 <div class="columns is-vcentered is-multiline is-gapless">
-                    <div class="column is-11">
+                    <div class="column is-15">
                         <span class="dark-gray-color">Schriftschnitt</span>
                     </div>
-                    <div class="column is-5">
-                        <button @click="textStyle('bold')" title="bold" class="button" ref="boldButton">
+                    <div class="column is-3">
+                        <button @click="textStyle('bold')" title="bold" class="button is-small" ref="boldButton">
                             <b>B</b>
                         </button>
                     </div>
-                    <div class="column is-4">
-                        <button @click="textStyle('italic')" title="italic" class="button" ref="italicButton">
+                    <div class="column is-3">
+                        <button @click="textStyle('italic')" title="italic" class="button is-small" ref="italicButton">
                             <i>I</i>
-                        </button>
-                    </div>
-                    <div class="column is-4">
-                        <button @click="textStyle('underline')" title="underline" class="button" ref="underlineButton"
-                                disabled>
-                            <u>u</u>
                         </button>
                     </div>
                 </div>
@@ -78,7 +63,7 @@
             <div v-if="isTextAsset" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="isTextAsset" class="column is-24">
+            <div v-if="isTextAsset" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Schriftfarbe</span>
@@ -90,7 +75,7 @@
             <div v-if="isTextAsset" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="isTextAsset" class="column is-24">
+            <div v-if="isTextAsset" class="column is-24 py-0">
                 <div class="columns is-multiline is-vcentered is-gapless">
                     <div class="column is-12">
                         <span class="dark-gray-color">Ausrichtung Text</span>
@@ -112,7 +97,7 @@
             <div v-if="isTextAsset" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="isTextAsset" class="column is-24">
+            <div v-if="isTextAsset" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-12">
                         <span class="dark-gray-color">Aufzählung</span>
@@ -131,7 +116,7 @@
             <div v-if="isTextAsset" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="isTextAsset" class="column is-24">
+            <div v-if="isTextAsset" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Textbox löschen</span>
@@ -143,14 +128,19 @@
             <div v-if="isTextAsset" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="isTextAsset" class="column is-24">
+            <div v-if="isTextAsset" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column">
-                        <div class="field">
-                            <input id="extendedEditSwitch" :checked="extendedEditSwitchOn" @click="enableExtendedEdit"
-                                   class="switch is-info"
-                                   name="extendedEditSwitch" type="checkbox">
-                            <label for="extendedEditSwitch" class="dark-gray-color">Erweiterte Bearbeitung</label>
+                    <div class="column is-flex is-flex-direction-column is-align-items-center">
+                        <label class="has-text-weight-medium blue-color mb-2" for="extendedEditSwitch">
+                            Erweiterte Text-Bearbeitung
+                        </label>
+                        <div class="onoffswitch">
+                            <input type="checkbox" :checked="extendedEditSwitchOn" @click="enableExtendedEdit"
+                                   name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" tabindex="0">
+                            <label class="onoffswitch-label" for="myonoffswitch">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -159,6 +149,9 @@
                            :has-alignment="true" :has-background-color="true"
                            :has-layer="true" :has-opacity="true" :has-line-height="true">
             </extended-edit>
+            <div v-if="isTextAsset" class="column is-24">
+                <hr class="divider">
+            </div>
         </div>
     </div>
 </template>
@@ -230,12 +223,40 @@ export default {
             }
 
             this.currentFont = this.activeObject.font;
+            $('#font-family').val(this.activeObject.font);
+            $('#font-size').val(this.activeObject.size);
         }
     },
     mounted() {
+        const $fontSelect = $('#font-family');
+        $fontSelect.selectmenu({
+            icons: { button: "broken-arrow" },
+            width:140,
+            change: (event, ui) => {
+                this.changeFont(ui.item.value);
+            }
+        });
+
+        $fontSelect.selectmenu( "menuWidget" ).addClass(['height-200', 'width-140'])
+
+        const $fontSize = $('#font-size');
+        $fontSize.selectmenu({
+            icons: { button: "broken-arrow" },
+            width:140,
+            change: (event, ui) => {
+                this.changeFontSize(ui.item.value);
+            }
+        });
+
+        $fontSize.selectmenu( "menuWidget" ).addClass(['height-200', 'width-140'])
+
         // load default texblock values
         if (this.activeObject) {
+            $fontSelect.val(this.activeObject.font);
             this.currentFont = this.activeObject.font;
+
+            $fontSize.val(this.activeObject.size);
+
         }
 
         this.$editor.getFontService().getSizes().then((sizes) => {
@@ -246,6 +267,8 @@ export default {
             } else {
                 this.allFontSizes = [8, 10, 12, 14, 16, 18, 20, 28, 36, 48, 72]
             }
+
+            this.$nextTick(() => $fontSize.selectmenu('refresh'));
         });
 
         this.$editor.getFontService().getFontsByFamily().then((fonts) => {
@@ -260,6 +283,7 @@ export default {
             }
 
             this.allFontsFlat = flatFonts;
+            this.$nextTick(() => $fontSelect.selectmenu('refresh'));
         });
         $(this.$el).tooltip({
             classes: {
