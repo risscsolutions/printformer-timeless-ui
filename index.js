@@ -88,7 +88,7 @@ window.onload = () => {
 
     const store = makeStore()
 
-    connector.editor(editorIframe, window.events).then(editor => {
+    connector.connect(editorIframe, window.events).then(editor => {
         Vue.prototype.$editor = editor;
 
         editor.getNotifications().onChange(notifications => store.commit('setNotifications', notifications));

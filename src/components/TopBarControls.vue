@@ -1,11 +1,11 @@
 <template>
     <div class="columns is-mobile is-vcentered is-centered mb-0">
-        <div class="column is-1 has-text-centered dark-gray-color" style="width: 105px">
-            <span @click="editorZoomIn()" style="cursor: pointer; vertical-align: middle;" class="svg-20"
+        <div class="column is-4 dark-gray-color">
+            <span @click="editorZoomIn" style="cursor: pointer; vertical-align: middle;" class="svg-20"
                   v-html="icon('Plus')">
             </span>
-            <span>55%</span>
-            <span @click="editorZoomOut()" style="cursor: pointer; vertical-align: middle;" class="svg-20"
+            <span>{{ zoom }}%</span>
+            <span @click="editorZoomOut" style="cursor: pointer; vertical-align: middle;" class="svg-20"
                   v-html="icon('Minus')">
             </span>
         </div>
@@ -60,6 +60,7 @@ export default {
 
                     await this.$editor.getPager().showPage(1);
                     await this.$editor.getLoader().hide();
+                    this.$editor.getZoom().get().then(zoom => this.zoom = parseInt(zoom * 100));
                 });
 
             this.editorLoaded = true;
@@ -92,10 +93,10 @@ export default {
 
         },
         editorZoomIn() {
-            this.$editor.getZoom().in();
+            this.$editor.getZoom().in().then(zoom => this.zoom = parseInt(zoom * 100));
         },
         editorZoomOut() {
-            this.$editor.getZoom().out();
+            this.$editor.getZoom().out().then(zoom => this.zoom = parseInt(zoom * 100));
         },
         wait(t) {
             return new Promise(function (resolve) {
@@ -105,6 +106,7 @@ export default {
     },
     data() {
         return {
+            zoom: 55,
             currentActiveObject: null,
             editorLoaded: false,
             shouldShowMenu: false
