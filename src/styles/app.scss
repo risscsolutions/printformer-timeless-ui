@@ -29,6 +29,9 @@ body, html {
 html, div, label, span, p, h1, h2, h3, h4, h5, h6, b, i {
     font-family: 'Montserrat', sans-serif;
 }
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+    font-family: 'Montserrat', sans-serif;
+}
 
 .editor-iframe-with-pager {
     min-height: calc(100vh - 220px);
@@ -168,7 +171,9 @@ button {
     border-bottom: 5px solid white;
 }
 
-[aria-describedby="delete-text-dialog"]::after {
+[aria-describedby="delete-text-dialog"]::after,
+[aria-describedby="delete-form-dialog"]::after,
+[aria-describedby="delete-asset-dialog"]::after {
     content: "";
     width: 0;
     height: 0;
@@ -193,7 +198,9 @@ button {
     border-bottom: 6px solid #c5c5c5;
 }
 
-[aria-describedby="delete-text-dialog"]::before {
+[aria-describedby="delete-text-dialog"]::before,
+[aria-describedby="delete-asset-dialog"]::before,
+[aria-describedby="delete-form-dialog"]::before {
     content: "";
     width: 0;
     height: 0;

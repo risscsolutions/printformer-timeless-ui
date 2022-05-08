@@ -166,6 +166,37 @@ export default {
         });
 
         this.loadUserMedias();
+
+        const dialog = $('#delete-asset-dialog');
+        dialog
+            .dialog({
+                classes: {
+                    "ui-dialog": 'py-4 px-6',
+                    "ui-dialog-titlebar": "is-hidden",
+                },
+                autoOpen: false,
+                resizable: false,
+                height: "auto",
+                width: 384,
+                modal: true,
+                buttons: [
+                    {
+                        text: "LÖSCHEN",
+                        class: "button no-radius is-info my-0",
+                        click: () => {
+                            this.$catch(this.activeObject.delete())
+                                .then(() => dialog.dialog("close"));
+                        }
+                    },
+                    {
+                        text: "ABBRECHEN",
+                        class: "button no-radius is-dark dark-gray-background-color my-0",
+                        click: () => {
+                            dialog.dialog("close");
+                        }
+                    }
+                ]
+            });
     },
     methods: {
         icon(name) {
@@ -221,8 +252,10 @@ export default {
         assetFit() {
             this.$catch(this.activeObject.fitAsset());
         },
-        deleteAssetBox() {
-            this.$catch(this.activeObject.delete());
+        deleteAssetBox(e) {
+            $('#delete-asset-dialog')
+                .dialog('option', 'position', {my: "right center", at: "left-300 center", of: $(e.currentTarget)})
+                .dialog('open');
         },
         dragover(event) {
             event.preventDefault();
