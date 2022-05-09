@@ -34,10 +34,10 @@ export default {
             this.confirmed = !this.confirmed;
         },
         goBack() {
-            console.log(this.previewConfig.editorSteps.previous)
+            // console.log(this.previewConfig.editorSteps.previous)
         },
         gotToNext() {
-            console.log(this.previewConfig.editorSteps.next)
+            // console.log(this.previewConfig.editorSteps.next)
         }
     },
     data() {
