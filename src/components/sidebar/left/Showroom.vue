@@ -10,7 +10,8 @@
                       <span class="icon is-small" v-html="$svg('Pfeil3', 'stroke-white')">
                       </span>
                         </button>
-                        <button v-show="isPanelOpen" class="button is-dark dark-gray-background-color no-radius width-50 height-50"
+                        <button v-show="isPanelOpen"
+                                class="button is-dark dark-gray-background-color no-radius width-50 height-50"
                                 @click="toggleSidebarPanel('threedee')">
                       <span class="icon is-small" v-html="$svg('Pfeil2', 'stroke-white')">
                         </span>
@@ -72,10 +73,12 @@ import Events from "@rissc/printformer-editor-client/dist/Events";
 import AssetsInfo from "./AssetsInfo";
 import ShapesInfo from "./ShapesInfo";
 import TextsInfo from "./TextsInfo";
+import ViewSettingsInfo from "./ViewSettingsInfo";
+import VariantsInfo from "./VariantsInfo";
 
 export default {
     name: "showroom",
-    components: {AssetsInfo, ShapesInfo, TextsInfo},
+    components: {AssetsInfo, ShapesInfo, TextsInfo, ViewSettingsInfo, VariantsInfo},
 
     computed: {
         ...mapState(['editorConfig', 'is3D', 'notifications', 'openControlTab']),

@@ -1,9 +1,9 @@
 <template>
     <div>
         <div class="columns is-multiline is-centered">
-            <div class="column is-24">
+            <div class="column is-24 py-0">">
                 <div class="content is-small">
-                    <h4 class="dark-gray-color">Form auswählen</h4>
+                    <h4 class="dark-gray-color mb-0">Form auswählen</h4>
                 </div>
             </div>
             <div class="column is-24">

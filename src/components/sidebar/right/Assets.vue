@@ -1,14 +1,14 @@
 <template>
     <div class="is-flex is-flex-direction-column">
         <div class="columns is-multiline is-centered">
-            <div class="column is-24">
+            <div class="column is-24" v-if="allowAddAssets">
                 <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background"
                      style="cursor: pointer" :class="{'no-interaction': activeObject}" @click="uploadMediaAsset">
                     <span :style="{'opacity': activeObject ? '50%' : '100%'}" class="dark-gray-color">Neue Bildbox</span>
                     <span :style="{'opacity': activeObject ? '50%' : '100%'}" class="svg-20 m-1" v-html="icon('HinzufuegenPlus')"></span>
                 </div>
             </div>
-            <div class="column is-24">
+            <div class="column is-24" v-if="allowAddAssets">
                 <hr class="divider">
             </div>
             <div class="column is-24">
@@ -141,6 +141,7 @@ import Events from "@rissc/printformer-editor-client/dist/Events";
 import EditorObject, {Asset} from "@rissc/printformer-editor-client/dist/Objects";
 import bulmaSlider from "bulma-slider/src/js";
 import ExtendedEdit from "./ExtendedEdit";
+import {mapGetters} from "vuex";
 
 export default {
     name: "assets",
@@ -336,7 +337,9 @@ export default {
             }
 
             return color;
-        }
+        },
+        ...mapGetters(['allowAddAssets']),
+
     },
     data() {
         return {

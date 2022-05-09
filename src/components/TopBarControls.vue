@@ -47,21 +47,21 @@ export default {
             this.$store.commit('setEditorConfig', config);
 
             // loop through pages to load threedee preview correctly
-            this.wait(2000)
-                .then(async () => {
-                    let pages = await this.$editor.getPager().pages;
-                    await this.$editor.getLoader().show('Loading...');
-
-                    for (let i = 1; i < pages.length; i++) {
-                        if (i < pages.length) {
-                            await this.$editor.getPager().showPage(i);
-                        }
-                    }
-
-                    await this.$editor.getPager().showPage(1);
-                    await this.$editor.getLoader().hide();
-                    this.$editor.getZoom().get().then(zoom => this.zoom = parseInt(zoom * 100));
-                });
+            // this.wait(2000)
+            //     .then(async () => {
+            //         let pages = await this.$editor.getPager().pages;
+            //         await this.$editor.getLoader().show('Loading...');
+            //
+            //         for (let i = 1; i < pages.length; i++) {
+            //             if (i < pages.length) {
+            //                 await this.$editor.getPager().showPage(i);
+            //             }
+            //         }
+            //
+            //         await this.$editor.getPager().showPage(1);
+            //         await this.$editor.getLoader().hide();
+            //         this.$editor.getZoom().get().then(zoom => this.zoom = parseInt(zoom * 100));
+            //     });
 
             this.editorLoaded = true;
         });

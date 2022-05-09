@@ -1,33 +1,42 @@
 <template>
     <div v-if="hasVariants">
-        <div class="content is-small">
-            <h1>Wähle deine Farbe aus</h1>
+        <div class="column is-24 py-0">
+            <div class="content is-small">
+                <h4 class="dark-gray-color mb-0">Wähle deine Farbe aus</h4>
+            </div>
         </div>
         <div class="column is-24">
             <hr class="divider">
         </div>
         <div class="columns is-multiline is-mobile mb-2">
-            <div v-for="variant in variants" @click="loadVariant(variant, variant.id)" class="column is-half">
-                <div v-if="variant.thumbnail.type === 'color'" class="box variant"
+            <div v-for="variant in variants" @click="loadVariant(variant, variant.id)" class="column is-one-third">
+                <div v-if="variant.thumbnail.type === 'color'" class="box variant mb-0"
                      :class="{'variant-active': currentId === variant.id}"
                      :style="{'background-color': variant.thumbnail.value}">
                     <figure class="image is-square">
                         <span style="border-style: none; outline-color: transparent"></span>
                     </figure>
                 </div>
-                <div v-else class="box variant p-0" :class="{'variant-active': currentId === variant.id}">
+                <div v-else class="box variant p-0 mb-0" :class="{'variant-active': currentId === variant.id}">
                     <figure class="image is-square">
                         <img :src="variant.thumbnail.value" height="70px" width="auto">
                     </figure>
                 </div>
-                {{ variant.name }}
+                <span class="dark-gray-color variant-name" :title="variant.name">{{ variant.name }}</span>
             </div>
         </div>
     </div>
 </template>
 
 <style lang="css" scoped>
-
+.variant-name {
+    font-size: 10pt;
+    text-overflow: ellipsis;
+    width: 100%;
+    display: block;
+    overflow: hidden;
+    text-align: center;
+}
 .variant-active {
     border: 4px solid #000000 !important;
 }

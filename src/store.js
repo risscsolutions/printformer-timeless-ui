@@ -11,6 +11,17 @@ export default function makeStore() {
             fonts: [],
             openControlTab: null,
         },
+        getters: {
+            allowAddShapes(state) {
+                return ((state.editorConfig || {}).configuration|| {}).allowAddShapes;
+            },
+            allowAddAssets(state) {
+                return ((state.editorConfig || {}).configuration|| {}).allowAddAssets;
+            },
+            allowAddTexts(state) {
+                return ((state.editorConfig || {}).configuration|| {}).allowAddTexts;
+            }
+        },
         mutations: {
             setEditorConfig(state, editorConfig) {
                 state.editorConfig = editorConfig;

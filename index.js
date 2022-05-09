@@ -1,3 +1,6 @@
+import Events from "@rissc/printformer-editor-client/dist/Events";
+
+document.body.style.opacity = '0%';
 window.jQuery = window.$ = require('./src/vendor/jquery-ui-1.13.1.custom/external/jquery/jquery');
 require('./src/vendor/jquery-ui-1.13.1.custom/jquery-ui');
 
@@ -79,6 +82,10 @@ window.onload = () => {
         }
     }
     window.events = new EventEmitter();
+
+    window.events.on(Events.EDITOR_LOADED, async (config) => {
+        document.body.style.opacity = '100%';
+    });
 
     // mobile chrome ios fix
     if (navigator.userAgent.match('CriOS')) {

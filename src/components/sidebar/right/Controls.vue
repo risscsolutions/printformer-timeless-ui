@@ -14,37 +14,44 @@
             </transition>
             <div class="column is-1 p-0 width-100" style="overflow: auto">
                 <div class="sidebar-container">
-                    <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
+                    <button
+                            class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
                             @click="toggleSidebarPanel('assets')">
                         <span class="mb-1" v-html="icon('Bilder')"></span>
                         <span class="dark-gray-color has-text-weight-medium">Bilder</span>
                     </button>
-                    <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
+                    <button v-if="allowAddTexts"
+                            class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
                             @click="toggleSidebarPanel('texts')">
                         <span class="mb-1" v-html="icon('Text')"></span>
                         <span class="dark-gray-color has-text-weight-medium">Texte</span>
                     </button>
-                    <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
+                    <button v-if="allowAddShapes"
+                            class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
                             @click="toggleSidebarPanel('shapes')">
                         <span class="mb-1" v-html="icon('Formen')"></span>
                         <span class="dark-gray-color has-text-weight-medium">Formen</span>
                     </button>
-                    <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
-                            v-if="hasVariants" @click="toggleSidebarPanel('variants')">
+                    <button
+                        class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
+                        v-if="hasVariants" @click="toggleSidebarPanel('variants')">
                         <span class="mb-1" v-html="icon('Farbpalette')"></span>
                         <span class="dark-gray-color has-text-weight-medium">Produktfarbe ändern</span>
                     </button>
                     <div class="columns p-0 is-gapless">
-                        <span class="column has-text-centered" v-html="icon('VectorizerPfeilLinks')" style="cursor: pointer"
+                        <span class="column has-text-centered" v-html="icon('VectorizerPfeilLinks')"
+                              style="cursor: pointer"
                               @click="backward"></span>
-                        <span class="column has-text-centered" v-html="icon('VectorizerPfeilRechts')" style="cursor: pointer"
+                        <span class="column has-text-centered" v-html="icon('VectorizerPfeilRechts')"
+                              style="cursor: pointer"
                               @click="forward"></span>
                     </div>
 
 
-                    <button class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
-                            style="margin-top: auto;"
-                            @click="toggleSidebarPanel('view-settings')">
+                    <button
+                        class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
+                        style="margin-top: auto;"
+                        @click="toggleSidebarPanel('view-settings')">
                         <span class="mb-1" v-html="icon('Raster')"></span>
                         <span class="dark-gray-color has-text-weight-medium">Ansicht</span>
                     </button>
@@ -104,7 +111,7 @@
 </style>
 <script>
 import Events from "@rissc/printformer-editor-client/dist/Events";
-import {mapState} from "vuex";
+import {mapGetters, mapState} from "vuex";
 import {debounce} from "lodash";
 import BlockTypes from "@rissc/printformer-ts-common/dist/BlockTypes";
 
@@ -133,7 +140,8 @@ export default {
         isMultiPage() {
             return this.previewPages.length > 1;
         },
-        ...mapState(['editorConfig', 'previewPages', 'openControlTab'])
+        ...mapState(['editorConfig', 'previewPages', 'openControlTab']),
+        ...mapGetters(['allowAddShapes', 'allowAddAssets', 'allowAddTexts']),
     },
     mounted() {
         window.events.on(Events.EDITOR_LOADED, async (config) => {
