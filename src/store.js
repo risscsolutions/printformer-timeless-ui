@@ -4,6 +4,7 @@ export default function makeStore() {
     return new Vuex.Store({
         state: {
             editorConfig: {},
+            previewConfig: {},
             is3D: false,
             previewPages: [],
             notifications: [],
@@ -14,6 +15,9 @@ export default function makeStore() {
         mutations: {
             setEditorConfig(state, editorConfig) {
                 state.editorConfig = editorConfig;
+            },
+            setPreviewConfig(state, previewConfig) {
+                state.previewConfig = previewConfig;
             },
             setIs3D(state, is3D) {
                 state.is3D = is3D;
