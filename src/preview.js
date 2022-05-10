@@ -3,7 +3,7 @@ import makeStore from "./store";
 import Vuex from "vuex";
 import TopBar from "./components/sidebar/preview/TopBar";
 import Preview from "./components/sidebar/preview/Preview";
-import {parseSearchPath} from "./helper";
+import {urlQueryObject} from "./helper";
 import Connector from "@rissc/printformer-editor-client/dist/Connector";
 import EventEmitter from "eventemitter3";
 
@@ -16,8 +16,8 @@ window.onload = () => {
     const previewIframe = document.getElementById('previewFrame');
     const store = makeStore();
 
-    let url = new URL(location.href);
-    let query = parseSearchPath(url);
+    let query = urlQueryObject().query;
+    let url = urlQueryObject().url;
 
     if (process.env.NODE_ENV === 'development') {
         url = new URL(process.env.PF_URL);

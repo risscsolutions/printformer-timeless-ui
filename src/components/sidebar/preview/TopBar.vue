@@ -4,11 +4,11 @@
         <div class="column buttons has-text-right mb-0">
             <button @click="goBack" class="button no-radius is-dark dark-gray-background-color">
                 <span class="icon is-small" v-html="icon('Zueueck')"></span>
-                <span class="has-text-weight-light">{{ previewConfig.cancelLabel }}</span>
+                <span class="has-text-weight-light">{{ previewConfig.editorSteps ? previewConfig.editorSteps.previous.label : 'Loading...' }}</span>
             </button>
             <button :disabled="!confirmed" @click="gotToNext" class="button no-radius is-info ">
                 <span class="icon is-small" v-html="icon('Auge')"></span>
-                <span class="has-text-weight-light">{{ previewConfig.nextLabel }}</span>
+                <span class="has-text-weight-light">{{ previewConfig.editorSteps ? previewConfig.editorSteps.next.label : 'Loading...' }}</span>
             </button>
         </div>
         <div class="column is-2 is-hidden-touch"></div>
@@ -17,6 +17,8 @@
 <script>
 import {mapState} from "vuex";
 import {EventBus} from '../../../event-bus';
+import {goToStep} from "../../../helpers";
+import {urlQueryObject} from "../../../helper";
 
 export default {
     name: "top-bar",
@@ -34,10 +36,10 @@ export default {
             this.confirmed = !this.confirmed;
         },
         goBack() {
-            // console.log(this.previewConfig.editorSteps.previous)
+            window.location.assign(window.location.href.replace('preview.html', 'index.html'));
         },
         gotToNext() {
-            // console.log(this.previewConfig.editorSteps.next)
+            goToStep(this.previewConfig.editorSteps.next, urlQueryObject().query.draft)
         }
     },
     data() {

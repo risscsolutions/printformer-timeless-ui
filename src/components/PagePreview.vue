@@ -139,7 +139,7 @@ export default {
     },
     methods: {
         changePage(pageNumber) {
-            if (this.currentPage !== pageNumber) this.$editor.getPager().showPage(pageNumber)
+            if (this.currentPage !== pageNumber) this.$editor.getPager().showPage(pageNumber);
         }
     },
     data() {
