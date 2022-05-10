@@ -18,12 +18,12 @@
                 <div class="divider" style="margin: 0 !important;"></div>
             </div>
             <div class="column is-24">
-                <div class="columns is-vcentered" style="cursor: pointer" @click="downloadFile">
+                <div class="columns is-vcentered">
                     <div class="column is-four-fifths">
-                        <span class="subtitle is-4">Vorschau herunterladen</span>
+                        <a class="subtitle is-4" :href="previewConfig.downloadUrl">Vorschau herunterladen</a>
                     </div>
                     <div class="column is-one-fifth">
-                        <span class="icon" v-html="$svg('Abstand4')"></span>
+                        <a class="icon" :href="previewConfig.downloadUrl" v-html="$svg('Abstand4')"></a>
                     </div>
                 </div>
             </div>
@@ -32,11 +32,13 @@
             </div>
             <div class="column is-24">
                 <div class="columns is-mobile is-centered" :style="confirmedStyles">
-                    <div class="column is-large is-2">
-                        <input type="checkbox" @click="toggleConfirmed" v-model="confirmed">
+                    <div class="column is-large is-2 mt-1 ml-3">
+                        <input class="bigcheckbox" type="checkbox" @click="toggleConfirmed" v-model="confirmed">
                     </div>
-                    <div class="column is-22" style="color: white; cursor: pointer" @click="toggleConfirmed">
-                        {{ previewConfig.confirmText }}
+                    <div class="column is-22" style="color: white; cursor: pointer">
+                        <button class="has-text-left" style="background-color: transparent" @click="toggleConfirmed">
+                            <span class="is-size-6" style="color: white">{{ previewConfig.confirmText }}</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -52,13 +54,21 @@
     width: 100%;
     display: flex;
 }
+
+.bigcheckbox {
+    -ms-transform: scale(2);
+    -moz-transform: scale(2);
+    -webkit-transform: scale(2);
+    -o-transform: scale(2);
+    transform: scale(2);
+    padding: 10px;
+}
 </style>
 <script>
 import {mapState} from "vuex";
 import TopBar from "./TopBar";
 import {EventBus} from '../../../event-bus';
 import Events from "@rissc/printformer-editor-client/dist/Events";
-import axios from 'axios';
 
 export default {
     name: "preview",
@@ -95,17 +105,6 @@ export default {
         toggleConfirmed() {
             EventBus.$emit('clicked-confirmed', this.confirmed);
             this.confirmed = !this.confirmed;
-        },
-        downloadFile() {
-            axios.get(this.previewConfig.downloadUrl, {responseType: 'blob'})
-                .then(response => {
-                    const blob = new Blob([response.data], {type: 'application/pdf'});
-                    const link = document.createElement('a');
-                    link.href = URL.createObjectURL(blob);
-                    link.download = '';
-                    link.click();
-                    URL.revokeObjectURL(link.href);
-                }).catch(console.error);
         }
     },
     data() {

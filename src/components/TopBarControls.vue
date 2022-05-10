@@ -31,10 +31,8 @@
     </div>
 </template>
 <script>
-import {mapState, mapGetters} from "vuex";
-import axios from 'axios'
+import {mapState} from "vuex";
 import Events from "@rissc/printformer-editor-client/dist/Events";
-import {urlQueryObject} from "../helper";
 
 export default {
     name: "top-bar-controls",

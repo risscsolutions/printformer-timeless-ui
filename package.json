@@ -17,7 +17,6 @@
     "@creativebulma/bulma-divider": "^1.1.0",
     "@rissc/printformer-editor-client": "^1.0.36",
     "@rissc/printformer-ts-common": "^1.0.13",
-    "axios": "^0.27.2",
     "bulma": "^0.9.3",
     "bulma-carousel": "^4.0.24",
     "bulma-slider": "^2.0.5",
