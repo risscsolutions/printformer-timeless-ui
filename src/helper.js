@@ -1,7 +1,7 @@
-export function parseSearchPath() {
-    if (location.search.length === 0) return {};
+export function parseSearchPath(url) {
+    if (url.search.length === 0) return {};
 
-    return location.search.substring(1)
+    return url.search.substring(1)
         .split('&')
         .map(pair => pair.split('='))
         .reduce((acc, pair) => {
