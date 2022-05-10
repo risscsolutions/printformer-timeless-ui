@@ -31,7 +31,7 @@
     </div>
 </template>
 <script>
-import {mapState, mapGetters} from "vuex";
+import {mapState} from "vuex";
 import Events from "@rissc/printformer-editor-client/dist/Events";
 
 export default {
@@ -90,7 +90,11 @@ export default {
                 })
         },
         pagePreview() {
-
+          this.$editor.goToNextStep()
+            .then(() => {
+              this.$editor.getLoader().show();
+              window.location.assign(window.location.href.replace('index.html', 'preview.html'));
+            });
         },
         editorZoomIn() {
             this.$editor.getZoom().in().then(zoom => this.zoom = parseInt(zoom * 100));

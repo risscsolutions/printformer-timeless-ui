@@ -9,12 +9,13 @@
     "assets": "node ./svg-gen.js",
     "predev": "npm run assets",
     "prebuild": "npm run assets",
-    "dev": "parcel index.html --no-hmr",
-    "build": "parcel build index.html --public-url ./",
+    "dev": "parcel index.html preview.html --no-hmr",
+    "build": "parcel build index.html preview.html --public-url ./",
     "postbuild": "cd dist && zip -r ../${npm_package_name}-${npm_package_version}.zip ."
   },
   "dependencies": {
-    "@rissc/printformer-editor-client": "^1.0.34",
+    "@creativebulma/bulma-divider": "^1.1.0",
+    "@rissc/printformer-editor-client": "^1.0.36",
     "@rissc/printformer-ts-common": "^1.0.13",
     "bulma": "^0.9.3",
     "bulma-carousel": "^4.0.24",
