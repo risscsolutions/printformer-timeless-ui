@@ -4,11 +4,11 @@
         <div class="column buttons has-text-right mb-0">
             <button @click="goBack" class="button no-radius is-dark dark-gray-background-color">
                 <span class="icon is-small" v-html="icon('Zueueck')"></span>
-                <span class="has-text-weight-light">{{ previewConfig.editorSteps ? previewConfig.editorSteps.previous.label : 'Loading...' }}</span>
+                <span class="has-text-weight-light">{{ previewConfig.editorSteps ? previewConfig.editorSteps.previous.label : 'ZURÜCK ZUM EDITOR' }}</span>
             </button>
             <button :disabled="!confirmed" @click="gotToNext" class="button no-radius is-info ">
                 <span class="icon is-small" v-html="icon('Auge')"></span>
-                <span class="has-text-weight-light">{{ previewConfig.editorSteps ? previewConfig.editorSteps.next.label : 'Loading...' }}</span>
+                <span class="has-text-weight-light">{{ previewConfig.editorSteps ? previewConfig.editorSteps.next.label : 'WEITER ZUM WARENBKORB' }}</span>
             </button>
         </div>
         <div class="column is-2 is-hidden-touch"></div>

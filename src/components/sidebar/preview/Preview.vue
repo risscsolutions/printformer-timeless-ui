@@ -1,29 +1,20 @@
 <template>
-    <div class="column is-1 mr-3 mb-3 width-416 sidebar-no-pager" style="border: 1px solid black">
+    <div class="column is-1 mr-3 mb-3 width-416 sidebar-no-pager" style="border: 1px solid #A6A9A9">
         <div class="columns is-multiline is-centered p-3">
-            <div class="column is-24">
-                <div class="columns is-multiline is-vcentered is-gapless">
-                    <div class="column is-24">
-                        <span class="subtitle is-4">PDF-Vorschau</span>
-                    </div>
-                    <div class="column is-24">
-                    <span>
-                        Bitte überprüfen Sie gründlich das Dokument,
-                        insbesondere auf Rechtschreibfehler.
-                    </span>
-                    </div>
+            <div class="column is-24 py-0">
+                <div class="content">
+                    <h4 class="dark-gray-color like-h4 mb-1">PDF-Vorschau</h4>
+                    <span class="dark-gray-color ">Bitte überprüfen Sie gründlich das Doku-ment, insbesondere auf Rechtschreibfehler.</span>
                 </div>
             </div>
             <div class="column is-24">
-                <div class="divider" style="margin: 0 !important;"></div>
+                <hr class="divider">
             </div>
-            <div class="column is-24">
-                <div class="columns is-vcentered">
-                    <div class="column is-four-fifths">
-                        <a class="subtitle is-4" :href="previewConfig.downloadUrl">Vorschau herunterladen</a>
-                    </div>
-                    <div class="column is-one-fifth">
-                        <a class="icon" :href="previewConfig.downloadUrl" v-html="$svg('Abstand4')"></a>
+            <div class="column is-24 py-0">
+                <div class="columns">
+                    <div class="column is-flex is-justify-content-space-between">
+                        <span class="dark-gray-color">Vorschau herunterladen</span>
+                        <a class="icon" :href="previewConfig.downloadUrl" v-html="$svg('Download')"></a>
                     </div>
                 </div>
             </div>
@@ -46,8 +37,11 @@
     </div>
 </template>
 <style lang="css" scoped>
-@import "@creativebulma/bulma-divider/dist/bulma-divider.min.css";
-
+.like-h4 {
+    font-weight: 600;
+    line-height: 1.125;
+    font-size: 15px;
+}
 .sidebar-container {
     height: 100%;
     flex-direction: column;

@@ -38,7 +38,8 @@
     text-align: center;
 }
 .variant-active {
-    border: 4px solid #000000 !important;
+    border: 2px solid #A6A9A9 !important;
+    border-radius: 3px;
 }
 
 .variant {
