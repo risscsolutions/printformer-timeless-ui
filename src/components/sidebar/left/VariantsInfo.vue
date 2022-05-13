@@ -1,7 +1,7 @@
 <template>
     <info icon="Farbpalette">
         <template slot="info">
-            Farbvariante hier wählen
+            <p>Farbvariante hier wählen</p>
         </template>
         <template slot="tipp">
             <p>Hier texte bitte</p>

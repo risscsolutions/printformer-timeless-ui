@@ -1,14 +1,14 @@
 <template>
     <info icon="TexteHinweise">
         <template slot="info">
-            Klicke auf das Textfeld, um Schriften hinzuzufügen und zu formatieren.
+            <p>Klicke auf das Textfeld, um Schriften hinzuzufügen und zu formatieren.</p>
         </template>
         <template slot="tipp">
-            Mit einem <b>einfachem Klick</b> auf das Textfeld kannst du die Größe des Rahmens ändern, drehen und
+            <p>Mit einem <b>einfachem Klick</b> auf das Textfeld kannst du die Größe des Rahmens ändern, drehen und
             verschieben.
             <br>
             Mit einem <b>doppelten Klick</b> in das Textfeld kannst du den Text innerhalb der Rahmens beliebig
-            verändern.
+            verändern.</p>
         </template>
     </info>
 </template>

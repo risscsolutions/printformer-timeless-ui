@@ -1,10 +1,10 @@
 <template>
     <info icon="FormenHinweise">
         <template slot="info">
-            Klicke auf das Formenfeld, um Motive hinzufügen und zu bearbeiten.
+            <p> Klicke auf das Formenfeld, um Motive hinzufügen und zu bearbeiten.</p>
         </template>
         <template slot="tipp">
-            Du kannst deine Motive per Drag & Drop auf deiner Werbefläche platzieren.
+            <p>Du kannst deine Motive per Drag & Drop auf deiner Werbefläche platzieren.</p>
         </template>
     </info>
 </template>

@@ -26,19 +26,21 @@
                 </div>
             </div>
             <transition name="slide">
-                <div v-show="isPanelOpen" class="column p-4 pt-5 dark-gray-color" style="border: 1px solid grey">
-                    <b v-if="notifications.length === 0" class="mb-1">
-                        KLICKE AUF DIE SYMBOLE IN DER
-                        RECHTEN MENÜLEISTE, UM DEINE
-                        WERBEARTIKEL ZU GESTALTEN
-                    </b>
+                <div v-show="isPanelOpen" class="column p-4 dark-gray-color" style="border: 1px solid grey"
+                     :class="{'sidebar-with-pager': isMultiPage, 'sidebar-no-pager': !isMultiPage}">
                     <div v-if="notifications.length">
                         <div v-for="notification in notifications">
                             <b class="has-text-danger">{{ notification.type }}</b>
                             <p>{{ notification.message }}</p>
                         </div>
+                        <hr class="divider my-3">
                     </div>
-                    <component v-else-if="openControlTab" :is="infoComponent"></component>
+                    <p class="mb-1 like-h4">
+                        KLICKE AUF DIE SYMBOLE IN DER
+                        RECHTEN MENÜLEISTE, UM DEINE
+                        WERBEARTIKEL ZU GESTALTEN
+                    </p>
+                    <component v-if="openControlTab" :is="infoComponent"></component>
                     <div>
                         <iframe ref="threedeeiframe"
                                 style="min-height: 400px; width: 100%; height: 100%; display: none"></iframe>
@@ -81,10 +83,13 @@ export default {
     components: {AssetsInfo, ShapesInfo, TextsInfo, ViewSettingsInfo, VariantsInfo},
 
     computed: {
-        ...mapState(['editorConfig', 'is3D', 'notifications', 'openControlTab']),
         infoComponent() {
             return `${this.openControlTab}-info`;
-        }
+        },
+        isMultiPage() {
+            return this.previewPages.length > 1;
+        },
+        ...mapState(['editorConfig', 'is3D', 'notifications', 'openControlTab', 'previewPages']),
     },
     mounted() {
         window.events.on(Events.EDITOR_LOADED, () => {
@@ -147,7 +152,7 @@ export default {
             has3D: false,
             component: null,
             editorLoaded: false,
-            isPanelOpen: false,
+            isPanelOpen: true,
         }
     }
 }

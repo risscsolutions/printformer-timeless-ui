@@ -1,7 +1,7 @@
 <template>
     <info icon="Raster">
         <template slot="info">
-            Rasterfarbe hier
+            <p>Rasterfarbe hier</p>
         </template>
         <template slot="tipp">
             <p>Hier texte bitte</p>

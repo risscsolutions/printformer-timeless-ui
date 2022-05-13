@@ -1,7 +1,7 @@
 <template>
     <info icon="BilderHinweise">
         <template slot="info">
-            Klicke auf das Bildfeld, um Bilder hinzufügen und zu bearbeiten
+            <p>Klicke auf das Bildfeld, um Bilder hinzufügen und zu bearbeiten</p>
         </template>
         <template slot="tipp">
             <p>

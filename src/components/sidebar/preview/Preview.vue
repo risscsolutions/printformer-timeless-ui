@@ -37,11 +37,6 @@
     </div>
 </template>
 <style lang="css" scoped>
-.like-h4 {
-    font-weight: 600;
-    line-height: 1.125;
-    font-size: 15px;
-}
 .sidebar-container {
     height: 100%;
     flex-direction: column;
