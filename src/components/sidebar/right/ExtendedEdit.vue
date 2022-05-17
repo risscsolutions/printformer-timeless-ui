@@ -78,7 +78,7 @@
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Ebenen</span>
-                        <span @click="openLayer" style="cursor: pointer" class="svg-20" v-html="icon('Ebenen')"></span>
+                        <span @click="openLayer" style="cursor: pointer" class="svg-20" v-html="icon('Ebenen2')"></span>
                     </div>
                     <div v-if="openLayerSettings" class="column is-24">
                         <div class="columns is-multiline">
@@ -110,7 +110,7 @@
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Duplizieren</span>
                         <span @click="duplicateBlock" style="cursor: pointer" class="svg-20"
-                              v-html="icon('Ebenen2')"></span>
+                              v-html="icon('Ebenen')"></span>
                     </div>
                 </div>
             </div>

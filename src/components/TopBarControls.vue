@@ -4,7 +4,7 @@
             <span @click="editorZoomIn" style="cursor: pointer; vertical-align: middle;" class="svg-20"
                   v-html="icon('Plus')">
             </span>
-            <span>{{ zoom }}%</span>
+            <b>{{ zoom }}%</b>
             <span @click="editorZoomOut" style="cursor: pointer; vertical-align: middle;" class="svg-20"
                   v-html="icon('Minus')">
             </span>
@@ -15,16 +15,16 @@
             </button>
             <button @click="goBack" class="button no-radius is-dark dark-gray-background-color mb-0">
                 <span class="icon is-small" v-html="icon('Zueueck')"></span>
-                <span class="has-text-weight-light">Zurück zum Artikel</span>
+                <span class="has-text-weight-light">ZURÜCK ZUM ARTIKEL</span>
             </button>
             <button @click="editorSave" class="button no-radius is-info mb-0">
                 <span class="icon is-small" v-html="icon('Soeichern')"></span>
                 <span class="has-text-weight-light"
-                      title="Dein Entwurf wurde für dich gespeichert">Entwurf Speichern</span>
+                      title="Dein Entwurf wurde für dich gespeichert">ENTWURF SPEICHERN</span>
             </button>
             <button @click="pagePreview" class="button no-radius is-info mb-0">
                 <span class="icon is-small" v-html="icon('Auge')"></span>
-                <span class="has-text-weight-light">Weiter zur Vorschau</span>
+                <span class="has-text-weight-light">WEITER ZUR VORSCHAU</span>
             </button>
         </div>
         <div class="column is-2 is-hidden-touch"></div>
@@ -90,11 +90,11 @@ export default {
                 })
         },
         pagePreview() {
-          this.$editor.goToNextStep()
-            .then(() => {
-              this.$editor.getLoader().show();
-              window.location.assign(window.location.href.replace('index.html', 'preview.html'));
-            });
+            this.$editor.getLoader().show();
+            this.$editor.goToNextStep()
+                .then(() => {
+                    window.location.assign(window.location.href.replace('index.html', 'preview.html'));
+                }, async () => await this.$editor.getLoader().hide());
         },
         editorZoomIn() {
             this.$editor.getZoom().in().then(zoom => this.zoom = parseInt(zoom * 100));

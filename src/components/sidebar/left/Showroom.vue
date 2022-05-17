@@ -6,15 +6,14 @@
                 <div class="columns direction-column">
                     <div>
                         <button v-show="!isPanelOpen" class="button is-info no-radius width-50 height-50"
-                                @click="toggleSidebarPanel('threedee')">
+                                @click="openSidebarPanel()">
                       <span class="icon is-small" v-html="$svg('Pfeil3', 'stroke-white')">
                       </span>
                         </button>
                         <button v-show="isPanelOpen"
                                 class="button is-dark dark-gray-background-color no-radius width-50 height-50"
-                                @click="toggleSidebarPanel('threedee')">
-                      <span class="icon is-small" v-html="$svg('Pfeil2', 'stroke-white')">
-                        </span>
+                                @click="closeSidebarPanel()">
+                            <span class="icon is-small" v-html="$svg('Pfeil2', 'stroke-white')"></span>
                         </button>
                     </div>
                     <div style="transform-origin: 52px 40px; transform: rotate(270deg);">
@@ -30,10 +29,18 @@
                      :class="{'sidebar-with-pager': isMultiPage, 'sidebar-no-pager': !isMultiPage}">
                     <div v-if="notifications.length">
                         <div v-for="notification in notifications">
-                            <b class="has-text-danger">{{ notification.type }}</b>
-                            <p>{{ notification.message }}</p>
+                            <b v-if="notification.type === 'error'" class="has-text-danger">Fehler</b>
+                            <b v-else-if="notification.type === 'info'" class="has-text-info">Info</b>
+                            <b v-else-if="notification.type === 'warning'" class="has-text-warning">Warnung</b>
+                            <div class="is-flex is-justify-content-space-between is-align-items-center">
+                                <p>{{ notification.message }}</p>
+                                <button v-if="notification.action" class="button is-info is-small"
+                                        @click="doAction(notification.id)">
+                                    <span class="icon is-small" v-html="$svg('Pfeil3', 'stroke-white')"></span>
+                                </button>
+                            </div>
+                            <hr class="divider my-3">
                         </div>
-                        <hr class="divider my-3">
                     </div>
                     <p class="mb-1 like-h4">
                         KLICKE AUF DIE SYMBOLE IN DER
@@ -77,6 +84,8 @@ import ShapesInfo from "./ShapesInfo";
 import TextsInfo from "./TextsInfo";
 import ViewSettingsInfo from "./ViewSettingsInfo";
 import VariantsInfo from "./VariantsInfo";
+import {goToStep} from "../../../helpers";
+import {urlQueryObject} from "../../../helper";
 
 export default {
     name: "showroom",
@@ -112,10 +121,167 @@ export default {
 
             this.editorLoaded = true;
         });
+
+        this.$editor.registerConfirmCallback('LEAVE_EDITOR_WITH_ERRORS', (confirm) => {
+            this.openSidebarPanel();
+
+            const dialog = $('#confirm-leave-with-errors');
+            dialog
+                .dialog({
+                    classes: {
+                        "ui-dialog": 'py-4 px-6',
+                        "ui-dialog-titlebar": "is-hidden",
+                    },
+                    autoOpen: false,
+                    resizable: false,
+                    height: "auto",
+                    width: 450,
+                    modal: true,
+                    buttons: [
+                        {
+                            text: "JA",
+                            class: "button no-radius is-info my-0",
+                            click: () => {
+                                confirm(true);
+                                dialog.dialog("close")
+                            }
+                        },
+                        {
+                            text: "ABBRECHEN",
+                            class: "button no-radius is-dark dark-gray-background-color my-0",
+                            click: () => {
+                                confirm(false)
+                                dialog.dialog("close");
+                            }
+                        }
+                    ]
+                })
+                .dialog('open');
+        });
+
+        this.$editor.registerConfirmCallback('ASSETS_ARE_LOADING', (confirm) => {
+            const dialog = $('#confirm-assets-are-loading');
+            dialog
+                .text(this.editorConfig.configuration.labels.assetsAreLoading)
+                .dialog({
+                    classes: {
+                        "ui-dialog": 'py-4 px-6',
+                        "ui-dialog-titlebar": "is-hidden",
+                    },
+                    autoOpen: false,
+                    resizable: false,
+                    height: "auto",
+                    width: 450,
+                    modal: true,
+                    buttons: [
+                        {
+                            text: "JA",
+                            class: "button no-radius is-info my-0",
+                            click: () => {
+                                confirm(true);
+                                dialog.dialog("close")
+                            }
+                        },
+                        {
+                            text: "ABBRECHEN",
+                            class: "button no-radius is-dark dark-gray-background-color my-0",
+                            click: () => {
+                                confirm(false)
+                                dialog.dialog("close");
+                            }
+                        }
+                    ]
+                })
+                .dialog('open');
+
+        });
+
+        this.$editor.registerConfirmCallback('HAS_SEEN_ALL_PAGES', (confirm) => {
+                const dialog = $('#confirm-has-seen-all-pages');
+                dialog
+                    .text(this.editorConfig.configuration.labels.hasSeenAllPages)
+                    .dialog({
+                        classes: {
+                            "ui-dialog": 'py-4 px-6',
+                            "ui-dialog-titlebar": "is-hidden",
+                        },
+                        autoOpen: false,
+                        resizable: false,
+                        height: "auto",
+                        width: 450,
+                        modal: true,
+                        buttons: [
+                            {
+                                text: "JA",
+                                class: "button no-radius is-info my-0",
+                                click: () => {
+                                    confirm(true);
+                                    dialog.dialog("close")
+                                }
+                            },
+                            {
+                                text: "ABBRECHEN",
+                                class: "button no-radius is-dark dark-gray-background-color my-0",
+                                click: () => {
+                                    confirm(false)
+                                    dialog.dialog("close");
+                                }
+                            }
+                        ]
+                    })
+                    .dialog('open');
+        });
+        this.$editor.registerConfirmCallback('OTHER_USER_REQUESTS_ENTRY', (confirm, user) => {
+            if (!user) {
+                confirm(false);
+                return;
+            }
+            const dialog = $('#confirm-user-entry-request');
+            dialog
+                .text(`${user.name} möchte in den Editor. Den Entwurf speichern und abgeben?`)
+                .dialog({
+                    classes: {
+                        "ui-dialog": 'py-4 px-6',
+                        "ui-dialog-titlebar": "is-hidden",
+                    },
+                    autoOpen: false,
+                    resizable: false,
+                    height: "auto",
+                    width: 450,
+                    modal: true,
+                    buttons: [
+                        {
+                            text: "JA",
+                            class: "button no-radius is-info my-0",
+                            click: () => {
+                                confirm(true);
+                                setTimeout(() => {
+                                    goToStep(this.editorConfig.editorSteps.cancel, urlQueryObject().query.draft)
+                                }, 200);
+                                dialog.dialog("close")
+                            }
+                        },
+                        {
+                            text: "ABBRECHEN",
+                            class: "button no-radius is-dark dark-gray-background-color my-0",
+                            click: () => {
+                                confirm(false)
+                                dialog.dialog("close");
+                            }
+                        }
+                    ]
+                })
+                .dialog('open');
+        });
+
+        window.events.on(Events.MEDIA_UPLOAD_FILE_ERROR, this.openSidebarPanel.bind(this));
     },
     methods: {
         icon(name) {
             return this.$svg(name);
+        },
+        doAction(id) {
+            this.$editor.getNotifications().doAction(id);
         },
         load3DModel() {
             if (this.is3D !== this.has3D) {
@@ -127,30 +293,20 @@ export default {
         },
         closeSidebarPanel() {
             this.isPanelOpen = false
+            if (!this.has3D) return;
+
+            this.load3DModel();
+            this.$refs.threedeeiframe.style.display = 'block';
         },
         openSidebarPanel() {
             this.isPanelOpen = true
+            this.$refs.threedeeiframe.style.display = 'none';
         },
-        toggleSidebarPanel(component) {
-            const threeDee = this.$refs.threedeeiframe;
-
-            if (this.component !== component) {
-                this.openSidebarPanel();
-                this.component = component;
-                this.load3DModel();
-                threeDee.style.display = 'block';
-            } else {
-                this.closeSidebarPanel();
-                this.component = null;
-                threeDee.style.display = 'none';
-            }
-        }
     },
     data() {
         return {
             currentPage: null,
             has3D: false,
-            component: null,
             editorLoaded: false,
             isPanelOpen: true,
         }

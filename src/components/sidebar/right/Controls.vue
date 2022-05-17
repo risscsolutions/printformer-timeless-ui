@@ -172,8 +172,6 @@ export default {
             } else {
                 onCancel = debounce(() => {
                     this.activeObject = null;
-                    this.closeSidebarPanel();
-                    this.$store.commit('setOpenControlTab', null);
                     window.events.off(Events.EDITOR_OBJECT_UPDATED, onUpdate);
                 }, 200);
             }
