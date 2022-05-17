@@ -11,6 +11,7 @@ export default function makeStore() {
             fontSizes: null,
             fonts: [],
             openControlTab: null,
+            showroomIsOpen: true,
         },
         getters: {
             allowAddShapes(state) {
@@ -56,6 +57,12 @@ export default function makeStore() {
                         state.notifications.splice(idx, 1);
                     }
                 })
+            },
+            openShowroom(state) {
+                state.showroomIsOpen = true;
+            },
+            closeShowroom(state) {
+                state.showroomIsOpen = false;
             }
         }
     });

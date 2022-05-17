@@ -93,7 +93,7 @@
                     </div>
                 </div>
             </div>
-            <extended-edit v-if="extendedEditSwitchOn" :active-object="activeObject" :opacity="opacity"
+            <extended-edit v-if="extendedEditSwitchOn && activeObject" :active-object="activeObject" :opacity="opacity"
                            :has-alignment="true" :has-layer="true" :has-opacity="true">
             </extended-edit>
             <div v-if="isAsset" class="column is-24">

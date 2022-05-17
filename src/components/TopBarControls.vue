@@ -10,7 +10,7 @@
             </span>
         </div>
         <div class="column buttons has-text-right mb-0">
-            <button v-if="hasWarnings" class="button no-radius mb-0" style="background: #AC5D7A">
+            <button v-if="hasWarnings" @click="openShowroom" class="button no-radius mb-0" style="background: #AC5D7A">
                 <span class="icon is-small" v-html="icon('Warnung')"></span>
             </button>
             <button @click="goBack" class="button no-radius is-dark dark-gray-background-color mb-0">
@@ -31,7 +31,7 @@
     </div>
 </template>
 <script>
-import {mapState} from "vuex";
+import {mapMutations, mapState} from "vuex";
 import Events from "@rissc/printformer-editor-client/dist/Events";
 
 export default {
@@ -106,7 +106,8 @@ export default {
             return new Promise(function (resolve) {
                 window.setTimeout(resolve, t)
             });
-        }
+        },
+        ...mapMutations(['openShowroom'])
     },
     data() {
         return {

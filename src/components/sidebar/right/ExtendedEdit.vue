@@ -168,7 +168,7 @@ export default {
         },
         opacity: {
             get() {
-                return this.activeObject.opacity * 100;
+                return this.activeObject ? this.activeObject.opacity * 100 : 100;
             },
             set(v) {
                 this.$catch(this.activeObject.setOpacity(v / 100));
@@ -212,7 +212,9 @@ export default {
         });
 
         window.events.on(Events.EDITOR_OBJECT_SELECTED, (block) => {
-            let leading = this.activeObject.leading;
+            if (!Text.isText(block)) return;
+
+            let leading = block.leading;
             leading = leading === null ? 'Auto' : Number(leading);
             $fontLeading.val(leading);
         });

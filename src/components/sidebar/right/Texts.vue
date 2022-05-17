@@ -10,7 +10,7 @@
                           v-html="icon('HinzufuegenPlus')"></span>
                 </div>
             </div>
-            <div v-if="isTextAsset && allFontsFlat" class="column is-24">
+            <div v-show="isTextAsset && allFontsFlat" class="column is-24">
                 <hr class="divider">
             </div>
             <div v-show="isTextAsset && allFontsFlat" class="column is-24 py-0">
@@ -25,7 +25,7 @@
                     </div>
                 </div>
             </div>
-            <div v-if="isTextAsset && allFontSizes" class="column is-24">
+            <div v-show="isTextAsset && allFontSizes" class="column is-24">
                 <hr class="divider">
             </div>
             <div v-show="isTextAsset && allFontSizes" class="column is-24 py-0">
@@ -33,7 +33,7 @@
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Schriftgröße</span>
                         <select class="width-140" name="fontSizes" id="font-size">
-                            <option v-for="(fontSize, index) in allFontSizes" :key="index" :value="fontSize">
+                            <option v-for="fontSize in allFontSizes" :value="fontSize">
                                 {{ fontSize }} pt
                             </option>
                         </select>
@@ -49,13 +49,15 @@
                         <span class="dark-gray-color">Schriftschnitt</span>
                     </div>
                     <div class="column is-3">
-                        <button @click="textStyle('bold')" title="bold" class="button is-small" ref="boldButton">
-                            <b>B</b>
+                        <button @click="textStyle" value="bold" id="bold-button"
+                                class="button is-small" :disabled="boldDisabled">
+                            <b class="no-interaction">B</b>
                         </button>
                     </div>
                     <div class="column is-3">
-                        <button @click="textStyle('italic')" title="italic" class="button is-small" ref="italicButton">
-                            <i>I</i>
+                        <button @click="textStyle" value="italic" id="italic-button"
+                                class="button is-small" :disabled="italicDisabled">
+                            <i class="no-interaction">I</i>
                         </button>
                     </div>
                 </div>
@@ -145,7 +147,7 @@
                     </div>
                 </div>
             </div>
-            <extended-edit v-if="extendedEditSwitchOn" :active-object="activeObject"
+            <extended-edit v-if="extendedEditSwitchOn && activeObject" :active-object="activeObject"
                            :has-alignment="true" :has-background-color="false"
                            :has-layer="true" :has-opacity="true" :has-line-height="true">
             </extended-edit>
@@ -194,35 +196,16 @@ export default {
             return this.activeObject && Text.isText(this.activeObject);
         }
     },
-    async updated() {
+    updated() {
         if (this.activeObject && Text.isText(this.activeObject)) {
-            if (this.activeObject.font.indexOf('Bold') !== -1) {
-                let currentFontByName = await this.$editor.getFontService().getFontByPostScriptName(this.currentFont);
-                if (currentFontByName.styles.length === 1 && currentFontByName.styles[0] === 'bold') {
-                    // set button disabled if current font is already bold
-                    this.$refs.boldButton.disabled = true;
-                } else if (currentFontByName.styles.length === 1 && currentFontByName.styles[0] !== 'bold') {
-                    // set button disabled if current font has no bold family member
-                    this.$refs.boldButton.disabled = true;
-                }
-            } else {
-                this.$refs.boldButton.disabled = false;
-            }
-
-            if (this.activeObject.font.indexOf('Italic') !== -1) {
-                let currentFontByName = await this.$editor.getFontService().getFontByPostScriptName(this.currentFont);
-                if (currentFontByName.styles.length === 1 && currentFontByName.styles[0] === 'italic') {
-                    // set button disabled if current font is already italic
-                    this.$refs.italicButton.disabled = true;
-                } else if (currentFontByName.styles.length === 1 && currentFontByName.styles[0] !== 'italic') {
-                    // set button disabled if current font has no italic family member
-                    this.$refs.italicButton.disabled = true;
-                }
-            } else {
-                this.$refs.italicButton.disabled = false;
-            }
-
             this.currentFont = this.activeObject.font;
+            Promise.all([this.$editor.getFontService().getFontByPostScriptName(this.currentFont),
+                this.$editor.getFontService().getOtherFontFamilyMembers(this.currentFont)])
+                .then(([font, family]) => {
+                    this.boldDisabled = font.styles.includes('bold') || !family.some(f => f.styles.includes('bold'))
+                    this.italicDisabled = font.styles.includes('italic') || !family.some(f => f.styles.includes('italic'))
+                });
+
             $('#font-family').val(this.activeObject.font).selectmenu('refresh');
             $('#font-size').val(this.activeObject.size).selectmenu('refresh');
         }
@@ -230,25 +213,25 @@ export default {
     mounted() {
         const $fontSelect = $('#font-family');
         $fontSelect.selectmenu({
-            icons: { button: "broken-arrow" },
-            width:140,
+            icons: {button: "broken-arrow"},
+            width: 140,
             change: (event, ui) => {
                 this.changeFont(ui.item.value);
             }
         });
 
-        $fontSelect.selectmenu( "menuWidget" ).addClass(['height-200', 'width-140'])
+        $fontSelect.selectmenu("menuWidget").addClass(['height-200', 'width-140'])
 
         const $fontSize = $('#font-size');
         $fontSize.selectmenu({
-            icons: { button: "broken-arrow" },
-            width:140,
+            icons: {button: "broken-arrow"},
+            width: 140,
             change: (event, ui) => {
                 this.changeFontSize(ui.item.value);
             }
         });
 
-        $fontSize.selectmenu( "menuWidget" ).addClass(['height-200', 'width-140'])
+        $fontSize.selectmenu("menuWidget").addClass(['height-200', 'width-140'])
 
         // load default texblock values
         if (this.activeObject) {
@@ -262,10 +245,10 @@ export default {
         this.$editor.getFontService().getSizes().then((sizes) => {
             this.$store.commit('setFontSizes', sizes);
 
-            if (sizes.length > 1) {
+            if (sizes.length) {
                 this.allFontSizes = sizes;
             } else {
-                this.allFontSizes = [8, 10, 12, 14, 16, 18, 20, 28, 36, 48, 72]
+                this.allFontSizes = [8, 10, 12, 14, 16, 18, 20, 28, 36, 48, 72];
             }
 
             this.$nextTick(() => $fontSize.selectmenu('refresh'));
@@ -290,6 +273,21 @@ export default {
                 'ui-tooltip': 'p-1 is-size-7'
             }
         });
+
+        $('#bold-button').tooltip({
+            content: "bold",
+            classes: {
+                'ui-tooltip': 'p-1 is-size-7'
+            }
+        });
+
+        $('#italic-button').tooltip({
+            content: "italic",
+            classes: {
+                'ui-tooltip': 'p-1 is-size-7'
+            }
+        });
+
         const dialog = $('#delete-text-dialog');
         dialog
             .dialog({
@@ -344,60 +342,16 @@ export default {
         textAlign(position) {
             this.$catch(this.activeObject.setFontAlign(position));
         },
-        async textStyle(type) {
-            // bold, italic, undeline
-            let currentFontByName = await this.$editor.getFontService().getFontByPostScriptName(this.currentFont);
-            const postscriptName = currentFontByName.postscript_name;
+        textStyle(event) {
+            this.$editor.getFontService().getOtherFontFamilyMembers(this.currentFont)
+                .then(familyMembers => {
+                    const fontStyle = familyMembers.filter(member => member.styles.includes(event.target.value))
+                    if (fontStyle.length < 1) return;
 
-            if (type === 'bold') {
-                // check if current selected font is already bold
-                if (currentFontByName.styles.length === 1 && currentFontByName.styles[0] === 'bold') {
-                    // enable Bold button
-                    this.$refs.boldButton.disabled = false;
-                } else {
-                    // get Bold font by family name
-                    let familyMembers = await this.$editor.getFontService().getOtherFontFamilyMembers(postscriptName);
+                    this.activeObject.setFont(fontStyle[0].postscript_name);
+                });
 
-                    const boldFamilyMembers = familyMembers.filter(familyMember =>
-                        familyMember.styles.length === 1 &&
-                        familyMember.styles[0] === 'bold'
-                    )
-
-                    if (boldFamilyMembers.length === 1) {
-                        // enable bold font
-                        await this.activeObject.setFont(boldFamilyMembers[0].postscript_name);
-                        this.$refs.boldButton.disabled = false;
-                    } else {
-                        // disable button if no bold font in family
-                        this.$refs.boldButton.disabled = true;
-                    }
-                }
-            }
-
-            if (type === 'italic') {
-                // check if current selected font is already italic
-                if (currentFontByName.styles.length === 1 && currentFontByName.styles[0] === 'italic') {
-                    // enable italic button
-                    this.$refs.italicButton.disabled = false;
-                } else {
-                    // get italic font by family name
-                    let familyMembers = await this.$editor.getFontService().getOtherFontFamilyMembers(postscriptName);
-
-                    const boldFamilyMembers = familyMembers.filter(familyMember =>
-                        familyMember.styles.length === 1 &&
-                        familyMember.styles[0] === 'italic'
-                    )
-
-                    if (boldFamilyMembers.length === 1) {
-                        // enable italic font
-                        await this.activeObject.setFont(boldFamilyMembers[0].postscript_name);
-                        this.$refs.italicButton.disabled = false;
-                    } else {
-                        // disable button if no italic font in family
-                        this.$refs.italicButton.disabled = true;
-                    }
-                }
-            }
+            $(event.target).tooltip('close');
         },
         icon(name) {
             return this.$svg(name, 'text-and-icons-dark');
@@ -417,6 +371,8 @@ export default {
             currentFont: null,
             currentFontSize: null,
             extendedEditSwitchOn: false,
+            boldDisabled: false,
+            italicDisabled: false,
         }
     }
 }

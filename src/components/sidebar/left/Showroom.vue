@@ -1,16 +1,16 @@
 <template>
-    <div v-show="this.editorLoaded" :class="{'is-1 width-50': !isPanelOpen, 'is-6': isPanelOpen}" class="column my-3"
+    <div v-show="this.editorLoaded" :class="{'is-1 width-50': !showroomIsOpen, 'is-6': showroomIsOpen}" class="column my-3"
          style="display: grid">
         <div class="columns">
             <div class="column has-background-light is-1 width-50">
                 <div class="columns direction-column">
                     <div>
-                        <button v-show="!isPanelOpen" class="button is-info no-radius width-50 height-50"
+                        <button v-show="!showroomIsOpen" class="button is-info no-radius width-50 height-50"
                                 @click="openSidebarPanel()">
                       <span class="icon is-small" v-html="$svg('Pfeil3', 'stroke-white')">
                       </span>
                         </button>
-                        <button v-show="isPanelOpen"
+                        <button v-show="showroomIsOpen"
                                 class="button is-dark dark-gray-background-color no-radius width-50 height-50"
                                 @click="closeSidebarPanel()">
                             <span class="icon is-small" v-html="$svg('Pfeil2', 'stroke-white')"></span>
@@ -25,7 +25,7 @@
                 </div>
             </div>
             <transition name="slide">
-                <div v-show="isPanelOpen" class="column p-4 dark-gray-color" style="border: 1px solid grey"
+                <div v-show="showroomIsOpen" class="column p-4 dark-gray-color" style="border: 1px solid grey"
                      :class="{'sidebar-with-pager': isMultiPage, 'sidebar-no-pager': !isMultiPage}">
                     <div v-if="notifications.length">
                         <div v-for="notification in notifications">
@@ -77,7 +77,7 @@
 }
 </style>
 <script>
-import {mapState} from "vuex";
+import {mapMutations, mapState} from "vuex";
 import Events from "@rissc/printformer-editor-client/dist/Events";
 import AssetsInfo from "./AssetsInfo";
 import ShapesInfo from "./ShapesInfo";
@@ -98,7 +98,7 @@ export default {
         isMultiPage() {
             return this.previewPages.length > 1;
         },
-        ...mapState(['editorConfig', 'is3D', 'notifications', 'openControlTab', 'previewPages']),
+        ...mapState(['editorConfig', 'is3D', 'notifications', 'openControlTab', 'previewPages', 'showroomIsOpen']),
     },
     mounted() {
         window.events.on(Events.EDITOR_LOADED, () => {
@@ -292,23 +292,23 @@ export default {
             }
         },
         closeSidebarPanel() {
-            this.isPanelOpen = false
+            this.closeShowroom();
             if (!this.has3D) return;
 
             this.load3DModel();
             this.$refs.threedeeiframe.style.display = 'block';
         },
         openSidebarPanel() {
-            this.isPanelOpen = true
+            this.openShowroom();
             this.$refs.threedeeiframe.style.display = 'none';
         },
+        ...mapMutations(['openShowroom', 'closeShowroom']),
     },
     data() {
         return {
             currentPage: null,
             has3D: false,
             editorLoaded: false,
-            isPanelOpen: true,
         }
     }
 }
