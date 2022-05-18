@@ -40,32 +40,32 @@
                     </div>
                 </div>
             </div>
-            <div v-if="isTextAsset" class="column is-24">
+            <div v-show="isTextAsset" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="isTextAsset" class="column is-24 py-0">
+            <div v-show="isTextAsset" class="column is-24 py-0">
                 <div class="columns is-vcentered is-multiline is-gapless">
                     <div class="column is-15">
                         <span class="dark-gray-color">Schriftschnitt</span>
                     </div>
                     <div class="column is-3">
-                        <button @click="textStyle" value="bold" id="bold-button"
+                        <button @click="textStyle" value="bold" id="bold-button" title=""
                                 class="button is-small" :disabled="boldDisabled">
                             <b class="no-interaction">B</b>
                         </button>
                     </div>
                     <div class="column is-3">
-                        <button @click="textStyle" value="italic" id="italic-button"
+                        <button @click="textStyle" value="italic" id="italic-button" title=""
                                 class="button is-small" :disabled="italicDisabled">
                             <i class="no-interaction">I</i>
                         </button>
                     </div>
                 </div>
             </div>
-            <div v-if="isTextAsset" class="column is-24">
+            <div v-show="isTextAsset" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="isTextAsset" class="column is-24 py-0">
+            <div v-show ="activeObject && isTextAsset" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Schriftfarbe</span>
@@ -74,10 +74,10 @@
                     </div>
                 </div>
             </div>
-            <div v-if="isTextAsset" class="column is-24">
+            <div v-show="isTextAsset" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="isTextAsset" class="column is-24 py-0">
+            <div v-show="activeObject && isTextAsset" class="column is-24 py-0">
                 <div class="columns is-multiline is-vcentered is-gapless">
                     <div class="column is-12">
                         <span class="dark-gray-color">Ausrichtung Text</span>
@@ -96,10 +96,10 @@
                     </div>
                 </div>
             </div>
-            <div v-if="isTextAsset" class="column is-24">
+            <div v-show="isTextAsset" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="isTextAsset" class="column is-24 py-0">
+            <div v-show="isTextAsset" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-12">
                         <span class="dark-gray-color">Aufzählung</span>
@@ -115,10 +115,10 @@
                     </div>
                 </div>
             </div>
-            <div v-if="isTextAsset" class="column is-24">
+            <div v-show="isTextAsset" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="isTextAsset" class="column is-24 py-0">
+            <div v-show="isTextAsset" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Textbox löschen</span>
@@ -127,7 +127,7 @@
                     </div>
                 </div>
             </div>
-            <div v-if="isTextAsset" class="column is-24">
+            <div v-show="isTextAsset" class="column is-24">
                 <hr class="divider">
             </div>
             <div v-if="isTextAsset" class="column is-24 py-0">
@@ -177,6 +177,7 @@ export default {
     computed: {
         currentColor: {
             get() {
+                if (!this.activeObject) return '#ffffff';
                 return this.isTextAsset
                     ? this.activeObject.color.displayColor
                     : this.activeObject.fill.displayColor;
