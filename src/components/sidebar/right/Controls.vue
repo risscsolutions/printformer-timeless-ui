@@ -1,5 +1,5 @@
 <template>
-    <div v-show="this.editorLoaded" :class="{'width-105': !isPanelOpen, 'width-416': isPanelOpen}"
+    <div v-show="this.editorLoaded && !traceControlsIsOpen" :class="{'width-105': !isPanelOpen, 'width-416': isPanelOpen}"
          class="column is-1 px-0" style="display: grid">
         <div class="columns p-3">
             <transition name="slide">
@@ -140,7 +140,7 @@ export default {
         isMultiPage() {
             return this.previewPages.length > 1;
         },
-        ...mapState(['editorConfig', 'previewPages', 'openControlTab']),
+        ...mapState(['editorConfig', 'previewPages', 'openControlTab', 'traceControlsIsOpen']),
         ...mapGetters(['allowAddShapes', 'allowAddAssets', 'allowAddTexts']),
     },
     mounted() {

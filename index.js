@@ -98,6 +98,11 @@ window.onload = () => {
 
         editor.getNotifications().onChange(notifications => store.commit('setNotifications', notifications));
 
+        window.events.on(Events.EDITOR_COLOR_SET_CHANGED, ({colorSet}) => {
+            store.commit('setManagedColors', colorSet.colors);
+            store.commit('setColorSpaces', colorSet.colorSpaces);
+        });
+
         new Vue({
             store, render: createElement => createElement(Controls)
         }).$mount("#controls");

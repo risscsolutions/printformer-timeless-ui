@@ -13,6 +13,8 @@ export default function makeStore() {
             openControlTab: null,
             showroomIsOpen: true,
             traceControlsIsOpen: false,
+            managedColors: [],
+            colorSpaces: [],
         },
         getters: {
             allowAddShapes(state) {
@@ -70,7 +72,13 @@ export default function makeStore() {
             },
             closeTraceControls(state) {
                 state.traceControlsIsOpen = false;
-            }
+            },
+            setManagedColors(state, colors) {
+                state.managedColors = colors;
+            },
+            setColorSpaces(state, colorSpaces) {
+                state.colorSpaces = colorSpaces;
+            },
         }
     });
 }

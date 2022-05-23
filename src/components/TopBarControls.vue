@@ -1,5 +1,5 @@
 <template>
-    <div class="columns is-mobile is-vcentered is-centered mb-0">
+    <div class="columns is-mobile is-vcentered is-centered mb-0" :class="{'blured-no-pointer': traceControlsIsOpen}">
         <div class="column is-4 dark-gray-color pt-5 pb-0">
             <span @click="editorZoomIn" style="cursor: pointer; vertical-align: middle;" class="svg-20"
                   v-html="icon('Plus')">
@@ -39,7 +39,7 @@ import {urlQueryObject} from "../helper";
 export default {
     name: "top-bar-controls",
     computed: {
-        ...mapState(['editorConfig', 'notifications']),
+        ...mapState(['editorConfig', 'notifications', 'traceControlsIsOpen']),
         hasWarnings() {
             return this.notifications.some(notification => ['warning', 'error'].includes(notification.type));
         }

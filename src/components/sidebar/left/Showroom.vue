@@ -27,7 +27,7 @@
             <transition name="slide">
                 <div v-show="showroomIsOpen" class="column p-4 dark-gray-color" style="border: 1px solid grey"
                      :class="{'sidebar-with-pager': isMultiPage, 'sidebar-no-pager': !isMultiPage}">
-                    <div v-if="notifications.length">
+                    <div v-if="notifications.length && !traceControlsIsOpen">
                         <div v-for="notification in notifications">
                             <b v-if="notification.type === 'error'" class="has-text-danger">Fehler</b>
                             <b v-else-if="notification.type === 'info'" class="has-text-info">Info</b>
@@ -47,7 +47,7 @@
                         RECHTEN MENÜLEISTE, UM DEINE
                         WERBEARTIKEL ZU GESTALTEN
                     </p>
-                    <component v-if="openControlTab" :is="infoComponent"></component>
+                    <component v-if="openControlTab && !traceControlsIsOpen" :is="infoComponent"></component>
                     <div>
                         <iframe ref="threedeeiframe"
                                 style="min-height: 400px; width: 100%; height: 100%; display: none"></iframe>
@@ -98,7 +98,7 @@ export default {
         isMultiPage() {
             return this.previewPages.length > 1;
         },
-        ...mapState(['editorConfig', 'is3D', 'notifications', 'openControlTab', 'previewPages', 'showroomIsOpen']),
+        ...mapState(['editorConfig', 'is3D', 'notifications', 'openControlTab', 'previewPages', 'showroomIsOpen', 'traceControlsIsOpen']),
     },
     mounted() {
         window.events.on(Events.EDITOR_LOADED, () => {
