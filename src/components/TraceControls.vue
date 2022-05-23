@@ -28,8 +28,8 @@
                                 :value="managedColor.values" class="button is-rounded color-button-round"
                                 :style="`background-color: ${managedColor.displayColor}`" @click="selectColor">
                         </button>
-                        <button title="Transparent" value="null" class="button is-rounded color-button-round"
-                                @click="selectColor" :style="`background: ${backgroundNoneStyle}`"></button>
+                        <button title="Transparent" value="null" class="button is-rounded color-button-round chess-background"
+                                @click="selectColor"></button>
                     </div>
 
                     <div class="content">
@@ -253,7 +253,6 @@ export default {
             simpleColorsApplied: false,
             selectedSimpleColors: [],
             traceStep: 1,
-            backgroundNoneStyle: "linear-gradient(to right bottom, transparent calc(50% - 2px), red calc(50% - 2px), red 50%, transparent 50%) white"
         }
     },
     computed: {
