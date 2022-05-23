@@ -12,6 +12,7 @@ export default function makeStore() {
             fonts: [],
             openControlTab: null,
             showroomIsOpen: true,
+            traceControlsIsOpen: false,
         },
         getters: {
             allowAddShapes(state) {
@@ -63,6 +64,12 @@ export default function makeStore() {
             },
             closeShowroom(state) {
                 state.showroomIsOpen = false;
+            },
+            openTraceControls(state) {
+                state.traceControlsIsOpen = true;
+            },
+            closeTraceControls(state) {
+                state.traceControlsIsOpen = false;
             }
         }
     });

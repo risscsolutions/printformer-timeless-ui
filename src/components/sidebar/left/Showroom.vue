@@ -111,7 +111,6 @@ export default {
         });
 
         window.events.on(Events.EDITOR_LOADED, async (config) => {
-            this.$store.commit('setEditorConfig', config);
 
             if (config.configuration.show3DPreview) {
                 const editorIframe = document.getElementById('editor-iframe');

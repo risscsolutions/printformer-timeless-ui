@@ -15,8 +15,8 @@
             <div class="column is-1 p-0 width-100" style="overflow: auto">
                 <div class="sidebar-container">
                     <button
-                            class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
-                            @click="toggleSidebarPanel('assets')">
+                        class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
+                        @click="toggleSidebarPanel('assets')">
                         <span class="mb-1" v-html="icon('Bilder')"></span>
                         <span class="dark-gray-color has-text-weight-medium">Bilder</span>
                     </button>
@@ -158,6 +158,11 @@ export default {
             this.assets = await this.$editor.findEditorObjects({type: BlockTypes.ASSET});
             this.variants = await this.$editor.getVariants().getAll();
             this.editorLoaded = true;
+
+            this.setOnlyInteractableBlockActive();
+            window.events.on(Events.EDITOR_PAGES_PAGED, this.setOnlyInteractableBlockActive, this);
+
+
         });
 
         let onCancel;
@@ -181,6 +186,43 @@ export default {
         });
     },
     methods: {
+        setOnlyInteractableBlockActive() {
+            if (!(!this.allowAddAssets && !this.allowAddTexts && !this.allowAddShapes)) return;
+
+            this.$editor.findEditorObjects({
+                types: [
+                    BlockTypes.ASSET,
+                    BlockTypes.GRAPHIC,
+                    BlockTypes.IMAGE,
+                    BlockTypes.PDF,
+                    BlockTypes.TEXT,
+                    BlockTypes.BARCODE,
+                    BlockTypes.SHAPE
+                ],
+                isContentModifieable: true,
+                onPrintAbleLayer: true
+            })
+                .then(interactableBlocksOnPage => {
+                    if (interactableBlocksOnPage.length !== 1) return;
+                    const [onlyInteractableBlock] = interactableBlocksOnPage;
+
+                    if (onlyInteractableBlock.blockType === BlockTypes.ASSET
+                        && onlyInteractableBlock.isFilled
+                        && onlyInteractableBlock.isLoading) {
+
+                        const listener = (newTarget) => {
+                            if (onlyInteractableBlock.is(newTarget) && !newTarget.isLoading) {
+                                newTarget.setActive();
+                                window.events.off(Events.EDITOR_OBJECT_UPDATED, listener, this);
+                            }
+                        };
+                        window.events.on(Events.EDITOR_OBJECT_UPDATED, listener, this);
+                        return;
+                    }
+
+                    onlyInteractableBlock.setActive();
+                });
+        },
         icon(name) {
             return this.$svg(name);
         },

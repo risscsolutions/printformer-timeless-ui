@@ -1,6 +1,6 @@
 <template>
     <div class="columns is-mobile is-vcentered is-centered mb-0">
-        <div class="column is-4 dark-gray-color">
+        <div class="column is-4 dark-gray-color pt-5 pb-0">
             <span @click="editorZoomIn" style="cursor: pointer; vertical-align: middle;" class="svg-20"
                   v-html="icon('Plus')">
             </span>
@@ -33,6 +33,8 @@
 <script>
 import {mapMutations, mapState} from "vuex";
 import Events from "@rissc/printformer-editor-client/dist/Events";
+import {goToStep} from "../helpers";
+import {urlQueryObject} from "../helper";
 
 export default {
     name: "top-bar-controls",
@@ -44,7 +46,6 @@ export default {
     },
     mounted() {
         window.events.on(Events.EDITOR_LOADED, async (config) => {
-            this.$store.commit('setEditorConfig', config);
 
             // loop through pages to load threedee preview correctly
             // this.wait(2000)
@@ -71,7 +72,7 @@ export default {
             return this.$svg(name);
         },
         goBack() {
-
+            goToStep(this.editorConfig.editorSteps.previous, urlQueryObject().query.draft)
         },
         editorSave(e) {
             this.$editor.getLoader().show('Entwurf wird gespeichert...')
@@ -93,7 +94,7 @@ export default {
             this.$editor.getLoader().show();
             this.$editor.goToNextStep()
                 .then(() => {
-                    window.location.assign(window.location.href.replace('index.html', 'preview.html'));
+                    goToStep(this.editorConfig.editorSteps.next, urlQueryObject().query.draft)
                 }, async () => await this.$editor.getLoader().hide());
         },
         editorZoomIn() {

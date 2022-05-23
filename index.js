@@ -26,6 +26,7 @@ import Showroom from "./src/components/sidebar/left/Showroom";
 import ViewSettings from "./src/components/sidebar/right/ViewSettings";
 import ExtendedEdit from "./src/components/sidebar/right/ExtendedEdit";
 import {urlQueryObject} from "./src/helper";
+import TraceControls from "./src/components/TraceControls";
 
 Vue.prototype.$svg = require('./src/svg.js');
 Vue.use(Vuex);
@@ -47,8 +48,7 @@ Vue.component('ValidationObserver', ValidationObserver)
 
 configure({
     classes: {
-        valid: 'is-success',
-        invalid: 'is-danger'
+        valid: 'is-success', invalid: 'is-danger'
     }
 });
 
@@ -99,25 +99,23 @@ window.onload = () => {
         editor.getNotifications().onChange(notifications => store.commit('setNotifications', notifications));
 
         new Vue({
-            store,
-            render: createElement => createElement(TopBarControls)
-        }).$mount("#top-bar-controls");
-
-        new Vue({
-                store,
-                render: createElement => createElement(Showroom)
-            }
-        ).$mount("#showroom");
-
-        new Vue({
-            store,
-            render: createElement => createElement(Controls)
+            store, render: createElement => createElement(Controls)
         }).$mount("#controls");
 
         new Vue({
-                store,
-                render: createElement => createElement(PagePreview)
-            }
-        ).$mount("#pages");
+            store, render: createElement => createElement(TopBarControls)
+        }).$mount("#top-bar-controls");
+
+        new Vue({
+            store, render: createElement => createElement(Showroom)
+        }).$mount("#showroom");
+
+        new Vue({
+            store, render: createElement => createElement(PagePreview)
+        }).$mount("#pages");
+
+        new Vue({
+            store, render: createElement => createElement(TraceControls)
+        }).$mount("#trace-controls");
     });
 }
