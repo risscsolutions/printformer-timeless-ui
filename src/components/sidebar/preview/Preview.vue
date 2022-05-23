@@ -1,5 +1,5 @@
 <template>
-    <div class="column is-1 mr-3 mb-3 width-416 sidebar-no-pager" style="border: 1px solid #A6A9A9">
+    <div class="column is-1 mr-3 mb-3 width-416 sidebar-no-pager border-solid">
         <div class="columns is-multiline is-centered p-3">
             <div class="column is-24 py-0">
                 <div class="content">

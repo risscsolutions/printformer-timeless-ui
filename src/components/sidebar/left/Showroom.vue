@@ -25,7 +25,7 @@
                 </div>
             </div>
             <transition name="slide">
-                <div v-show="showroomIsOpen" class="column p-4 dark-gray-color" style="border: 1px solid grey"
+                <div v-show="showroomIsOpen" class="column p-4 dark-gray-color border-solid"
                      :class="{'sidebar-with-pager': isMultiPage, 'sidebar-no-pager': !isMultiPage}">
                     <div v-if="notifications.length && !traceControlsIsOpen">
                         <div v-for="notification in notifications">
@@ -42,10 +42,15 @@
                             <hr class="divider my-3">
                         </div>
                     </div>
-                    <p class="mb-1 like-h4">
+                    <p v-if="!traceControlsIsOpen" class="mb-1 like-h4">
                         KLICKE AUF DIE SYMBOLE IN DER
                         RECHTEN MENÜLEISTE, UM DEINE
                         WERBEARTIKEL ZU GESTALTEN
+                    </p>
+                    <p v-else class="mb-1 like-h4">
+                        HIER STEHT EIN GANZ TOLLER HILFETEXT.
+                        HIER STEHT EIN GANZ TOLLER HILFETEXT.
+                        HIER STEHT EIN GANZ TOLLER HILFETEXT.
                     </p>
                     <component v-if="openControlTab && !traceControlsIsOpen" :is="infoComponent"></component>
                     <div>

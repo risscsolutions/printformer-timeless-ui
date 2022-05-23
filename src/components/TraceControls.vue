@@ -1,7 +1,7 @@
 <template>
     <div v-show="traceControlsIsOpen" ref="traceOverlay" class="column my-3" id="trace-overlay">
         <div class="columns">
-            <div class="trace-preview column sidebar-no-pager">
+            <div class="trace-preview column sidebar-no-pager border-top-bottom">
                 <div v-if="traceStep === 1 && !simpleColorsApplied" class="columns direction-column">
                     <div class="column has-text-centered" v-html="icon('VectorizerVorschau')"></div>
                     <div class="column has-text-centered trace-preview-info content">
@@ -14,7 +14,7 @@
                 </div>
                 <div v-show="traceStep !== 1" ref="tracePreview"></div>
             </div>
-            <div class="trace-controls column is-narrow sidebar-no-pager" style="border: 1px solid grey;">
+            <div class="trace-controls column is-narrow sidebar-no-pager border-solid">
                 <div v-show="traceStep === 1" class="column">
                     <div class="content is-small my-2">
                         <h1 class="dark-gray-color mb-2 blue-color has-text-weight-bold">Bestimme deine Druckfarben</h1>
