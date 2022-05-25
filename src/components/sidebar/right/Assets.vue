@@ -67,7 +67,7 @@
             <div v-if="isAsset" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
-                        <span class="dark-gray-color">Bild löschen</span>
+                        <span class="dark-gray-color">Bildbox löschen</span>
                         <span @click="deleteAssetBox" style="cursor: pointer" class="svg-20"
                               v-html="icon('Loeschen')"></span>
                     </div>
