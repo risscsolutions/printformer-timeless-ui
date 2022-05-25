@@ -9,8 +9,48 @@
                     </div>
                 </div>
 
-                <div v-if="traceStep === 1 && simpleColorsApplied">
-                    <div ref="simpleColorPreviews"></div>
+                <div v-if="traceStep === 1 && simpleColorsApplied"
+                     class="columns direction-column is-align-self-flex-start">
+                    <div class="column content is-small mt-2 mx-5 mb-0">
+                        <p class="dark-gray-color mb-2 dark-gray-color has-text-weight-bold">
+                            SO KÖNNTE DEIN WERBEAUFDRUCK MIT DEINEN FARBEN AUSSEHEN:
+                        </p>
+                    </div>
+                    <div class="column content is-small mx-5 mb-0">
+                        <p class="dark-gray-color mb-2 dark-gray-color">
+                            Hier siehst du mögliche Kombinationsmöglichkeiten
+                        </p>
+                    </div>
+                    <div class="column columns is-multiline is-24 mb-0" style="overflow: auto">
+                        <div v-for="preview in previews" class="column is-8"
+                             style="height: 265px">
+                            <div class="columns direction-column">
+                                <div class="column has-text-centered" v-html="preview.svg" style="height: 200px;"></div>
+                                <div class="column has-text-centered content">
+                                    <button class="button is-small is-info" @click="selectPreview(preview.colors)"
+                                            :disabled="blockUi">
+                                        <span>ÜBERNEHMEN</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column content is-small mx-5 mb-0">
+                        <p class="dark-gray-color dark-gray-color has-text-weight-bold">
+                            ICH MÖCHTE KEINE FARBVERSION DAVON ÜBERNEHMEN. ZEIG MIR WEITERE MÖGLICHKEITEN.
+                        </p>
+                    </div>
+                    <div class="column columns is-24">
+                        <div class="column is-8 p-1 columns direction-column">
+                            <div class="column has-text-centered content">
+                                <button class="button is-small is-info" @click="skipSimpleMode">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span>WEITER</span>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div v-show="traceStep !== 1" ref="tracePreview"></div>
             </div>
@@ -18,22 +58,25 @@
                 <div v-show="traceStep === 1" class="column">
                     <div class="content is-small my-2">
                         <h1 class="dark-gray-color mb-2 blue-color has-text-weight-bold">Bestimme deine Druckfarben</h1>
-                        <p class="dark-gray-color mb-2 blue-color has-text-weight-bold">Du kannst max. {{ colorLimit }}
-                            Farben
-                            auswählen.</p>
-                        <p class="dark-gray-color mb-0 ">Unere Farbvorschläge für dich:</p>
+                        <p class="dark-gray-color mb-2 blue-color has-text-weight-bold">
+                            Du kannst max. {{ colorLimit }} Farben auswählen.
+                        </p>
+                        <p class="dark-gray-color mb-0 ">Unsere Farbvorschläge für dich:</p>
                     </div>
-                    <div v-if="managedColors.length" class="content is-small">
+                    <div v-if="managedColors.length" class="content is-small" ref="managedColors">
                         <button v-for="managedColor in managedColors" :title="managedColor.name"
-                                :value="managedColor.values" class="button is-rounded color-button-round"
-                                :style="`background-color: ${managedColor.displayColor}`" @click="selectColor">
+                                class="button is-rounded color-button-round"
+                                :style="`background-color: ${managedColor.displayColor}`"
+                                @click="selectColor(managedColor, $event)" :disabled="simpleColorsApplied">
                         </button>
-                        <button title="Transparent" value="null" class="button is-rounded color-button-round chess-background"
-                                @click="selectColor"></button>
+                        <button v-if="colorLimit > 1" title="Transparent"
+                                class="button is-rounded color-button-round chess-background"
+                                @click="selectColor('none', $event)" :disabled="simpleColorsApplied"></button>
                     </div>
 
                     <div class="content">
-                        <button class="button is-small is-info" @click="applySimpleColors" :disabled="!selectedSimpleColors.length || selectedSimpleColors.length  > colorLimit">
+                        <button class="button is-small is-info" @click="applySimpleColors"
+                                :disabled="!selectedSimpleColors.length || selectedSimpleColors.length  > colorLimit || simpleColorsApplied">
                             <span>ÜBERNEHMEN</span>
                         </button>
                     </div>
@@ -82,10 +125,6 @@
                         <p class="dark-gray-color mb-0 ">Wähle deine gewünschten Druckfarben aus</p>
                     </div>
                 </div>
-
-
-
-
 
 
                 <div style="display:none;">
@@ -142,8 +181,10 @@
                     <button ref="cancelTrace" class="button is-small is-dark dark-gray-background-color">
                         <span>ABBRECHEN</span>
                     </button>
-                    <button v-html="icon('VectorizerPfeilLinks')" @click="backward" class="button is-small is-ghost"></button>
-                    <button v-html="icon('VectorizerPfeilRechts')" @click="forward" class="button is-small is-ghost"></button>
+                    <button v-html="icon('VectorizerPfeilLinks')" @click="backward"
+                            v-if="(traceStep === 1 && simpleColorsApplied)"
+                            :disabled="blockUi"
+                            class="button is-small is-ghost"></button>
                 </div>
 
             </div>
@@ -215,7 +256,7 @@
 <script>
 import Events from "@rissc/printformer-editor-client/dist/Events";
 import {Asset, BlockEffects} from "@rissc/printformer-editor-client/dist/Objects";
-import {remove, isEmpty, isEqual, uniqWith} from "lodash";
+import {remove, isEmpty, isEqual, uniqWith, shuffle} from "lodash";
 import {mapMutations, mapState} from "vuex";
 
 const BLOCK_EFFECTS = {
@@ -248,10 +289,13 @@ export default {
             optimizePaths: 10,
             colorLimit: 0,
             defaultColorLimit: 10,
+            initialColorMap: [],
             patchIdentifierToRevertTo: undefined,
-            automationActive: false,
+            automationActive: true,
+            blockUi: false,
             simpleColorsApplied: false,
             selectedSimpleColors: [],
+            previews: [],
             traceStep: 1,
         }
     },
@@ -356,7 +400,6 @@ export default {
         },
         async openOverlayAndSetSettings(target) {
             this.openTraceControls();
-            this.patchIdentifierToRevertTo = await this.$editor.getUndoRedo().addSnapshot();
 
             let activeObject;
             if (target) {
@@ -378,7 +421,7 @@ export default {
             }
             // this.$refs.traceLoader.style.display = 'flex';
 
-            // @ts-ignore
+            this.initialColorMap = activeObject.colorMap;
             this.colorLimit = settings.colorLimit || this.defaultColorLimit;
 
             this.deSpeckle = settings.deSpeckle || 0
@@ -391,9 +434,9 @@ export default {
             this.startTracing()
                 .then(() => {
                     window.events.on(Events.EDITOR_OBJECT_UPDATED, this.updatePreview, this);
-                    this.showOverlay();
-            // this.$refs.traceLoader.style.display = 'none';
-            });
+                    this.showOverlay(activeObject);
+                    // this.$refs.traceLoader.style.display = 'none';
+                });
         },
         startTracing(persist = false) {
             console.debug('Start tracing', {persist});
@@ -531,9 +574,21 @@ export default {
         },
         async applyTraceAndCloseOverlay(button) {
             if (button !== this.$refs.applyTrace) {
+                const activeObject = await this.$editor.getActiveObject();
+
                 return (
-                    this.patchIdentifierToRevertTo
-                        ? this.$editor.getUndoRedo().revertToSnapshot(this.patchIdentifierToRevertTo)
+                    this.initialColorMap.length
+                        ? Promise.all(this.initialColorMap.map((c, idx) => {
+                            return activeObject.replaceColor(c, c.printcolor ||
+                                (c.replaced === 'none'
+                                    ? 'none'
+                                    : {
+                                        colorSpace: 'RGB',
+                                        displayColor: c.replaced,
+                                        values: /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(c.replaced).map(x => parseInt(x, 16))
+                                    })
+                            )
+                        })).then(this.$editor.getUndoRedo().clear())
                         : Promise.resolve()
                 )
                     .then(() => {
@@ -552,11 +607,19 @@ export default {
                     this.closeOverlay();
                 });
         },
-        showOverlay() {
+        showOverlay(activeObject) {
+            const colorMap = activeObject.colorMap;
+
+            if (colorMap.length === this.colorLimit) {
+                this.traceStep = 1;
+            }
+
             this.openTraceControls();
         },
         closeOverlay() {
+            console.log('closeOverlay')
             window.events.off(Events.EDITOR_OBJECT_UPDATED, this.updatePreview, this);
+            this.revertTraceStepOne();
             this.closeTraceControls();
             // this.$refs.traceOverlay.style.display = 'none';
         },
@@ -565,28 +628,81 @@ export default {
             return this.$svg(name);
         },
         async applySimpleColors() {
+            this.blockUi = true;
             this.simpleColorsApplied = true;
+
+            if (this.selectedSimpleColors.length === 1) {
+                this.selectedSimpleColors.push('none');
+            }
             const activeObject = await this.$editor.getActiveObject();
 
-            this.$refs.simpleColorPreviews.innerHTML =  (await activeObject.getContent()) || '';
+            const colorMap = activeObject.colorMap;
+            const selectedColors = this.selectedSimpleColors.map(c => c.name || 'none');
+            const cartesian = (...a) => a.reduce((a, b) => a.flatMap(d => b.map(e => [d, e].flat())));
+            let output = cartesian(selectedColors, selectedColors);
 
+            while (output[0].length < colorMap.length) {
+                output = cartesian(output, selectedColors);
+            }
+            if (this.selectedSimpleColors.length >= colorMap.length) {
+                output = output.filter(cs => (new Set(cs)).size === cs.length);
+            }
+
+            output = output.filter(cs => !((new Set(cs)).size === 1 && cs[0] === 'none'));
+
+            shuffle(output).slice(0, 27).reduce((p, colors) => {
+                return p.then(() => {
+                    return new Promise(resolve => {
+                        colors.reduce((p2, c, idx) => {
+                            return p2.then(a => a.replaceColor(colorMap[idx], this.selectedSimpleColors.find(ssc => ssc.name === c) || c));
+                        }, Promise.resolve(activeObject))
+                            .then((a) => a.getContent())
+                            .then((svg) => this.previews.push({svg, colors}))
+                            .then(resolve);
+                    })
+                });
+            }, Promise.resolve()).then(() => {
+                this.blockUi = false;
+            });
         },
-        selectColor(e) {
+        selectColor(color, e) {
             const target = e.target;
             target.classList.toggle('is-active');
 
-            const value = target.value;
-
-            if (this.selectedSimpleColors.includes(value)) {
-                this.selectedSimpleColors = remove(this.selectedSimpleColors, value);
+            const index = this.selectedSimpleColors.findIndex(ssc => isEqual(ssc, color));
+            if (index !== -1) {
+                this.selectedSimpleColors.splice(index, 1);
             } else {
-                this.selectedSimpleColors.push(value);
+                this.selectedSimpleColors.push(color);
             }
         },
-        backward() {
+        async selectPreview(colors) {
+            const activeObject = await this.$editor.getActiveObject();
+            const colorMap = activeObject.colorMap;
+
+            await Promise.all(colors.map((c, idx) => {
+                return activeObject.replaceColor(colorMap[idx], this.selectedSimpleColors.find(ssc => ssc.name === c) || c)
+            }));
+
+            this.closeOverlay();
+        },
+        skipSimpleMode() {
 
         },
-        forward() {
+        revertTraceStepOne() {
+            this.simpleColorsApplied = false;
+            this.selectedSimpleColors = [];
+            this.previews = [];
+            this.initialColorMap = [];
+            const colorButtons = this.$refs.managedColors.children;
+            for (let item of colorButtons) {
+                item.classList.remove('is-active');
+            }
+        },
+        async backward() {
+            if (this.traceStep === 1) {
+                this.revertTraceStepOne();
+            }
 
         },
         ...mapMutations(['openTraceControls', 'closeTraceControls'])
@@ -594,10 +710,16 @@ export default {
     },
     watch: {
         traceControlsIsOpen(state) {
-            if (state) this.openOverlayAndSetSettings();
-            document.querySelector('#pf-container').style.display = state
-                ? 'none'
-                : 'grid';
+            console.log('traceControlsIsOpen', state)
+            const editor = document.querySelector('#pf-container');
+            if (state) {
+                this.openOverlayAndSetSettings();
+                editor.style.position = 'absolute';
+                editor.style.zIndex = -9999;
+            } else {
+                editor.style.position = 'static';
+                editor.style.zIndex = null;
+            }
         }
 
     }
