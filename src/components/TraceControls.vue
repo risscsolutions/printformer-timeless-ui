@@ -131,66 +131,44 @@
                     </div>
 
                     <div class="content is-small" ref="userColors">
-
-                        <button class="button is-rounded color-button-round"
-                                @click="chooseColor" v-html="icon('Plus')"></button>
-                        <button class="button is-rounded color-button-round"
-                                @click="chooseColor" v-html="icon('Plus')"></button>
-                        <button class="button is-rounded color-button-round"
-                                @click="chooseColor" v-html="icon('Plus')"></button>
-                        <button class="button is-rounded color-button-round"
-                                @click="chooseColor" v-html="icon('Plus')"></button>
-                        <button class="button is-rounded color-button-round"
-                                @click="chooseColor" v-html="icon('Plus')"></button>
-                        <button class="button is-rounded color-button-round"
-                                @click="chooseColor" v-html="icon('Plus')"></button>
-                        <button class="button is-rounded color-button-round"
-                                @click="chooseColor" v-html="icon('Plus')"></button>
-                        <button class="button is-rounded color-button-round"
-                                @click="chooseColor" v-html="icon('Plus')"></button>
-                        <button class="button is-rounded color-button-round"
-                                @click="chooseColor" v-html="icon('Plus')"></button>
-                        <button class="button is-rounded color-button-round"
-                                @click="chooseColor" v-html="icon('Plus')"></button>
+                        <button v-for="(userColor, index) in userColors" v-html="userColor ? null : icon('Plus')"
+                                :style="{'background-color': userColor ? userColor.displayColor : null}"
+                                @click="chooseColor(index, $event)" class="button is-rounded color-button-round">
+                        </button>
                     </div>
-                    <hr class="sidebar-divider">
+                    <hr class="sidebar-divider" v-if="userColorsFilled">
 
-                    <div class="content is-small my-2" v-if="colorsChosen">
+                    <div class="content is-small my-2" v-if="userColorsFilled">
                         <p class="dark-gray-color mb-2 blue-color has-text-weight-bold">Schritt 2: Druckfarben
                             zuweisen</p>
                         <p class="dark-gray-color mb-0 ">Weise die in Schritt 1 bestimmten Druckfarben denen in deinem
                             Bild gefundenen Farben zu.</p>
                     </div>
 
-                    <div class="content is-small" ref="colorsInSVG" v-if="colorsChosen">
-                        <button class="button is-rounded color-button-round"
-                                @click="chooseColor" v-html="icon('Plus')"></button>
-                        <button class="button is-rounded color-button-round"
-                                @click="chooseColor" v-html="icon('Plus')"></button>
-                        <button class="button is-rounded color-button-round"
-                                @click="chooseColor" v-html="icon('Plus')"></button>
-                        <button class="button is-rounded color-button-round"
-                                @click="chooseColor" v-html="icon('Plus')"></button>
-                        <button class="button is-rounded color-button-round"
-                                @click="chooseColor" v-html="icon('Plus')"></button>
-                        <button class="button is-rounded color-button-round"
-                                @click="chooseColor" v-html="icon('Plus')"></button>
-                        <button class="button is-rounded color-button-round"
-                                @click="chooseColor" v-html="icon('Plus')"></button>
-                        <button class="button is-rounded color-button-round"
-                                @click="chooseColor" v-html="icon('Plus')"></button>
-                        <button class="button is-rounded color-button-round"
-                                @click="chooseColor" v-html="icon('Plus')"></button>
-                        <button class="button is-rounded color-button-round"
-                                @click="chooseColor" v-html="icon('Plus')"></button>
+                    <div class="content is-small my-0" v-if="userColorsFilled">
+                        <button v-for="color in colorMap"
+                                :style="`background-color: ${color.replaced}; pointer-events: none;`"
+                                class="button is-rounded color-button-round">
+                        </button>
+                    </div>
+                    <div class="content is-small is-flex my-0" v-if="userColorsFilled">
+                        <button v-for="color in colorMap" v-html="icon('dashed')"
+                                style="pointer-events: none;" class="button is-rounded color-button-round is-ghost">
+                        </button>
+                    </div>
+                    <div class="content is-small" v-if="userColorsFilled">
+                        <button v-for="(color, index) in colorMap" v-html="icon('Plus')"
+                                @click="chooseColor(index)" class="button is-rounded color-button-round">
+                        </button>
+                    </div>
+                    <div class="content" v-show="userColorsFilled">
+                        <button class="button is-small is-info" ref="applyTrace">
+                            <span>ÜBERNEHMEN</span>
+                        </button>
                     </div>
                 </div>
 
-                <div class="content">
-                    <button class="button is-small is-info" ref="applyTrace">
-                        <span>ÜBERNEHMEN</span>
-                    </button>
-                </div>
+
                 <div style="display:none;">
                     <div ref="resultAsUserMedia">
                         <p class="text-headline">Vektor in Mediamanager speichern</p>
@@ -327,7 +305,9 @@ export default {
             previews: [],
             traceStep: 1,
             colorsChosen: false,
-
+            colorMap: [],
+            userColors: [],
+            userColorsFilled: false,
         }
     },
     computed: {
@@ -368,18 +348,7 @@ export default {
                     window.events.on(Events.EDITOR_OBJECT_UPDATED, listener, this);
                     return;
                 }
-
-                // this.button.classList.remove('prohibited');
-                const vectorEffect = target.effects
-                    .find((effect) => {
-                        return [BlockEffects.vector, BlockEffects.embossing].includes(effect.type);
-                    });
-                // displayBlockOrNone(this.container, !!vectorEffect);
             });
-
-            // this.container.style.display = 'block';
-
-            // this.button.addEventListener('click', () => this.openOverlayAndSetSettings());
 
             const buttons = [this.$refs.applyTrace, this.$refs.cancelTrace];
             buttons.forEach(button => {
@@ -599,11 +568,11 @@ export default {
         showOverlay(activeObject) {
             const colorMap = activeObject.colorMap;
             if (!activeObject.containsRasterImages || colorMap.length > this.colorLimit) {
-                this.traceStep = 3; //color picker
+                this.setTraceStep(3); //color picker
             } else if (colorMap.length < this.colorLimit || colorMap.length === 1) {
-                this.traceStep = 2; //granululu
+                this.setTraceStep(2); //granululu
             } else if (colorMap.length === this.colorLimit) {
-                this.traceStep = 1; //automat
+                this.setTraceStep(1); //automat
             }
 
             this.openTraceControls();
@@ -691,16 +660,17 @@ export default {
                     return this.startTracing();
                 })
                 .then(() => {
-                    this.traceStep = 2;
+                    this.setTraceStep(2);
                 })
 
         },
         applyGranululu() {
-            this.traceStep = 3;
+            this.setTraceStep(3);
         },
-        chooseColor(event) {
-            console.log(event)
-            this.setColorClosure()
+        chooseColor(index, event) {
+            console.log(index)
+            this.setCurrentColorSpace(this.colorSpaces[0]);
+            this.setColorClosure((color) => this.userColors.splice(index, 1, color));
 
             $('#color-picker')
                 .dialog('option', 'position', {
@@ -734,15 +704,24 @@ export default {
 
                 this.startTracing()
                     .then(() => {
-                        this.traceStep = 1;
+                        this.setTraceStep(1);
                     });
             } else if (this.traceStep === 3) {
-                this.traceStep = 2;
+                this.setTraceStep(2);
                 this.colorsChosen = false;
             }
 
         },
-        ...mapMutations(['openTraceControls', 'closeTraceControls', 'setColorClosure'])
+        setTraceStep(step) {
+            this.traceStep = step;
+            if (step === 3) {
+                this.$editor.getActiveObject().then(editorObject => {
+                    this.colorMap = editorObject.colorMap;
+                    this.userColors = editorObject.colorMap.map(() => null);
+                })
+            }
+        },
+        ...mapMutations(['openTraceControls', 'closeTraceControls', 'setColorClosure', 'setCurrentColorSpace'])
 
     },
     watch: {
@@ -756,8 +735,11 @@ export default {
                 editor.style.position = 'static';
                 editor.style.zIndex = null;
             }
+        },
+        userColors(array) {
+            this.userColorsFilled = !array.includes(null);
+            console.log('filled',this.userColorsFilled)
         }
-
     }
 }
 </script>

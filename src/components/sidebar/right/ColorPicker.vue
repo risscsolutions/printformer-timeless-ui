@@ -3,48 +3,51 @@
         <div class="column is-flex-grow-0">
             <div class="tabs is-centered">
                 <ul id="color-space-tabs">
-                    <li v-if="colorSpaces.includes('PANTONE')">
-                        <a @click="setActiveContent('PANTONE', $event)">PANTONE</a>
+                    <li v-if="colorSpaces.includes('PANTONE')" :class="{'is-active': currentColorSpace === 'PANTONE'}">
+                        <a @click="setCurrentColorSpace('PANTONE')">PANTONE</a>
                     </li>
-                    <li v-if="colorSpaces.includes('HKS')">
-                        <a @click="setActiveContent('HKS', $event)">HKS</a>
+                    <li v-if="colorSpaces.includes('HKS')" :class="{'is-active': currentColorSpace === 'HKS'}">
+                        <a @click="setCurrentColorSpace('HKS')">HKS</a>
                     </li>
-                    <li v-if="colorSpaces.some(s => ['CMYK', 'RGB'].includes(s))">
-                        <a @click="setActiveContent('CMYK', $event)">RGB/CMYK</a>
+                    <li v-if="colorSpaces.some(s => ['CMYK', 'RGB'].includes(s))"
+                        :class="{'is-active': currentColorSpace === 'CMYK'}">
+                        <a @click="setCurrentColorSpace('CMYK')">RGB/CMYK</a>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="column">
-            <div class="columns">
-                <div v-show="currentColorSpace ==='PANTONE'" class="column">
-                    <div class="is-12">
-                        <label for="pantone-color-select">PANTONE Code eingeben...</label>
-                        <input id="pantone-color-select">
-                    </div>
-                    <div id="pantone-user-color-preview" class="user-color-preview"></div>
+            <div v-show="currentColorSpace ==='PANTONE'" class="columns p-3 mb-0">
+                <div class="column">
+                    <input id="pantone-color-select" style="width: 222px">
                 </div>
-                <div v-show="currentColorSpace ==='HKS'" class="column">
-                    <div class="is-12">
-                        <label for="hks-color-select">HKS Code eingeben...</label>
-                        <input id="hks-color-select">
-                    </div>
-                    <div id="hks-user-color-preview" class="user-color-preview"></div>
-                </div>
-                <div v-show="['CMYK', 'RGB'].includes(currentColorSpace)" class="column"></div>
+                <div id="pantone-user-color-preview" class="column user-color-preview mr-3"></div>
             </div>
+            <div v-show="currentColorSpace ==='HKS'" class="columns p-3 mb-0">
+                <div class="column">
+                    <input id="hks-color-select" style="width: 222px">
+                </div>
+                <div id="hks-user-color-preview" class="column user-color-preview mr-3"></div>
+            </div>
+            <div v-show="['CMYK', 'RGB'].includes(currentColorSpace)" class="column"></div>
+        </div>
+        <div class="has-text-centered content">
+            <button class="button is-small is-info" @click="applyColor"
+                    :disabled="!currentValueForColorSpace[currentColorSpace]">
+                <span>ÜBERNEHMEN</span>
+            </button>
         </div>
     </div>
 
 </template>
 
 <script>
-import {mapState} from "vuex";
+import {mapMutations, mapState} from "vuex";
 
 export default {
     name: "color-picker",
     computed: {
-        ...mapState(['colorSpaces', 'managedColors']),
+        ...mapState(['colorSpaces', 'managedColors', 'colorClosure', 'currentColorSpace']),
     },
     mounted() {
         const dialog = $('#color-picker');
@@ -56,15 +59,18 @@ export default {
                 },
                 autoOpen: false,
                 resizable: false,
-                height: 250,
+                height: 'auto',
                 width: 384,
                 modal: true,
             });
     },
     data() {
         return {
-            currentColorSpace: undefined,
-            currentValueForColorSpace: {},
+            currentValueForColorSpace: {
+                'PANTONE': null,
+                'HKS': null,
+                'CMYK/RGB': null,
+            },
             initializedPickers: {
                 'PANTONE': false,
                 'HKS': false,
@@ -73,19 +79,24 @@ export default {
         }
     },
     methods: {
-        setActiveContent(colorSpace, $event) {
-            const tabs = document.querySelector('#color-space-tabs').children;
-            for (let tab of tabs) {
-                tab.classList.remove('is-active');
-            }
-
-            this.currentColorSpace = colorSpace;
-            $event.target.parentElement.classList.add('is-active');
-        },
         setColorByColorSpace(color) {
-
             this.currentValueForColorSpace[color.colorSpace] = color;
+        },
+        applyColor() {
+            this.colorClosure(this.currentValueForColorSpace[this.currentColorSpace]);
+
+            this.currentValueForColorSpace = {
+                'PANTONE': null,
+                'HKS': null,
+                'CMYK/RGB': null,
+            };
+            $('#pantone-color-select').val(null)
+            document.querySelector('#pantone-user-color-preview').style.backgroundColor = null;
+            document.querySelector('#hks-user-color-preview').style.backgroundColor = null;
+
+            $('#hks-color-select').val(null)
             $('#color-picker').dialog("close");
+
         },
         addPantoneColorPicker() {
             if (this.initializedPickers['PANTONE']) return;
@@ -94,6 +105,8 @@ export default {
             const selectPANTONEColor = (event, ui) => {
                 const pantoneColor = ui.item.value
                 if (!pantoneColor) return;
+                event.preventDefault();
+                $('#pantone-color-select').val(ui.item.label)
 
                 document.querySelector('#pantone-user-color-preview').style.backgroundColor = pantoneColor.displayColor;
                 this.setColorByColorSpace(pantoneColor);
@@ -102,6 +115,7 @@ export default {
                 source: (query, callback) => {
                     this.$editor
                         .getColorService()
+                        // .pantone(query.term.replace('PANTONE: ', ''))
                         .pantone(query.term)
                         .then(({colors}) => {
                             console.log(colors)
@@ -125,6 +139,8 @@ export default {
             const selectHKSColor = (event, ui) => {
                 const hksColor = ui.item.value
                 if (!hksColor) return;
+                event.preventDefault();
+                $('#hks-color-select').val(ui.item.label)
 
                 document.querySelector('#hks-user-color-preview').style.backgroundColor = hksColor.displayColor;
                 this.setColorByColorSpace(hksColor);
@@ -147,7 +163,8 @@ export default {
                 minLength: 1,
             });
             this.initializedPickers['HKS'] = true;
-        }
+        },
+        ...mapMutations(['setCurrentColorSpace']),
     },
     watch: {
         colorSpaces(spaces) {

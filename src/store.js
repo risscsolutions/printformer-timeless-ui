@@ -15,6 +15,7 @@ export default function makeStore() {
             traceControlsIsOpen: false,
             managedColors: [],
             colorSpaces: [],
+            currentColorSpace: undefined,
             colorClosure: () => {},
         },
         getters: {
@@ -79,6 +80,9 @@ export default function makeStore() {
             },
             setColorSpaces(state, colorSpaces) {
                 state.colorSpaces = colorSpaces;
+            },
+            setCurrentColorSpace(state, colorSpace) {
+                state.currentColorSpace = colorSpace;
             },
             setColorClosure(state, closure) {
                 state.colorClosure = closure;
