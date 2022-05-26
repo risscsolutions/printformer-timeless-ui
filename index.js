@@ -1,6 +1,5 @@
 import Events from "@rissc/printformer-editor-client/dist/Events";
 
-document.body.style.opacity = '0%';
 window.jQuery = window.$ = require('./src/vendor/jquery-ui-1.13.1.custom/external/jquery/jquery');
 require('./src/vendor/jquery-ui-1.13.1.custom/jquery-ui');
 
@@ -28,6 +27,7 @@ import ExtendedEdit from "./src/components/sidebar/right/ExtendedEdit";
 import {urlQueryObject} from "./src/helper";
 import TraceControls from "./src/components/TraceControls";
 import ColorPicker from "./src/components/sidebar/right/ColorPicker";
+import FullScreenLoader from "./src/components/FullScreenLoader";
 
 Vue.prototype.$svg = require('./src/svg.js');
 Vue.use(Vuex);
@@ -93,6 +93,10 @@ window.onload = () => {
     }
 
     const store = makeStore()
+
+    new Vue({
+        store, render: createElement => createElement(FullScreenLoader)
+    }).$mount("#full-screen-loader");
 
     connector.editor(editorIframe, window.events).then(editor => {
         Vue.prototype.$editor = editor;
