@@ -43,7 +43,7 @@
                     <div class="column columns is-24">
                         <div class="column is-8 p-1 columns direction-column">
                             <div class="column has-text-centered content">
-                                <button class="button is-small is-info" @click="skipSimpleMode">
+                                <button class="button is-small is-info" @click="skipSimpleMode" :disabled="blockUi">
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <span>WEITER</span>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -52,7 +52,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-show="traceStep !== 1" ref="tracePreview"></div>
+                <div v-show="traceStep !== 1" ref="tracePreview" style="height: 100%"></div>
             </div>
             <div class="trace-controls column is-narrow sidebar-no-pager border-solid">
                 <div v-show="traceStep === 1" class="column">
@@ -82,80 +82,116 @@
                     </div>
                 </div>
                 <div v-show="traceStep === 2" class="column">
-                    <div class="content is-small">
+                    <div class="content is-small my-2">
                         <h1 class="dark-gray-color mb-2 blue-color has-text-weight-bold">Optional: Optimierung deines
                             Werbeafdrucks</h1>
                         <div ref="traceSettings">
-                            <p class="text-headline">Rauschunterdrückung</p>
-                            <div class="flex-space-between">
-                                <input ref="deSpeckleRange" class="" type="range" value="1"
+                            <div>
+                                <input ref="deSpeckleRange" id="deSpeckleRange" class="" type="range" value="1"
                                        min="0" max="1000" step="1">
-                                <span ref="deSpeckleInfo" class="text-and-icons"
-                                      style="margin-left: 10px">1</span>
+                                <span class="px-2 dark-gray-color has-text-weight-semibold vertical-align-sub">Rauschunterdrückung</span>
+                                <output ref="deSpeckleInfo" for="deSpeckleRange"
+                                        class="slider-output dark-gray-color has-text-weight-semibold vertical-align-sub">
+                                    1
+                                </output>
                             </div>
-                            <p class="text-headline">Eckenglättung</p>
-                            <div class="flex-space-between">
-                                <input ref="smoothCornersRange" class="" type="range" value="1"
+                            <div>
+                                <input ref="smoothCornersRange" id="smoothCornersRange" class="" type="range" value="1"
                                        min="0" max="1.334" step="0.001">
-                                <span ref="smoothCornersInfo" class="text-and-icons"
-                                      style="margin-left: 10px">1</span>
+                                <span class="px-2 dark-gray-color has-text-weight-semibold vertical-align-sub">Eckenglättung</span>
+                                <output ref="smoothCornersInfo" for="smoothCornersRange"
+                                        class="slider-output dark-gray-color has-text-weight-semibold vertical-align-sub">
+                                    1
+                                </output>
                             </div>
-                            <p class="text-headline">Bézierkurvenoptimierung</p>
-
-                            <div class="flex-space-between">
-                                <input ref="optimizePathsRange" class="" type="range" value="1"
+                            <div>
+                                <input ref="optimizePathsRange" id="optimizePathsRange" class="" type="range" value="1"
                                        min="0" max="5" step="0.1">
-                                <span ref="optimizePathsInfo" class="text-and-icons"
-                                      style="margin-left: 10px">1</span>
+                                <span class="px-2 dark-gray-color has-text-weight-semibold vertical-align-sub">Bézierkurven</span>
+                                <output ref="optimizePathsInfo" for="optimizePathsRange"
+                                        class="slider-output dark-gray-color has-text-weight-semibold vertical-align-sub">
+                                    1
+                                </output>
                             </div>
-                            <hr class="sidebar-divider">
                         </div>
-
-                        <button class="button text-and-icons" @click="">
+                    </div>
+                    <div class="content">
+                        <button class="button is-small is-info" @click="applyGranululu">
                             <span>ÜBERNEHMEN</span>
                         </button>
                     </div>
                 </div>
                 <div v-show="traceStep === 3" class="column">
-                    <div class="content is-small">
+                    <div class="content is-small my-2">
                         <h1 class="dark-gray-color mb-2 blue-color has-text-weight-bold">Farben bestimmen und
                             zuweisen</h1>
                         <p class="dark-gray-color mb-2 blue-color has-text-weight-bold">Schritt 1: Druckfarben
                             bestimmen</p>
                         <p class="dark-gray-color mb-0 ">Wähle deine gewünschten Druckfarben aus</p>
                     </div>
-                </div>
 
+                    <div class="content is-small" ref="userColors">
 
-                <div style="display:none;">
-                    <div class="controls ">
-                        <div ref="effectDescriptionContainer">
-                            <p class="text-headline" id="effect-description"></p>
-                            <hr class="sidebar-divider">
-                        </div>
+                        <button class="button is-rounded color-button-round"
+                                @click="chooseColor" v-html="icon('Plus')"></button>
+                        <button class="button is-rounded color-button-round"
+                                @click="chooseColor" v-html="icon('Plus')"></button>
+                        <button class="button is-rounded color-button-round"
+                                @click="chooseColor" v-html="icon('Plus')"></button>
+                        <button class="button is-rounded color-button-round"
+                                @click="chooseColor" v-html="icon('Plus')"></button>
+                        <button class="button is-rounded color-button-round"
+                                @click="chooseColor" v-html="icon('Plus')"></button>
+                        <button class="button is-rounded color-button-round"
+                                @click="chooseColor" v-html="icon('Plus')"></button>
+                        <button class="button is-rounded color-button-round"
+                                @click="chooseColor" v-html="icon('Plus')"></button>
+                        <button class="button is-rounded color-button-round"
+                                @click="chooseColor" v-html="icon('Plus')"></button>
+                        <button class="button is-rounded color-button-round"
+                                @click="chooseColor" v-html="icon('Plus')"></button>
+                        <button class="button is-rounded color-button-round"
+                                @click="chooseColor" v-html="icon('Plus')"></button>
+                    </div>
+                    <hr class="sidebar-divider">
 
-
-                        <div ref="reduceAutomation">
-                            <p class="text-headline">Farben automatisch reduzieren</p>
-                            <label class="switch">
-                                <input ref="reduceAutomationSwitch" type="checkbox">
-                                <span class="slider round"></span>
-                            </label>
-                        </div>
-
-                        <hr class="sidebar-divider">
-
-                        <div class="field">
-                            <p ref="maxColorInfo" class="text-description">
-                                <span ref="existingColors">0</span>
-                                <span> / </span>
-                                <span ref="allowedColors">0</span>
-                                erlaubten Farben</p>
-                        </div>
-
-                        <!--                    @include('editor.control.color', ['type' => 'trace', 'showUsedColors' => true])-->
+                    <div class="content is-small my-2" v-if="colorsChosen">
+                        <p class="dark-gray-color mb-2 blue-color has-text-weight-bold">Schritt 2: Druckfarben
+                            zuweisen</p>
+                        <p class="dark-gray-color mb-0 ">Weise die in Schritt 1 bestimmten Druckfarben denen in deinem
+                            Bild gefundenen Farben zu.</p>
                     </div>
 
+                    <div class="content is-small" ref="colorsInSVG" v-if="colorsChosen">
+                        <button class="button is-rounded color-button-round"
+                                @click="chooseColor" v-html="icon('Plus')"></button>
+                        <button class="button is-rounded color-button-round"
+                                @click="chooseColor" v-html="icon('Plus')"></button>
+                        <button class="button is-rounded color-button-round"
+                                @click="chooseColor" v-html="icon('Plus')"></button>
+                        <button class="button is-rounded color-button-round"
+                                @click="chooseColor" v-html="icon('Plus')"></button>
+                        <button class="button is-rounded color-button-round"
+                                @click="chooseColor" v-html="icon('Plus')"></button>
+                        <button class="button is-rounded color-button-round"
+                                @click="chooseColor" v-html="icon('Plus')"></button>
+                        <button class="button is-rounded color-button-round"
+                                @click="chooseColor" v-html="icon('Plus')"></button>
+                        <button class="button is-rounded color-button-round"
+                                @click="chooseColor" v-html="icon('Plus')"></button>
+                        <button class="button is-rounded color-button-round"
+                                @click="chooseColor" v-html="icon('Plus')"></button>
+                        <button class="button is-rounded color-button-round"
+                                @click="chooseColor" v-html="icon('Plus')"></button>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <button class="button is-small is-info" ref="applyTrace">
+                        <span>ÜBERNEHMEN</span>
+                    </button>
+                </div>
+                <div style="display:none;">
                     <div ref="resultAsUserMedia">
                         <p class="text-headline">Vektor in Mediamanager speichern</p>
 
@@ -166,13 +202,6 @@
                         <hr class="sidebar-divider">
                     </div>
 
-                    <div class="flex-space-around button-group-container">
-                        <div class="button-in-group-divider"></div>
-                        <a ref="applyTrace"
-                           class="text-and-icons button-in-group">
-                            <p class="text-and-icons no-pointer-events text-and-icons">Übernehmen</p>
-                        </a>
-                    </div>
 
                 </div>
 
@@ -182,7 +211,7 @@
                         <span>ABBRECHEN</span>
                     </button>
                     <button v-html="icon('VectorizerPfeilLinks')" @click="backward"
-                            v-if="(traceStep === 1 && simpleColorsApplied)"
+                            v-if="(traceStep === 1 && simpleColorsApplied || traceStep === 2 || traceStep === 3)"
                             :disabled="blockUi"
                             class="button is-small is-ghost"></button>
                 </div>
@@ -256,7 +285,7 @@
 <script>
 import Events from "@rissc/printformer-editor-client/dist/Events";
 import {Asset, BlockEffects} from "@rissc/printformer-editor-client/dist/Objects";
-import {remove, isEmpty, isEqual, uniqWith, shuffle} from "lodash";
+import {remove, isEmpty, isEqual, uniqWith, shuffle, clone} from "lodash";
 import {mapMutations, mapState} from "vuex";
 
 const BLOCK_EFFECTS = {
@@ -283,13 +312,13 @@ export default {
     data() {
         return {
             effects: [],
+            blockEffectType: undefined,
             updateListener: new Map(),
             deSpeckle: 10,
             smoothCorners: 10,
             optimizePaths: 10,
             colorLimit: 0,
             defaultColorLimit: 10,
-            initialColorMap: [],
             patchIdentifierToRevertTo: undefined,
             automationActive: true,
             blockUi: false,
@@ -297,6 +326,8 @@ export default {
             selectedSimpleColors: [],
             previews: [],
             traceStep: 1,
+            colorsChosen: false,
+
         }
     },
     computed: {
@@ -313,13 +344,6 @@ export default {
                 // this.button.classList.add('prohibited');
                 // this.container.style.display = 'none';
                 return;
-            }
-
-            if (vectorEffect.description) {
-                // @ts-ignore
-                this.$refs.effectDescriptionContainer.querySelector("#effect-description").innerHTML = vectorEffect.description;
-            } else {
-                this.$refs.effectDescriptionContainer.style.display = 'none';
             }
 
             this.initialize(configuration);
@@ -375,8 +399,6 @@ export default {
                 element.addEventListener('mouseup', () => this.startTracing());
             });
 
-            this.$refs.reduceAutomationSwitch.addEventListener('input', e => this.checkReduceAutomation(e));
-
             if (!((configuration.sideBar.tabPanel.tabs.multimedia || {}).provider || {}).userMedia)
                 this.$refs.resultAsUserMedia.style.display = 'none';
 
@@ -420,8 +442,7 @@ export default {
                 return;
             }
             // this.$refs.traceLoader.style.display = 'flex';
-
-            this.initialColorMap = activeObject.colorMap;
+            this.blockEffectType = activeObject.effects[0].type;
             this.colorLimit = settings.colorLimit || this.defaultColorLimit;
 
             this.deSpeckle = settings.deSpeckle || 0
@@ -430,6 +451,21 @@ export default {
             this.$refs.deSpeckleInfo.innerText = this.$refs.deSpeckleRange.value = this.deSpeckle.toString();
             this.$refs.smoothCornersInfo.innerText = this.$refs.smoothCornersRange.value = this.smoothCorners.toString();
             this.$refs.optimizePathsInfo.innerText = this.$refs.optimizePathsRange.value = this.optimizePaths.toString();
+
+            if (activeObject.colorMap.length > this.colorLimit) {
+                this.automationActive = false;
+                this.setSettings();
+                this.updatePreview(activeObject).then(() => {
+                    window.events.on(Events.EDITOR_OBJECT_UPDATED, this.updatePreview, this);
+                    this.showOverlay(activeObject);
+                });
+                return;
+            }
+
+            if (activeObject.colorMap.length < this.colorLimit || activeObject.colorMap.length === 1) {
+                this.automationActive = false;
+            }
+
 
             this.startTracing()
                 .then(() => {
@@ -446,7 +482,10 @@ export default {
             this.$refs.traceOverlay.style.cursor = "wait";
             return this.$editor.getActiveObject()
                 .then((editorObject) => {
-                    if (!editorObject) return;
+                    if (!editorObject) {
+                        this.closeOverlay();
+                        return;
+                    }
 
                     const effectIdentifier = editorObject.effects
                         .find((effect) => {
@@ -492,31 +531,6 @@ export default {
                     console.error('Unknown trace range:', element);
             }
         },
-        checkReduceAutomation(event) {
-            if (!event.target) return;
-
-            const message = this.automationActive
-                ? 'Ihre Vorlage wird auf den Ursprung zurück gesetzt. Alle Einstellungen gehen verloren.'
-                : [
-                    `Reduzierung ist auf max. ${this.colorLimit.toString()} Farben möglich.`,
-                    'Ggf. werden bereits vorgenommene Einstellungen zurück gesetzt.',
-                    'Bitte überprüfen Sie in jedem Fall das Ergebnis.',
-                ].join('</br>');
-
-            // TODO
-            // showConfirm(message,
-            //     () => {
-            //         this.automationActive = (event.target).checked;
-            //         this.startTracing();
-            //     },
-            //     () => {
-            //         this.$refs.reduceAutomationSwitch.checked = this.automationActive;
-            //     },
-            //     'Achtung',
-            //     'Weiter',
-            //     'Abbruch'
-            // )
-        },
         async updatePreview(editorObject) {
             this.$refs.tracePreview.innerHTML = (await editorObject.getContent()) || '';
             this.resolveColorsAndUpdateControls(editorObject);
@@ -528,20 +542,6 @@ export default {
             }
 
             this.colors = uniqWith(activeObject.colorMap.map(c => c.replaced).filter((c) => c !== null && c !== 'none'), isEqual);
-
-            this.$refs.allowedColors.innerHTML = this.colorLimit.toString();
-            this.$refs.existingColors.innerHTML = this.colors.length.toString();
-
-            const usedColorsBeyondLimit = this.colors.length > this.colorLimit;
-            displayBlockOrNone(this.$refs.maxColorInfo, usedColorsBeyondLimit);
-
-            const reduceAutomationVisible = !activeObject.containsRasterImages
-                || (activeObject.colorMap.length <= this.colorLimit && !this.automationActive);
-
-            displayBlockOrNone(this.$refs.reduceAutomation, !reduceAutomationVisible);
-            displayBlockOrNone(this.$refs.reduceAutomation.nextElementSibling, !reduceAutomationVisible);
-
-            this.$refs.applyTrace.classList.toggle('disabled', usedColorsBeyondLimit);
 
             displayBlockOrNone(this.$refs.traceSettings, activeObject.containsRasterImages);
 
@@ -574,23 +574,12 @@ export default {
         },
         async applyTraceAndCloseOverlay(button) {
             if (button !== this.$refs.applyTrace) {
+                this.revertSettings();
                 const activeObject = await this.$editor.getActiveObject();
-
-                return (
-                    this.initialColorMap.length
-                        ? Promise.all(this.initialColorMap.map((c, idx) => {
-                            return activeObject.replaceColor(c, c.printcolor ||
-                                (c.replaced === 'none'
-                                    ? 'none'
-                                    : {
-                                        colorSpace: 'RGB',
-                                        displayColor: c.replaced,
-                                        values: /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(c.replaced).map(x => parseInt(x, 16))
-                                    })
-                            )
-                        })).then(this.$editor.getUndoRedo().clear())
-                        : Promise.resolve()
-                )
+                return activeObject.delete()
+                    .then(() => {
+                        this.$editor.getUndoRedo().clear();
+                    })
                     .then(() => {
                         this.$refs.resultAsUserMediaSwitch.checked = false;
                         this.closeOverlay();
@@ -609,9 +598,12 @@ export default {
         },
         showOverlay(activeObject) {
             const colorMap = activeObject.colorMap;
-
-            if (colorMap.length === this.colorLimit) {
-                this.traceStep = 1;
+            if (!activeObject.containsRasterImages || colorMap.length > this.colorLimit) {
+                this.traceStep = 3; //color picker
+            } else if (colorMap.length < this.colorLimit || colorMap.length === 1) {
+                this.traceStep = 2; //granululu
+            } else if (colorMap.length === this.colorLimit) {
+                this.traceStep = 1; //automat
             }
 
             this.openTraceControls();
@@ -620,6 +612,7 @@ export default {
             console.log('closeOverlay')
             window.events.off(Events.EDITOR_OBJECT_UPDATED, this.updatePreview, this);
             this.revertTraceStepOne();
+            this.revertTraceStepTwo();
             this.closeTraceControls();
             // this.$refs.traceOverlay.style.display = 'none';
         },
@@ -654,7 +647,10 @@ export default {
                 return p.then(() => {
                     return new Promise(resolve => {
                         colors.reduce((p2, c, idx) => {
-                            return p2.then(a => a.replaceColor(colorMap[idx], this.selectedSimpleColors.find(ssc => ssc.name === c) || c));
+                            return p2.then(a => {
+                                if (!colorMap[idx]) return Promise.resolve(a);
+                                return a.replaceColor(colorMap[idx], this.selectedSimpleColors.find(ssc => ssc.name === c) || c)
+                            });
                         }, Promise.resolve(activeObject))
                             .then((a) => a.getContent())
                             .then((svg) => this.previews.push({svg, colors}))
@@ -686,31 +682,71 @@ export default {
 
             this.closeOverlay();
         },
-        skipSimpleMode() {
+        async skipSimpleMode() {
+            const activeObject = await this.$editor.getActiveObject();
 
+            this.$editor.getUndoRedo().clear()
+                .then(() => {
+                    this.automationActive = false;
+                    return this.startTracing();
+                })
+                .then(() => {
+                    this.traceStep = 2;
+                })
+
+        },
+        applyGranululu() {
+            this.traceStep = 3;
+        },
+        chooseColor(event) {
+            console.log(event)
+            this.setColorClosure()
+
+            $('#color-picker')
+                .dialog('option', 'position', {
+                    collision: "fit",
+                    my: "center top+10",
+                    at: "center bottom",
+                    of: $(event.currentTarget)
+                })
+                .dialog('open');
         },
         revertTraceStepOne() {
             this.simpleColorsApplied = false;
             this.selectedSimpleColors = [];
             this.previews = [];
-            this.initialColorMap = [];
             const colorButtons = this.$refs.managedColors.children;
             for (let item of colorButtons) {
                 item.classList.remove('is-active');
             }
         },
+        revertTraceStepTwo() {
+            this.automationActive = true;
+        },
+        revertSettings() {
+        },
         async backward() {
             if (this.traceStep === 1) {
                 this.revertTraceStepOne();
+            } else if (this.traceStep === 2) {
+                this.automationActive = true;
+                this.revertSettings();
+
+                this.startTracing()
+                    .then(() => {
+                        this.traceStep = 1;
+                    });
+            } else if (this.traceStep === 3) {
+                this.traceStep = 2;
+                this.colorsChosen = false;
             }
 
         },
-        ...mapMutations(['openTraceControls', 'closeTraceControls'])
+        ...mapMutations(['openTraceControls', 'closeTraceControls', 'setColorClosure'])
 
     },
     watch: {
         traceControlsIsOpen(state) {
-            console.log('traceControlsIsOpen', state)
             const editor = document.querySelector('#pf-container');
             if (state) {
                 this.openOverlayAndSetSettings();
@@ -727,5 +763,11 @@ export default {
 </script>
 
 <style scoped>
+input[type=range] {
+    width: 250px;
+}
 
+.vertical-align-sub {
+    vertical-align: sub;
+}
 </style>

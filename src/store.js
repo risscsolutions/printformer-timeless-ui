@@ -15,6 +15,7 @@ export default function makeStore() {
             traceControlsIsOpen: false,
             managedColors: [],
             colorSpaces: [],
+            colorClosure: () => {},
         },
         getters: {
             allowAddShapes(state) {
@@ -79,6 +80,9 @@ export default function makeStore() {
             setColorSpaces(state, colorSpaces) {
                 state.colorSpaces = colorSpaces;
             },
+            setColorClosure(state, closure) {
+                state.colorClosure = closure;
+            }
         }
     });
 }

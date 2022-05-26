@@ -27,6 +27,7 @@ import ViewSettings from "./src/components/sidebar/right/ViewSettings";
 import ExtendedEdit from "./src/components/sidebar/right/ExtendedEdit";
 import {urlQueryObject} from "./src/helper";
 import TraceControls from "./src/components/TraceControls";
+import ColorPicker from "./src/components/sidebar/right/ColorPicker";
 
 Vue.prototype.$svg = require('./src/svg.js');
 Vue.use(Vuex);
@@ -122,5 +123,9 @@ window.onload = () => {
         new Vue({
             store, render: createElement => createElement(TraceControls)
         }).$mount("#trace-controls");
+
+        new Vue({
+            store, render: createElement => createElement(ColorPicker)
+        }).$mount("#color-picker");
     });
 }
