@@ -29,7 +29,9 @@
                 </div>
                 <div id="hks-user-color-preview" class="column user-color-preview mr-3"></div>
             </div>
-            <div v-show="['CMYK', 'RGB'].includes(currentColorSpace)" class="column"></div>
+            <div v-show="['CMYK', 'RGB'].includes(currentColorSpace)" class="column">
+                <input id="spectre"/>
+            </div>
         </div>
         <div class="has-text-centered content">
             <button class="button is-small is-info" @click="applyColor"
@@ -50,6 +52,15 @@ export default {
         ...mapState(['colorSpaces', 'managedColors', 'colorClosure', 'currentColorSpace']),
     },
     mounted() {
+        const spectre = $('#spectre').spectrum({
+            flat: true,
+            showInput: false,
+            showButtons: false,
+            change: (color) => {
+                color.toHexString(); // #ff0000
+            }
+        })
+
         const dialog = $('#color-picker');
         dialog
             .dialog({

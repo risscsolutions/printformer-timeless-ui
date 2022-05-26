@@ -2,6 +2,7 @@ import Events from "@rissc/printformer-editor-client/dist/Events";
 
 window.jQuery = window.$ = require('./src/vendor/jquery-ui-1.13.1.custom/external/jquery/jquery');
 require('./src/vendor/jquery-ui-1.13.1.custom/jquery-ui');
+require('./src/vendor/spectrum/spectrum');
 
 import Vue from 'vue';
 import Vuex from 'vuex';
