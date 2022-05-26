@@ -37,6 +37,7 @@
     overflow: hidden;
     text-align: center;
 }
+
 .variant-active {
     border: 2px solid #A6A9A9 !important;
     border-radius: 3px;
@@ -48,7 +49,7 @@
 </style>
 
 <script>
-import {mapState} from "vuex";
+import {mapMutations, mapState} from "vuex";
 
 export default {
     name: "variants",
@@ -69,7 +70,7 @@ export default {
         async loadVariant(variant, index) {
             if (this.currentId !== index) {
                 this.currentId = index;
-                await this.$editor.getLoader().show("Loading...");
+                this.showFullScreenLoader();
                 await this.$editor.getVariants().apply(variant.id);
                 await this.$editor.save();
 
@@ -83,10 +84,11 @@ export default {
                     this.$store.commit('setPreviewPages', prevPages);
                 });
 
-                await this.$editor.getLoader().hide();
+                this.hideFullScreenLoader();
                 this.currentId = index;
             }
-        }
+        },
+        ...mapMutations(['showFullScreenLoader', 'hideFullScreenLoader'])
     },
     data() {
         return {

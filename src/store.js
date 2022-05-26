@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 export default function makeStore() {
     return new Vuex.Store({
         state: {
+            editorLoaded: false,
             editorConfig: {},
             previewConfig: {},
             is3D: false,
@@ -17,21 +18,24 @@ export default function makeStore() {
             colorSpaces: [],
             currentColorSpace: undefined,
             colorClosure: () => {},
+            fullScreenLoaderVisible: true,
         },
         getters: {
             allowAddShapes(state) {
-                return ((state.editorConfig || {}).configuration|| {}).allowAddShapes;
+                return ((state.editorConfig || {}).configuration || {}).allowAddShapes;
             },
             allowAddAssets(state) {
-                return ((state.editorConfig || {}).configuration|| {}).allowAddAssets;
+                return ((state.editorConfig || {}).configuration || {}).allowAddAssets;
             },
             allowAddTexts(state) {
-                return ((state.editorConfig || {}).configuration|| {}).allowAddTexts;
+                return ((state.editorConfig || {}).configuration || {}).allowAddTexts;
             }
         },
         mutations: {
             setEditorConfig(state, editorConfig) {
                 state.editorConfig = editorConfig;
+                state.editorLoaded = true;
+                state.fullScreenLoaderVisible = false;
             },
             setPreviewConfig(state, previewConfig) {
                 state.previewConfig = previewConfig;
@@ -86,6 +90,12 @@ export default function makeStore() {
             },
             setColorClosure(state, closure) {
                 state.colorClosure = closure;
+            },
+            showFullScreenLoader(state) {
+                state.fullScreenLoaderVisible = true;
+            },
+            hideFullScreenLoader(state) {
+                state.fullScreenLoaderVisible = false;
             }
         }
     });

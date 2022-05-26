@@ -1,5 +1,5 @@
 <template>
-    <div v-show="this.editorLoaded" :class="{'is-1 width-50': !showroomIsOpen, 'is-6': showroomIsOpen}" class="column my-3"
+    <div v-show="editorLoaded" :class="{'is-1 width-50': !showroomIsOpen, 'is-6': showroomIsOpen}" class="column my-3"
          style="display: grid">
         <div class="columns">
             <div class="column has-background-light is-1 width-50">
@@ -103,7 +103,7 @@ export default {
         isMultiPage() {
             return this.previewPages.length > 1;
         },
-        ...mapState(['editorConfig', 'is3D', 'notifications', 'openControlTab', 'previewPages', 'showroomIsOpen', 'traceControlsIsOpen']),
+        ...mapState(['editorConfig', 'is3D', 'notifications', 'openControlTab', 'previewPages', 'showroomIsOpen', 'traceControlsIsOpen', 'editorLoaded']),
     },
     mounted() {
         window.events.on(Events.EDITOR_LOADED, () => {
@@ -116,14 +116,11 @@ export default {
         });
 
         window.events.on(Events.EDITOR_LOADED, async (config) => {
-
             if (config.configuration.show3DPreview) {
                 const editorIframe = document.getElementById('editor-iframe');
                 this.$refs.threedeeiframe.src = editorIframe.src.replace(new RegExp(/\/embed/), '/3d');
                 this.$editor.setThreeDeeElement(this.$refs.threedeeiframe);
             }
-
-            this.editorLoaded = true;
         });
 
         this.$editor.registerConfirmCallback('LEAVE_EDITOR_WITH_ERRORS', (confirm) => {
@@ -312,7 +309,6 @@ export default {
         return {
             currentPage: null,
             has3D: false,
-            editorLoaded: false,
         }
     }
 }

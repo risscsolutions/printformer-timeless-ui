@@ -1,5 +1,5 @@
 <template>
-    <div class="columns is-mobile is-vcentered is-centered mb-0" :class="{'blured-no-pointer': traceControlsIsOpen}">
+    <div class="columns is-mobile is-vcentered is-centered mb-0" :class="{'blured-no-pointer': traceControlsIsOpen || fullScreenLoaderVisible}">
         <div class="column is-4 dark-gray-color pt-5 pb-0">
             <span @click="editorZoomIn" style="cursor: pointer; vertical-align: middle;" class="svg-20"
                   v-html="icon('Plus')">
@@ -39,7 +39,7 @@ import {urlQueryObject} from "../helper";
 export default {
     name: "top-bar-controls",
     computed: {
-        ...mapState(['editorConfig', 'notifications', 'traceControlsIsOpen']),
+        ...mapState(['editorConfig', 'notifications', 'traceControlsIsOpen', 'fullScreenLoaderVisible', 'editorLoaded']),
         hasWarnings() {
             return this.notifications.some(notification => ['warning', 'error'].includes(notification.type));
         }
@@ -63,8 +63,6 @@ export default {
             //         await this.$editor.getLoader().hide();
             //         this.$editor.getZoom().get().then(zoom => this.zoom = parseInt(zoom * 100));
             //     });
-
-            this.editorLoaded = true;
         });
     },
     methods: {
@@ -76,8 +74,12 @@ export default {
         },
         editorSave(e) {
             this.$editor.getLoader().show('Entwurf wird gespeichert...')
-                .then(() => this.$catch(this.$editor.save()))
-                .then(() => this.$editor.getLoader().hide())
+            this.showFullScreenLoader();
+            this.$catch(this.$editor.save())
+                .then(() => {
+                    this.hideFullScreenLoader();
+                    return this.$editor.getLoader().hide()
+                })
                 .then(() => {
                     setTimeout(() => $(e.target).tooltip('destroy'), 800);
                     $(e.target)
@@ -91,11 +93,11 @@ export default {
                 })
         },
         pagePreview() {
-            this.$editor.getLoader().show();
+            this.showFullScreenLoader()
             this.$editor.goToNextStep()
                 .then(() => {
                     goToStep(this.editorConfig.editorSteps.next, urlQueryObject().query.draft)
-                }, async () => await this.$editor.getLoader().hide());
+                }, () => this.hideFullScreenLoader());
         },
         editorZoomIn() {
             this.$editor.getZoom().in().then(zoom => this.zoom = parseInt(zoom * 100));
@@ -108,13 +110,12 @@ export default {
                 window.setTimeout(resolve, t)
             });
         },
-        ...mapMutations(['openShowroom'])
+        ...mapMutations(['openShowroom', 'showFullScreenLoader', 'hideFullScreenLoader'])
     },
     data() {
         return {
             zoom: 55,
             currentActiveObject: null,
-            editorLoaded: false,
             shouldShowMenu: false
         }
     }
