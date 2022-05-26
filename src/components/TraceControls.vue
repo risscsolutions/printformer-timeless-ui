@@ -374,7 +374,7 @@ export default {
                 return;
             }
 
-            if (activeObject.colorMap.length < this.colorLimit || activeObject.colorMap.length === 1) {
+            if (activeObject.colorMap.length < this.colorLimit && activeObject.colorMap.length === 1) {
                 this.automationActive = false;
             }
 
@@ -472,7 +472,7 @@ export default {
             const colorMap = activeObject.colorMap;
             if (!activeObject.containsRasterImages || colorMap.length > this.colorLimit) {
                 this.setTraceStep(3); //color picker
-            } else if (colorMap.length < this.colorLimit || colorMap.length === 1) {
+            } else if (colorMap.length < this.colorLimit && colorMap.length === 1) {
                 this.setTraceStep(2); //granululu
             } else if (colorMap.length === this.colorLimit) {
                 this.setTraceStep(1); //automat

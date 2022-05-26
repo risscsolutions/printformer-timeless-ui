@@ -9,9 +9,13 @@
                     <li v-if="colorSpaces.includes('HKS')" :class="{'is-active': currentColorSpace === 'HKS'}">
                         <a @click="setCurrentColorSpace('HKS')">HKS</a>
                     </li>
-                    <li v-if="colorSpaces.some(s => ['CMYK', 'RGB'].includes(s))"
+                    <li v-if="colorSpaces.includes('CMYK')"
                         :class="{'is-active': currentColorSpace === 'CMYK'}">
-                        <a @click="setCurrentColorSpace('CMYK')">RGB/CMYK</a>
+                        <a @click="setCurrentColorSpace('CMYK')">CMYK</a>
+                    </li>
+                    <li v-if="colorSpaces.includes('RGB')"
+                        :class="{'is-active': currentColorSpace === 'RGB'}">
+                        <a @click="setCurrentColorSpace('RGB')">RGB</a>
                     </li>
                 </ul>
             </div>
@@ -29,8 +33,47 @@
                 </div>
                 <div id="hks-user-color-preview" class="column user-color-preview mr-3"></div>
             </div>
-            <div v-show="['CMYK', 'RGB'].includes(currentColorSpace)" class="column">
-                <input id="spectre"/>
+            <div v-show="currentColorSpace ==='RGB'" class="columns p-3 mr-5">
+                <div class="column">
+                    <input id="spectre-rgb">
+                </div>
+                <div class="column">
+                    <div class="columns is-justify-content-space-between">
+                        <b class="mx-2">R</b>
+                        <input v-model="R" @input="updateRGB" type="number" class="width-100" min="0" max="255">
+                    </div>
+                    <div class="columns is-justify-content-space-between">
+                        <b class="mx-2">G</b>
+                        <input v-model="G" @input="updateRGB" type="number" class="width-100" min="0" max="255">
+                    </div>
+                    <div class="columns is-justify-content-space-between">
+                        <b class="mx-2">B</b>
+                        <input v-model="B" @input="updateRGB" type="number" class="width-100" min="0" max="255">
+                    </div>
+                </div>
+            </div>
+            <div v-show="currentColorSpace ==='CMYK'" class="columns p-3 mr-5">
+                <div class="column">
+                    <input id="spectre-cmyk">
+                </div>
+                <div class="column">
+                    <div class="columns is-justify-content-space-between">
+                        <b class="mx-2">C</b>
+                        <input v-model="C" @input="updateCMYK" type="number" class="width-100" min="0" max="100">
+                    </div>
+                    <div class="columns is-justify-content-space-between">
+                        <b class="mx-2">M</b>
+                        <input v-model="M" @input="updateCMYK" type="number" class="width-100" min="0" max="100">
+                    </div>
+                    <div class="columns is-justify-content-space-between">
+                        <b class="mx-2">Y</b>
+                        <input v-model="Y" @input="updateCMYK" type="number" class="width-100" min="0" max="100">
+                    </div>
+                    <div class="columns is-justify-content-space-between">
+                        <b class="mx-2">K</b>
+                        <input v-model="K" @input="updateCMYK" type="number" class="width-100" min="0" max="100">
+                    </div>
+                </div>
             </div>
         </div>
         <div class="has-text-centered content">
@@ -52,15 +95,6 @@ export default {
         ...mapState(['colorSpaces', 'managedColors', 'colorClosure', 'currentColorSpace']),
     },
     mounted() {
-        const spectre = $('#spectre').spectrum({
-            flat: true,
-            showInput: false,
-            showButtons: false,
-            change: (color) => {
-                color.toHexString(); // #ff0000
-            }
-        })
-
         const dialog = $('#color-picker');
         dialog
             .dialog({
@@ -77,6 +111,13 @@ export default {
     },
     data() {
         return {
+            R: 255,
+            G: 0,
+            B: 0,
+            C: 0,
+            M: 100,
+            Y: 100,
+            K: 0,
             currentValueForColorSpace: {
                 'PANTONE': null,
                 'HKS': null,
@@ -90,6 +131,12 @@ export default {
         }
     },
     methods: {
+        updateRGB() {
+            $('#spectre-rgb').spectrum("set", {r: this.R, g: this.G, b: this.B})
+        },
+        updateCMYK() {
+            $('#spectre-cmyk').spectrum("set", {c: this.C, m: this.M, y: this.Y, k: this.K})
+        },
         setColorByColorSpace(color) {
             this.currentValueForColorSpace[color.colorSpace] = color;
         },
@@ -99,7 +146,16 @@ export default {
             this.currentValueForColorSpace = {
                 'PANTONE': null,
                 'HKS': null,
-                'CMYK/RGB': null,
+                'CMYK': {
+                    displayColor: '#ff0000',
+                    values: [0, 100, 100, 0],
+                    colorSpace: 'CMYK'
+                },
+                'RGB': {
+                    displayColor: '#ff0000',
+                    values: [255, 0, 0],
+                    colorSpace: 'RGB'
+                },
             };
             $('#pantone-color-select').val(null)
             document.querySelector('#pantone-user-color-preview').style.backgroundColor = null;
@@ -175,6 +231,61 @@ export default {
             });
             this.initializedPickers['HKS'] = true;
         },
+        addCMYKColorPicker() {
+            if (this.initializedPickers['CMYK']) return;
+            if (!this.colorSpaces.includes('CMYK')) return;
+            const change = (color) => {
+                const cmyk = color.toCMYK();
+                const hex = color.toHexString();
+                this.currentValueForColorSpace['CMYK'] = {
+                    displayColor: hex,
+                    values: [cmyk.c, cmyk.m, cmyk.y, cmyk.k],
+                    colorSpace: 'CMYK'
+                };
+            };
+            $('#spectre-cmyk').spectrum({
+                flat: true,
+                showInput: false,
+                showButtons: false,
+                move: (color) => {
+                    const cmyk = color.toCMYK();
+                    this.C = parseInt(cmyk.c);
+                    this.M = parseInt(cmyk.m);
+                    this.Y = parseInt(cmyk.y);
+                    this.K = parseInt(cmyk.k);
+                    change(color);
+                },
+                change
+            });
+            this.initializedPickers['CMYK'] = true;
+        },
+        addRGBColorPicker() {
+            if (this.initializedPickers['RGB']) return;
+            if (!this.colorSpaces.includes('RGB')) return;
+            const change = (color) => {
+                const rgb = color.toRgb();
+                const hex = color.toHexString();
+                this.currentValueForColorSpace['RGB'] = {
+                    displayColor: hex,
+                    values: [rgb.r, rgb.g, rgb.b],
+                    colorSpace: 'RGB'
+                };
+            }
+            $('#spectre-rgb').spectrum({
+                flat: true,
+                showInput: false,
+                showButtons: false,
+                move: (color) => {
+                    const rgb = color.toRgb();
+                    this.R = rgb.r;
+                    this.G = rgb.g;
+                    this.B = rgb.b;
+                    change(color);
+                },
+                change
+            })
+            this.initializedPickers['RGB'] = true;
+        },
         ...mapMutations(['setCurrentColorSpace']),
     },
     watch: {
@@ -182,6 +293,8 @@ export default {
             console.log(spaces)
             this.addPantoneColorPicker();
             this.addHKSColorPicker();
+            this.addCMYKColorPicker();
+            this.addRGBColorPicker();
         }
 
     }

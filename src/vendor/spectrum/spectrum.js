@@ -964,7 +964,7 @@
             offset: setOffset,
             set: function (c) {
                 set(c);
-                updateOriginalInput();
+                updateOriginalInput(true);
             },
             get: get,
             destroy: destroy,
@@ -1588,9 +1588,9 @@
         }
 
         function rgbToCMYK(r, g, b) {
-            var r = this._r / 255;
-            var g = this._g / 255;
-            var b = this._b / 255;
+            var r = r / 255;
+            var g = g / 255;
+            var b = b / 255;
             var c;
             var m;
             var y;
@@ -1605,10 +1605,10 @@
         }
 
         function cmykToRgb(cmyk) {
-            var c = cmyk[0] / 100;
-            var m = cmyk[1] / 100;
-            var y = cmyk[2] / 100;
-            var k = cmyk[3] / 100;
+            var c = cmyk.c / 100;
+            var m = cmyk.m / 100;
+            var y = cmyk.y / 100;
+            var k = cmyk.k / 100;
             var r;
             var g;
             var b;
