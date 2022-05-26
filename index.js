@@ -28,6 +28,7 @@ import {urlQueryObject} from "./src/helper";
 import TraceControls from "./src/components/TraceControls";
 import ColorPicker from "./src/components/sidebar/right/ColorPicker";
 import FullScreenLoader from "./src/components/FullScreenLoader";
+import ColorAssigner from "./src/components/sidebar/right/ColorAssigner";
 
 Vue.prototype.$svg = require('./src/svg.js');
 Vue.use(Vuex);
@@ -131,5 +132,9 @@ window.onload = () => {
         new Vue({
             store, render: createElement => createElement(ColorPicker)
         }).$mount("#color-picker");
+
+        new Vue({
+            store, render: createElement => createElement(ColorAssigner)
+        }).$mount("#color-assigner");
     });
 }

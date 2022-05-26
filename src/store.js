@@ -17,7 +17,9 @@ export default function makeStore() {
             managedColors: [],
             colorSpaces: [],
             currentColorSpace: undefined,
-            colorClosure: () => {},
+            colorClosure: (lel) => {},
+            colorAssignerClosure: (lel) => {},
+            userColors: [],
             fullScreenLoaderVisible: true,
         },
         getters: {
@@ -96,6 +98,12 @@ export default function makeStore() {
             },
             hideFullScreenLoader(state) {
                 state.fullScreenLoaderVisible = false;
+            },
+            setColorAssignerClosure(state, closure) {
+                state.colorAssignerClosure = closure;
+            },
+            setUserColors(state, userColors) {
+                state.userColors = userColors;
             }
         }
     });
