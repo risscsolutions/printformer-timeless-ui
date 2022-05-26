@@ -11,7 +11,7 @@
                       v-html="$svg('VectorizerLadebalken')"></span>
                 <p>Wird geladen...</p>
             </div>
-            <div v-if="editorLoaded" class="column px-0 is-1 width-105" style="background: white; opacity:.5;"></div>
+            <div v-if="editorLoaded && !traceControlsIsOpen" class="column px-0 is-1 width-105" style="background: white; opacity:.5;"></div>
         </div>
     </div>
 </template>
@@ -22,7 +22,7 @@ import {mapState} from "vuex";
 export default {
     name: "FullScreenLoader",
     computed: {
-        ...mapState(['fullScreenLoaderVisible', 'showroomIsOpen', 'editorLoaded']),
+        ...mapState(['fullScreenLoaderVisible', 'showroomIsOpen', 'editorLoaded','traceControlsIsOpen']),
     }
 }
 </script>

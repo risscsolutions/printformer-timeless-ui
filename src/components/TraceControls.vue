@@ -352,7 +352,7 @@ export default {
                 console.error('No effect setting on asset', activeObject);
                 return;
             }
-            // this.$refs.traceLoader.style.display = 'flex';
+            this.showFullScreenLoader();
             this.blockEffectType = activeObject.effects[0].type;
             this.colorLimit = settings.colorLimit || this.defaultColorLimit;
 
@@ -369,6 +369,7 @@ export default {
                 this.updatePreview(activeObject).then(() => {
                     window.events.on(Events.EDITOR_OBJECT_UPDATED, this.updatePreview, this);
                     this.showOverlay(activeObject);
+                    this.hideFullScreenLoader();
                 });
                 return;
             }
@@ -382,14 +383,13 @@ export default {
                 .then(() => {
                     window.events.on(Events.EDITOR_OBJECT_UPDATED, this.updatePreview, this);
                     this.showOverlay(activeObject);
-                    // this.$refs.traceLoader.style.display = 'none';
+                    this.hideFullScreenLoader();
                 });
         },
         startTracing(persist = false) {
             console.debug('Start tracing', {persist});
-            // this.$refs.traceLoader.style.display = 'flex';
+            this.showFullScreenLoader();
             this.setSettings();
-            // this.$refs.traceOverlay.style.pointerEvents = 'none';
             this.$refs.traceOverlay.style.cursor = "wait";
             return this.$editor.getActiveObject()
                 .then((editorObject) => {
@@ -413,9 +413,8 @@ export default {
                             }
                         ).then((editorObject) => {
                             this.updatePreview(editorObject);
-                            // this.$refs.traceOverlay.style.pointerEvents = 'all';
                             this.$refs.traceOverlay.style.cursor = "auto";
-                            // this.$refs.traceLoader.style.display = 'none';
+                            this.hideFullScreenLoader();
                             if (persist) window.events.emit('reload-media');
                         });
                 });
@@ -444,44 +443,6 @@ export default {
         },
         async updatePreview(editorObject) {
             this.$refs.tracePreview.innerHTML = (await editorObject.getContent()) || '';
-            this.resolveColorsAndUpdateControls(editorObject);
-        },
-        resolveColorsAndUpdateControls(activeObject) {
-            if (!activeObject.colorMap) {
-                console.error('NO colorMap on OBJECT', activeObject);
-                return;
-            }
-
-            this.colors = uniqWith(activeObject.colorMap.map(c => c.replaced).filter((c) => c !== null && c !== 'none'), isEqual);
-
-            displayBlockOrNone(this.$refs.traceSettings, activeObject.containsRasterImages);
-
-            let showColorControl = true;
-            const assignedEffect = activeObject.effects.find(effect => BlockEffects.embossing === effect.type);
-            if (assignedEffect) {
-                const embossingEffect = this.effects.find(e => e.identifier === assignedEffect.identifier);
-                if (activeObject.colorMap.length === 1 && isEqual(activeObject.colorMap[0].printcolor, embossingEffect.color)) {
-                    showColorControl = false;
-                } else {
-                    // TODO
-                    // this.colorControl.initialize(false, [embossingEffect.color]);
-                    // this.colorControl.onObjectSelected(activeObject);
-                }
-            } else {
-                // TODO
-                // this.colorControl.initialize(this.canvasToolBar.graphicColorControl.userCanAddColors, this.canvasToolBar.graphicColorControl.colors);
-                // this.canvasToolBar.addUserColor.addColorsFromUser({showNoty: false});
-                // this.colorControl.onObjectSelected(activeObject);
-            }
-
-            // TODO
-            // displayBlockOrNone(
-            //     this.colorControl.swatchContainer.parentElement,
-            //     showColorControl
-            // );
-            if (!activeObject.containsRasterImages && !showColorControl && !usedColorsBeyondLimit) {
-                this.applyTraceAndCloseOverlay(this.$refs.applyTrace);
-            }
         },
         async applyTraceAndCloseOverlay(button) {
             if (button !== this.$refs.applyTrace) {
@@ -680,7 +641,7 @@ export default {
                 })
             }
         },
-        ...mapMutations(['openTraceControls', 'closeTraceControls', 'setColorClosure', 'setCurrentColorSpace', 'setUserColors', 'setColorAssignerClosure'])
+        ...mapMutations(['openTraceControls', 'closeTraceControls', 'setColorClosure', 'setCurrentColorSpace', 'setUserColors', 'setColorAssignerClosure', 'showFullScreenLoader', 'hideFullScreenLoader'])
 
     },
     watch: {
