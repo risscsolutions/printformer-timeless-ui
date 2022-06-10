@@ -2,62 +2,63 @@
     <div v-show="editorLoaded && !traceControlsIsOpen" :class="{'width-105': !isPanelOpen, 'width-416': isPanelOpen}"
          class="column is-1 px-0" style="display: grid">
         <div class="columns p-3">
-            <transition name="slide">
-                <div v-show="isPanelOpen || shouldShowMenu" class="column p-2 is-1 mr-3 width-300 border-solid"
-                     style="overflow-x: hidden; overflow-y: auto">
-                    <div class="columns is-multiline is-mobile" style="overflow: hidden">
-                        <component class="column is-24 p-5" :is="openControlTab"
-                                   :class="{'sidebar-with-pager': isMultiPage, 'sidebar-no-pager': !isMultiPage}"
-                                   :activeObject="activeObject"></component>
-                    </div>
+            <div v-show="isPanelOpen || shouldShowMenu" class="column p-2 is-1 mr-3 width-300 border-solid"
+                 style="overflow-x: hidden; overflow-y: auto">
+                <div class="columns is-multiline is-mobile" style="overflow: hidden">
+                    <component class="column is-24 p-5" :is="openControlTab"
+                               :class="{'sidebar-with-pager': isMultiPage, 'sidebar-no-pager': !isMultiPage}"
+                               :activeObject="activeObject"></component>
                 </div>
-            </transition>
+            </div>
             <div class="column is-1 p-0 width-100" style="overflow: auto">
                 <div class="sidebar-container">
                     <button
                         class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
-                        @click="toggleSidebarPanel('assets')">
+                        @click="toggleSidebarPanel('assets', $event)" id="asset-menu-button">
                         <span class="mb-1" v-html="icon('Bilder')"></span>
                         <span class="dark-gray-color has-text-weight-medium">Bilder</span>
                     </button>
                     <button v-if="allowAddTexts"
                             class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
-                            @click="toggleSidebarPanel('texts')">
+                            @click="toggleSidebarPanel('texts', $event)" id="text-menu-button">
                         <span class="mb-1" v-html="icon('Text')"></span>
                         <span class="dark-gray-color has-text-weight-medium">Texte</span>
                     </button>
                     <button v-if="allowAddShapes"
                             class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
-                            @click="toggleSidebarPanel('shapes')">
+                            @click="toggleSidebarPanel('shapes', $event)" id="shape-menu-button">
                         <span class="mb-1" v-html="icon('Formen')"></span>
                         <span class="dark-gray-color has-text-weight-medium">Formen</span>
                     </button>
                     <button
                         class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
-                        v-if="hasVariants" @click="toggleSidebarPanel('variants')">
+                        v-if="hasVariants" @click="toggleSidebarPanel('variants', $event)">
                         <span class="mb-1" v-html="icon('Farbpalette')"></span>
                         <span class="dark-gray-color has-text-weight-medium">Produktfarbe ändern</span>
                     </button>
                     <div class="columns p-0 is-gapless">
-                        <span class="column has-text-centered" v-html="icon('VectorizerPfeilLinks')"
-                              style="cursor: pointer"
-                              @click="backward"></span>
-                        <span class="column has-text-centered" v-html="icon('VectorizerPfeilRechts')"
-                              style="cursor: pointer"
-                              @click="forward"></span>
+                        <button class="column has-text-centered button is-ghost is-small"
+                                v-html="icon('VectorizerPfeilLinks')"
+                                :disabled="!undoStack.length"
+                                @click="backward"></button>
+                        <button class="column has-text-centered button is-ghost is-small"
+                                v-html="icon('VectorizerPfeilRechts')"
+                                :disabled="!redoStack.length"
+                                @click="forward"></button>
                     </div>
 
 
                     <button
                         class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
                         style="margin-top: auto;"
-                        @click="toggleSidebarPanel('view-settings')">
+                        @click="toggleSidebarPanel('view-settings', $event)">
                         <span class="mb-1" v-html="icon('Raster')"></span>
                         <span class="dark-gray-color has-text-weight-medium">Ansicht</span>
                     </button>
                 </div>
             </div>
         </div>
+        <div style="display: none" id="triangle-left" class="triangle-left"></div>
     </div>
 </template>
 <style scoped>
@@ -111,7 +112,7 @@
 </style>
 <script>
 import Events from "@rissc/printformer-editor-client/dist/Events";
-import {mapGetters, mapState} from "vuex";
+import {mapGetters, mapMutations, mapState} from "vuex";
 import {debounce} from "lodash";
 import BlockTypes from "@rissc/printformer-ts-common/dist/BlockTypes";
 
@@ -167,6 +168,8 @@ export default {
             this.activeObject = block;
             this.$store.commit('setOpenControlTab', this.blockMenuType);
             this.openSidebarPanel();
+            this.showTriangle(this.activeObject.blockType);
+
             let onUpdate = block => this.activeObject = block;
 
             if (onCancel) {
@@ -180,6 +183,10 @@ export default {
 
             window.events.once(Events.EDITOR_OBJECT_CLEARED, onCancel);
             window.events.on(Events.EDITOR_OBJECT_UPDATED, onUpdate);
+        });
+
+        window.events.on(Events.EDITOR_UNDO_REDO_STACK_CHANGED, () => {
+            this.checkStacks();
         });
     },
     methods: {
@@ -231,21 +238,53 @@ export default {
             this.isPanelOpen = true;
             this.shouldShowMenu = true;
         },
-        toggleSidebarPanel(component) {
+        showTriangle(type) {
+            let button;
+            switch (type) {
+                case'ASSET':
+                    button = $('#asset-menu-button');
+                    break;
+                case 'TEXT':
+                    button = $('#text-menu-button');
+                    break;
+                case 'SHAPE':
+                    button = $('#shape-menu-button');
+                    break;
+            }
+            $('#triangle-left')
+                .css('display', 'block')
+                .position({my: "right center", at: "left-1 center", of: button});
+        },
+        toggleSidebarPanel(component, event) {
             if ((this.openControlTab !== component) || (this.openControlTab === null && this.activeObject !== null)) {
+                if (this.activeObject && component !== this.blockMenuType) this.activeObject.discard()
+
+
                 this.openSidebarPanel();
                 this.$store.commit('setOpenControlTab', component);
+                $('#triangle-left')
+                    .css('display', 'block')
+                    .position({my: "right center", at: "left-1 center", of: $(event.currentTarget)});
             } else {
+                $('#triangle-left').css('display', 'none');
                 this.closeSidebarPanel();
                 this.$store.commit('setOpenControlTab', null);
             }
         },
         forward() {
-            this.$catch(this.$editor.getUndoRedo().redo());
+            this.showFullScreenLoader();
+            this.$catch(this.$editor.getUndoRedo().redo().then(this.hideFullScreenLoader));
         },
         backward() {
-            this.$catch(this.$editor.getUndoRedo().undo());
+            this.showFullScreenLoader();
+            this.$catch(this.$editor.getUndoRedo().undo().then(this.hideFullScreenLoader));
         },
+
+        async checkStacks() {
+            await this.$editor.getUndoRedo().getUndoStack().then(stack => this.undoStack = stack);
+            await this.$editor.getUndoRedo().getRedoStack().then(stack => this.redoStack = stack);
+        },
+        ...mapMutations(['showFullScreenLoader', 'hideFullScreenLoader'])
     },
     data() {
         return {
@@ -253,7 +292,9 @@ export default {
             isPanelOpen: false,
             activeObject: null,
             assets: [],
-            variants: []
+            variants: [],
+            undoStack: [],
+            redoStack: []
         }
     }
 }

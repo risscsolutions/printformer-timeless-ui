@@ -122,6 +122,11 @@ button {
     border: none;
     outline: none;
 }
+.button.is-ghost, .button.is-ghost[disabled] {
+    border: none !important;
+    background-color: transparent !important;
+    outline: none !important;
+}
 
 .gray-background {
     background-color: #f5f5f5;
@@ -278,6 +283,10 @@ button {
     }
 }
 
+.border-purple {
+    border: 1px solid #AC5D7A;
+}
+
 .color-button-round {
     height: 30px !important;
     width: 30px !important;
@@ -320,4 +329,28 @@ button.is-rounded svg {
     max-height: 200px;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+.z-index-2000 {
+    z-index: 2000 !important;
+}
+
+.triangle-left {
+    width: 0;
+    height: 0;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 12px solid #A6A9A3;
+    position:absolute;
+}
+.triangle-left:after{
+    content:'';
+    width: 0;
+    height: 0;
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    border-left: 11px solid #ffffff;
+    position:absolute;
+    top:-11px;
+    right:1px;
 }

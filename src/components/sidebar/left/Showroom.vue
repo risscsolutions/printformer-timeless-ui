@@ -24,41 +24,39 @@
                     <span v-html="icon('Ausrufezeichen')"></span>
                 </div>
             </div>
-            <transition name="slide">
-                <div v-show="showroomIsOpen" class="column p-4 dark-gray-color border-solid"
-                     :class="{'sidebar-with-pager': isMultiPage, 'sidebar-no-pager': !isMultiPage}">
-                    <div v-if="notifications.length && !traceControlsIsOpen">
-                        <div v-for="notification in notifications">
-                            <b v-if="notification.type === 'error'" class="has-text-danger">Fehler</b>
-                            <b v-else-if="notification.type === 'info'" class="has-text-info">Info</b>
-                            <b v-else-if="notification.type === 'warning'" class="has-text-warning">Warnung</b>
-                            <div class="is-flex is-justify-content-space-between is-align-items-center">
-                                <p>{{ notification.message }}</p>
-                                <button v-if="notification.action" class="button is-info is-small"
-                                        @click="doAction(notification.id)">
-                                    <span class="icon is-small" v-html="$svg('Pfeil3', 'stroke-white')"></span>
-                                </button>
-                            </div>
-                            <hr class="divider my-3">
+            <div v-show="showroomIsOpen" class="column p-4 dark-gray-color border-solid"
+                 :class="{'sidebar-with-pager': isMultiPage, 'sidebar-no-pager': !isMultiPage}">
+                <div v-if="notifications.length && !traceControlsIsOpen">
+                    <div v-for="notification in notifications">
+                        <b v-if="notification.type === 'error'" class="has-text-danger">Fehler</b>
+                        <b v-else-if="notification.type === 'info'" class="has-text-info">Info</b>
+                        <b v-else-if="notification.type === 'warning'" class="has-text-warning">Warnung</b>
+                        <div class="is-flex is-justify-content-space-between is-align-items-center">
+                            <p>{{ notification.message }}</p>
+                            <button v-if="notification.action" class="button is-info is-small"
+                                    @click="doAction(notification.id)">
+                                <span class="icon is-small" v-html="$svg('Pfeil3', 'stroke-white')"></span>
+                            </button>
                         </div>
-                    </div>
-                    <p v-if="!traceControlsIsOpen" class="mb-1 like-h4">
-                        KLICKE AUF DIE SYMBOLE IN DER
-                        RECHTEN MENÜLEISTE, UM DEINE
-                        WERBEARTIKEL ZU GESTALTEN
-                    </p>
-                    <p v-else class="mb-1 like-h4">
-                        HIER STEHT EIN GANZ TOLLER HILFETEXT.
-                        HIER STEHT EIN GANZ TOLLER HILFETEXT.
-                        HIER STEHT EIN GANZ TOLLER HILFETEXT.
-                    </p>
-                    <component v-if="openControlTab && !traceControlsIsOpen" :is="infoComponent"></component>
-                    <div>
-                        <iframe ref="threedeeiframe"
-                                style="min-height: 400px; width: 100%; height: 100%; display: none"></iframe>
+                        <hr class="divider my-3">
                     </div>
                 </div>
-            </transition>
+                <p v-if="!traceControlsIsOpen" class="mb-1 like-h4">
+                    KLICKE AUF DIE SYMBOLE IN DER
+                    RECHTEN MENÜLEISTE, UM DEINE
+                    WERBEARTIKEL ZU GESTALTEN
+                </p>
+                <p v-else class="mb-1 like-h4">
+                    HIER STEHT EIN GANZ TOLLER HILFETEXT.
+                    HIER STEHT EIN GANZ TOLLER HILFETEXT.
+                    HIER STEHT EIN GANZ TOLLER HILFETEXT.
+                </p>
+                <component v-if="openControlTab && !traceControlsIsOpen" :is="infoComponent"></component>
+                <div>
+                    <iframe ref="threedeeiframe"
+                            style="min-height: 400px; width: 100%; height: 100%; display: none"></iframe>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -130,7 +128,7 @@ export default {
             dialog
                 .dialog({
                     classes: {
-                        "ui-dialog": 'py-4 px-6',
+                        "ui-dialog": 'py-4 px-6 z-index-2000',
                         "ui-dialog-titlebar": "is-hidden",
                     },
                     autoOpen: false,
@@ -198,39 +196,39 @@ export default {
         });
 
         this.$editor.registerConfirmCallback('HAS_SEEN_ALL_PAGES', (confirm) => {
-                const dialog = $('#confirm-has-seen-all-pages');
-                dialog
-                    .text(this.editorConfig.configuration.labels.hasSeenAllPages)
-                    .dialog({
-                        classes: {
-                            "ui-dialog": 'py-4 px-6',
-                            "ui-dialog-titlebar": "is-hidden",
-                        },
-                        autoOpen: false,
-                        resizable: false,
-                        height: "auto",
-                        width: 450,
-                        modal: true,
-                        buttons: [
-                            {
-                                text: "JA",
-                                class: "button no-radius is-info my-0",
-                                click: () => {
-                                    confirm(true);
-                                    dialog.dialog("close")
-                                }
-                            },
-                            {
-                                text: "ABBRECHEN",
-                                class: "button no-radius is-dark dark-gray-background-color my-0",
-                                click: () => {
-                                    confirm(false)
-                                    dialog.dialog("close");
-                                }
+            const dialog = $('#confirm-has-seen-all-pages');
+            dialog
+                .text(this.editorConfig.configuration.labels.hasSeenAllPages)
+                .dialog({
+                    classes: {
+                        "ui-dialog": 'py-4 px-6',
+                        "ui-dialog-titlebar": "is-hidden",
+                    },
+                    autoOpen: false,
+                    resizable: false,
+                    height: "auto",
+                    width: 450,
+                    modal: true,
+                    buttons: [
+                        {
+                            text: "JA",
+                            class: "button no-radius is-info my-0",
+                            click: () => {
+                                confirm(true);
+                                dialog.dialog("close")
                             }
-                        ]
-                    })
-                    .dialog('open');
+                        },
+                        {
+                            text: "ABBRECHEN",
+                            class: "button no-radius is-dark dark-gray-background-color my-0",
+                            click: () => {
+                                confirm(false)
+                                dialog.dialog("close");
+                            }
+                        }
+                    ]
+                })
+                .dialog('open');
         });
         this.$editor.registerConfirmCallback('OTHER_USER_REQUESTS_ENTRY', (confirm, user) => {
             if (!user) {

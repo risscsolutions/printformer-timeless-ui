@@ -380,9 +380,9 @@ export default {
 
 
             this.startTracing()
-                .then(() => {
+                .then((editorObject) => {
                     window.events.on(Events.EDITOR_OBJECT_UPDATED, this.updatePreview, this);
-                    this.showOverlay(activeObject);
+                    this.showOverlay(editorObject);
                     this.hideFullScreenLoader();
                 });
         },
@@ -416,6 +416,8 @@ export default {
                             this.$refs.traceOverlay.style.cursor = "auto";
                             this.hideFullScreenLoader();
                             if (persist) window.events.emit('reload-media');
+
+                            return editorObject;
                         });
                 });
         },
@@ -448,6 +450,20 @@ export default {
             if (button !== this.$refs.applyTrace) {
                 this.revertSettings();
                 const activeObject = await this.$editor.getActiveObject();
+                const prohibitedActions = activeObject.prohibitedActions;
+
+                if (prohibitedActions.includes('delete')) {
+                    if (Asset.isAsset(activeObject) && !prohibitedActions.includes('asset-replace')) {
+                        return activeObject.clear()
+                            .then(() => {
+                                this.$editor.getUndoRedo().clear();
+                            })
+                            .then(() => {
+                                this.$refs.resultAsUserMediaSwitch.checked = false;
+                                this.closeOverlay();
+                            });
+                    }
+                }
                 return activeObject.delete()
                     .then(() => {
                         this.$editor.getUndoRedo().clear();
@@ -470,11 +486,11 @@ export default {
         },
         showOverlay(activeObject) {
             const colorMap = activeObject.colorMap;
-            if (!activeObject.containsRasterImages || colorMap.length > this.colorLimit) {
+            if (colorMap.length > this.colorLimit) {
                 this.setTraceStep(3); //color picker
-            } else if (colorMap.length < this.colorLimit && colorMap.length === 1) {
+            } else if (colorMap.length < this.colorLimit && colorMap.length === 1 && activeObject.containsRasterImages) {
                 this.setTraceStep(2); //granululu
-            } else if (colorMap.length === this.colorLimit) {
+            } else {
                 this.setTraceStep(1); //automat
             }
 
@@ -549,6 +565,7 @@ export default {
             const colorMap = activeObject.colorMap;
 
             await Promise.all(colors.map((c, idx) => {
+                if (!colorMap[idx]) return Promise.resolve(c);
                 return activeObject.replaceColor(colorMap[idx], this.selectedSimpleColors.find(ssc => ssc.name === c) || c)
             }));
 
@@ -563,7 +580,8 @@ export default {
                     return this.startTracing();
                 })
                 .then(() => {
-                    this.setTraceStep(2);
+                    const step = activeObject.containsRasterImages ? 2 : 3;
+                    this.setTraceStep(step);
                 })
 
         },
@@ -626,7 +644,10 @@ export default {
                         this.setTraceStep(1);
                     });
             } else if (this.traceStep === 3) {
-                this.setTraceStep(2);
+                const activeObject = await this.$editor.getActiveObject();
+                const step = activeObject.containsRasterImages ? 2 : 1;
+
+                this.setTraceStep(step);
                 this.colorsChosen = false;
             }
 

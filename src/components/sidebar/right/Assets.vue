@@ -2,7 +2,7 @@
     <div class="is-flex is-flex-direction-column">
         <div class="columns is-multiline is-centered">
             <div class="column is-24" v-if="allowAddAssets">
-                <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background"
+                <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background p-2"
                      style="cursor: pointer" :class="{'no-interaction': activeObject}" @click="uploadMediaAsset">
                     <span :style="{'opacity': activeObject ? '50%' : '100%'}" class="dark-gray-color">Neue Bildbox</span>
                     <span :style="{'opacity': activeObject ? '50%' : '100%'}" class="svg-20 m-1" v-html="icon('HinzufuegenPlus')"></span>
@@ -12,7 +12,7 @@
                 <hr class="divider">
             </div>
             <div class="column is-24">
-                <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background"
+                <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background p-2"
                      style="cursor: pointer" @click="uploadMediaAsset">
                     <span class="dark-gray-color">Bilder hochladen</span>
                     <span class="svg-20 m-1" v-html="icon('Bilder_hochladen')"></span>
@@ -109,12 +109,12 @@
                         </div>
                     </div>
                     <div class="column is-24">
-                        <div class="tile is-ancestor is-flex-wrap-wrap" style="max-height: 500px; overflow-y: scroll">
+                        <div class="tile is-ancestor is-flex-wrap-wrap media-wrapper">
                             <div v-for="media in userMedias" class="tile is-6 p-1 is-parent">
                                 <article style="cursor: pointer" @click="addUserMedia(media)"
-                                         class="tile is-child is-flex is-align-items-center p-1">
-                                    <figure class="image">
-                                        <img class="has-ratio" :src="media.src" crossorigin="anonymous">
+                                         class="tile is-child is-flex is-align-items-center p-1 border-purple">
+                                    <figure class="image is-flex is-align-items-center is-justify-content-center is-flex-grow-1 is-flex-shrink-1">
+                                        <img class="has-ratio media-in-wrapper" :src="media.src" crossorigin="anonymous">
                                     </figure>
                                     <!--                                        <p class="subtitle">{{ media.name }}</p>-->
                                 </article>
@@ -133,6 +133,16 @@
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 5rem;
+}
+.media-wrapper {
+    max-height: 500px;
+    overflow-y: scroll;
+}
+.media-in-wrapper {
+    height: 100% !important;
+    width: auto !important;
+    max-width: 100% !important;
+    max-height: 60px !important;
 }
 </style>
 <script>
