@@ -165,7 +165,7 @@
                         </button>
                     </div>
                     <div class="content" v-show="userColorsFilled">
-                        <button class="button is-small is-info" ref="applyTrace">
+                        <button class="button is-small is-info" ref="applyTrace" :disabled="!replacedEqualsLimit">
                             <span>ÜBERNEHMEN</span>
                         </button>
                     </div>
@@ -205,7 +205,7 @@
 <script>
 import Events from "@rissc/printformer-editor-client/dist/Events";
 import {Asset, BlockEffects} from "@rissc/printformer-editor-client/dist/Objects";
-import {remove, isEmpty, isEqual, uniqWith, shuffle, clone} from "lodash";
+import {isEmpty, isEqual, uniqWith, shuffle} from "lodash";
 import {mapMutations, mapState} from "vuex";
 
 const BLOCK_EFFECTS = {
@@ -253,6 +253,9 @@ export default {
         }
     },
     computed: {
+        replacedEqualsLimit() {
+            return uniqWith(this.colorMap.map(cm => cm.printcolor).filter(c => c !== undefined), isEqual).length <= this.colorLimit
+        },
         ...mapState(['traceControlsIsOpen', 'managedColors', 'colorSpaces', 'userColors']),
     },
     mounted() {
@@ -605,7 +608,10 @@ export default {
             this.setColorAssignerClosure((color) => {
                 this.assignedColors.splice(index, 1, color)
                 this.$editor.getActiveObject().then((activeObject) => {
-                    activeObject.replaceColor(this.colorMap[index], color);
+                    activeObject.replaceColor(this.colorMap[index], color)
+                        .then(eo => {
+                            this.colorMap = eo.colorMap;
+                        });
                 });
             });
 
@@ -657,7 +663,7 @@ export default {
             if (step === 3) {
                 this.$editor.getActiveObject().then(editorObject => {
                     this.colorMap = editorObject.colorMap;
-                    this.setUserColors(editorObject.colorMap.map(() => null));
+                    this.setUserColors(new Array(this.colorLimit).fill(null));
                     this.assignedColors = editorObject.colorMap.map(() => null);
                 })
             }
