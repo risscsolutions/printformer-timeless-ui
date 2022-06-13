@@ -46,6 +46,7 @@ export default {
     },
     mounted() {
         window.events.on(Events.EDITOR_LOADED, async (config) => {
+            this.$editor.getZoom().get().then(zoom => this.zoom = parseInt(zoom * 100));
 
             // loop through pages to load threedee preview correctly
             // this.wait(2000)
