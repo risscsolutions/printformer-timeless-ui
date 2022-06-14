@@ -117,10 +117,10 @@
                     </div>
                 </div>
             </div>
-            <div class="column is-24">
+            <div class="column is-24" v-if="hasDuplicate">
                 <hr class="divider">
             </div>
-            <div class="column is-24 py-0">
+            <div class="column is-24 py-0" v-if="hasDuplicate">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Duplizieren</span>
@@ -165,7 +165,8 @@ export default {
         hasAlignment: Boolean,
         hasOpacity: Boolean,
         hasLayer: Boolean,
-        hasTraceButton: Boolean
+        hasTraceButton: Boolean,
+        hasDuplicate: Boolean
     },
     computed: {
         currentColor: {

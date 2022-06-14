@@ -4,21 +4,23 @@
             <div class="column is-24" v-if="allowAddAssets">
                 <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background p-2"
                      style="cursor: pointer" :class="{'no-interaction': activeObject}" @click="uploadMediaAsset">
-                    <span :style="{'opacity': activeObject ? '50%' : '100%'}" class="dark-gray-color">Neue Bildbox</span>
-                    <span :style="{'opacity': activeObject ? '50%' : '100%'}" class="svg-20 m-1" v-html="icon('HinzufuegenPlus')"></span>
+                    <span :style="{'opacity': activeObject ? '50%' : '100%'}"
+                          class="dark-gray-color">Neue Bildbox</span>
+                    <span :style="{'opacity': activeObject ? '50%' : '100%'}" class="svg-20 m-1"
+                          v-html="icon('HinzufuegenPlus')"></span>
                 </div>
             </div>
             <div class="column is-24" v-if="allowAddAssets">
                 <hr class="divider">
             </div>
-            <div class="column is-24">
+            <div class="column is-24" v-if="allowAddAssets || isAllowed('asset-replace')">
                 <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background p-2"
+                     @dragover="dragover"
+                     @dragleave="dragleave" @drop="drop"
                      style="cursor: pointer" @click="uploadMediaAsset">
                     <span class="dark-gray-color">Bilder hochladen</span>
                     <span class="svg-20 m-1" v-html="icon('Bilder_hochladen')"></span>
-                    <div class="columns m-0 is-flex-direction-column has-text-centered dark-gray-color"
-                         @dragover="dragover"
-                         @dragleave="dragleave" @drop="drop">
+                    <div class="columns m-0 is-flex-direction-column has-text-centered dark-gray-color">
                         <input ref="uploadFile" type="file" hidden accept=".jpg,.jpeg,.png,.pdf" @change="uploadImage">
                         <span>vom <span class="blue-under">Computer</span> oder</span>
                         <span>per Drag and Drop</span>
@@ -26,7 +28,7 @@
                     </div>
                 </div>
             </div>
-            <div v-if="isAsset && !isGraphic" class="column is-24">
+            <div v-if="allowAddAssets || isAllowed('asset-replace')" class="column is-24">
                 <hr class="divider">
             </div>
             <div v-if="isAsset && !isGraphic" class="column is-24 py-0">
@@ -37,10 +39,10 @@
                     </div>
                 </div>
             </div>
-            <div v-if="isAsset" class="column is-24">
+            <div v-if="isAsset && !isGraphic" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="isAsset" class="column is-24 py-0">
+            <div v-if="isAllowed('asset-cut-out')" class="column is-24 py-0">
                 <div class="content">
                     <div class="columns">
                         <div class="column is-14">
@@ -61,10 +63,10 @@
                     </div>
                 </div>
             </div>
-            <div v-if="isAsset" class="column is-24">
+            <div v-if="isAllowed('asset-cut-out')" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="isAsset" class="column is-24 py-0">
+            <div v-if="isAllowed('delete') || isAllowed('asset-replace')" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Bildbox löschen</span>
@@ -73,10 +75,10 @@
                     </div>
                 </div>
             </div>
-            <div v-if="isAsset" class="column is-24">
+            <div v-if="isAllowed('delete') || isAllowed('asset-replace')" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="isAsset" class="column is-24 py-0">
+            <div v-if="showExtendedSwitch" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-flex-direction-column is-align-items-center">
                         <label class="has-text-weight-medium blue-color mb-2" for="extendedEditSwitch">
@@ -94,13 +96,15 @@
                 </div>
             </div>
             <extended-edit v-if="extendedEditSwitchOn && activeObject" :active-object="activeObject" :opacity="opacity"
-                           :has-trace-button="true" :has-alignment="true" :has-layer="true" :has-opacity="true">
+                           :has-trace-button="showTraceButton" :has-alignment="isAllowed('hmove') || isAllowed('vmove')"
+                           :has-layer="isAllowed('zindex')"
+                           :has-opacity="isAllowed('opacity')" :has-duplicate="isAllowed('duplicate')">
             </extended-edit>
-            <div v-if="isAsset" class="column is-24">
+            <div v-if="showExtendedSwitch" class="column is-24">
                 <hr class="divider">
             </div>
         </div>
-        <div v-if="hasUserMedias" class="columns is-24 mt-auto">
+        <div v-show="hasUserMedias && (allowAddAssets || isAsset)" class="columns is-24 mt-auto">
             <div class="box gray-background">
                 <div class="columns is-multiline is-centered">
                     <div class="column is-24">
@@ -113,8 +117,10 @@
                             <div v-for="media in userMedias" class="tile is-6 p-1 is-parent">
                                 <article style="cursor: pointer" @click="addUserMedia(media)"
                                          class="tile is-child is-flex is-align-items-center p-1 border-purple">
-                                    <figure class="image is-flex is-align-items-center is-justify-content-center is-flex-grow-1 is-flex-shrink-1">
-                                        <img class="has-ratio media-in-wrapper" :src="media.src" crossorigin="anonymous">
+                                    <figure
+                                        class="image is-flex is-align-items-center is-justify-content-center is-flex-grow-1 is-flex-shrink-1">
+                                        <img class="has-ratio media-in-wrapper" :src="media.src"
+                                             crossorigin="anonymous">
                                     </figure>
                                     <!--                                        <p class="subtitle">{{ media.name }}</p>-->
                                 </article>
@@ -134,10 +140,12 @@
     height: 1.5rem;
     border-radius: 5rem;
 }
+
 .media-wrapper {
     max-height: 500px;
     overflow-y: scroll;
 }
+
 .media-in-wrapper {
     height: 100% !important;
     width: auto !important;
@@ -148,10 +156,11 @@
 <script>
 import BlockTypes, {AssetTypes} from "@rissc/printformer-ts-common/dist/BlockTypes";
 import Events from "@rissc/printformer-editor-client/dist/Events";
-import EditorObject, {Asset} from "@rissc/printformer-editor-client/dist/Objects";
+import EditorObject, {Asset, BlockEffects} from "@rissc/printformer-editor-client/dist/Objects";
 import bulmaSlider from "bulma-slider/src/js";
 import ExtendedEdit from "./ExtendedEdit";
 import {mapGetters} from "vuex";
+import BlockActions from "../../../BlockActions";
 
 export default {
     name: "assets",
@@ -167,13 +176,21 @@ export default {
 
         window.events.on(Events.EDITOR_OBJECT_SELECTED, (block) => {
             this.dpi = block.dpi;
-            this.opacity = (block.opacity * 100)
+            this.opacity = (block.opacity * 100);
             this.loadAssets();
+            this.showTraceButton = !!block.effects
+                .find((effect) => {
+                    return [BlockEffects.vector, BlockEffects.embossing].includes(effect.type);
+                });
         });
 
         window.events.on(Events.EDITOR_OBJECT_UPDATED, (block) => {
             this.dpi = block.dpi;
-            this.opacity = (block.opacity * 100)
+            this.opacity = (block.opacity * 100);
+            this.showTraceButton = !!block.effects
+                .find((effect) => {
+                    return [BlockEffects.vector, BlockEffects.embossing].includes(effect.type);
+                });
         });
 
         this.loadUserMedias();
@@ -195,8 +212,17 @@ export default {
                         text: "LÖSCHEN",
                         class: "button no-radius is-info my-0",
                         click: () => {
-                            this.$catch(this.activeObject.delete())
-                                .then(() => dialog.dialog("close"));
+                            const prohibitedActions = this.activeObject.prohibitedActions;
+
+                            if (prohibitedActions.includes(BlockActions.DELETE)) {
+                                if (Asset.isAsset(this.activeObject) && !prohibitedActions.includes(BlockActions.ASSET_REPLACE)) {
+                                    this.$catch(this.activeObject.clear())
+                                        .then(() => dialog.dialog("close"));
+                                }
+                            } else {
+                                this.$catch(this.activeObject.delete())
+                                    .then(() => dialog.dialog("close"));
+                            }
                         }
                     },
                     {
@@ -313,9 +339,20 @@ export default {
         },
         centerBlockV() {
             this.$catch(this.activeObject.centerV());
-        }
+        },
+        isAllowed(action) {
+            return this.isAsset && !this.activeObject.prohibitedActions.includes(action);
+        },
     },
     computed: {
+        showExtendedSwitch() {
+            return (this.showTraceButton
+                || this.isAllowed(BlockActions.OPACITY)
+                || this.isAllowed(BlockActions.H_MOVE)
+                || this.isAllowed(BlockActions.V_MOVE)
+                || this.isAllowed(BlockActions.Z_INDEX)
+                || this.isAllowed(BlockActions.DUPLICATE))
+        },
         hasAssets() {
             return this.assets.length > 0;
         },
@@ -363,7 +400,8 @@ export default {
             },
             extendedEditSwitchOn: false,
             openAlignmentSettings: false,
-            openLayerSettings: false
+            openLayerSettings: false,
+            showTraceButton: false,
         }
     }
 }

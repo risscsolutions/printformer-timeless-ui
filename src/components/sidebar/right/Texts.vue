@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="columns is-multiline is-centered">
-            <div class="column is-24">
+            <div class="column is-24" v-if="allowAddTexts">
                 <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background p-2"
                      style="cursor: pointer" :class="{'no-interaction': activeObject}" @click="addTextBlock">
                     <span :style="{'opacity': activeObject ? '50%' : '100%'}"
@@ -10,10 +10,10 @@
                           v-html="icon('HinzufuegenPlus')"></span>
                 </div>
             </div>
-            <div v-show="isTextAsset && allFontsFlat" class="column is-24">
+            <div v-show="allowAddTexts" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-show="isTextAsset && allFontsFlat" class="column is-24 py-0">
+            <div v-show="(isAllowed('font-family') || isAllowed('font-style')) && allFontsFlat" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Schriftart</span>
@@ -25,10 +25,10 @@
                     </div>
                 </div>
             </div>
-            <div v-show="isTextAsset && allFontSizes" class="column is-24">
+            <div v-show="(isAllowed('font-family') || isAllowed('font-style')) && allFontsFlat" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-show="isTextAsset && allFontSizes" class="column is-24 py-0">
+            <div v-show="isAllowed('font-size') && allFontSizes" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Schriftgröße</span>
@@ -40,10 +40,10 @@
                     </div>
                 </div>
             </div>
-            <div v-show="isTextAsset" class="column is-24">
+            <div v-show="isAllowed('font-size') && allFontSizes" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-show="isTextAsset" class="column is-24 py-0">
+            <div v-show="isAllowed('font-style')" class="column is-24 py-0">
                 <div class="columns is-vcentered is-multiline is-gapless">
                     <div class="column is-15">
                         <span class="dark-gray-color">Schriftschnitt</span>
@@ -62,10 +62,10 @@
                     </div>
                 </div>
             </div>
-            <div v-show="isTextAsset" class="column is-24">
+            <div v-show="isAllowed('font-style')" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-show ="activeObject && isTextAsset" class="column is-24 py-0">
+            <div v-show="isAllowed('color')" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Schriftfarbe</span>
@@ -74,10 +74,10 @@
                     </div>
                 </div>
             </div>
-            <div v-show="isTextAsset" class="column is-24">
+            <div v-show="isAllowed('color')" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-show="activeObject && isTextAsset" class="column is-24 py-0">
+            <div v-show="isAllowed('halign')" class="column is-24 py-0">
                 <div class="columns is-multiline is-vcentered is-gapless">
                     <div class="column is-12">
                         <span class="dark-gray-color">Ausrichtung Text</span>
@@ -91,15 +91,15 @@
                     <div class="column is-3" style="cursor: pointer" @click="textAlign('center')">
                         <span class="svg-20" title="zentriert" v-html="icon('zentriert')"></span>
                     </div>
-                    <div class="column is-3" style="cursor: pointer" @click="textAlign('')">
+                    <div class="column is-3" style="cursor: pointer" @click="textAlign('right')">
                         <span class="svg-20" title="rechtsbuendig" v-html="icon('rechtsbuendig')"></span>
                     </div>
                 </div>
             </div>
-            <div v-show="isTextAsset" class="column is-24">
+            <div v-show="isAllowed('halign')" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-show="isTextAsset" class="column is-24 py-0">
+            <div v-show="isAllowed('list')" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-12">
                         <span class="dark-gray-color">Aufzählung</span>
@@ -115,10 +115,10 @@
                     </div>
                 </div>
             </div>
-            <div v-show="isTextAsset" class="column is-24">
+            <div v-show="isAllowed('list')" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-show="isTextAsset" class="column is-24 py-0">
+            <div v-show="isAllowed('delete')" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Textbox löschen</span>
@@ -127,10 +127,10 @@
                     </div>
                 </div>
             </div>
-            <div v-show="isTextAsset" class="column is-24">
+            <div v-show="isAllowed('delete')" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="isTextAsset" class="column is-24 py-0">
+            <div v-if="showExtendedSwitch" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-flex-direction-column is-align-items-center">
                         <label class="has-text-weight-medium blue-color mb-2" for="extendedEditSwitch">
@@ -148,10 +148,12 @@
                 </div>
             </div>
             <extended-edit v-if="extendedEditSwitchOn && activeObject" :active-object="activeObject"
-                           :has-alignment="true" :has-background-color="false"
-                           :has-layer="true" :has-opacity="true" :has-line-height="true">
+                           :has-line-height="isAllowed('fontsize')"
+                           :has-alignment="isAllowed('hmove') || isAllowed('vmove')"
+                           :has-layer="isAllowed('zindex')"
+                           :has-opacity="isAllowed('opacity')" :has-duplicate="isAllowed('duplicate')">
             </extended-edit>
-            <div v-if="isTextAsset" class="column is-24">
+            <div v-if="showExtendedSwitch" class="column is-24">
                 <hr class="divider">
             </div>
         </div>
@@ -160,11 +162,12 @@
 
 <script>
 import {BulmaAccordion} from 'vue-bulma-accordion';
-import {mapMutations, mapState} from "vuex";
+import {mapGetters, mapMutations, mapState} from "vuex";
 import convert from "color-convert";
 import {Text} from "@rissc/printformer-editor-client/dist/Objects/Blocks"
 import EditorObject from "@rissc/printformer-editor-client/dist/Objects";
 import ExtendedEdit from "./ExtendedEdit";
+import BlockActions from "../../../BlockActions";
 
 export default {
     name: "texts",
@@ -178,7 +181,7 @@ export default {
         currentColor: {
             get() {
                 if (!this.activeObject) return '#ffffff';
-                return this.isTextAsset
+                return this.isText
                     ? this.activeObject.color.displayColor
                     : this.activeObject.fill.displayColor;
             },
@@ -188,14 +191,23 @@ export default {
                     colorSpace: 'RGB',
                     values: convert.hex.rgb(color)
                 }
-                this.isTextAsset
+                this.isText
                     ? this.$catch(this.activeObject.setFontColor(parsedColor))
                     : this.$catch(this.activeObject.setFillColor(parsedColor));
             }
         },
-        isTextAsset() {
+        isText() {
             return this.activeObject && Text.isText(this.activeObject);
-        }
+        },
+        showExtendedSwitch() {
+            return (this.isAllowed(BlockActions.FONT_SIZE)
+                || this.isAllowed(BlockActions.OPACITY)
+                || this.isAllowed(BlockActions.H_MOVE)
+                || this.isAllowed(BlockActions.V_MOVE)
+                || this.isAllowed(BlockActions.Z_INDEX)
+                || this.isAllowed(BlockActions.DUPLICATE))
+        },
+        ...mapGetters(['allowAddTexts']),
     },
     updated() {
         if (this.activeObject && Text.isText(this.activeObject)) {
@@ -363,6 +375,9 @@ export default {
         },
         enableExtendedEdit() {
             this.extendedEditSwitchOn = !this.extendedEditSwitchOn;
+        },
+        isAllowed(action) {
+            return this.isText && !this.activeObject.prohibitedActions.includes(action);
         },
     },
     data() {

@@ -12,19 +12,19 @@
             </div>
             <div class="column is-1 p-0 width-100" style="overflow: auto">
                 <div class="sidebar-container">
-                    <button
-                        class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
-                        @click="toggleSidebarPanel('assets', $event)" id="asset-menu-button">
+                    <button v-if="allowAddTexts || pageContainsAssets"
+                            class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
+                            @click="toggleSidebarPanel('assets', $event)" id="asset-menu-button">
                         <span class="mb-1" v-html="icon('Bilder')"></span>
                         <span class="dark-gray-color has-text-weight-medium">Bilder</span>
                     </button>
-                    <button v-if="allowAddTexts"
+                    <button v-if="allowAddTexts || pageContainsTexts"
                             class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
                             @click="toggleSidebarPanel('texts', $event)" id="text-menu-button">
                         <span class="mb-1" v-html="icon('Text')"></span>
                         <span class="dark-gray-color has-text-weight-medium">Texte</span>
                     </button>
-                    <button v-if="allowAddShapes"
+                    <button v-if="allowAddShapes || pageContainsShapes"
                             class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
                             @click="toggleSidebarPanel('shapes', $event)" id="shape-menu-button">
                         <span class="mb-1" v-html="icon('Formen')"></span>
@@ -121,14 +121,26 @@ export default {
     computed: {
         blockMenuType() {
             switch (this.activeObject.blockType) {
-                case 'ASSET':
+                case BlockTypes.ASSET:
                     return 'assets';
-                case 'TEXT':
+                case BlockTypes.TEXT:
                     return 'texts';
-                case 'SHAPE':
+                case BlockTypes.SHAPE:
                     return 'shapes';
                 default:
                     this.shouldShowMenu = false;
+                    return null;
+            }
+        },
+        blockTypeByComponent() {
+            switch (this.openControlTab) {
+                case 'assets':
+                    return BlockTypes.ASSET;
+                case 'texts':
+                    return BlockTypes.TEXT;
+                case 'shapes':
+                    return BlockTypes.SHAPE;
+                default:
                     return null;
             }
         },
@@ -161,6 +173,20 @@ export default {
 
             this.setOnlyInteractableBlockActive();
             window.events.on(Events.EDITOR_PAGES_PAGED, this.setOnlyInteractableBlockActive, this);
+
+
+            this.$editor.findEditorObjects({isContentModifieable: true, type: BlockTypes.ASSET})
+                .then((blocks) => {
+                    this.pageContainsAssets = !!blocks.length
+                });
+            this.$editor.findEditorObjects({isContentModifieable: true, type: BlockTypes.TEXT})
+                .then((blocks) => {
+                    this.pageContainsTexts = !!blocks.length
+                });
+            this.$editor.findEditorObjects({isContentModifieable: true, type: BlockTypes.SHAPE})
+                .then((blocks) => {
+                    this.pageContainsShapes = !!blocks.length
+                });
         });
 
         let onCancel;
@@ -191,7 +217,7 @@ export default {
     },
     methods: {
         setOnlyInteractableBlockActive() {
-            if (!(!this.allowAddAssets && !this.allowAddTexts && !this.allowAddShapes)) return;
+            if (this.allowAddAssets || this.allowAddTexts || this.allowAddShapes) return;
 
             this.$editor.findEditorObjects({
                 types: [
@@ -257,11 +283,18 @@ export default {
         },
         toggleSidebarPanel(component, event) {
             if ((this.openControlTab !== component) || (this.openControlTab === null && this.activeObject !== null)) {
-                if (this.activeObject && component !== this.blockMenuType) this.activeObject.discard()
-
+                if (this.activeObject && component !== this.blockMenuType) this.activeObject.discard();
 
                 this.openSidebarPanel();
                 this.$store.commit('setOpenControlTab', component);
+                const blockType = this.blockTypeByComponent;
+                if (!this.allowAddAssets && blockType && !this.activeObject) {
+                    this.$editor.findEditorObjects({isContentModifieable: true, type: blockType})
+                        .then((blocks) => {
+                            if (blocks.length) blocks[0].setActive();
+                        });
+                }
+
                 $('#triangle-left')
                     .css('display', 'block')
                     .position({my: "right center", at: "left-1 center", of: $(event.currentTarget)});
@@ -294,7 +327,10 @@ export default {
             assets: [],
             variants: [],
             undoStack: [],
-            redoStack: []
+            redoStack: [],
+            pageContainsAssets: false,
+            pageContainsTexts: false,
+            pageContainsShapes: false,
         }
     }
 }
