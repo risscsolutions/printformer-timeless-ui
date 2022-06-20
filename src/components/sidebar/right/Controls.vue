@@ -281,10 +281,8 @@ export default {
                 .css('display', 'block')
                 .position({my: "right center", at: "left-1 center", of: button});
         },
-        async toggleSidebarPanel(component, event) {
-            if ((this.openControlTab !== component) || (this.openControlTab === null && this.activeObject !== null)) {
-                if (this.activeObject && component !== this.blockMenuType) await this.activeObject.discard();
-
+        toggleSidebarPanel(component, event) {
+            const doStuff = () => {
                 this.openSidebarPanel();
                 this.$store.commit('setOpenControlTab', component);
                 const blockType = this.blockTypeByComponent;
@@ -296,10 +294,23 @@ export default {
                             if (blocks.length) blocks[0].setActive();
                         });
                 }
+            }
 
+            if ((this.openControlTab !== component) || (this.openControlTab === null && this.activeObject !== null)) {
                 $('#triangle-left')
                     .css('display', 'block')
                     .position({my: "right center", at: "left-1 center", of: $(event.currentTarget)});
+
+                if (this.activeObject && component !== this.blockMenuType) {
+                    this.activeObject.discard().then(() => {
+                        this.activeObject = null;
+                        doStuff();
+                    });
+                    return;
+                }
+
+                doStuff();
+
             } else {
                 $('#triangle-left').css('display', 'none');
                 this.closeSidebarPanel();
