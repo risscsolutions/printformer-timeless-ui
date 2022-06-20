@@ -226,16 +226,12 @@ export default {
                 this.allLineHeights = ['Auto', 8, 10, 12, 14, 16, 18, 20, 28, 36, 48]
             }
 
-            this.$nextTick(() => $fontLeading.selectmenu('refresh'));
+            this.$nextTick(() => {
+                const leadingVal = this.activeObject.leading ?? 'Auto';
+                $fontLeading.val(leadingVal).selectmenu('refresh');
+            });
         });
 
-        window.events.on(Events.EDITOR_OBJECT_SELECTED, (block) => {
-            if (!Text.isText(block)) return;
-
-            let leading = block.leading;
-            leading = leading === null ? 'Auto' : Number(leading);
-            $fontLeading.val(leading);
-        });
     },
     methods: {
         icon(name) {

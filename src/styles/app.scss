@@ -184,7 +184,7 @@ button {
 }
 
 [aria-describedby="delete-text-dialog"]::after,
-[aria-describedby="delete-form-dialog"]::after,
+[aria-describedby="delete-shape-dialog"]::after,
 [aria-describedby="delete-asset-dialog"]::after {
     content: "";
     width: 0;
@@ -212,7 +212,7 @@ button {
 
 [aria-describedby="delete-text-dialog"]::before,
 [aria-describedby="delete-asset-dialog"]::before,
-[aria-describedby="delete-form-dialog"]::before {
+[aria-describedby="delete-shape-dialog"]::before {
     content: "";
     width: 0;
     height: 0;

@@ -92,7 +92,7 @@ import {mapMutations, mapState} from "vuex";
 export default {
     name: "color-picker",
     computed: {
-        ...mapState(['colorSpaces', 'managedColors', 'colorClosure', 'currentColorSpace']),
+        ...mapState(['colorSpaces', 'managedColors', 'colorClosure', 'currentColorSpace', 'currentValueForColorSpace']),
     },
     mounted() {
         const dialog = $('#color-picker');
@@ -118,11 +118,6 @@ export default {
             M: 100,
             Y: 100,
             K: 0,
-            currentValueForColorSpace: {
-                'PANTONE': null,
-                'HKS': null,
-                'CMYK/RGB': null,
-            },
             initializedPickers: {
                 'PANTONE': false,
                 'HKS': false,
@@ -137,26 +132,10 @@ export default {
         updateCMYK() {
             $('#spectre-cmyk').spectrum("set", {c: this.C, m: this.M, y: this.Y, k: this.K})
         },
-        setColorByColorSpace(color) {
-            this.currentValueForColorSpace[color.colorSpace] = color;
-        },
         applyColor() {
             this.colorClosure(this.currentValueForColorSpace[this.currentColorSpace]);
+            this.resetColorSpaces();
 
-            this.currentValueForColorSpace = {
-                'PANTONE': null,
-                'HKS': null,
-                'CMYK': {
-                    displayColor: '#ff0000',
-                    values: [0, 100, 100, 0],
-                    colorSpace: 'CMYK'
-                },
-                'RGB': {
-                    displayColor: '#ff0000',
-                    values: [255, 0, 0],
-                    colorSpace: 'RGB'
-                },
-            };
             $('#pantone-color-select').val(null)
             document.querySelector('#pantone-user-color-preview').style.backgroundColor = null;
             document.querySelector('#hks-user-color-preview').style.backgroundColor = null;
@@ -182,10 +161,8 @@ export default {
                 source: (query, callback) => {
                     this.$editor
                         .getColorService()
-                        // .pantone(query.term.replace('PANTONE: ', ''))
-                        .pantone(query.term)
+                        .pantone(query.term.replace('PANTONE: ', ''))
                         .then(({colors}) => {
-                            console.log(colors)
                             callback(colors.map(color => {
                                 return {label: color.name, value: color}
                             }));
@@ -286,7 +263,7 @@ export default {
             })
             this.initializedPickers['RGB'] = true;
         },
-        ...mapMutations(['setCurrentColorSpace']),
+        ...mapMutations(['setCurrentColorSpace', 'setColorByColorSpace', 'resetColorSpaces']),
     },
     watch: {
         colorSpaces(spaces) {

@@ -174,6 +174,12 @@ export default {
     mounted() {
         bulmaSlider.attach();
 
+        window.events.on(Events.EDITOR_OBJECT_CLEARED, () => {
+            this.dpi = 0;
+            this.opacity = 100;
+            this.showTraceButton = false;
+        });
+
         window.events.on(Events.EDITOR_OBJECT_SELECTED, (block) => {
             this.dpi = block.dpi;
             this.opacity = (block.opacity * 100);
@@ -181,7 +187,7 @@ export default {
             this.showTraceButton = !!block.effects
                 .find((effect) => {
                     return [BlockEffects.vector, BlockEffects.embossing].includes(effect.type);
-                });
+                }) && block.isFilled;
         });
 
         window.events.on(Events.EDITOR_OBJECT_UPDATED, (block) => {
@@ -190,7 +196,7 @@ export default {
             this.showTraceButton = !!block.effects
                 .find((effect) => {
                     return [BlockEffects.vector, BlockEffects.embossing].includes(effect.type);
-                });
+                }) && block.isFilled;
         });
 
         this.loadUserMedias();

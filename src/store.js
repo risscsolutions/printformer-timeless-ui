@@ -17,6 +17,20 @@ export default function makeStore() {
             managedColors: [],
             colorSpaces: [],
             currentColorSpace: undefined,
+            currentValueForColorSpace: {
+                'PANTONE': null,
+                'HKS': null,
+                'CMYK': {
+                    displayColor: '#ff0000',
+                    values: [0, 100, 100, 0],
+                    colorSpace: 'CMYK'
+                },
+                'RGB': {
+                    displayColor: '#ff0000',
+                    values: [255, 0, 0],
+                    colorSpace: 'RGB'
+                },
+            },
             colorClosure: (lel) => {},
             colorAssignerClosure: (lel) => {},
             userColors: [],
@@ -89,6 +103,25 @@ export default function makeStore() {
             },
             setCurrentColorSpace(state, colorSpace) {
                 state.currentColorSpace = colorSpace;
+            },
+            setColorByColorSpace(state, color) {
+                state.currentValueForColorSpace[color.colorSpace] = color;
+            },
+            resetColorSpaces(state) {
+                state.currentValueForColorSpace = {
+                    'PANTONE': null,
+                    'HKS': null,
+                    'CMYK': {
+                        displayColor: '#ff0000',
+                        values: [0, 100, 100, 0],
+                        colorSpace: 'CMYK'
+                    },
+                    'RGB': {
+                        displayColor: '#ff0000',
+                        values: [255, 0, 0],
+                        colorSpace: 'RGB'
+                    },
+                };
             },
             setColorClosure(state, closure) {
                 state.colorClosure = closure;

@@ -13,7 +13,8 @@
             <div v-show="allowAddTexts" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-show="(isAllowed('font-family') || isAllowed('font-style')) && allFontsFlat" class="column is-24 py-0">
+            <div v-show="(isAllowed('font-family') || isAllowed('font-style')) && allFontsFlat"
+                 class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Schriftart</span>
@@ -69,8 +70,12 @@
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Schriftfarbe</span>
-                        <input type="color" class="mobile-input-faker" v-model="currentColor"
-                               :name="'Farbe ' + currentColor + ' gewählt'">
+                        <button
+                            :style="{'background-color': (activeObject || {}).color ? activeObject.color.displayColor : null}"
+                            :class="{'chess-background': (activeObject || {}).color === 'none'}"
+                            @click="openColorPicker(activeObject.color, $event)"
+                            class="button is-rounded color-button-round m-0">
+                        </button>
                     </div>
                 </div>
             </div>
@@ -172,30 +177,11 @@ import BlockActions from "../../../BlockActions";
 export default {
     name: "texts",
     components: {BulmaAccordion, ExtendedEdit},
-    ...mapMutations(['setFontSizes', 'setFonts']),
     ...mapState(['fonts', 'fontSizes', 'editorConfig']),
     props: {
         activeObject: EditorObject
     },
     computed: {
-        currentColor: {
-            get() {
-                if (!this.activeObject) return '#ffffff';
-                return this.isText
-                    ? this.activeObject.color.displayColor
-                    : this.activeObject.fill.displayColor;
-            },
-            set(color) {
-                const parsedColor = {
-                    displayColor: color,
-                    colorSpace: 'RGB',
-                    values: convert.hex.rgb(color)
-                }
-                this.isText
-                    ? this.$catch(this.activeObject.setFontColor(parsedColor))
-                    : this.$catch(this.activeObject.setFillColor(parsedColor));
-            }
-        },
         isText() {
             return this.activeObject && Text.isText(this.activeObject);
         },
@@ -221,6 +207,9 @@ export default {
 
             $('#font-family').val(this.activeObject.font).selectmenu('refresh');
             $('#font-size').val(this.activeObject.size).selectmenu('refresh');
+
+            const leadingVal = this.activeObject.leading ?? 'Auto';
+            $('#font-leading').val(leadingVal).selectmenu('refresh');
         }
     },
     mounted() {
@@ -347,6 +336,28 @@ export default {
             this.currentFontSize = fontSize;
             this.$catch(this.activeObject.setFontSize(fontSize));
         },
+        openColorPicker(color, event) {
+            this.setCurrentColorSpace(color.colorSpace);
+            this.setColorByColorSpace(color);
+            this.setColorClosure((color) => this.activeObject.setFontColor(color));
+            if (color.colorSpace === 'PANTONE') {
+                $('#pantone-color-select').val(color.name)
+                document.querySelector('#pantone-user-color-preview').style.backgroundColor = color.displayColor;
+            } else if (color.colorSpace === 'HKS') {
+                $('#hks-color-select').val(color.name)
+                document.querySelector('#hks-user-color-preview').style.backgroundColor = color.displayColor;
+
+            }
+
+            $('#color-picker')
+                .dialog('option', 'position', {
+                    collision: "fit",
+                    my: "right top+10",
+                    at: "center bottom",
+                    of: $(event.currentTarget)
+                })
+                .dialog('open');
+        },
         deleteTextBox(e) {
             $('#delete-text-dialog')
                 .dialog('option', 'position', {my: "right center", at: "left-300 center", of: $(e.currentTarget)})
@@ -379,6 +390,7 @@ export default {
         isAllowed(action) {
             return this.isText && !this.activeObject.prohibitedActions.includes(action);
         },
+        ...mapMutations(['setFontSizes', 'setFonts', 'setColorClosure', 'setCurrentColorSpace', 'setColorByColorSpace']),
     },
     data() {
         return {

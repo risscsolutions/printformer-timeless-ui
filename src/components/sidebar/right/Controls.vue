@@ -281,14 +281,16 @@ export default {
                 .css('display', 'block')
                 .position({my: "right center", at: "left-1 center", of: button});
         },
-        toggleSidebarPanel(component, event) {
+        async toggleSidebarPanel(component, event) {
             if ((this.openControlTab !== component) || (this.openControlTab === null && this.activeObject !== null)) {
-                if (this.activeObject && component !== this.blockMenuType) this.activeObject.discard();
+                if (this.activeObject && component !== this.blockMenuType) await this.activeObject.discard();
 
                 this.openSidebarPanel();
                 this.$store.commit('setOpenControlTab', component);
                 const blockType = this.blockTypeByComponent;
-                if (!this.allowAddAssets && blockType && !this.activeObject) {
+                if (!this.activeObject && ((!this.allowAddAssets && blockType === BlockTypes.ASSET)
+                    || (!this.allowAddTexts && blockType === BlockTypes.TEXT)
+                    || (!this.allowAddShapes && blockType === BlockTypes.SHAPE))) {
                     this.$editor.findEditorObjects({isContentModifieable: true, type: blockType})
                         .then((blocks) => {
                             if (blocks.length) blocks[0].setActive();
