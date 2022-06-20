@@ -38,7 +38,12 @@
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between">
                         <span class="dark-gray-color">Rasterfarbe</span>
-                        <input type="color" v-model="currentColor">
+                        <input type="color" id="grid-color" style="opacity: 0" v-model="currentColor" class="button is-rounded color-button-round m-0">
+                        <button
+                            :style="{'background-color': initialColor}"
+                            @click="openColorPicker"
+                            class="button is-rounded color-button-round m-0">
+                        </button>
                     </div>
                 </div>
             </div>
@@ -107,7 +112,11 @@ export default {
             this.configuration = configuration;
         });
     },
-    methods: {},
+    methods: {
+        openColorPicker() {
+            document.getElementById('grid-color').click();
+        }
+    },
     computed: {
         gridSize: {
             get() {
