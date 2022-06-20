@@ -49,6 +49,7 @@
                     <div class="column is-15">
                         <span class="dark-gray-color">Schriftschnitt</span>
                     </div>
+                    <div class="column is-3"></div>
                     <div class="column is-3">
                         <button @click="textStyle" value="bold" id="bold-button" title=""
                                 class="button is-small" :disabled="boldDisabled">
