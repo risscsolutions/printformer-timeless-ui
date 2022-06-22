@@ -1,11 +1,11 @@
 <template>
     <div class="columns is-mobile is-vcentered is-centered mb-0" :class="{'blured-no-pointer': traceControlsIsOpen || fullScreenLoaderVisible}">
         <div class="column is-4 dark-gray-color pt-5 pb-0">
-            <span @click="editorZoomIn" style="cursor: pointer; vertical-align: middle;" class="svg-20"
+            <span @click="editorZoomIn" style="cursor: pointer; vertical-align: middle;" class="svg-30"
                   v-html="icon('Plus')">
             </span>
             <b>{{ zoom }}%</b>
-            <span @click="editorZoomOut" style="cursor: pointer; vertical-align: middle;" class="svg-20"
+            <span @click="editorZoomOut" style="cursor: pointer; vertical-align: middle;" class="svg-30"
                   v-html="icon('Minus')">
             </span>
         </div>

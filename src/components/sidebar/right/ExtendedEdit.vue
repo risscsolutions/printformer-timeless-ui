@@ -6,9 +6,9 @@
             </div>
             <div v-if="activeObject && hasTraceButton" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between">
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
                         <span class="dark-gray-color">Bild nachzeichnen</span>
-                        <span @click="openTraceControls" style="cursor: pointer" class="svg-20"
+                        <span @click="openTraceControls" style="cursor: pointer" class="svg-30 is-flex"
                               v-html="icon('VectorizerVorschau')"></span>
                     </div>
                 </div>
@@ -19,7 +19,7 @@
             </div>
             <div v-if="activeObject && hasBackgroundColor" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between">
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
                         <span class="dark-gray-color">Hintergrundfarbe</span>
                         <input type="color" class="mobile-input-faker" v-model="currentColor"
                                :name="'Farbe ' + currentColor + ' gewählt'">
@@ -31,8 +31,8 @@
             </div>
             <div v-show="hasLineHeight" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between">
-                        <span class="dark-gray-color">Zeilenabstand</span>
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
+                        <span class="dark-gray-color" style="line-height: 30px">Zeilenabstand</span>
                         <select name="fonts" id="font-leading">
                             <option v-for="lineHeight in allLineHeights" :value="lineHeight">
                                 {{ lineHeight }}
@@ -47,16 +47,16 @@
             <div v-if="hasOpacity" class="column is-24 py-0">
                 <div class="content">
                     <div class="columns">
-                        <div class="column is-13">
+                        <div class="column is-13 is-flex py-2 is-align-items-center">
                             <span class="dark-gray-color">Transparenz</span>
                         </div>
-                        <div class="column is-flex is-justify-content-space-between">
+                        <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
                             <input id="sliderWithValue" class="has-output is-fullwidth" v-model="opacity" min="0"
                                    max="100" step="1" type="range">
                             <output for="sliderWithValue"
                                     class="px-2 slider-output dark-gray-color has-text-weight-semibold">{{ opacity }}
                             </output>
-                            <b class="dark-gray-color has-text-weight-semibold">%</b>
+                            <b class="dark-gray-color has-text-weight-semibold" style="line-height: 30px">%</b>
                         </div>
                     </div>
                 </div>
@@ -66,19 +66,19 @@
             </div>
             <div v-if="hasAlignment" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between">
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
                         <span class="dark-gray-color">Ausrichtung</span>
-                        <span @click="openAlignment" style="cursor: pointer" class="svg-20"
+                        <span @click="openAlignment" style="cursor: pointer" class="svg-30 is-flex"
                               v-html="icon('Abstand2')"></span>
                     </div>
                     <div v-if="openAlignmentSettings" class="column is-24">
                         <div class="columns is-multiline">
                             <div class="column is-half has-text-centered">
-                                <span @click="centerBlockH" style="cursor: pointer" class="svg-20"
+                                <span @click="centerBlockH" style="cursor: pointer" class="svg-30"
                                       v-html="icon('Abstand')"></span>
                             </div>
                             <div class="column is-half has-text-centered">
-                                <span @click="centerBlockV" style="cursor: pointer" class="svg-20"
+                                <span @click="centerBlockV" style="cursor: pointer" class="svg-30"
                                       v-html="icon('Abstand2')"></span>
                             </div>
                         </div>
@@ -90,26 +90,26 @@
             </div>
             <div v-if="hasLayer" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between">
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
                         <span class="dark-gray-color">Ebenen</span>
-                        <span @click="openLayer" style="cursor: pointer" class="svg-20" v-html="icon('Ebenen2')"></span>
+                        <span @click="openLayer" style="cursor: pointer" class="svg-30 is-flex" v-html="icon('Ebenen2')"></span>
                     </div>
                     <div v-if="openLayerSettings" class="column is-24">
                         <div class="columns is-multiline">
                             <div class="column is-half has-text-centered">
-                                <span @click="moveUp(true)" style="cursor: pointer" class="svg-20" title="Vorne"
+                                <span @click="moveUp(true)" style="cursor: pointer" class="svg-30" title="Vorne"
                                       v-html="icon('Vorne')"></span>
                             </div>
                             <div class="column is-half has-text-centered">
-                                <span @click="moveDown(true)" style="cursor: pointer" class="svg-20" title="Hinten"
+                                <span @click="moveDown(true)" style="cursor: pointer" class="svg-30" title="Hinten"
                                       v-html="icon('Hinten')"></span>
                             </div>
                             <div class="column is-half has-text-centered">
-                                <span @click="moveUp(false)" style="cursor: pointer" class="svg-20" title="Ganz Vorne"
+                                <span @click="moveUp(false)" style="cursor: pointer" class="svg-30" title="Ganz Vorne"
                                       v-html="icon('Vorne2')"></span>
                             </div>
                             <div class="column is-half has-text-centered">
-                                <span @click="moveDown(false)" style="cursor: pointer" class="svg-20"
+                                <span @click="moveDown(false)" style="cursor: pointer" class="svg-30"
                                       title="Ganz Hinten"
                                       v-html="icon('Hinten2')"></span>
                             </div>
@@ -122,9 +122,9 @@
             </div>
             <div class="column is-24 py-0" v-if="hasDuplicate">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between">
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
                         <span class="dark-gray-color">Duplizieren</span>
-                        <span @click="duplicateBlock" style="cursor: pointer" class="svg-20"
+                        <span @click="duplicateBlock" style="cursor: pointer" class="svg-30 is-flex"
                               v-html="icon('Ebenen')"></span>
                     </div>
                 </div>
@@ -186,7 +186,7 @@ export default {
         },
         opacity: {
             get() {
-                return this.activeObject ? this.activeObject.opacity * 100 : 100;
+                return this.activeObject ? parseInt(this.activeObject.opacity * 100) : 100;
             },
             set(v) {
                 this.$catch(this.activeObject.setOpacity(v / 100));

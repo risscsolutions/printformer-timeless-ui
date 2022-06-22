@@ -12,7 +12,7 @@
             </div>
             <div class="column is-24 py-0">
                 <div class="columns">
-                    <div class="column is-flex is-justify-content-space-between">
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
                         <span class="dark-gray-color">Vorschau herunterladen</span>
                         <a class="icon" :href="previewConfig.downloadUrl" v-html="$svg('Download')"></a>
                     </div>

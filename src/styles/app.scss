@@ -79,6 +79,10 @@ html, div, label, span, p, h1, h2, h3, h4, h5, h6, b, i {
     height: 50px !important;
 }
 
+.width-30 {
+    width: 30px !important;
+}
+
 .width-50 {
     width: 50px !important;
 }
@@ -95,12 +99,12 @@ html, div, label, span, p, h1, h2, h3, h4, h5, h6, b, i {
     width: 140px !important;
 }
 
-.width-300 {
-    width: 300px !important;
+.width-340 {
+    width: 340px !important;
 }
 
-.width-416 {
-    width: 416px !important;
+.width-456 {
+    width: 456px !important;
 }
 
 .direction-column {
@@ -122,10 +126,17 @@ button {
     border: none;
     outline: none;
 }
+
 .button.is-ghost, .button.is-ghost[disabled] {
     border: none !important;
     background-color: transparent !important;
     outline: none !important;
+}
+
+.muted-button {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .gray-background {
@@ -140,9 +151,10 @@ button {
     background-color: #A6A9A9 !important;
 }
 
-.svg-20 svg {
-    width: 20px;
-    height: 20px;
+
+.svg-30 svg {
+    width: 30px;
+    height: 30px;
 }
 
 .blue-under {
@@ -168,6 +180,7 @@ button {
 
 .box {
     border-radius: 1px;
+    box-shadow: none !important;
 }
 
 .has-arrow-center-top::after {
@@ -278,6 +291,7 @@ button {
 
 .trace-preview-info {
     background-color: #AC5D7A !important;
+
     h4 {
         color: #FFFFFF !important;
     }
@@ -290,7 +304,7 @@ button {
 .color-button-round {
     height: 30px !important;
     width: 30px !important;
-    padding: 0!important;
+    padding: 0 !important;
     margin: 0 12px 12px 0;
     border: 1px solid #A6A9A9;
 
@@ -341,16 +355,17 @@ button.is-rounded svg {
     border-top: 12px solid transparent;
     border-bottom: 12px solid transparent;
     border-left: 12px solid #A6A9A3;
-    position:absolute;
+    position: absolute;
 }
-.triangle-left:after{
-    content:'';
+
+.triangle-left:after {
+    content: '';
     width: 0;
     height: 0;
     border-top: 11px solid transparent;
     border-bottom: 11px solid transparent;
     border-left: 11px solid #ffffff;
-    position:absolute;
-    top:-11px;
-    right:1px;
+    position: absolute;
+    top: -11px;
+    right: 1px;
 }

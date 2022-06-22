@@ -16,7 +16,7 @@
             <!--            </div>-->
             <div class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between">
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
                         <label class="dark-gray-color" for="extendedEditSwitch">
                             Raster
                         </label>
@@ -36,13 +36,13 @@
             </div>
             <div v-if="gridSwitchOn" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between">
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
                         <span class="dark-gray-color">Rasterfarbe</span>
                         <input type="color" id="grid-color" style="opacity: 0" v-model="currentColor" class="button is-rounded color-button-round m-0">
                         <button
                             :style="{'background-color': initialColor}"
                             @click="openColorPicker"
-                            class="button is-rounded color-button-round m-0">
+                            class="button is-rounded color-button-round m-0 border-solid">
                         </button>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
             <div v-if="gridSwitchOn" class="column is-24 py-0">
                 <div class="columns is-multiline">
 
-                    <div class="column is-flex is-justify-content-space-between">
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
                         <span class="dark-gray-color">Rastergröße (in mm)</span>
                         <input type="number" v-model="gridSize" style="width: 70px">
                     </div>

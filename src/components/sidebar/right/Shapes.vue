@@ -26,13 +26,13 @@
 
             <div v-show="isAllowed('color')" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between">
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
                         <span class="dark-gray-color">Formfarbe</span>
                         <button
                             :style="{'background-color': (activeObject || {}).fill ? activeObject.fill.displayColor : null}"
                             :class="{'chess-background': (activeObject || {}).fill === 'none'}"
                             @click="openColorPicker(activeObject.fill, $event)"
-                            class="button is-rounded color-button-round m-0">
+                            class="button is-rounded color-button-round m-0 border-solid">
                         </button>
                     </div>
                 </div>
@@ -43,9 +43,9 @@
 
             <div v-show="isAllowed('delete')" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between">
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
                         <span class="dark-gray-color">Form löschen</span>
-                        <span @click="deleteForm" style="cursor: pointer" class="svg-20"
+                        <span @click="deleteForm" style="cursor: pointer" class="svg-30 is-flex"
                               v-html="icon('Loeschen')"></span>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
             </div>
             <div v-if="showExtendedSwitch" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-flex-direction-column is-align-items-center">
+                    <div class="column is-flex is-flex-direction-column is-align-items-center py-2">
                         <label class="has-text-weight-medium blue-color mb-2" for="extendedEditSwitch">
                             Erweiterte Form-Bearbeitung
                         </label>

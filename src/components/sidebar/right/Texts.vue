@@ -6,7 +6,7 @@
                      style="cursor: pointer" :class="{'no-interaction': activeObject}" @click="addTextBlock">
                     <span :style="{'opacity': activeObject ? '50%' : '100%'}"
                           class="dark-gray-color">Neue Textbox</span>
-                    <span :style="{'opacity': activeObject ? '50%' : '100%'}" class="svg-20 m-1"
+                    <span :style="{'opacity': activeObject ? '50%' : '100%'}" class="svg-30 is-flex m-1"
                           v-html="icon('HinzufuegenPlus')"></span>
                 </div>
             </div>
@@ -16,8 +16,8 @@
             <div v-show="(isAllowed('font-family') || isAllowed('font-style')) && allFontsFlat"
                  class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between">
-                        <span class="dark-gray-color">Schriftart</span>
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
+                        <span class="dark-gray-color" style="line-height: 30px">Schriftart</span>
                         <select name="fonts" id="font-family">
                             <option v-for="font in allFontsFlat" :value="font.postscript_name">
                                 {{ font.postscript_name }}
@@ -31,8 +31,8 @@
             </div>
             <div v-show="isAllowed('font-size') && allFontSizes" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between">
-                        <span class="dark-gray-color">Schriftgröße</span>
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
+                        <span class="dark-gray-color" style="line-height: 30px">Schriftgröße</span>
                         <select class="width-140" name="fontSizes" id="font-size">
                             <option v-for="fontSize in allFontSizes" :value="fontSize">
                                 {{ fontSize }} pt
@@ -45,22 +45,21 @@
                 <hr class="divider">
             </div>
             <div v-show="isAllowed('font-style')" class="column is-24 py-0">
-                <div class="columns is-vcentered is-multiline is-gapless">
-                    <div class="column is-15">
-                        <span class="dark-gray-color">Schriftschnitt</span>
-                    </div>
-                    <div class="column is-3"></div>
-                    <div class="column is-3">
-                        <button @click="textStyle" value="bold" id="bold-button" title=""
-                                class="button is-small" :disabled="boldDisabled">
-                            <b class="no-interaction">B</b>
-                        </button>
-                    </div>
-                    <div class="column is-3">
-                        <button @click="textStyle" value="italic" id="italic-button" title=""
-                                class="button is-small" :disabled="italicDisabled">
-                            <i class="no-interaction">I</i>
-                        </button>
+                <div class="content">
+                    <div class="columns">
+                        <div class="column is-13 is-flex py-2 is-align-items-center">
+                            <span class="dark-gray-color">Schriftschnitt</span>
+                        </div>
+                        <div class="column is-flex is-justify-content-flex-end py-2 is-align-items-center" >
+                            <button @click="textStyle" value="bold" id="bold-button" title=""
+                                    class="button is-small width-30" :disabled="boldDisabled">
+                                <b class="no-interaction">B</b>
+                            </button>
+                            <button @click="textStyle" value="italic" id="italic-button" title=""
+                                    class="button is-small width-30 ml-2" :disabled="italicDisabled">
+                                <i class="no-interaction">I</i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -69,13 +68,13 @@
             </div>
             <div v-show="isAllowed('color')" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between">
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
                         <span class="dark-gray-color">Schriftfarbe</span>
                         <button
                             :style="{'background-color': (activeObject || {}).color ? activeObject.color.displayColor : null}"
                             :class="{'chess-background': (activeObject || {}).color === 'none'}"
                             @click="openColorPicker(activeObject.color, $event)"
-                            class="button is-rounded color-button-round m-0">
+                            class="button is-rounded color-button-round m-0 border-solid">
                         </button>
                     </div>
                 </div>
@@ -84,21 +83,29 @@
                 <hr class="divider">
             </div>
             <div v-show="isAllowed('halign')" class="column is-24 py-0">
-                <div class="columns is-multiline is-vcentered is-gapless">
-                    <div class="column is-12">
-                        <span class="dark-gray-color">Ausrichtung Text</span>
-                    </div>
-                    <div class="column is-3" style="cursor: pointer" @click="textAlign('justify')">
-                        <span class="svg-20" title="Blocksatz" v-html="icon('Blocksatz')"></span>
-                    </div>
-                    <div class="column is-3" style="cursor: pointer" @click="textAlign('left')">
-                        <span class="svg-20" title="Linksbuendig" v-html="icon('Linksbuendig')"></span>
-                    </div>
-                    <div class="column is-3" style="cursor: pointer" @click="textAlign('center')">
-                        <span class="svg-20" title="zentriert" v-html="icon('zentriert')"></span>
-                    </div>
-                    <div class="column is-3" style="cursor: pointer" @click="textAlign('right')">
-                        <span class="svg-20" title="rechtsbuendig" v-html="icon('rechtsbuendig')"></span>
+                <div class="content">
+                    <div class="columns">
+                        <div class="column is-flex py-2 is-align-items-center">
+                            <span class="dark-gray-color">Ausrichtung Text</span>
+                        </div>
+                        <div class="column is-flex is-justify-content-flex-end py-2 is-align-items-center" >
+                            <button @click="textAlign('justify')" title="Blocksatz"
+                                    class="button is-small muted-button width-30">
+                                <span class="svg-30 no-interaction is-flex" v-html="icon('Blocksatz')"></span>
+                            </button>
+                            <button @click="textAlign('left')" title="Linksbündig"
+                                    class="button is-small ml-1 muted-button width-30">
+                                <span class="svg-30 no-interaction is-flex" v-html="icon('Linksbuendig')"></span>
+                            </button>
+                            <button @click="textAlign('center')" title="Zentriert"
+                                    class="button is-small ml-1 muted-button width-30">
+                                <span class="svg-30 no-interaction is-flex" v-html="icon('zentriert')"></span>
+                            </button>
+                            <button @click="textAlign('right')" title="Rechtsbündig"
+                                    class="button is-small ml-1 muted-button width-30">
+                                <span class="svg-30 no-interaction is-flex" v-html="icon('rechtsbuendig')"></span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -106,18 +113,25 @@
                 <hr class="divider">
             </div>
             <div v-show="isAllowed('list')" class="column is-24 py-0">
-                <div class="columns is-multiline">
-                    <div class="column is-12">
-                        <span class="dark-gray-color">Aufzählung</span>
-                    </div>
-                    <div class="column is-4" style="cursor: pointer" @click="textBulletPoints('alphabetic')">
-                        <span class="svg-20" title="AufzaehlungPunkte" v-html="icon('AufzaehlungPunkte')"></span>
-                    </div>
-                    <div class="column is-4" style="cursor: pointer" @click="textBulletPoints('bullet')">
-                        <span class="svg-20" title="AufzaehlungEcken" v-html="icon('AufzaehlungEcken')"></span>
-                    </div>
-                    <div class="column is-4" style="cursor: pointer" @click="textBulletPoints('number')">
-                        <span class="svg-20" title="AufzaehlungZahlen" v-html="icon('AufzaehlungZahlen')"></span>
+                <div class="content">
+                    <div class="columns">
+                        <div class="column is-flex py-2 is-align-items-center">
+                            <span class="dark-gray-color">Aufzählung</span>
+                        </div>
+                        <div class="column is-flex is-justify-content-flex-end py-2 is-align-items-center" >
+                            <button @click="textBulletPoints('alphabetic')" title="Alphabetisch"
+                                    class="button is-small muted-button width-30">
+                                <span class="svg-30 no-interaction is-flex" v-html="icon('AufzaehlungPunkte')"></span>
+                            </button>
+                            <button @click="textBulletPoints('bullet')" title="Bullet"
+                                    class="button is-small ml-1 muted-button width-30">
+                                <span class="svg-30 no-interaction is-flex" v-html="icon('AufzaehlungEcken')"></span>
+                            </button>
+                            <button @click="textBulletPoints('number')" title="Zahlen"
+                                    class="button is-small ml-1 muted-button width-30">
+                                <span class="svg-30 no-interaction is-flex" v-html="icon('AufzaehlungZahlen')"></span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -126,9 +140,9 @@
             </div>
             <div v-show="isAllowed('delete')" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between">
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
                         <span class="dark-gray-color">Textbox löschen</span>
-                        <span @click="deleteTextBox" style="cursor: pointer" class="svg-20"
+                        <span @click="deleteTextBox" style="cursor: pointer" class="svg-30 is-flex"
                               v-html="icon('Loeschen')"></span>
                     </div>
                 </div>
@@ -138,7 +152,7 @@
             </div>
             <div v-if="showExtendedSwitch" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-flex-direction-column is-align-items-center">
+                    <div class="column is-flex is-flex-direction-column is-align-items-center py-2">
                         <label class="has-text-weight-medium blue-color mb-2" for="extendedEditSwitch">
                             Erweiterte Text-Bearbeitung
                         </label>

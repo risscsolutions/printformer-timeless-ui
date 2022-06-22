@@ -1,8 +1,8 @@
 <template>
-    <div v-show="editorLoaded && !traceControlsIsOpen" :class="{'width-105': !isPanelOpen, 'width-416': isPanelOpen}"
+    <div v-show="editorLoaded && !traceControlsIsOpen" :class="{'width-105': !isPanelOpen, 'width-456': isPanelOpen}"
          class="column is-1 px-0" style="display: grid">
         <div class="columns p-3">
-            <div v-show="isPanelOpen || shouldShowMenu" class="column p-2 is-1 mr-3 width-300 border-solid"
+            <div v-show="isPanelOpen || shouldShowMenu" class="column p-2 is-1 mr-3 width-340 border-solid"
                  style="overflow-x: hidden; overflow-y: auto">
                 <div class="columns is-multiline is-mobile" style="overflow: hidden">
                     <component class="column is-24 p-5" :is="openControlTab"

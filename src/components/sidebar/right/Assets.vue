@@ -6,7 +6,7 @@
                      style="cursor: pointer" :class="{'no-interaction': activeObject}" @click="uploadMediaAsset">
                     <span :style="{'opacity': activeObject ? '50%' : '100%'}"
                           class="dark-gray-color">Neue Bildbox</span>
-                    <span :style="{'opacity': activeObject ? '50%' : '100%'}" class="svg-20 m-1"
+                    <span :style="{'opacity': activeObject ? '50%' : '100%'}" class="svg-30 is-flex m-1"
                           v-html="icon('HinzufuegenPlus')"></span>
                 </div>
             </div>
@@ -19,7 +19,7 @@
                      @dragleave="dragleave" @drop="drop"
                      style="cursor: pointer" @click="uploadMediaAsset">
                     <span class="dark-gray-color">Bilder hochladen</span>
-                    <span class="svg-20 m-1" v-html="icon('Bilder_hochladen')"></span>
+                    <span class="svg-30 is-flex m-1" v-html="icon('Bilder_hochladen')"></span>
                     <div class="columns m-0 is-flex-direction-column has-text-centered dark-gray-color">
                         <input ref="uploadFile" type="file" hidden accept=".jpg,.jpeg,.png,.pdf" @change="uploadImage">
                         <span>vom <span class="blue-under">Computer</span> oder</span>
@@ -33,9 +33,9 @@
             </div>
             <div v-if="isAsset && !isGraphic" class="column is-24 py-0">
                 <div class="columns">
-                    <div class="column is-flex is-justify-content-space-between">
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
                         <span class="dark-gray-color">Bildqualität</span>
-                        <span class="dark-gray-color dpi-circle" :style="{'background-color': qualityColor}"></span>
+                        <span class="dark-gray-color dpi-circle border-solid" :style="{'background-color': qualityColor}"></span>
                     </div>
                 </div>
             </div>
@@ -45,20 +45,22 @@
             <div v-if="isAllowed('asset-cut-out')" class="column is-24 py-0">
                 <div class="content">
                     <div class="columns">
-                        <div class="column is-14">
+                        <div class="column is-flex py-2 is-align-items-center">
                             <span class="dark-gray-color">Bild zoomen</span>
                         </div>
-                        <div class="column is-3">
-                            <span @click="assetZoomIn" style="cursor: pointer" class="svg-20"
-                                  v-html="icon('HinzufuegenPlus')"></span>
-                        </div>
-                        <div class="column is-3">
-                            <span @click="assetZoomOut" style="cursor: pointer" class="svg-20"
-                                  v-html="icon('HinzufuegenMinus')"></span>
-                        </div>
-                        <div class="column is-3">
-                            <span @click="assetFit" style="cursor: pointer" class="svg-20"
-                                  v-html="icon('vergroessern')"></span>
+                        <div class="column is-flex is-justify-content-flex-end py-2 is-align-items-center" >
+                            <button @click="assetZoomIn" title="Vergrößern"
+                                    class="button is-small muted-button width-30">
+                                <span class="svg-30 no-interaction is-flex" v-html="icon('HinzufuegenPlus')"></span>
+                            </button>
+                            <button @click="assetZoomOut" title="Verkleinern"
+                                    class="button is-small ml-2 muted-button width-30">
+                                <span class="svg-30 no-interaction is-flex" v-html="icon('HinzufuegenMinus')"></span>
+                            </button>
+                            <button @click="assetFit" title="Rahmen füllen"
+                                    class="button is-small ml-2 muted-button width-30">
+                                <span class="svg-30 no-interaction is-flex" v-html="icon('vergroessern')"></span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -68,9 +70,9 @@
             </div>
             <div v-if="isAllowed('delete') || isAllowed('asset-replace')" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between">
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
                         <span class="dark-gray-color">Bildbox löschen</span>
-                        <span @click="deleteAssetBox" style="cursor: pointer" class="svg-20"
+                        <span @click="deleteAssetBox" style="cursor: pointer" class="svg-30 is-flex"
                               v-html="icon('Loeschen')"></span>
                     </div>
                 </div>
@@ -80,7 +82,7 @@
             </div>
             <div v-if="showExtendedSwitch" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-flex-direction-column is-align-items-center">
+                    <div class="column is-flex is-flex-direction-column is-align-items-center py-2">
                         <label class="has-text-weight-medium blue-color mb-2" for="extendedEditSwitch">
                             Erweiterte Bild-Bearbeitung
                         </label>
@@ -120,7 +122,7 @@
                                     <figure
                                         class="image is-flex is-align-items-center is-justify-content-center is-flex-grow-1 is-flex-shrink-1">
                                         <img class="has-ratio media-in-wrapper" :src="media.src"
-                                             crossorigin="anonymous">
+                                             crossorigin="anonymous" draggable="false">
                                     </figure>
                                     <!--                                        <p class="subtitle">{{ media.name }}</p>-->
                                 </article>
@@ -136,8 +138,8 @@
 
 .dpi-circle {
     border: 1px solid #4f4d4d;
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 30px;
+    height: 30px;
     border-radius: 5rem;
 }
 
