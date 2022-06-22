@@ -16,7 +16,7 @@
             <div v-show="(isAllowed('font-family') || isAllowed('font-style')) && allFontsFlat"
                  class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
                         <span class="dark-gray-color" style="line-height: 30px">Schriftart</span>
                         <select name="fonts" id="font-family">
                             <option v-for="font in allFontsFlat" :value="font.postscript_name">
@@ -31,7 +31,7 @@
             </div>
             <div v-show="isAllowed('font-size') && allFontSizes" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
                         <span class="dark-gray-color" style="line-height: 30px">Schriftgröße</span>
                         <select class="width-140" name="fontSizes" id="font-size">
                             <option v-for="fontSize in allFontSizes" :value="fontSize">
@@ -50,7 +50,7 @@
                         <div class="column is-13 is-flex py-2 is-align-items-center">
                             <span class="dark-gray-color">Schriftschnitt</span>
                         </div>
-                        <div class="column is-flex is-justify-content-flex-end py-2 is-align-items-center" >
+                        <div class="column is-flex is-justify-content-flex-end py-2 is-align-items-center">
                             <button @click="textStyle" value="bold" id="bold-button" title=""
                                     class="button is-small width-30" :disabled="boldDisabled">
                                 <b class="no-interaction">B</b>
@@ -68,7 +68,7 @@
             </div>
             <div v-show="isAllowed('color')" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
                         <span class="dark-gray-color">Schriftfarbe</span>
                         <button
                             :style="{'background-color': (activeObject || {}).color ? activeObject.color.displayColor : null}"
@@ -88,7 +88,7 @@
                         <div class="column is-flex py-2 is-align-items-center">
                             <span class="dark-gray-color">Ausrichtung Text</span>
                         </div>
-                        <div class="column is-flex is-justify-content-flex-end py-2 is-align-items-center" >
+                        <div class="column is-flex is-justify-content-flex-end py-2 is-align-items-center">
                             <button @click="textAlign('justify')" title="Blocksatz"
                                     class="button is-small muted-button width-30">
                                 <span class="svg-30 no-interaction is-flex" v-html="icon('Blocksatz')"></span>
@@ -118,7 +118,7 @@
                         <div class="column is-flex py-2 is-align-items-center">
                             <span class="dark-gray-color">Aufzählung</span>
                         </div>
-                        <div class="column is-flex is-justify-content-flex-end py-2 is-align-items-center" >
+                        <div class="column is-flex is-justify-content-flex-end py-2 is-align-items-center">
                             <button @click="textBulletPoints('alphabetic')" title="Alphabetisch"
                                     class="button is-small muted-button width-30">
                                 <span class="svg-30 no-interaction is-flex" v-html="icon('AufzaehlungPunkte')"></span>
@@ -140,7 +140,7 @@
             </div>
             <div v-show="isAllowed('delete')" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
                         <span class="dark-gray-color">Textbox löschen</span>
                         <span @click="deleteTextBox" style="cursor: pointer" class="svg-30 is-flex"
                               v-html="icon('Loeschen')"></span>
@@ -223,7 +223,7 @@ export default {
             $('#font-family').val(this.activeObject.font).selectmenu('refresh');
             $('#font-size').val(this.activeObject.size).selectmenu('refresh');
 
-            const leadingVal = this.activeObject.leading ?? 'Auto';
+            const leadingVal = this.activeObject.leading ? this.activeObject.leading : 'Auto';
             $('#font-leading').val(leadingVal).selectmenu('refresh');
         }
     },
