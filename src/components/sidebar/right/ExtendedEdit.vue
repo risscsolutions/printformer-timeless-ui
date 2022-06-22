@@ -6,7 +6,7 @@
             </div>
             <div v-if="activeObject && hasTraceButton" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
                         <span class="dark-gray-color">Bild nachzeichnen</span>
                         <span @click="openTraceControls" style="cursor: pointer" class="svg-30 is-flex"
                               v-html="icon('VectorizerVorschau')"></span>
@@ -19,7 +19,7 @@
             </div>
             <div v-if="activeObject && hasBackgroundColor" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
                         <span class="dark-gray-color">Hintergrundfarbe</span>
                         <input type="color" class="mobile-input-faker" v-model="currentColor"
                                :name="'Farbe ' + currentColor + ' gewählt'">
@@ -31,7 +31,7 @@
             </div>
             <div v-show="hasLineHeight" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
                         <span class="dark-gray-color" style="line-height: 30px">Zeilenabstand</span>
                         <select name="fonts" id="font-leading">
                             <option v-for="lineHeight in allLineHeights" :value="lineHeight">
@@ -50,7 +50,7 @@
                         <div class="column is-13 is-flex py-2 is-align-items-center">
                             <span class="dark-gray-color">Transparenz</span>
                         </div>
-                        <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
+                        <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
                             <input id="sliderWithValue" class="has-output is-fullwidth" v-model="opacity" min="0"
                                    max="100" step="1" type="range">
                             <output for="sliderWithValue"
@@ -90,9 +90,10 @@
             </div>
             <div v-if="hasLayer" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
                         <span class="dark-gray-color">Ebenen</span>
-                        <span @click="openLayer" style="cursor: pointer" class="svg-30 is-flex" v-html="icon('Ebenen2')"></span>
+                        <span @click="openLayer" style="cursor: pointer" class="svg-30 is-flex"
+                              v-html="icon('Ebenen2')"></span>
                     </div>
                     <div v-if="openLayerSettings" class="column is-24">
                         <div class="columns is-multiline">
@@ -122,7 +123,7 @@
             </div>
             <div class="column is-24 py-0" v-if="hasDuplicate">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
                         <span class="dark-gray-color">Duplizieren</span>
                         <span @click="duplicateBlock" style="cursor: pointer" class="svg-30 is-flex"
                               v-html="icon('Ebenen')"></span>
@@ -227,7 +228,7 @@ export default {
             }
 
             this.$nextTick(() => {
-                const leadingVal = this.activeObject.leading ?? 'Auto';
+                const leadingVal = this.activeObject.leading ? this.activeObject.leading : 'Auto';
                 $fontLeading.val(leadingVal).selectmenu('refresh');
             });
         });
