@@ -10,14 +10,14 @@
         </div>
         <div class="columns is-multiline is-mobile mb-2">
             <div v-for="variant in variants" @click="loadVariant(variant, variant.id)" class="column is-one-third">
-                <div v-if="variant.thumbnail.type === 'color'" class="box variant mb-0"
+                <div v-if="variant.thumbnail.type === 'color'" class="box variant mb-0 border-solid"
                      :class="{'variant-active': currentId === variant.id}"
                      :style="{'background-color': variant.thumbnail.value}">
                     <figure class="image is-square">
                         <span style="border-style: none; outline-color: transparent"></span>
                     </figure>
                 </div>
-                <div v-else class="box variant p-0 mb-0" :class="{'variant-active': currentId === variant.id}">
+                <div v-else class="box variant p-0 mb-0 border-solid" :class="{'variant-active': currentId === variant.id}">
                     <figure class="image is-square">
                         <img :src="variant.thumbnail.value" height="70px" width="auto">
                     </figure>
@@ -39,12 +39,11 @@
 }
 
 .variant-active {
-    border: 2px solid #A6A9A9 !important;
-    border-radius: 3px;
+    border: 2px solid #0E689A !important;
 }
 
 .variant {
-    border: 3px solid transparent;
+    border-radius: 3px;
 }
 </style>
 

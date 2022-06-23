@@ -144,8 +144,8 @@
 }
 
 .media-wrapper {
-    max-height: 500px;
-    overflow-y: scroll;
+    max-height: 300px;
+    overflow-y: auto;
 }
 
 .media-in-wrapper {
