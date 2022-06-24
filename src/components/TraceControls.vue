@@ -8,7 +8,6 @@
                         <h4 class="mb-0">Nach Farbauswahl erscheint <br>hier deine Logovorschau</h4>
                     </div>
                 </div>
-
                 <div v-if="traceStep === 1 && simpleColorsApplied"
                      class="columns direction-column is-align-self-flex-start">
                     <div class="column content is-small mt-2 mx-5 mb-0">
@@ -129,7 +128,6 @@
                             bestimmen</p>
                         <p class="dark-gray-color mb-0 ">Wähle deine gewünschten Druckfarben aus</p>
                     </div>
-
                     <div class="content is-small" ref="userColors">
                         <button v-for="(userColor, index) in userColors" v-html="userColor ? null : icon('Plus')"
                                 :style="{'background-color': userColor ? userColor.displayColor : null}"
@@ -137,14 +135,12 @@
                         </button>
                     </div>
                     <hr class="sidebar-divider" v-if="userColorsFilled">
-
                     <div class="content is-small my-2" v-if="userColorsFilled">
                         <p class="dark-gray-color mb-2 blue-color has-text-weight-bold">Schritt 2: Druckfarben
                             zuweisen</p>
                         <p class="dark-gray-color mb-0 ">Weise die in Schritt 1 bestimmten Druckfarben denen in deinem
                             Bild gefundenen Farben zu.</p>
                     </div>
-
                     <div class="content is-small my-0" v-if="userColorsFilled">
                         <button v-for="color in colorMap"
                                 :style="`background-color: ${color.replaced}; pointer-events: none;`"
@@ -170,8 +166,6 @@
                         </button>
                     </div>
                 </div>
-
-
                 <div style="display:none;">
                     <div ref="resultAsUserMedia">
                         <p class="text-headline">Vektor in Mediamanager speichern</p>
@@ -182,11 +176,7 @@
                         </label>
                         <hr class="sidebar-divider">
                     </div>
-
-
                 </div>
-
-
                 <div class="content">
                     <button ref="cancelTrace" class="button is-small is-dark dark-gray-background-color">
                         <span>ABBRECHEN</span>
@@ -196,7 +186,6 @@
                             :disabled="blockUi"
                             class="button is-small is-ghost"></button>
                 </div>
-
             </div>
         </div>
     </div>
@@ -281,9 +270,6 @@ export default {
 
                 console.debug('TraceControl object selected', {...target});
                 if (!target.isFilled) {
-                    // this.button.classList.add('prohibited');
-                    // this.container.style.display = 'none';
-
                     if (this.updateListener.has(target)) return;
 
                     const listener = (newTarget) => {
@@ -291,8 +277,19 @@ export default {
                     };
                     this.updateListener.set(target, listener);
                     window.events.on(Events.EDITOR_OBJECT_UPDATED, listener, this);
-                    return;
                 }
+            });
+
+            window.events.on('TIMELESS:asset-replaced', (target) => {
+                if (!Asset.isAsset(target)) return;
+
+                if (this.updateListener.has(target)) return;
+
+                const listener = (newTarget) => {
+                    if (target.is(newTarget)) this.showOverlayIfCurrentlySelectedBlockIsVectorized(newTarget);
+                };
+                this.updateListener.set(target, listener);
+                window.events.on(Events.EDITOR_OBJECT_UPDATED, listener, this);
             });
 
             const buttons = [this.$refs.applyTrace, this.$refs.cancelTrace];
@@ -418,7 +415,7 @@ export default {
                             this.updatePreview(editorObject);
                             this.$refs.traceOverlay.style.cursor = "auto";
                             this.hideFullScreenLoader();
-                            if (persist) window.events.emit('reload-media');
+                            if (persist) window.events.emit('TIMELESS:reload-media');
 
                             return editorObject;
                         });

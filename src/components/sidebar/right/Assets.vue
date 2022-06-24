@@ -31,7 +31,7 @@
             <div v-if="allowAddAssets || isAllowed('asset-replace')" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="isAsset && !isGraphic" class="column is-24 py-0">
+            <div v-if="isFilled && !isGraphic" class="column is-24 py-0">
                 <div class="columns">
                     <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
                         <span class="dark-gray-color">Bildqualität</span>
@@ -39,7 +39,7 @@
                     </div>
                 </div>
             </div>
-            <div v-if="isAsset && !isGraphic" class="column is-24">
+            <div v-if="isFilled && !isGraphic" class="column is-24">
                 <hr class="divider">
             </div>
             <div v-if="isAllowed('asset-cut-out')" class="column is-24 py-0">
@@ -176,6 +176,10 @@ export default {
     mounted() {
         bulmaSlider.attach();
 
+        window.events.on('TIMELESS:reload-media', () => {
+            this.loadUserMedias();
+        });
+
         window.events.on(Events.EDITOR_OBJECT_CLEARED, () => {
             this.dpi = 0;
             this.opacity = 100;
@@ -271,7 +275,8 @@ export default {
             // if it has then replace with selected image
             // if not just add a new asset block
             if (this.isAsset) {
-                this.$catch(this.activeObject.replaceWithMedia('userMedia', media.id));
+                this.$catch(this.activeObject.replaceWithMedia('userMedia', media.id)
+                    .then(block => window.events.emit('TIMELESS:asset-replaced', block)));
             } else {
                 this.$catch(this.$editor.addAssetBlockFromMedia('userMedia', media.id));
             }
@@ -281,7 +286,7 @@ export default {
                 mediaProvider: 'userMedia',
                 additionalData: {},
                 page: this.pagination.page,
-                limit: 25
+                limit: 50
             }
 
             this.$editor.getMediaProvider().getMedia(params).then((userMedias) => {
@@ -369,6 +374,9 @@ export default {
         },
         isAsset() {
             return this.activeObject && Asset.isAsset(this.activeObject);
+        },
+        isFilled() {
+            return this.isAsset && this.activeObject.isFilled;
         },
         isGraphic() {
             return this.isAsset && this.activeObject.assetType === AssetTypes.GRAPHIC;

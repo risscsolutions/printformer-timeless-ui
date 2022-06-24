@@ -73,13 +73,16 @@
                     </div>
                     <div v-if="openAlignmentSettings" class="column is-24">
                         <div class="columns is-multiline">
-                            <div class="column is-half has-text-centered">
-                                <span @click="centerBlockH" style="cursor: pointer" class="svg-30"
-                                      v-html="icon('Abstand')"></span>
+                            <div @click="centerBlockH" style="cursor: pointer"
+                                 class="column is-half has-text-centered is-flex is-flex-direction-column pt-0">
+                                <span class="svg-30" v-html="icon('Abstand')"></span>
+                                <span class="dark-gray-color">Horizontale<br>Mittelachse</span>
+
                             </div>
-                            <div class="column is-half has-text-centered">
-                                <span @click="centerBlockV" style="cursor: pointer" class="svg-30"
-                                      v-html="icon('Abstand2')"></span>
+                            <div @click="centerBlockV" style="cursor: pointer"
+                                 class="column is-half has-text-centered is-flex is-flex-direction-column pt-0">
+                                <span class="svg-30" v-html="icon('Abstand2')"></span>
+                                <span class="dark-gray-color">Vertikale<br>Mittelachse</span>
                             </div>
                         </div>
                     </div>
@@ -97,22 +100,27 @@
                     </div>
                     <div v-if="openLayerSettings" class="column is-24">
                         <div class="columns is-multiline">
-                            <div class="column is-half has-text-centered">
-                                <span @click="moveUp(true)" style="cursor: pointer" class="svg-30" title="Vorne"
-                                      v-html="icon('Vorne')"></span>
+                            <div @click="moveUp(true)" style="cursor: pointer"
+                                 class="column is-half has-text-centered is-flex is-flex-direction-column pt-0">
+                                <span class="svg-30" v-html="icon('Vorne')"></span>
+                                <span class="dark-gray-color">In den<br>Vordergrund</span>
+
                             </div>
-                            <div class="column is-half has-text-centered">
-                                <span @click="moveDown(true)" style="cursor: pointer" class="svg-30" title="Hinten"
-                                      v-html="icon('Hinten')"></span>
+                            <div @click="moveDown(true)" style="cursor: pointer"
+                                 class="column is-half has-text-centered is-flex is-flex-direction-column pt-0">
+                                <span class="svg-30" v-html="icon('Hinten')"></span>
+                                <span class="dark-gray-color">In den<br>Hintergrund</span>
+
                             </div>
-                            <div class="column is-half has-text-centered">
-                                <span @click="moveUp(false)" style="cursor: pointer" class="svg-30" title="Ganz Vorne"
-                                      v-html="icon('Vorne2')"></span>
+                            <div @click="moveUp(false)" style="cursor: pointer"
+                                 class="column is-half has-text-centered is-flex is-flex-direction-column pt-0">
+                                <span class="svg-30" v-html="icon('Vorne2')"></span>
+                                <span class="dark-gray-color">Eine Ebene<br>nach vorne</span>
                             </div>
-                            <div class="column is-half has-text-centered">
-                                <span @click="moveDown(false)" style="cursor: pointer" class="svg-30"
-                                      title="Ganz Hinten"
-                                      v-html="icon('Hinten2')"></span>
+                            <div @click="moveDown(false)" style="cursor: pointer"
+                                 class="column is-half has-text-centered is-flex is-flex-direction-column pt-0">
+                                <span class="svg-30" v-html="icon('Hinten2')"></span>
+                                <span class="dark-gray-color">Eine Ebene<br>nach hinten</span>
                             </div>
                         </div>
                     </div>
