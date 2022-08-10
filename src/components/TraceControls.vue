@@ -184,10 +184,10 @@
                     <button ref="cancelTrace" class="button is-small is-dark dark-gray-background-color">
                         <span>ABBRECHEN</span>
                     </button>
-<!--                    <button v-html="icon('VectorizerPfeilLinks')" @click="backward"-->
-<!--                            v-if="(traceStep === 1 && simpleColorsApplied || traceStep === 2 || traceStep === 3)"-->
-<!--                            :disabled="blockUi"-->
-<!--                            class="button is-small is-ghost"></button>-->
+                    <!--                    <button v-html="icon('VectorizerPfeilLinks')" @click="backward"-->
+                    <!--                            v-if="(traceStep === 1 && simpleColorsApplied || traceStep === 2 || traceStep === 3)"-->
+                    <!--                            :disabled="blockUi"-->
+                    <!--                            class="button is-small is-ghost"></button>-->
 
                     <button @click="backward" class="button is-small is-info"
                             v-if="(traceStep === 1 && simpleColorsApplied || traceStep === 2 || traceStep === 3)"
@@ -598,7 +598,7 @@ export default {
             this.setTraceStep(3);
         },
         chooseColor(index, event) {
-            this.setCurrentColorSpace(this.colorSpaces[0]);
+            this.setCurrentColorSpace(this.colorSpaces.length === 0 && this.managedColors.length === 0 ? 'CMYK' : this.colorSpaces[0]);
             this.setColorClosure((color) => this.userColors.splice(index, 1, color));
 
             $('#color-picker')

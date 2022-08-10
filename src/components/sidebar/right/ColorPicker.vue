@@ -13,7 +13,7 @@
                     <li v-if="colorSpaces.includes('HKS')" :class="{'is-active': currentColorSpace === 'HKS'}">
                         <a @click="setCurrentColorSpace('HKS')">HKS</a>
                     </li>
-                    <li v-if="colorSpaces.includes('CMYK')"
+                    <li v-if="colorSpaces.includes('CMYK') || colorSpaces.length === 0 && managedColors.length === 0"
                         :class="{'is-active': currentColorSpace === 'CMYK'}">
                         <a @click="setCurrentColorSpace('CMYK')">CMYK</a>
                     </li>
@@ -150,9 +150,12 @@ export default {
             this.colorClosure(this.currentValueForColorSpace[this.currentColorSpace]);
             this.resetColorSpaces();
 
-            const buttons = document.querySelector('#managed-colors-in-picker').children;
-            for (const button of buttons) {
-                button.classList.remove('is-active')
+            const element = document.querySelector('#managed-colors-in-picker');
+            if (element) {
+                const buttons = element.children;
+                for (const button of buttons) {
+                    button.classList.remove('is-active')
+                }
             }
 
             $('#pantone-color-select').val(null)
@@ -227,9 +230,9 @@ export default {
             });
             this.initializedPickers['HKS'] = true;
         },
-        addCMYKColorPicker() {
+        addCMYKColorPicker(override = false) {
             if (this.initializedPickers['CMYK']) return;
-            if (!this.colorSpaces.includes('CMYK')) return;
+            if (!override && !this.colorSpaces.includes('CMYK')) return;
             const change = (color) => {
                 const cmyk = color.toCMYK();
                 const hex = color.toHexString();
@@ -301,6 +304,10 @@ export default {
     },
     watch: {
         colorSpaces(spaces) {
+            if (this.colorSpaces.length === 0 && this.managedColors.length === 0) {
+                this.addCMYKColorPicker(true);
+                return;
+            }
             this.addPantoneColorPicker();
             this.addHKSColorPicker();
             this.addCMYKColorPicker();
@@ -317,6 +324,7 @@ export default {
     max-width: 447px;
     min-width: 384px;
 }
+
 .managed-colors-in-picker {
     display: flex;
     flex-wrap: wrap;
