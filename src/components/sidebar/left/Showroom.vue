@@ -292,6 +292,7 @@ export default {
         },
         closeSidebarPanel() {
             this.closeShowroom();
+            setTimeout(() => this.$editor.getZoom().get().then(zoom => this.setZoom(parseInt(zoom * 100))), 100);
             if (!this.has3D) return;
 
             this.load3DModel();
@@ -299,9 +300,12 @@ export default {
         },
         openSidebarPanel() {
             this.openShowroom();
+            setTimeout(() => this.$editor.getZoom().get().then(zoom => this.setZoom(parseInt(zoom * 100))), 100);
+
             this.$refs.threedeeiframe.style.display = 'none';
+
         },
-        ...mapMutations(['openShowroom', 'closeShowroom']),
+        ...mapMutations(['openShowroom', 'closeShowroom', 'setZoom']),
     },
     data() {
         return {

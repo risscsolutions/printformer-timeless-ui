@@ -158,6 +158,19 @@ button {
     height: 30px;
 }
 
+
+.svg-50 svg {
+    width: 50px;
+    height: 50px;
+}
+
+@media screen and (max-width: 1050px) {
+    .svg-50 svg {
+        width: 30px;
+        height: 30px;
+    }
+}
+
 .blue-under {
     color: #0F699B;
     text-decoration: underline;
@@ -311,7 +324,19 @@ button {
 
     &.is-active {
         border-width: 2px;
+
+        span {
+            border: #4a4a4a solid 1.5px;
+            width: 22px;
+            height: 22px;
+            border-radius: 99999999px;
+            pointer-events: none;
+        }
     }
+}
+
+.button[disabled] span {
+    border-color: transparent !important;
 }
 
 .chess-background {

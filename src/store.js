@@ -20,6 +20,7 @@ export default function makeStore() {
             currentValueForColorSpace: {
                 'PANTONE': null,
                 'HKS': null,
+                'MANAGED': null,
                 'CMYK': {
                     displayColor: '#ff0000',
                     values: [0, 100, 100, 0],
@@ -35,6 +36,7 @@ export default function makeStore() {
             colorAssignerClosure: (lel) => {},
             userColors: [],
             fullScreenLoaderVisible: true,
+            zoom: 0,
         },
         getters: {
             allowAddShapes(state) {
@@ -111,6 +113,7 @@ export default function makeStore() {
                 state.currentValueForColorSpace = {
                     'PANTONE': null,
                     'HKS': null,
+                    'MANAGED': null,
                     'CMYK': {
                         displayColor: '#ff0000',
                         values: [0, 100, 100, 0],
@@ -137,6 +140,9 @@ export default function makeStore() {
             },
             setUserColors(state, userColors) {
                 state.userColors = userColors;
+            },
+            setZoom(state, zoom) {
+                state.zoom = zoom;
             }
         }
     });

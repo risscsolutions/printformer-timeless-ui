@@ -1,16 +1,17 @@
 <template>
-    <div class="columns is-mobile is-vcentered is-centered mb-0" :class="{'blured-no-pointer': traceControlsIsOpen || fullScreenLoaderVisible}">
+    <div class="columns is-mobile is-vcentered is-centered mb-0"
+         :class="{'blured-no-pointer': traceControlsIsOpen || fullScreenLoaderVisible}">
         <div class="column is-4 dark-gray-color pt-5 pb-0">
-            <span @click="editorZoomIn" style="cursor: pointer; vertical-align: middle;" class="svg-30"
-                  v-html="icon('Plus')">
+            <span @click="editorZoomOut" style="cursor: pointer; vertical-align: middle;" class="svg-50"
+                  v-html="icon('Minus')">
             </span>
             <b>{{ zoom }}%</b>
-            <span @click="editorZoomOut" style="cursor: pointer; vertical-align: middle;" class="svg-30"
-                  v-html="icon('Minus')">
+            <span @click="editorZoomIn" style="cursor: pointer; vertical-align: middle;" class="svg-50"
+                  v-html="icon('Plus')">
             </span>
         </div>
         <div class="column buttons has-text-right mb-0">
-            <button v-if="hasWarnings" @click="openShowroom" class="button no-radius mb-0" style="background: #AC5D7A">
+            <button v-if="hasWarnings" @click="openShowroomAndSetZoom" class="button no-radius mb-0" style="background: #AC5D7A">
                 <span class="icon is-small" v-html="icon('Warnung')"></span>
             </button>
             <button @click="goBack" class="button no-radius is-dark dark-gray-background-color mb-0">
@@ -39,14 +40,14 @@ import {urlQueryObject} from "../helper";
 export default {
     name: "top-bar-controls",
     computed: {
-        ...mapState(['editorConfig', 'notifications', 'traceControlsIsOpen', 'fullScreenLoaderVisible', 'editorLoaded']),
+        ...mapState(['editorConfig', 'notifications', 'traceControlsIsOpen', 'fullScreenLoaderVisible', 'editorLoaded', 'zoom']),
         hasWarnings() {
             return this.notifications.some(notification => ['warning', 'error'].includes(notification.type));
         }
     },
     mounted() {
         window.events.on(Events.EDITOR_LOADED, async (config) => {
-            this.$editor.getZoom().get().then(zoom => this.zoom = parseInt(zoom * 100));
+            setTimeout(() => this.$editor.getZoom().get().then(zoom => this.setZoom(parseInt(zoom * 100))), 100)
 
             // loop through pages to load threedee preview correctly
             // this.wait(2000)
@@ -101,21 +102,24 @@ export default {
                 }, () => this.hideFullScreenLoader());
         },
         editorZoomIn() {
-            this.$editor.getZoom().in().then(zoom => this.zoom = parseInt(zoom * 100));
+            this.$editor.getZoom().in().then(zoom => this.setZoom(parseInt(zoom * 100)));
         },
         editorZoomOut() {
-            this.$editor.getZoom().out().then(zoom => this.zoom = parseInt(zoom * 100));
+            this.$editor.getZoom().out().then(zoom => this.setZoom(parseInt(zoom * 100)));
         },
         wait(t) {
             return new Promise(function (resolve) {
                 window.setTimeout(resolve, t)
             });
         },
-        ...mapMutations(['openShowroom', 'showFullScreenLoader', 'hideFullScreenLoader'])
+        openShowroomAndSetZoom() {
+            this.openShowroom();
+            setTimeout(() => this.$editor.getZoom().get().then(zoom => this.setZoom(parseInt(zoom * 100))), 100)
+        },
+        ...mapMutations(['openShowroom', 'showFullScreenLoader', 'hideFullScreenLoader', 'setZoom'])
     },
     data() {
         return {
-            zoom: 55,
             currentActiveObject: null,
             shouldShowMenu: false
         }

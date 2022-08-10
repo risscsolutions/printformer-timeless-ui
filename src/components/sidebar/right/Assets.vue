@@ -290,7 +290,7 @@ export default {
             }
 
             this.$editor.getMediaProvider().getMedia(params).then((userMedias) => {
-                this.userMedias = userMedias;
+                this.userMedias = userMedias.filter(userMedia => userMedia.id);
             });
         },
         assetZoomIn() {

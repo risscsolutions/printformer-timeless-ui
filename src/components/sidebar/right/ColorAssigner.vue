@@ -4,10 +4,13 @@
                     class="button is-rounded color-button-round m-0"
                     :style="`background-color: ${color.displayColor}`"
                     @click="applyColor(color)">
+                <span></span>
             </button>
             <button title="Transparent"
                     class="button is-rounded color-button-round chess-background m-0"
-                    @click="applyColor('none')"></button>
+                    @click="applyColor('none')">
+                <span></span>
+            </button>
     </div>
 
 </template>

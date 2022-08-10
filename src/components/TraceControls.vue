@@ -67,10 +67,13 @@
                                 class="button is-rounded color-button-round"
                                 :style="`background-color: ${managedColor.displayColor}`"
                                 @click="selectColor(managedColor, $event)" :disabled="simpleColorsApplied">
+                            <span></span>
                         </button>
                         <button v-if="colorLimit > 1" title="Transparent"
                                 class="button is-rounded color-button-round chess-background"
-                                @click="selectColor('none', $event)" :disabled="simpleColorsApplied"></button>
+                                @click="selectColor('none', $event)" :disabled="simpleColorsApplied">
+                            <span></span>
+                        </button>
                     </div>
 
                     <div class="content">
@@ -83,7 +86,7 @@
                 <div v-show="traceStep === 2" class="column">
                     <div class="content is-small my-2">
                         <h1 class="dark-gray-color mb-2 blue-color has-text-weight-bold">Optional: Optimierung deines
-                            Werbeafdrucks</h1>
+                            Werbeaufdrucks</h1>
                         <div ref="traceSettings">
                             <div>
                                 <input ref="deSpeckleRange" id="deSpeckleRange" class="" type="range" value="1"
@@ -181,10 +184,16 @@
                     <button ref="cancelTrace" class="button is-small is-dark dark-gray-background-color">
                         <span>ABBRECHEN</span>
                     </button>
-                    <button v-html="icon('VectorizerPfeilLinks')" @click="backward"
+<!--                    <button v-html="icon('VectorizerPfeilLinks')" @click="backward"-->
+<!--                            v-if="(traceStep === 1 && simpleColorsApplied || traceStep === 2 || traceStep === 3)"-->
+<!--                            :disabled="blockUi"-->
+<!--                            class="button is-small is-ghost"></button>-->
+
+                    <button @click="backward" class="button is-small is-info"
                             v-if="(traceStep === 1 && simpleColorsApplied || traceStep === 2 || traceStep === 3)"
-                            :disabled="blockUi"
-                            class="button is-small is-ghost"></button>
+                            :disabled="blockUi">
+                        <span>RÜCKGÄNGIG</span>
+                    </button>
                 </div>
             </div>
         </div>

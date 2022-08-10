@@ -263,6 +263,7 @@ export default {
         openSidebarPanel() {
             this.isPanelOpen = true;
             this.shouldShowMenu = true;
+            setTimeout(() => this.$editor.getZoom().get().then(zoom => this.setZoom(parseInt(zoom * 100))), 100);
         },
         showTriangle(type) {
             let button;
@@ -315,6 +316,7 @@ export default {
                 $('#triangle-left').css('display', 'none');
                 this.closeSidebarPanel();
                 this.$store.commit('setOpenControlTab', null);
+                setTimeout(() => this.$editor.getZoom().get().then(zoom => this.setZoom(parseInt(zoom * 100))), 100)
             }
         },
         forward() {
@@ -330,7 +332,7 @@ export default {
             await this.$editor.getUndoRedo().getUndoStack().then(stack => this.undoStack = stack);
             await this.$editor.getUndoRedo().getRedoStack().then(stack => this.redoStack = stack);
         },
-        ...mapMutations(['showFullScreenLoader', 'hideFullScreenLoader'])
+        ...mapMutations(['showFullScreenLoader', 'hideFullScreenLoader', 'setZoom'])
     },
     data() {
         return {

@@ -3,6 +3,10 @@
         <div class="column is-flex-grow-0">
             <div class="tabs is-centered">
                 <ul id="color-space-tabs">
+                    <li v-if="managedColors.length"
+                        :class="{'is-active': currentColorSpace === 'MANAGED'}">
+                        <a @click="setCurrentColorSpace('MANAGED')">SYSTEM</a>
+                    </li>
                     <li v-if="colorSpaces.includes('PANTONE')" :class="{'is-active': currentColorSpace === 'PANTONE'}">
                         <a @click="setCurrentColorSpace('PANTONE')">PANTONE</a>
                     </li>
@@ -21,6 +25,15 @@
             </div>
         </div>
         <div class="column">
+            <div v-show="currentColorSpace ==='MANAGED'" class="columns p-3 mb-0 managed-colors-in-picker"
+                 id="managed-colors-in-picker">
+                <button v-for="managedColor in managedColors" :title="managedColor.name"
+                        class="button is-rounded color-button-round"
+                        :style="`background-color: ${managedColor.displayColor}`"
+                        @click="selectManagedColor(managedColor, $event)">
+                    <span></span>
+                </button>
+            </div>
             <div v-show="currentColorSpace ==='PANTONE'" class="columns p-3 mb-0">
                 <div class="column">
                     <input id="pantone-color-select" style="width: 222px">
@@ -105,7 +118,7 @@ export default {
                 autoOpen: false,
                 resizable: false,
                 height: 'auto',
-                width: 384,
+                width: 'auto',
                 modal: true,
             });
     },
@@ -121,7 +134,8 @@ export default {
             initializedPickers: {
                 'PANTONE': false,
                 'HKS': false,
-                'CMYK/RGB': false,
+                'CMYK': false,
+                'RGB': false,
             }
         }
     },
@@ -135,6 +149,11 @@ export default {
         applyColor() {
             this.colorClosure(this.currentValueForColorSpace[this.currentColorSpace]);
             this.resetColorSpaces();
+
+            const buttons = document.querySelector('#managed-colors-in-picker').children;
+            for (const button of buttons) {
+                button.classList.remove('is-active')
+            }
 
             $('#pantone-color-select').val(null)
             document.querySelector('#pantone-user-color-preview').style.backgroundColor = null;
@@ -263,14 +282,29 @@ export default {
             })
             this.initializedPickers['RGB'] = true;
         },
+        selectManagedColor(color, e) {
+            const target = e.target;
+            const buttons = e.target.parentElement.children;
+            for (const button of buttons) {
+                button.classList.remove('is-active')
+            }
+
+            target.classList.add('is-active');
+
+            this.currentValueForColorSpace['MANAGED'] = {
+                displayColor: color.displayColor,
+                values: color.values,
+                colorSpace: color.colorSpace
+            };
+        },
         ...mapMutations(['setCurrentColorSpace', 'setColorByColorSpace', 'resetColorSpaces']),
     },
     watch: {
         colorSpaces(spaces) {
-            console.log(spaces)
             this.addPantoneColorPicker();
             this.addHKSColorPicker();
             this.addCMYKColorPicker();
+            this.addRGBColorPicker();
             this.addRGBColorPicker();
         }
 
@@ -279,4 +313,16 @@ export default {
 </script>
 
 <style scoped>
+#color-picker {
+    max-width: 447px;
+    min-width: 384px;
+}
+.managed-colors-in-picker {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-start;
+    padding-left: 40px !important;
+}
 </style>
