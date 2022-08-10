@@ -634,9 +634,12 @@ export default {
             this.simpleColorsApplied = false;
             this.selectedSimpleColors = [];
             this.previews = [];
-            const colorButtons = this.$refs.managedColors.children;
-            for (let item of colorButtons) {
-                item.classList.remove('is-active');
+            const managedColors = this.$refs.managedColors;
+            if (managedColors) {
+                const colorButtons = managedColors.children;
+                for (let item of colorButtons) {
+                    item.classList.remove('is-active');
+                }
             }
         },
         revertTraceStepTwo() {

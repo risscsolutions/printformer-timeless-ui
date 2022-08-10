@@ -150,11 +150,11 @@ export default {
             this.colorClosure(this.currentValueForColorSpace[this.currentColorSpace]);
             this.resetColorSpaces();
 
-            const element = document.querySelector('#managed-colors-in-picker');
-            if (element) {
-                const buttons = element.children;
-                for (const button of buttons) {
-                    button.classList.remove('is-active')
+            const managedColors = document.querySelector('#managed-colors-in-picker');
+            if (managedColors) {
+                const buttons = managedColors.children;
+                for (let button of buttons) {
+                    button.classList.remove('is-active');
                 }
             }
 
