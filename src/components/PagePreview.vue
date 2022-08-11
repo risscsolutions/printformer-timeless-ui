@@ -1,16 +1,13 @@
 <template>
-    <div v-if="previewPages.length > 1" class="columns is-mobile is-centered has-background-light">
-        <div class="column is-half">
-            <agile v-show="previewPages.length > 0" ref="carousel" class="thumbnails" :slidesToShow="4" :dots="false"
-                   :infinite="false">
-                <div v-for="(page, index) in previewPages" class="slide slide--thumbniail" :key="index"
-                     :class="'slide--' + index">
-                    <img
-                        :style="{'border': currentPage === page.pageNumber ? 'black 5px solid': 'transparent 5px solid'}"
-                        @click="changePage(page.pageNumber)" :src="page.previewImage"/>
+    <div v-if="previewPages.length > 1" class="image-container mx-6">
+        <agile v-show="previewPages.length > 0" ref="carousel" :class="setClass" class="thumbnails" :nav-buttons="showSlideNavButtons" :slidesToShow="showSlides" :dots="false" :infinite="false">
+            <div v-for="(page, index) in previewPages" class="slide slide--thumbniail" :key="index" :class="setClass">
+                <div class="image-container" :style="{'border': currentPage === page.pageNumber ? 'black 5px solid': 'transparent 5px solid'}">
+                    <img @click="changePage(page.pageNumber)" :src="page.previewImage"/>
+                    <span style="color: black">{{ page.pageNumber }}</span>
                 </div>
-            </agile>
-        </div>
+            </div>
+        </agile>
     </div>
 </template>
 <style>
@@ -77,13 +74,12 @@
     box-sizing: border-box;
     color: #fff;
     display: flex;
-    height: 450px;
+    max-width: 450px;
     justify-content: center;
 }
 
 .slide--thumbniail {
     cursor: pointer;
-    height: 100px;
     padding: 0 5px;
     transition: opacity 0.3s;
 }
@@ -93,12 +89,26 @@
 }
 
 .slide img {
-    height: 100%;
+    height: 100px;
     -o-object-fit: cover;
     object-fit: cover;
     -o-object-position: center;
     object-position: center;
     width: 100%;
+}
+
+.image-container {
+    margin: 0 auto !important;
+    max-width: 1000px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.has-few-pages {
+    width: unset !important;
 }
 </style>
 <script>
@@ -112,16 +122,58 @@ export default {
         agile: VueAgile
     },
     computed: {
+        showSlides() {
+            if (this.windowWidth >= 1400) {
+                if (this.previewPages.length < 8) {
+                    this.hasFewPages = true;
+                    return this.previewPages.length;
+                } else {
+                    this.hasFewPages = false;
+                    return 8;
+                }
+            } else {
+                if (this.previewPages.length > 8) {
+                    this.hasFewPages = false;
+                    return 8;
+                } else {
+                    this.hasFewPages = true;
+                    return this.previewPages.length;
+                }
+            }
+        },
+        setClass() {
+            return this.hasFewPages ? 'has-few-pages': null;
+        },
+        showSlideNavButtons() {
+            return this.previewPages.length > 8;
+        },
         ...mapState(['editorConfig', 'previewPages'])
     },
     mounted() {
+        this.$nextTick(() => {
+            window.addEventListener('resize', this.onResize);
+        });
+
         window.events.on(Events.EDITOR_LOADED, () => {
             this.currentPage = 1;
         });
 
         window.events.on(Events.EDITOR_PAGES_PAGED, (pageInfo) => {
             this.currentPage = pageInfo.pageNumber;
+
+            this.$editor.getPager().pages.then(async (pages) => {
+                let prevPages = await Promise.all(pages.map(async (page) => {
+                    page.previewImage = await this.$editor.getPager().getPagePreview(page.pageNumber);
+                    return page;
+                }));
+
+                this.$store.commit('setPreviewPages', prevPages);
+
+            });
         });
+    },
+    beforeDestroy() {
+        window.removeEventListener('resize', this.onResize);
     },
     watch: {
         previewPages(array) {
@@ -134,17 +186,31 @@ export default {
                 iFrame.classList.add('editor-iframe-no-pager');
                 iFrame.classList.remove('editor-iframe-with-pager');
             }
-
         }
     },
     methods: {
         changePage(pageNumber) {
             if (this.currentPage !== pageNumber) this.$editor.getPager().showPage(pageNumber);
+        },
+        setActive() {
+            this.isHovered = !this.isHovered;
+        },
+        onResize() {
+            this.windowWidth = window.innerWidth;
+
+            if (this.windowWidth >= 1400) {
+                this.hasFewPages = this.previewPages.length < 8;
+            } else {
+                this.hasFewPages = this.previewPages.length <= 8;
+            }
         }
     },
     data() {
         return {
-            currentPage: null
+            hasFewPages: false,
+            currentPage: null,
+            isHovered: false,
+            windowWidth: window.innerWidth
         }
     }
 }
