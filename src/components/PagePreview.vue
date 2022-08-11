@@ -177,12 +177,15 @@ export default {
     },
     watch: {
         previewPages(array) {
+            const content = document.querySelector('#main-content');
             const iFrame = document.querySelector('#editor-iframe');
 
             if (array.length > 1) {
+                content.classList.add('mb-0');
                 iFrame.classList.add('editor-iframe-with-pager');
                 iFrame.classList.remove('editor-iframe-no-pager');
             } else {
+                content.classList.remove('mb-0');
                 iFrame.classList.add('editor-iframe-no-pager');
                 iFrame.classList.remove('editor-iframe-with-pager');
             }

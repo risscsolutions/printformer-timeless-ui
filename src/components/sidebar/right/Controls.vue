@@ -10,7 +10,9 @@
                                :activeObject="activeObject"></component>
                 </div>
             </div>
-            <div class="column is-1 p-0 width-100" style="overflow-y: auto;height: calc(100vh - 70px);overflow-x: hidden;">
+            <div class="column is-1 p-0 width-100"
+                 :class="{'sidebar-with-pager': isMultiPage, 'sidebar-no-pager': !isMultiPage}"
+                 style="overflow-y: auto; overflow-x: hidden;">
                 <div class="sidebar-container">
                     <button v-if="allowAddTexts || pageContainsAssets"
                             class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
