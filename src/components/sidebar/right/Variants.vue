@@ -48,22 +48,18 @@
 </style>
 
 <script>
-import {mapMutations, mapState} from "vuex";
+import {mapGetters, mapMutations, mapState} from "vuex";
 
 export default {
     name: "variants",
     computed: {
-        hasVariants() {
-            return this.variants.length > 0;
-        },
-        ...mapState(['editorConfig', 'previewPages'])
+        ...mapGetters(['hasVariants']),
+        ...mapState(['editorConfig', 'previewPages', 'variants'])
     },
     async mounted() {
         this.$editor.getVariants().getActive().then((variant) => {
             if (variant) this.currentId = variant.id;
         });
-
-        this.variants = await this.$editor.getVariants().getAll();
     },
     methods: {
         async loadVariant(variant, index) {
@@ -91,7 +87,6 @@ export default {
     },
     data() {
         return {
-            variants: [],
             currentId: 0
         }
     }

@@ -32,11 +32,17 @@ export default function makeStore() {
                     colorSpace: 'RGB'
                 },
             },
-            colorClosure: (lel) => {},
-            colorAssignerClosure: (lel) => {},
+            colorClosure: (lel) => {
+            },
+            colorAssignerClosure: (lel) => {
+            },
             userColors: [],
             fullScreenLoaderVisible: true,
             zoom: 0,
+            variants: [],
+            pageContainsAssets: false,
+            pageContainsTexts: false,
+            pageContainsShapes: false,
         },
         getters: {
             allowAddShapes(state) {
@@ -47,6 +53,9 @@ export default function makeStore() {
             },
             allowAddTexts(state) {
                 return ((state.editorConfig || {}).configuration || {}).allowAddTexts;
+            },
+            hasVariants(state) {
+                return state.variants.length > 0;
             }
         },
         mutations: {
@@ -143,6 +152,18 @@ export default function makeStore() {
             },
             setZoom(state, zoom) {
                 state.zoom = zoom;
+            },
+            setVariants(state, variants) {
+                state.variants = variants;
+            },
+            setPageContainsTexts(state, bool) {
+                state.pageContainsTexts = bool;
+            },
+            setPageContainsAssets(state, bool) {
+                state.pageContainsAssets = bool;
+            },
+            setPageContainsShapes(state, bool) {
+                state.pageContainsShapes = bool;
             }
         }
     });

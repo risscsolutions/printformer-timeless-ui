@@ -41,16 +41,45 @@
                         <hr class="divider my-3">
                     </div>
                 </div>
-                <p v-if="!traceControlsIsOpen" class="mb-1 like-h4">
-                    KLICKE AUF DIE SYMBOLE IN DER
-                    RECHTEN MENÜLEISTE, UM DEINE
-                    WERBEARTIKEL ZU GESTALTEN
-                </p>
-                <p v-else class="mb-1 like-h4">
-                    HIER STEHT EIN GANZ TOLLER HILFETEXT.
-                    HIER STEHT EIN GANZ TOLLER HILFETEXT.
-                    HIER STEHT EIN GANZ TOLLER HILFETEXT.
-                </p>
+                <div class="columns is-multiline p-2 is-vcentered" v-if="!openControlTab && !traceControlsIsOpen">
+                    <div class="column is-24 p-2">
+                        <p class="mb-1 like-h4">TIPPS UND HINWEISE</p>
+                        <p>Gestalte deinen Werbeartikel mit den Tools aus dem Menü rechts: </p>
+                    </div>
+                    <div class="columns is-multiline p-2 is-vcentered" v-if="allowAddAssets || pageContainsAssets">
+                        <div class="column is-one-fifth has-text-centered" v-html="$svg('BilderHinweise')"></div>
+                        <div class="column is-four-fifths">
+                            <p>Für Bilder (z.B. dein Logo) kannst du hier eine Bild-Box hinzufügen, Bilder bearbeiten
+                                oder löschen.</p>
+                        </div>
+                    </div>
+                    <div class="columns is-multiline p-2 is-vcentered" v-if="allowAddTexts || pageContainsTexts">
+                        <div class="column is-one-fifth has-text-centered" v-html="$svg('TexteHinweise')"></div>
+                        <div class="column is-four-fifths">
+                            <p>Wenn du Text integrieren möchtest, füge zunächst eine Text-Box hinzu. Hier lassen sich
+                                Texte auch formatieren oder löschen.</p>
+                        </div>
+                    </div>
+                    <div class="columns is-multiline p-2 is-vcentered" v-if="allowAddShapes || pageContainsShapes">
+                        <div class="column is-one-fifth has-text-centered" v-html="$svg('FormenHinweise')"></div>
+                        <div class="column is-four-fifths">
+                            <p>Füge eine Form hinzu, z.B. um diese hinter deinen Text oder dein Logo zu legen.</p>
+                        </div>
+                    </div>
+                    <div class="columns is-multiline p-2 is-vcentered" v-if="hasVariants">
+                        <div class="column is-one-fifth has-text-centered" v-html="$svg('Farbpalette_grau')"></div>
+                        <div class="column is-four-fifths">
+                            <p>Hier kannst du die Farbe deines Werbeartikels ändern. </p>
+                        </div>
+                    </div>
+                </div>
+                <template v-if="traceControlsIsOpen">
+                    <p class="mb-1 like-h4">
+                        HIER STEHT EIN GANZ TOLLER HILFETEXT.
+                        HIER STEHT EIN GANZ TOLLER HILFETEXT.
+                        HIER STEHT EIN GANZ TOLLER HILFETEXT.
+                    </p>
+                </template>
                 <component v-if="openControlTab && !traceControlsIsOpen" :is="infoComponent"></component>
                 <div>
                     <iframe ref="threedeeiframe"
@@ -80,7 +109,7 @@
 }
 </style>
 <script>
-import {mapMutations, mapState} from "vuex";
+import {mapGetters, mapMutations, mapState} from "vuex";
 import Events from "@rissc/printformer-editor-client/dist/Events";
 import AssetsInfo from "./AssetsInfo";
 import ShapesInfo from "./ShapesInfo";
@@ -101,7 +130,20 @@ export default {
         isMultiPage() {
             return this.previewPages.length > 1;
         },
-        ...mapState(['editorConfig', 'is3D', 'notifications', 'openControlTab', 'previewPages', 'showroomIsOpen', 'traceControlsIsOpen', 'editorLoaded']),
+        ...mapGetters(['allowAddTexts', 'allowAddAssets', 'allowAddShapes', 'hasVariants']),
+        ...mapState([
+            'editorConfig',
+            'is3D',
+            'notifications',
+            'openControlTab',
+            'previewPages',
+            'showroomIsOpen',
+            'traceControlsIsOpen',
+            'editorLoaded',
+            'pageContainsAssets',
+            'pageContainsTexts',
+            'pageContainsShapes',
+        ]),
     },
     mounted() {
         window.events.on(Events.EDITOR_LOADED, () => {

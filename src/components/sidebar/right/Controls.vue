@@ -14,7 +14,7 @@
                  :class="{'sidebar-with-pager': isMultiPage, 'sidebar-no-pager': !isMultiPage}"
                  style="overflow-y: auto; overflow-x: hidden;">
                 <div class="sidebar-container">
-                    <button v-if="allowAddTexts || pageContainsAssets"
+                    <button v-if="allowAddAssets || pageContainsAssets"
                             class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
                             @click="toggleSidebarPanel('assets', $event)" id="asset-menu-button">
                         <span class="mb-1" v-html="icon('Bilder')"></span>
@@ -149,16 +149,41 @@ export default {
         hasAssets() {
             return this.assets.length > 0;
         },
-        hasVariants() {
-            return this.variants.length > 0;
-        },
         isMultiPage() {
             return this.previewPages.length > 1;
         },
-        ...mapState(['editorConfig', 'previewPages', 'openControlTab', 'traceControlsIsOpen', 'editorLoaded']),
-        ...mapGetters(['allowAddShapes', 'allowAddAssets', 'allowAddTexts']),
+        ...mapState([
+            'editorConfig',
+            'previewPages',
+            'openControlTab',
+            'traceControlsIsOpen',
+            'editorLoaded',
+            'variants',
+            'pageContainsTexts',
+            'pageContainsAssets',
+            'pageContainsShapes'
+        ]),
+        ...mapGetters(['allowAddShapes', 'allowAddAssets', 'allowAddTexts', 'hasVariants']),
     },
     mounted() {
+        window.events.on(Events.EDITOR_LOADED, async (config) => {
+            this.setOnlyInteractableBlockActive();
+
+            this.$editor.findEditorObjects({isContentModifieable: true, type: BlockTypes.ASSET})
+                .then((blocks) => {
+                    this.setPageContainsAssets(!!blocks.length)
+                });
+            this.$editor.findEditorObjects({isContentModifieable: true, type: BlockTypes.TEXT})
+                .then((blocks) => {
+                    this.setPageContainsTexts(!!blocks.length)
+                });
+            this.$editor.findEditorObjects({isContentModifieable: true, type: BlockTypes.SHAPE})
+                .then((blocks) => {
+                    this.setPageContainsShapes(!!blocks.length)
+                });
+
+        });
+
         window.events.on(Events.EDITOR_LOADED, async (config) => {
             this.$store.commit('setEditorConfig', config);
 
@@ -171,24 +196,9 @@ export default {
             });
 
             this.assets = await this.$editor.findEditorObjects({type: BlockTypes.ASSET});
-            this.variants = await this.$editor.getVariants().getAll();
+            this.setVariants(await this.$editor.getVariants().getAll());
 
             this.setOnlyInteractableBlockActive();
-            window.events.on(Events.EDITOR_PAGES_PAGED, this.setOnlyInteractableBlockActive, this);
-
-
-            this.$editor.findEditorObjects({isContentModifieable: true, type: BlockTypes.ASSET})
-                .then((blocks) => {
-                    this.pageContainsAssets = !!blocks.length
-                });
-            this.$editor.findEditorObjects({isContentModifieable: true, type: BlockTypes.TEXT})
-                .then((blocks) => {
-                    this.pageContainsTexts = !!blocks.length
-                });
-            this.$editor.findEditorObjects({isContentModifieable: true, type: BlockTypes.SHAPE})
-                .then((blocks) => {
-                    this.pageContainsShapes = !!blocks.length
-                });
         });
 
         let onCancel;
@@ -334,7 +344,15 @@ export default {
             await this.$editor.getUndoRedo().getUndoStack().then(stack => this.undoStack = stack);
             await this.$editor.getUndoRedo().getRedoStack().then(stack => this.redoStack = stack);
         },
-        ...mapMutations(['showFullScreenLoader', 'hideFullScreenLoader', 'setZoom'])
+        ...mapMutations([
+            'showFullScreenLoader',
+            'hideFullScreenLoader',
+            'setZoom',
+            'setVariants',
+            'setPageContainsTexts',
+            'setPageContainsAssets',
+            'setPageContainsShapes'
+        ])
     },
     data() {
         return {
@@ -342,12 +360,8 @@ export default {
             isPanelOpen: false,
             activeObject: null,
             assets: [],
-            variants: [],
             undoStack: [],
             redoStack: [],
-            pageContainsAssets: false,
-            pageContainsTexts: false,
-            pageContainsShapes: false,
         }
     }
 }

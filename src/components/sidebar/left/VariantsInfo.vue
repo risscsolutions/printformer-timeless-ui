@@ -1,5 +1,5 @@
 <template>
-    <info icon="Farbpalette">
+    <info icon="Farbpalette_grau">
         <template slot="info">
             <p>Farbvariante hier wählen</p>
         </template>

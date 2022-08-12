@@ -2,9 +2,9 @@
     <div v-if="previewPages.length > 1" class="image-container mx-6">
         <agile v-show="previewPages.length > 0" ref="carousel" :class="setClass" class="thumbnails" :nav-buttons="showSlideNavButtons" :slidesToShow="showSlides" :dots="false" :infinite="false">
             <div v-for="(page, index) in previewPages" class="slide slide--thumbniail" :key="index" :class="setClass">
-                <div class="image-container" :style="{'border': currentPage === page.pageNumber ? 'black 5px solid': 'transparent 5px solid'}">
+                <div class="image-container" :style="{'border': currentPage === page.pageNumber ? '#AC5D7A 2px solid': '#A6A9A9 2px solid'}">
                     <img @click="changePage(page.pageNumber)" :src="page.previewImage"/>
-                    <span style="color: black">{{ page.pageNumber }}</span>
+<!--                    <span style="color: black">{{ page.pageNumber }}</span>-->
                 </div>
             </div>
         </agile>
