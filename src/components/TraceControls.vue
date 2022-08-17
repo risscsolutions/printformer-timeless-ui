@@ -35,13 +35,15 @@
                         </p>
                     </div>
                     <div class="column columns is-24">
-                        <div class="column is-8 p-1 columns direction-column">
-                            <div class="column has-text-centered content">
-                                <button class="button is-small is-info" @click="skipSimpleMode" :disabled="blockUi">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span>WEITER</span>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                </button>
+                        <div class="column is-8">
+                            <div class="columns direction-column">
+                                <div class="column has-text-centered content">
+                                    <button class="button is-small is-info" @click="skipSimpleMode" :disabled="blockUi">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span>WEITER</span>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -54,10 +56,12 @@
                         <h1 class="dark-gray-color mb-2 blue-color has-text-weight-bold">Bestimme deine Druckfarben</h1>
                         <p class="dark-gray-color mb-2 blue-color has-text-weight-bold">
                             <template v-if="colorLimit === 1">
-                                Wähle eine Druckfarbe aus. Klicke dafür auf den entsprechenden Farbkreis. Bestätige dann deine Auswahl mit „übernehmen“.
+                                Wähle eine Druckfarbe aus. Klicke dafür auf den entsprechenden Farbkreis. Bestätige dann
+                                deine Auswahl mit „übernehmen“.
                             </template>
                             <template v-else>
-                                Wähle max. {{colorLimit}} Druckfarben aus. Klicke dafür auf die entsprechenden Farbkreise. Bestätige dann deine Auswahl mit „übernehmen“.
+                                Wähle max. {{ colorLimit }} Druckfarben aus. Klicke dafür auf die entsprechenden
+                                Farbkreise. Bestätige dann deine Auswahl mit „übernehmen“.
                             </template>
                         </p>
                         <p class="dark-gray-color mb-0 ">Unsere Farbvorschläge für dich:</p>
