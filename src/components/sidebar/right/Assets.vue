@@ -118,16 +118,18 @@
                     </div>
                     <div class="column is-24">
                         <div class="tile is-ancestor is-flex-wrap-wrap media-wrapper">
-                            <div v-for="media in userMedias" class="tile is-6 p-1 is-parent">
-                                <article style="cursor: pointer" @click="addUserMedia(media)"
+                            <div v-for="media in userMedias" class="tile is-6 p-1 is-parent" style="display: block;">
+                                <article style="cursor: pointer;" @click="addUserMedia(media)"
                                          class="tile is-child is-flex is-align-items-center p-1 border-purple">
                                     <figure
                                         class="image is-flex is-align-items-center is-justify-content-center is-flex-grow-1 is-flex-shrink-1">
                                         <img class="has-ratio media-in-wrapper" :src="media.src"
                                              crossorigin="anonymous" draggable="false">
                                     </figure>
-                                    <!--                                        <p class="subtitle">{{ media.name }}</p>-->
                                 </article>
+                                <p class="is-size-6 dark-gray-color has-text-centered" style="word-break: break-all">
+                                    {{ media.name }}
+                                </p>
                             </div>
                         </div>
                     </div>
