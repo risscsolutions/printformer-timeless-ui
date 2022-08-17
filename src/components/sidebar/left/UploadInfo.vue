@@ -6,15 +6,9 @@
                 Dies kann einige Minuten dauern. Bitte habe solange Geduld.
             </p>
         </div>
-        <step step="1" text="Deine Datei wird hochgeladen.">
-            <span v-if="icon(upload)" v-bind="iconProps(upload)" slot="icon" v-html="$svg(icon(upload))"></span>
-        </step>
-        <step step="2" text="Deine Datei wird geprüft.">
-            <span v-if="icon(check)" v-bind="iconProps(check)" slot="icon" v-html="$svg(icon(check))"></span>
-        </step>
-        <step step="3" text="Datei-Vorschau wird generiert.">
-            <span v-if="icon(preview)" v-bind="iconProps(preview)" slot="icon" v-html="$svg(icon(preview))"></span>
-        </step>
+        <step step="1" text="Deine Datei wird hochgeladen." :state="upload"></step>
+        <step step="2" text="Deine Datei wird geprüft." :state="check"></step>
+        <step step="3" text="Datei-Vorschau wird generiert." :state="preview"></step>
     </div>
 </template>
 
@@ -57,27 +51,6 @@ export default {
             this.check = 'complete';
             this.preview = 'complete';
         });
-    },
-    methods: {
-        icon(icon) {
-            switch (icon) {
-                case 'loading':
-                    return 'Ladebalken';
-                case 'complete':
-                    return 'Herunter';
-                case 'failed':
-                    return 'PfeilFormen'
-            }
-            return null;
-        },
-        iconProps(icon) {
-            if (icon === 'loading') {
-                return {
-                    style: 'animation: 1.6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 0s infinite normal none running loader-ring'
-                }
-            }
-            return null;
-        }
     }
 }
 </script>

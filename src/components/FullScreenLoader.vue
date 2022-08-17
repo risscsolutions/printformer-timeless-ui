@@ -7,7 +7,7 @@
                  style="background: white; opacity:.5;"></div>
             <div class="column pl-0"
                  style="background: white;display: flex;flex-direction: column;align-content: center;justify-content: center;flex-wrap: wrap;align-items: center;">
-                <span style="animation: 1.6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 0s infinite normal none running loader-ring;"
+                <span class="spinning"
                       v-html="$svg('Ladebalken','svg-150')"></span>
                 <p>Wird geladen...</p>
             </div>

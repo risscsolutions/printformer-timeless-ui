@@ -406,11 +406,16 @@ button.is-rounded svg {
     right: 1px;
 }
 
+.spinning {
+    display: block;
+    animation: loader-ring 1.6s cubic-bezier(0.46, 0.03, 0.52, 0.96) 0s infinite normal none running;
+}
+
 @keyframes loader-ring {
-    0% {
+    from {
         transform: rotate(0deg);
     }
-    100% {
+    to {
         transform: rotate(360deg);
     }
 }
