@@ -80,37 +80,20 @@
                     <template v-if="traceControlsIsOpen">
                         <template v-if="traceStep === 1">
                             <p>Willkommen im Vectorizer</p><br>
-                            <p>
-                                Das von dir gewählte Druckverfahren
-                                erfordert Druckdaten, die nur eine
-                                bestimmte Anzahl von Farben erlauben.
-                                Unser Vectorizer hilft dabei, diese
-                                Druckdaten zu erstellen.
-                            </p>
-                            <p>
-                                Folge einfach den Hinweisen. Wir leiten
-                                dich Schritt für Schritt durch den Prozess,
-                                um deine optimalen Druckdaten zu
-                                erstellen.
-                            </p><br>
-
+                            <p>Das von dir gewählte Druckverfahren erfordert Druckdaten, die nur eine bestimmte Anzahl
+                                von Farben erlauben. Unser Vectorizer hilft dabei, diese Druckdaten zu erstellen.</p>
+                            <p>Folge einfach den Hinweisen. Wir leiten dich Schritt für Schritt durch den Prozess, um
+                                deine optimalen Druckdaten zu erstellen.</p><br>
                             <p class="like-h4"> Bestimme deine Wunschfarbe(n):</p>
-                            <p>Wähle auf der rechten Seite deine
-                                gewünschte Druckfarbe, bzw. Druckfarben
-                                aus.
+                            <p>Wähle auf der rechten Seite deine gewünschte Druckfarbe, bzw. Druckfarben aus.
                             </p><br>
-                            <p> Tipp: Rechts siehst du unsere
-                                Farbvorschläge. Falls deine Wunschfarbe
-                                nicht dabei ist, kannst du diese später
-                                definieren.
+                            <p> Tipp: Rechts siehst du unsere Farbvorschläge. Falls deine Wunschfarbe nicht dabei ist,
+                                kannst du diese später definieren.
                             </p><br>
-                            <p> Tipp: Um den Vectorizer zu verlassen und
-                                neue Druckdaten auszuwählen, klicke auf
+                            <p> Tipp: Um den Vectorizer zu verlassen und neue Druckdaten auszuwählen, klicke auf
                                 „ABBRECHEN“.
                             </p><br>
-                            <p> Tipp:
-                                Um deine Farbauswahl zu ändern, klicke
-                                auf „RÜCKGÄNGIG“.
+                            <p> Tipp: Um deine Farbauswahl zu ändern, klicke auf „RÜCKGÄNGIG“.
                             </p>
                         </template>
                         <template v-else-if="traceStep === 2">
@@ -151,12 +134,17 @@
                         <template v-else-if="traceStep === 4">
                             <p>Du möchtest deine Farbzuordnung selbst bearbeiten</p>
                             <br>
-                            <p>Klicke dafür auf der rechten Seite auf das Symbol <button class="button is-rounded color-button-round m-0" v-html="$svg('Plus')"></button></p>
+                            <p>Klicke dafür auf der rechten Seite auf das Symbol
+                                <button class="button is-rounded color-button-round m-0" v-html="$svg('Plus')"></button>
+                            </p>
                             <br>
                             <p>Sobald du diese ausgewählt hast, geht es weiter mit Schritt 2: Druckfarben zuweisen</p>
                             <br>
-                            <p>Klicke dafür auf das Symbol <button class="button is-rounded color-button-round m-0" v-html="$svg('Plus')"></button> der in deinem Bild gefundenen Farben und unterhalb ersetzte
-                                sie mit einer deiner Wunschfarben.</p>
+                            <p>Klicke dafür auf das Symbol
+                                <button class="button is-rounded color-button-round m-0" v-html="$svg('Plus')"></button>
+                                der in deinem Bild gefundenen Farben und unterhalb ersetzte
+                                sie mit einer deiner Wunschfarben.
+                            </p>
                             <p>Die Farbanpassungen in deinem Bild kannst du in Echtzeit sehen und ggf. wieder
                                 verändern.</p>
                             <p>Klicke dann auf „ÜBERNEHMEN“. Du gelangst dann mit den fertigen Druckdaten zurück zum
