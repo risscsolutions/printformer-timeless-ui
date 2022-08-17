@@ -2,22 +2,17 @@
     <div v-show="traceControlsIsOpen" ref="traceOverlay" class="column my-3" id="trace-overlay">
         <div class="columns">
             <div class="trace-preview column sidebar-no-pager border-top-bottom">
-                <div v-if="traceStep === 1 && !simpleColorsApplied" class="columns direction-column">
+                <div v-if="traceStep === 1" class="columns direction-column">
                     <div class="column has-text-centered" v-html="icon('VectorizerVorschau')"></div>
                     <div class="column has-text-centered trace-preview-info content">
                         <h4 class="mb-0">Nach Farbauswahl erscheint <br>hier deine Logovorschau</h4>
                     </div>
                 </div>
-                <div v-if="traceStep === 1 && simpleColorsApplied"
+                <div v-if="traceStep === 2"
                      class="columns direction-column is-align-self-flex-start">
                     <div class="column content is-small mt-2 mx-5 mb-0">
                         <p class="dark-gray-color mb-2 dark-gray-color has-text-weight-bold">
-                            SO KÖNNTE DEIN WERBEAUFDRUCK MIT DEINEN FARBEN AUSSEHEN:
-                        </p>
-                    </div>
-                    <div class="column content is-small mx-5 mb-0">
-                        <p class="dark-gray-color mb-2 dark-gray-color">
-                            Hier siehst du mögliche Kombinationsmöglichkeiten
+                            So könnte dein Werbeaufdruck mit deinen ausgewählten Farben aussehen.
                         </p>
                     </div>
                     <div class="column columns is-multiline is-24 mb-0" style="overflow: auto">
@@ -36,7 +31,7 @@
                     </div>
                     <div class="column content is-small mx-5 mb-0">
                         <p class="dark-gray-color dark-gray-color has-text-weight-bold">
-                            ICH MÖCHTE KEINE FARBVERSION DAVON ÜBERNEHMEN. ZEIG MIR WEITERE MÖGLICHKEITEN.
+                            Gefällt dir noch nicht? Klicke „WEITER“ um deine Druckfarben manuell zu definieren.
                         </p>
                     </div>
                     <div class="column columns is-24">
@@ -51,14 +46,19 @@
                         </div>
                     </div>
                 </div>
-                <div v-show="traceStep !== 1" ref="tracePreview" style="height: 100%"></div>
+                <div v-show="traceStep > 2" ref="tracePreview" style="height: 100%"></div>
             </div>
             <div class="trace-controls column is-narrow sidebar-no-pager border-solid">
-                <div v-show="traceStep === 1" class="column">
+                <div v-show="[1, 2].includes(traceStep)" class="column">
                     <div class="content is-small my-2">
                         <h1 class="dark-gray-color mb-2 blue-color has-text-weight-bold">Bestimme deine Druckfarben</h1>
                         <p class="dark-gray-color mb-2 blue-color has-text-weight-bold">
-                            Du kannst max. {{ colorLimit }} Farben auswählen.
+                            <template v-if="colorLimit === 1">
+                                Wähle eine Druckfarbe aus. Klicke dafür auf den entsprechenden Farbkreis. Bestätige dann deine Auswahl mit „übernehmen“.
+                            </template>
+                            <template v-else>
+                                Wähle max. {{colorLimit}} Druckfarben aus. Klicke dafür auf die entsprechenden Farbkreise. Bestätige dann deine Auswahl mit „übernehmen“.
+                            </template>
                         </p>
                         <p class="dark-gray-color mb-0 ">Unsere Farbvorschläge für dich:</p>
                     </div>
@@ -66,24 +66,24 @@
                         <button v-for="managedColor in managedColors" :title="managedColor.name"
                                 class="button is-rounded color-button-round"
                                 :style="`background-color: ${managedColor.displayColor}`"
-                                @click="selectColor(managedColor, $event)" :disabled="simpleColorsApplied">
+                                @click="selectColor(managedColor, $event)" :disabled="traceStep === 2">
                             <span></span>
                         </button>
                         <button v-if="colorLimit > 1" title="Transparent"
                                 class="button is-rounded color-button-round chess-background"
-                                @click="selectColor('none', $event)" :disabled="simpleColorsApplied">
+                                @click="selectColor('none', $event)" :disabled="traceStep === 2">
                             <span></span>
                         </button>
                     </div>
 
                     <div class="content">
                         <button class="button is-small is-info" @click="applySimpleColors"
-                                :disabled="!selectedSimpleColors.length || selectedSimpleColors.length  > colorLimit || simpleColorsApplied">
+                                :disabled="!selectedSimpleColors.length || selectedSimpleColors.length  > colorLimit || traceStep === 2">
                             <span>ÜBERNEHMEN</span>
                         </button>
                     </div>
                 </div>
-                <div v-show="traceStep === 2" class="column">
+                <div v-show="traceStep === 3" class="column">
                     <div class="content is-small my-2">
                         <h1 class="dark-gray-color mb-2 blue-color has-text-weight-bold">Optional: Optimierung deines
                             Werbeaufdrucks</h1>
@@ -123,7 +123,7 @@
                         </button>
                     </div>
                 </div>
-                <div v-show="traceStep === 3" class="column">
+                <div v-show="traceStep === 4" class="column">
                     <div class="content is-small my-2">
                         <h1 class="dark-gray-color mb-2 blue-color has-text-weight-bold">Farben bestimmen und
                             zuweisen</h1>
@@ -185,12 +185,12 @@
                         <span>ABBRECHEN</span>
                     </button>
                     <!--                    <button v-html="icon('VectorizerPfeilLinks')" @click="backward"-->
-                    <!--                            v-if="(traceStep === 1 && simpleColorsApplied || traceStep === 2 || traceStep === 3)"-->
+                    <!--                            v-if="(traceStep === 2 || traceStep === 3 || traceStep === 4)"-->
                     <!--                            :disabled="blockUi"-->
                     <!--                            class="button is-small is-ghost"></button>-->
 
                     <button @click="backward" class="button is-small is-info"
-                            v-if="(traceStep === 1 && simpleColorsApplied || traceStep === 2 || traceStep === 3)"
+                            v-if="(traceStep === 2 || traceStep === 3 || traceStep === 4)"
                             :disabled="blockUi">
                         <span>RÜCKGÄNGIG</span>
                     </button>
@@ -240,10 +240,8 @@ export default {
             patchIdentifierToRevertTo: undefined,
             automationActive: true,
             blockUi: false,
-            simpleColorsApplied: false,
             selectedSimpleColors: [],
             previews: [],
-            traceStep: 1,
             colorsChosen: false,
             colorMap: [],
             assignedColors: [],
@@ -254,7 +252,7 @@ export default {
         replacedEqualsLimit() {
             return uniqWith(this.colorMap.map(cm => cm.printcolor).filter(c => c !== undefined), isEqual).length <= this.colorLimit
         },
-        ...mapState(['traceControlsIsOpen', 'managedColors', 'colorSpaces', 'userColors']),
+        ...mapState(['traceControlsIsOpen', 'managedColors', 'colorSpaces', 'userColors', 'traceStep']),
     },
     mounted() {
         window.events.on(Events.EDITOR_LOADED, ({draftInfo, configuration}) => {
@@ -496,9 +494,9 @@ export default {
         showOverlay(activeObject) {
             const colorMap = activeObject.colorMap;
             if (colorMap.length > this.colorLimit) {
-                this.setTraceStep(3); //color picker
+                this.setTraceStep(4); //color picker
             } else if (colorMap.length < this.colorLimit && colorMap.length === 1 && activeObject.containsRasterImages) {
-                this.setTraceStep(2); //granululu
+                this.setTraceStep(3); //granululu
             } else {
                 this.setTraceStep(1); //automat
             }
@@ -519,7 +517,7 @@ export default {
         },
         async applySimpleColors() {
             this.blockUi = true;
-            this.simpleColorsApplied = true;
+            this.setTraceStep(2);
 
             if (this.selectedSimpleColors.length === 1) {
                 this.selectedSimpleColors.push('none');
@@ -589,13 +587,13 @@ export default {
                     return this.startTracing();
                 })
                 .then(() => {
-                    const step = activeObject.containsRasterImages ? 2 : 3;
+                    const step = activeObject.containsRasterImages ? 3 : 4;
                     this.setTraceStep(step);
                 })
 
         },
         applyGranululu() {
-            this.setTraceStep(3);
+            this.setTraceStep(4);
         },
         chooseColor(index, event) {
             this.setCurrentColorSpace(this.colorSpaces.length === 0 && this.managedColors.length === 0 ? 'CMYK' : this.colorSpaces[0]);
@@ -631,7 +629,7 @@ export default {
                 .dialog('open');
         },
         revertTraceStepOne() {
-            this.simpleColorsApplied = false;
+            this.setTraceStep(1);
             this.selectedSimpleColors = [];
             this.previews = [];
             const managedColors = this.$refs.managedColors;
@@ -648,9 +646,9 @@ export default {
         revertSettings() {
         },
         async backward() {
-            if (this.traceStep === 1) {
+            if (this.traceStep === 2) {
                 this.revertTraceStepOne();
-            } else if (this.traceStep === 2) {
+            } else if (this.traceStep === 3) {
                 this.automationActive = true;
                 this.revertSettings();
 
@@ -658,9 +656,9 @@ export default {
                     .then(() => {
                         this.setTraceStep(1);
                     });
-            } else if (this.traceStep === 3) {
+            } else if (this.traceStep === 4) {
                 const activeObject = await this.$editor.getActiveObject();
-                const step = activeObject.containsRasterImages ? 2 : 1;
+                const step = activeObject.containsRasterImages ? 3 : 1;
 
                 this.setTraceStep(step);
                 this.colorsChosen = false;
@@ -668,8 +666,8 @@ export default {
 
         },
         setTraceStep(step) {
-            this.traceStep = step;
-            if (step === 3) {
+            this.goToTraceStep(step);
+            if (step === 4) {
                 this.$editor.getActiveObject().then(editorObject => {
                     this.colorMap = editorObject.colorMap;
                     this.setUserColors(new Array(this.colorLimit).fill(null));
@@ -677,7 +675,7 @@ export default {
                 })
             }
         },
-        ...mapMutations(['openTraceControls', 'closeTraceControls', 'setColorClosure', 'setCurrentColorSpace', 'setUserColors', 'setColorAssignerClosure', 'showFullScreenLoader', 'hideFullScreenLoader'])
+        ...mapMutations(['openTraceControls', 'closeTraceControls', 'setColorClosure', 'setCurrentColorSpace', 'setUserColors', 'setColorAssignerClosure', 'showFullScreenLoader', 'hideFullScreenLoader', 'goToTraceStep'])
 
     },
     watch: {

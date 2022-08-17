@@ -14,6 +14,7 @@ export default function makeStore() {
             openControlTab: null,
             showroomIsOpen: true,
             traceControlsIsOpen: false,
+            traceStep: 1,
             managedColors: [],
             colorSpaces: [],
             currentColorSpace: undefined,
@@ -60,6 +61,9 @@ export default function makeStore() {
             },
             extendedEditSwitchOn(state) {
                 return state.extendedEditSwitchOn;
+            },
+            traceStep(state) {
+                return state.traceStep;
             }
         },
         mutations: {
@@ -106,6 +110,9 @@ export default function makeStore() {
             },
             openTraceControls(state) {
                 state.traceControlsIsOpen = true;
+            },
+            goToTraceStep(state, step) {
+                state.traceStep = step;
             },
             closeTraceControls(state) {
                 state.traceControlsIsOpen = false;
