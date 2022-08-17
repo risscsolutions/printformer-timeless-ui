@@ -100,8 +100,10 @@
                         </div>
                     </div>
                 </div>
-                <extended-edit v-if="extendedEditSwitchOn && activeObject" :active-object="activeObject" :opacity="opacity"
-                               :has-trace-button="showTraceButton" :has-alignment="isAllowed('hmove') || isAllowed('vmove')"
+                <extended-edit v-if="extendedEditSwitchOn && activeObject" :active-object="activeObject"
+                               :opacity="opacity"
+                               :has-trace-button="showTraceButton"
+                               :has-alignment="isAllowed('hmove') || isAllowed('vmove')"
                                :has-layer="isAllowed('zindex')"
                                :has-opacity="isAllowed('opacity')" :has-duplicate="isAllowed('duplicate')">
                 </extended-edit>
@@ -270,9 +272,13 @@ export default {
                 ? event.target.files
                 : event.dataTransfer.files;
 
+            window.events.emit('TIMELESS:asset-uploading');
             Promise.all(
                 [...files].map(file => this.$catch(this.$editor.addAssetBlockFromFile(file)))
-            ).finally(() => this.loadUserMedias());
+            ).finally(() => {
+                window.events.emit('TIMELESS:asset-uploaded');
+                this.loadUserMedias();
+            });
         },
         addUserMedia(media) {
             // check has active object and active object is type asset

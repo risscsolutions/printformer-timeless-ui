@@ -1,6 +1,5 @@
 <template>
     <div class="columns is-multiline p-2 is-vcentered">
-
         <div class="column is-24 p-2">
             <slot name="title"></slot>
         </div>

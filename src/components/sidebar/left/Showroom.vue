@@ -26,61 +26,64 @@
             </div>
             <div v-show="showroomIsOpen" class="column p-4 dark-gray-color border-solid"
                  :class="{'sidebar-with-pager': isMultiPage, 'sidebar-no-pager': !isMultiPage}">
-                <div v-if="notifications.length && !traceControlsIsOpen">
-                    <div v-for="notification in notifications">
-                        <b v-if="notification.type === 'error'" class="has-text-danger">Fehler</b>
-                        <b v-else-if="notification.type === 'info'" class="has-text-info">Info</b>
-                        <b v-else-if="notification.type === 'warning'" class="has-text-warning">Warnung</b>
-                        <div class="is-flex is-justify-content-space-between is-align-items-center">
-                            <p>{{ notification.message }}</p>
-                            <button v-if="notification.action" class="button is-info is-small"
-                                    @click="doAction(notification.id)">
-                                <span class="icon is-small" v-html="$svg('Pfeil3', 'stroke-white')"></span>
-                            </button>
-                        </div>
-                        <hr class="divider my-3">
-                    </div>
-                </div>
-                <div class="columns is-multiline p-2 is-vcentered" v-if="!openControlTab && !traceControlsIsOpen">
-                    <div class="column is-24 p-2">
-                        <p class="mb-1 like-h4">TIPPS UND HINWEISE</p>
-                        <p>Gestalte deinen Werbeartikel mit den Tools aus dem Menü rechts: </p>
-                    </div>
-                    <div class="columns is-multiline p-2 is-vcentered" v-if="allowAddAssets || pageContainsAssets">
-                        <div class="column is-one-fifth has-text-centered" v-html="$svg('BilderHinweise')"></div>
-                        <div class="column is-four-fifths">
-                            <p>Für Bilder (z.B. dein Logo) kannst du hier eine Bild-Box hinzufügen, Bilder bearbeiten
-                                oder löschen.</p>
+                <upload-info v-if="uploading"></upload-info>
+                <template v-else>
+                    <div v-if="notifications.length && !traceControlsIsOpen">
+                        <div v-for="notification in notifications">
+                            <b v-if="notification.type === 'error'" class="has-text-danger">Fehler</b>
+                            <b v-else-if="notification.type === 'info'" class="has-text-info">Info</b>
+                            <b v-else-if="notification.type === 'warning'" class="has-text-warning">Warnung</b>
+                            <div class="is-flex is-justify-content-space-between is-align-items-center">
+                                <p>{{ notification.message }}</p>
+                                <button v-if="notification.action" class="button is-info is-small"
+                                        @click="doAction(notification.id)">
+                                    <span class="icon is-small" v-html="$svg('Pfeil3', 'stroke-white')"></span>
+                                </button>
+                            </div>
+                            <hr class="divider my-3">
                         </div>
                     </div>
-                    <div class="columns is-multiline p-2 is-vcentered" v-if="allowAddTexts || pageContainsTexts">
-                        <div class="column is-one-fifth has-text-centered" v-html="$svg('TexteHinweise')"></div>
-                        <div class="column is-four-fifths">
-                            <p>Wenn du Text integrieren möchtest, füge zunächst eine Text-Box hinzu. Hier lassen sich
-                                Texte auch formatieren oder löschen.</p>
+                    <div class="columns is-multiline p-2 is-vcentered" v-if="!openControlTab && !traceControlsIsOpen">
+                        <div class="column is-24 p-2">
+                            <p class="mb-1 like-h4">TIPPS UND HINWEISE</p>
+                            <p>Gestalte deinen Werbeartikel mit den Tools aus dem Menü rechts: </p>
+                        </div>
+                        <div class="columns is-multiline p-2 is-vcentered" v-if="allowAddAssets || pageContainsAssets">
+                            <div class="column is-one-fifth has-text-centered" v-html="$svg('BilderHinweise')"></div>
+                            <div class="column is-four-fifths">
+                                <p>Für Bilder (z.B. dein Logo) kannst du hier eine Bild-Box hinzufügen, Bilder bearbeiten
+                                    oder löschen.</p>
+                            </div>
+                        </div>
+                        <div class="columns is-multiline p-2 is-vcentered" v-if="allowAddTexts || pageContainsTexts">
+                            <div class="column is-one-fifth has-text-centered" v-html="$svg('TexteHinweise')"></div>
+                            <div class="column is-four-fifths">
+                                <p>Wenn du Text integrieren möchtest, füge zunächst eine Text-Box hinzu. Hier lassen sich
+                                    Texte auch formatieren oder löschen.</p>
+                            </div>
+                        </div>
+                        <div class="columns is-multiline p-2 is-vcentered" v-if="allowAddShapes || pageContainsShapes">
+                            <div class="column is-one-fifth has-text-centered" v-html="$svg('FormenHinweise')"></div>
+                            <div class="column is-four-fifths">
+                                <p>Füge eine Form hinzu, z.B. um diese hinter deinen Text oder dein Logo zu legen.</p>
+                            </div>
+                        </div>
+                        <div class="columns is-multiline p-2 is-vcentered" v-if="hasVariants">
+                            <div class="column is-one-fifth has-text-centered" v-html="$svg('Farbpalette_grau')"></div>
+                            <div class="column is-four-fifths">
+                                <p>Hier kannst du die Farbe deines Werbeartikels ändern. </p>
+                            </div>
                         </div>
                     </div>
-                    <div class="columns is-multiline p-2 is-vcentered" v-if="allowAddShapes || pageContainsShapes">
-                        <div class="column is-one-fifth has-text-centered" v-html="$svg('FormenHinweise')"></div>
-                        <div class="column is-four-fifths">
-                            <p>Füge eine Form hinzu, z.B. um diese hinter deinen Text oder dein Logo zu legen.</p>
-                        </div>
-                    </div>
-                    <div class="columns is-multiline p-2 is-vcentered" v-if="hasVariants">
-                        <div class="column is-one-fifth has-text-centered" v-html="$svg('Farbpalette_grau')"></div>
-                        <div class="column is-four-fifths">
-                            <p>Hier kannst du die Farbe deines Werbeartikels ändern. </p>
-                        </div>
-                    </div>
-                </div>
-                <template v-if="traceControlsIsOpen">
-                    <p class="mb-1 like-h4">
-                        HIER STEHT EIN GANZ TOLLER HILFETEXT.
-                        HIER STEHT EIN GANZ TOLLER HILFETEXT.
-                        HIER STEHT EIN GANZ TOLLER HILFETEXT.
-                    </p>
+                    <template v-if="traceControlsIsOpen">
+                        <p class="mb-1 like-h4">
+                            HIER STEHT EIN GANZ TOLLER HILFETEXT.
+                            HIER STEHT EIN GANZ TOLLER HILFETEXT.
+                            HIER STEHT EIN GANZ TOLLER HILFETEXT.
+                        </p>
+                    </template>
+                    <component v-else-if="openControlTab && !traceControlsIsOpen" :is="infoComponent"></component>
                 </template>
-                <component v-if="openControlTab && !traceControlsIsOpen" :is="infoComponent"></component>
                 <div>
                     <iframe ref="threedeeiframe"
                             style="min-height: 400px; width: 100%; height: 100%; display: none"></iframe>
@@ -118,10 +121,11 @@ import ViewSettingsInfo from "./ViewSettingsInfo";
 import VariantsInfo from "./VariantsInfo";
 import {goToStep} from "../../../helpers";
 import {urlQueryObject} from "../../../helper";
+import UploadInfo from "./UploadInfo";
 
 export default {
     name: "showroom",
-    components: {AssetsInfo, ShapesInfo, TextsInfo, ViewSettingsInfo, VariantsInfo},
+    components: {AssetsInfo, ShapesInfo, TextsInfo, ViewSettingsInfo, VariantsInfo, UploadInfo},
 
     computed: {
         infoComponent() {
@@ -161,6 +165,13 @@ export default {
                 this.$refs.threedeeiframe.src = editorIframe.src.replace(new RegExp(/\/embed/), '/3d');
                 this.$editor.setThreeDeeElement(this.$refs.threedeeiframe);
             }
+        });
+
+        window.events.on('TIMELESS:asset-uploading', () => {
+            this.uploading = true;
+        });
+        window.events.on('TIMELESS:asset-uploaded', () => {
+            setTimeout(() => this.uploading = false, 200);
         });
 
         this.$editor.registerConfirmCallback('LEAVE_EDITOR_WITH_ERRORS', (confirm) => {
@@ -352,6 +363,7 @@ export default {
     data() {
         return {
             currentPage: null,
+            uploading: false,
             has3D: false,
         }
     }
