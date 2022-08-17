@@ -43,6 +43,7 @@ export default function makeStore() {
             pageContainsAssets: false,
             pageContainsTexts: false,
             pageContainsShapes: false,
+            extendedEditSwitchOn: false,
         },
         getters: {
             allowAddShapes(state) {
@@ -56,6 +57,9 @@ export default function makeStore() {
             },
             hasVariants(state) {
                 return state.variants.length > 0;
+            },
+            extendedEditSwitchOn(state) {
+                return state.extendedEditSwitchOn;
             }
         },
         mutations: {
@@ -164,6 +168,9 @@ export default function makeStore() {
             },
             setPageContainsShapes(state, bool) {
                 state.pageContainsShapes = bool;
+            },
+            enableExtendedEdit(state) {
+                state.extendedEditSwitchOn = !state.extendedEditSwitchOn;
             }
         }
     });

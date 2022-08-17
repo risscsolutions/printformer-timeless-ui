@@ -150,32 +150,34 @@
             <div v-show="isAllowed('delete')" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="showExtendedSwitch" class="column is-24 py-0">
-                <div class="columns is-multiline">
-                    <div class="column is-flex is-flex-direction-column is-align-items-center py-2">
-                        <label class="has-text-weight-medium blue-color mb-2" for="extendedEditSwitch">
-                            Erweiterte Text-Bearbeitung
-                        </label>
-                        <div class="onoffswitch">
-                            <input type="checkbox" :checked="extendedEditSwitchOn" @click="enableExtendedEdit"
-                                   name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" tabindex="0">
-                            <label class="onoffswitch-label" for="myonoffswitch">
-                                <span class="onoffswitch-inner"></span>
-                                <span class="onoffswitch-switch"></span>
+            <template v-if="showExtendedSwitch">
+                <div class="column is-24 py-0">
+                    <div class="columns is-multiline">
+                        <div class="column is-flex is-flex-direction-column is-align-items-center py-2">
+                            <label class="has-text-weight-medium blue-color mb-2" for="extendedEditSwitch">
+                                Erweiterte Text-Bearbeitung
                             </label>
+                            <div class="onoffswitch">
+                                <input type="checkbox" :checked="extendedEditSwitchOn" @click="enableExtendedEdit"
+                                       name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" tabindex="0">
+                                <label class="onoffswitch-label" for="myonoffswitch">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <extended-edit v-if="extendedEditSwitchOn && activeObject" :active-object="activeObject"
-                           :has-line-height="isAllowed('fontsize')"
-                           :has-alignment="isAllowed('hmove') || isAllowed('vmove')"
-                           :has-layer="isAllowed('zindex')"
-                           :has-opacity="isAllowed('opacity')" :has-duplicate="isAllowed('duplicate')">
-            </extended-edit>
-            <div v-if="showExtendedSwitch" class="column is-24">
-                <hr class="divider">
-            </div>
+                <extended-edit v-if="extendedEditSwitchOn && activeObject" :active-object="activeObject"
+                               :has-line-height="isAllowed('fontsize')"
+                               :has-alignment="isAllowed('hmove') || isAllowed('vmove')"
+                               :has-layer="isAllowed('zindex')"
+                               :has-opacity="isAllowed('opacity')" :has-duplicate="isAllowed('duplicate')">
+                </extended-edit>
+                <div class="column is-24">
+                    <hr class="divider">
+                </div>
+            </template>
         </div>
     </div>
 </template>
@@ -192,7 +194,6 @@ import BlockActions from "../../../BlockActions";
 export default {
     name: "texts",
     components: {BulmaAccordion, ExtendedEdit},
-    ...mapState(['fonts', 'fontSizes', 'editorConfig']),
     props: {
         activeObject: EditorObject
     },
@@ -208,7 +209,7 @@ export default {
                 || this.isAllowed(BlockActions.Z_INDEX)
                 || this.isAllowed(BlockActions.DUPLICATE))
         },
-        ...mapGetters(['allowAddTexts']),
+        ...mapGetters(['allowAddTexts', 'extendedEditSwitchOn']),
     },
     updated() {
         if (this.activeObject && Text.isText(this.activeObject)) {
@@ -399,13 +400,10 @@ export default {
             // bullet, number, alphabetic
             this.$catch(this.activeObject.addBulletPoint(type));
         },
-        enableExtendedEdit() {
-            this.extendedEditSwitchOn = !this.extendedEditSwitchOn;
-        },
         isAllowed(action) {
             return this.isText && !this.activeObject.prohibitedActions.includes(action);
         },
-        ...mapMutations(['setFontSizes', 'setFonts', 'setColorClosure', 'setCurrentColorSpace', 'setColorByColorSpace']),
+        ...mapMutations(['setFontSizes', 'setFonts', 'setColorClosure', 'setCurrentColorSpace', 'setColorByColorSpace', 'enableExtendedEdit']),
     },
     data() {
         return {
@@ -413,7 +411,6 @@ export default {
             allFontSizes: null,
             currentFont: null,
             currentFontSize: null,
-            extendedEditSwitchOn: false,
             boldDisabled: false,
             italicDisabled: false,
         }

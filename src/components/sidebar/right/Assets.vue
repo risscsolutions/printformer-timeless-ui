@@ -82,31 +82,33 @@
             <div v-if="isAllowed('delete') || isAllowed('asset-replace')" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="showExtendedSwitch" class="column is-24 py-0">
-                <div class="columns is-multiline">
-                    <div class="column is-flex is-flex-direction-column is-align-items-center py-2">
-                        <label class="has-text-weight-medium blue-color mb-2" for="extendedEditSwitch">
-                            Erweiterte Bild-Bearbeitung
-                        </label>
-                        <div class="onoffswitch">
-                            <input type="checkbox" :checked="extendedEditSwitchOn" @click="enableExtendedEdit"
-                                   name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" tabindex="0">
-                            <label class="onoffswitch-label" for="myonoffswitch">
-                                <span class="onoffswitch-inner"></span>
-                                <span class="onoffswitch-switch"></span>
+            <template v-if="showExtendedSwitch">
+                <div class="column is-24 py-0">
+                    <div class="columns is-multiline">
+                        <div class="column is-flex is-flex-direction-column is-align-items-center py-2">
+                            <label class="has-text-weight-medium blue-color mb-2" for="extendedEditSwitch">
+                                Erweiterte Bild-Bearbeitung
                             </label>
+                            <div class="onoffswitch">
+                                <input type="checkbox" :checked="extendedEditSwitchOn" @click="toggleExtendedEdit"
+                                       name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" tabindex="0">
+                                <label class="onoffswitch-label" for="myonoffswitch">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <extended-edit v-if="extendedEditSwitchOn && activeObject" :active-object="activeObject" :opacity="opacity"
-                           :has-trace-button="showTraceButton" :has-alignment="isAllowed('hmove') || isAllowed('vmove')"
-                           :has-layer="isAllowed('zindex')"
-                           :has-opacity="isAllowed('opacity')" :has-duplicate="isAllowed('duplicate')">
-            </extended-edit>
-            <div v-if="showExtendedSwitch" class="column is-24">
-                <hr class="divider">
-            </div>
+                <extended-edit v-if="extendedEditSwitchOn && activeObject" :active-object="activeObject" :opacity="opacity"
+                               :has-trace-button="showTraceButton" :has-alignment="isAllowed('hmove') || isAllowed('vmove')"
+                               :has-layer="isAllowed('zindex')"
+                               :has-opacity="isAllowed('opacity')" :has-duplicate="isAllowed('duplicate')">
+                </extended-edit>
+                <div class="column is-24">
+                    <hr class="divider">
+                </div>
+            </template>
         </div>
         <div v-show="hasUserMedias && (allowAddAssets || isAsset)" class="columns is-24 mt-auto">
             <div class="box gray-background">
@@ -165,7 +167,7 @@ import Events from "@rissc/printformer-editor-client/dist/Events";
 import EditorObject, {Asset, BlockEffects} from "@rissc/printformer-editor-client/dist/Objects";
 import bulmaSlider from "bulma-slider/src/js";
 import ExtendedEdit from "./ExtendedEdit";
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 import BlockActions from "../../../BlockActions";
 
 export default {
@@ -327,9 +329,9 @@ export default {
             event.currentTarget.classList.remove('has-background-success');
             this.$catch(this.uploadImage(event));
         },
-        enableExtendedEdit() {
+        toggleExtendedEdit() {
             this.opacity = (this.activeObject.opacity * 100);
-            this.extendedEditSwitchOn = !this.extendedEditSwitchOn;
+            this.enableExtendedEdit();
         },
         changeOpacity() {
             this.$catch(this.activeObject.setOpacity((parseInt(this.opacity) / 100)));
@@ -358,6 +360,7 @@ export default {
         isAllowed(action) {
             return this.isAsset && !this.activeObject.prohibitedActions.includes(action);
         },
+        ...mapMutations(['enableExtendedEdit'])
     },
     computed: {
         showExtendedSwitch() {
@@ -403,8 +406,7 @@ export default {
 
             return color;
         },
-        ...mapGetters(['allowAddAssets']),
-
+        ...mapGetters(['allowAddAssets', 'extendedEditSwitchOn']),
     },
     data() {
         return {
@@ -416,7 +418,6 @@ export default {
             pagination: {
                 page: 1
             },
-            extendedEditSwitchOn: false,
             openAlignmentSettings: false,
             openLayerSettings: false,
             showTraceButton: false,

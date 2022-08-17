@@ -26,7 +26,7 @@
 
             <div v-show="isAllowed('color')" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
                         <span class="dark-gray-color">Formfarbe</span>
                         <button
                             :style="{'background-color': (activeObject || {}).fill ? activeObject.fill.displayColor : null}"
@@ -43,7 +43,7 @@
 
             <div v-show="isAllowed('delete')" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
                         <span class="dark-gray-color">Form löschen</span>
                         <span @click="deleteForm" style="cursor: pointer" class="svg-30 is-flex"
                               v-html="icon('Loeschen')"></span>
@@ -53,32 +53,33 @@
             <div v-show="isAllowed('delete')" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="showExtendedSwitch" class="column is-24 py-0">
-                <div class="columns is-multiline">
-                    <div class="column is-flex is-flex-direction-column is-align-items-center py-2">
-                        <label class="has-text-weight-medium blue-color mb-2" for="extendedEditSwitch">
-                            Erweiterte Form-Bearbeitung
-                        </label>
-                        <div class="onoffswitch">
-                            <input type="checkbox" :checked="extendedEditSwitchOn" @click="enableExtendedEdit"
-                                   name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" tabindex="0">
-                            <label class="onoffswitch-label" for="myonoffswitch">
-                                <span class="onoffswitch-inner"></span>
-                                <span class="onoffswitch-switch"></span>
+            <template v-if="showExtendedSwitch">
+                <div class="column is-24 py-0">
+                    <div class="columns is-multiline">
+                        <div class="column is-flex is-flex-direction-column is-align-items-center py-2">
+                            <label class="has-text-weight-medium blue-color mb-2" for="extendedEditSwitch">
+                                Erweiterte Form-Bearbeitung
                             </label>
+                            <div class="onoffswitch">
+                                <input type="checkbox" :checked="extendedEditSwitchOn" @click="enableExtendedEdit"
+                                       name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" tabindex="0">
+                                <label class="onoffswitch-label" for="myonoffswitch">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <extended-edit v-if="extendedEditSwitchOn && activeObject" :active-object="activeObject"
-                           :has-alignment="isAllowed('hmove') || isAllowed('vmove')"
-                           :has-layer="isAllowed('zindex')"
-                           :has-opacity="isAllowed('opacity')" :has-duplicate="isAllowed('duplicate')">
-            </extended-edit>
-            <div v-if="showExtendedSwitch" class="column is-24">
-                <hr class="divider">
-            </div>
-
+                <extended-edit v-if="extendedEditSwitchOn && activeObject" :active-object="activeObject"
+                               :has-alignment="isAllowed('hmove') || isAllowed('vmove')"
+                               :has-layer="isAllowed('zindex')"
+                               :has-opacity="isAllowed('opacity')" :has-duplicate="isAllowed('duplicate')">
+                </extended-edit>
+                <div class="column is-24">
+                    <hr class="divider">
+                </div>
+            </template>
         </div>
     </div>
 </template>
@@ -190,7 +191,7 @@ export default {
                 || this.isAllowed(BlockActions.Z_INDEX)
                 || this.isAllowed(BlockActions.DUPLICATE))
         },
-        ...mapGetters(['allowAddShapes']),
+        ...mapGetters(['allowAddShapes', 'extendedEditSwitchOn']),
     },
     methods: {
         icon(name) {
@@ -229,15 +230,7 @@ export default {
                 .dialog('option', 'position', {my: "right center", at: "left-300 center", of: $(e.currentTarget)})
                 .dialog('open');
         },
-        enableExtendedEdit() {
-            this.extendedEditSwitchOn = !this.extendedEditSwitchOn;
-        },
-        ...mapMutations(['setColorClosure', 'setCurrentColorSpace', 'setColorByColorSpace']),
-    },
-    data() {
-        return {
-            extendedEditSwitchOn: false,
-        }
+        ...mapMutations(['setColorClosure', 'setCurrentColorSpace', 'setColorByColorSpace', 'enableExtendedEdit']),
     }
 }
 </script>
