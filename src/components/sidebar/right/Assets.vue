@@ -21,7 +21,8 @@
                     <span class="dark-gray-color">Bilder hochladen</span>
                     <span class="svg-30 is-flex m-1" v-html="icon('Bilder_hochladen')"></span>
                     <div class="columns m-0 is-flex-direction-column has-text-centered dark-gray-color">
-                        <input ref="uploadFile" type="file" hidden accept=".jpg,.jpeg,.png,.pdf" @change="uploadImage">
+                        <input ref="uploadFile" type="file" multiple hidden accept=".jpg,.jpeg,.png,.pdf"
+                               @change="uploadImage">
                         <span>vom <span class="blue-under">Computer</span> oder</span>
                         <span>per Drag and Drop</span>
                         <span>in die Box ziehen</span>
@@ -33,9 +34,10 @@
             </div>
             <div v-if="isFilled && !isGraphic" class="column is-24 py-0">
                 <div class="columns">
-                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
                         <span class="dark-gray-color">Bildqualität</span>
-                        <span class="dark-gray-color dpi-circle border-solid" :style="{'background-color': qualityColor}"></span>
+                        <span class="dark-gray-color dpi-circle border-solid"
+                              :style="{'background-color': qualityColor}"></span>
                     </div>
                 </div>
             </div>
@@ -48,7 +50,7 @@
                         <div class="column is-flex py-2 is-align-items-center">
                             <span class="dark-gray-color">Bild zoomen</span>
                         </div>
-                        <div class="column is-flex is-justify-content-flex-end py-2 is-align-items-center" >
+                        <div class="column is-flex is-justify-content-flex-end py-2 is-align-items-center">
                             <button @click="assetZoomIn" title="Vergrößern"
                                     class="button is-small muted-button width-30">
                                 <span class="svg-30 no-interaction is-flex" v-html="icon('HinzufuegenPlus')"></span>
@@ -70,7 +72,7 @@
             </div>
             <div v-if="isAllowed('delete') || isAllowed('asset-replace')" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
                         <span class="dark-gray-color">Bildbox löschen</span>
                         <span @click="deleteAssetBox" style="cursor: pointer" class="svg-30 is-flex"
                               v-html="icon('Loeschen')"></span>
@@ -260,15 +262,13 @@ export default {
             this.$refs.uploadFile.click();
         },
         async uploadImage(event) {
-            let file;
-            if (typeof event.dataTransfer === 'undefined') {
-                file = event.target.files[0];
-            } else {
-                file = event.dataTransfer.files[0];
-            }
+            const files = (typeof event.dataTransfer === 'undefined')
+                ? event.target.files
+                : event.dataTransfer.files;
 
-            this.$catch(this.$editor.addAssetBlockFromFile(file))
-                .then(() => this.loadUserMedias());
+            Promise.all(
+                [...files].map(file => this.$catch(this.$editor.addAssetBlockFromFile(file)))
+            ).finally(() => this.loadUserMedias());
         },
         addUserMedia(media) {
             // check has active object and active object is type asset
