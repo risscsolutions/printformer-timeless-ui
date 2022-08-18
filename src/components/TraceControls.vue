@@ -66,7 +66,8 @@
                         </p>
                         <p class="dark-gray-color mb-0 ">Unsere Farbvorschläge für dich:</p>
                     </div>
-                    <div v-if="managedColors.length" class="content is-small" ref="managedColors">
+                    <div v-if="blockEffectType === 'vector' && managedColors.length" class="content is-small"
+                         ref="managedColors">
                         <button v-for="managedColor in managedColors" :title="managedColor.name"
                                 class="button is-rounded color-button-round"
                                 :style="`background-color: ${managedColor.displayColor}`"
@@ -76,6 +77,15 @@
                         <button v-if="colorLimit > 1" title="Transparent"
                                 class="button is-rounded color-button-round chess-background"
                                 @click="selectColor('none', $event)" :disabled="traceStep === 2">
+                            <span></span>
+                        </button>
+                    </div>
+                    <div v-else-if="blockEffectType === 'embossing' && !!embossingColor" class="content is-small"
+                         ref="managedColors">
+                        <button :title="embossingColor.name"
+                                class="button is-rounded color-button-round"
+                                :style="`background-color: ${embossingColor.displayColor}`"
+                                @click="selectColor(embossingColor, $event)" :disabled="traceStep === 2">
                             <span></span>
                         </button>
                     </div>
@@ -135,10 +145,15 @@
                             bestimmen</p>
                         <p class="dark-gray-color mb-0 ">Wähle deine gewünschten Druckfarben aus</p>
                     </div>
-                    <div class="content is-small" ref="userColors">
+                    <div v-if="blockEffectType === 'vector'" class="content is-small" ref="userColors">
                         <button v-for="(userColor, index) in userColors" v-html="userColor ? null : icon('Plus')"
                                 :style="{'background-color': userColor ? userColor.displayColor : null}"
                                 @click="chooseColor(index, $event)" class="button is-rounded color-button-round">
+                        </button>
+                    </div>
+                    <div v-else class="content is-small" ref="userColors">
+                        <button :style="{'background-color': embossingColor ? embossingColor.displayColor : null}"
+                                class="button is-rounded color-button-round">
                         </button>
                     </div>
                     <hr class="sidebar-divider" v-if="userColorsFilled">
@@ -250,6 +265,8 @@ export default {
             colorMap: [],
             assignedColors: [],
             userColorsFilled: false,
+
+            embossingColor: null
         }
     },
     computed: {
@@ -366,6 +383,7 @@ export default {
             this.showFullScreenLoader();
             this.blockEffectType = activeObject.effects[0].type;
             this.colorLimit = settings.colorLimit || this.defaultColorLimit;
+            this.embossingColor = activeObject.effects[0].color;
 
             this.deSpeckle = settings.deSpeckle || 0
             this.smoothCorners = settings.smoothCorners || 0;
@@ -529,7 +547,9 @@ export default {
             const activeObject = await this.$editor.getActiveObject();
 
             const colorMap = activeObject.colorMap;
-            const selectedColors = this.selectedSimpleColors.map(c => c.name || 'none');
+            const selectedColors = this.selectedSimpleColors.map(c => typeof c === 'string' ? c : c.name);
+            console.debug(this.selectedSimpleColors, selectedColors);
+
             const cartesian = (...a) => a.reduce((a, b) => a.flatMap(d => b.map(e => [d, e].flat())));
             let output = cartesian(selectedColors, selectedColors);
 
@@ -681,9 +701,15 @@ export default {
             if (step === 4) {
                 this.$editor.getActiveObject().then(editorObject => {
                     this.colorMap = editorObject.colorMap;
-                    this.setUserColors(new Array(this.colorLimit).fill(null));
                     this.assignedColors = editorObject.colorMap.map(() => null);
-                })
+
+                    if (this.blockEffectType === 'embossing') {
+                        this.setUserColors([this.embossingColor]);
+                        this.userColorsFilled = true;
+                    } else {
+                        this.setUserColors(new Array(this.colorLimit).fill(null));
+                    }
+                });
             }
         },
         ...mapMutations(['openTraceControls', 'closeTraceControls', 'setColorClosure', 'setCurrentColorSpace', 'setUserColors', 'setColorAssignerClosure', 'showFullScreenLoader', 'hideFullScreenLoader', 'goToTraceStep'])
