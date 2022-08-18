@@ -600,7 +600,14 @@ export default {
             this.setTraceStep(4);
         },
         chooseColor(index, event) {
-            this.setCurrentColorSpace(this.colorSpaces.length === 0 && this.managedColors.length === 0 ? 'CMYK' : this.colorSpaces[0]);
+            if (this.managedColors.length > 0) {
+                this.setCurrentColorSpace('MANAGED');
+            } else if (this.colorSpaces.length > 0) {
+                this.setCurrentColorSpace(this.colorSpaces[0]);
+            } else {
+                this.setCurrentColorSpace('CMYK');
+            }
+
             this.setColorClosure((color) => this.userColors.splice(index, 1, color));
 
             $('#color-picker')

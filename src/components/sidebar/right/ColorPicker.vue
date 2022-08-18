@@ -46,7 +46,7 @@
                 </div>
                 <div id="hks-user-color-preview" class="column user-color-preview mr-3"></div>
             </div>
-            <div v-show="currentColorSpace ==='RGB'" class="columns p-3 mr-5">
+            <div v-show="currentColorSpace ==='RGB'" class="columns p-3 mr-5 mb-0">
                 <div class="column">
                     <input id="spectre-rgb">
                 </div>
@@ -65,7 +65,7 @@
                     </div>
                 </div>
             </div>
-            <div v-show="currentColorSpace ==='CMYK'" class="columns p-3 mr-5">
+            <div v-show="currentColorSpace ==='CMYK'" class="columns p-3 mr-5 mb-0">
                 <div class="column">
                     <input id="spectre-cmyk">
                 </div>
