@@ -46,14 +46,13 @@ export default function makeStore() {
             pageContainsShapes: false,
             extendedEditSwitchOn: false,
 
-            preflight: {
-                result: {
-                    hits: [],
-                    fixups: [],
-                    errors: [],
-                },
-                report_file_url: null
-            }
+            preflightResultInfos: [],
+            preflightResultWarnings: [],
+            preflightResultFixups: [],
+            preflightResultErrors: [],
+
+            preflightStatus: null,
+            preflightReportFileURL: null,
         },
         getters: {
             allowAddShapes(state) {
@@ -188,8 +187,15 @@ export default function makeStore() {
             enableExtendedEdit(state) {
                 state.extendedEditSwitchOn = !state.extendedEditSwitchOn;
             },
-            setPreflightResult(state, result) {
-                state.preflight = result;
+            setPreflightResult(state, {result, status, report_file_url}) {
+                state.preflightResultInfos = result.hits ? result.hits.info || [] : [];
+                state.preflightResultWarnings = result.warning ? result.hits.warning || [] : [];
+                state.preflightResultFixups.splice(0, state.preflightResultFixups.length, ...result.fixups);
+                state.preflightResultErrors = [...result.errors, ...(result.hits && result.hits.error ? result.hits.error : [])];
+                state.preflightStatus = status;
+                state.preflightReportFileURL = report_file_url;
+
+                console.debug(state);
             }
         }
     });

@@ -10,7 +10,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(hit, index) in results" class="dark-gray-color">
+            <tr v-for="(hit, index) in results" :key="hit.id" class="dark-gray-color">
                 <th scope="row" class="has-text-weight-semibold dark-gray-color">
                     {{ (index + 1) }}
                 </th>

@@ -1,15 +1,19 @@
 <template>
-    <div id="preflight" class="pt-4">
-        <preflight-result-table severity="info" v-show="hasInfo" :results="preflight.result.hits['info']"
-                                :title="hitTitle"/>
-        <preflight-result-table severity="warning" v-show="hasWarnings" :results="preflight.result.hits['warning']"
-                                :title="warningTitle"/>
-        <preflight-result-table severity="success" v-show="hasFixups" :results="preflight.result.fixups"
-                                :title="fixupTitle"/>
-        <preflight-result-table severity="danger" v-show="hasErrors" :results="errorResult" :title="errorTitle"/>
-        <div class="flex-space-around button-group-container" v-if="preflight.report_file_url">
-            <button v-on:click="downloadReportFile"
-                    class="button" style="width: 100%; margin-top: 0.25rem;">
+    <div id="preflight-modal" class="pt-4">
+        <preflight-result-table severity="info" v-show="hasInfo"
+                                :results="preflightResultInfos"
+                                :title="hitTitle"></preflight-result-table>
+        <preflight-result-table severity="warning" v-show="hasWarnings"
+                                :results="preflightResultWarnings"
+                                :title="warningTitle"></preflight-result-table>
+        <preflight-result-table severity="success" v-show="hasFixups"
+                                :results="preflightResultFixups"
+                                :title="fixupTitle"></preflight-result-table>
+        <preflight-result-table severity="danger" v-show="hasErrors"
+                                :results="preflightResultErrors"
+                                :title="errorTitle"></preflight-result-table>
+        <div class="flex-space-around button-group-container" v-show="preflightReportFileURL">
+            <button @click="downloadReportFile" class="button" style="width: 100%; margin-top: 0.25rem;">
                 <span v-html="pdfSvg"></span>
                 <span class="text-description has-text-weight-bold">
                     {{ $i18n.translate('Report-PDF herunterladen') }}
@@ -36,10 +40,9 @@ export default {
     created() {
         this.$editor.getEvents()
             .on(Events.PREFLIGHT.PROCESSED, (event) => {
-                console.debug(event);
                 this.setPreflightResult(event);
                 this.$nextTick(() => {
-                    $('#preflight')
+                    $('#preflight-modal')
                         .dialog('option', 'position', {
                             collision: "fit",
                             my: "center center",
@@ -51,7 +54,7 @@ export default {
             });
     },
     mounted() {
-        const dialog = $('#preflight');
+        const dialog = $('#preflight-modal');
         dialog
             .dialog({
                 title: this.$i18n.translate('Ergebnis der Druckdatenprüfung'),
@@ -80,33 +83,31 @@ export default {
     methods: {
         downloadReportFile: function () {
             const windowOpen = window.open();
-            windowOpen.location = this.preflight.report_file_url;
+            windowOpen.location = this.preflightReportFileURL;
         },
         ...mapMutations(['setPreflightResult'])
     },
     computed: {
         hasErrors() {
-            return (this.preflight.result.errors && this.preflight.result.errors.length > 0) ||
-                (this.preflight.result.hits['error'] && this.preflight.result.hits['error'].length > 0);
-        },
-        hasHits() {
-            return this.preflight.result.hits && this.preflight.result.hits.length > 0;
+            return this.preflightResultErrors.length > 0;
         },
         hasInfo() {
-            return this.preflight.result.hits['info'] && this.preflight.result.hits['info'].length > 0;
+            return this.preflightResultInfos.length > 0;
         },
         hasWarnings() {
-            return this.preflight.result.hits['warning'] && this.preflight.result.hits['warning'].length > 0;
+            return this.preflightResultWarnings.length > 0;
         },
         hasFixups() {
-            return this.preflight.result.fixups && this.preflight.result.fixups.length > 0;
+            return this.preflightResultFixups.length > 0;
         },
-        errorResult() {
-            const hitErrors = this.preflight.result.hits['error'] || [];
-            const preflightErrors = this.preflight.result.errors || [];
-            return preflightErrors.concat(hitErrors)
-        },
-        ...mapState(['preflight'])
+        ...mapState([
+            'preflightResultInfos',
+            'preflightResultWarnings',
+            'preflightResultFixups',
+            'preflightResultErrors',
+            'preflightStatus',
+            'preflightReportFileURL',
+        ])
     }
 }
 </script>
