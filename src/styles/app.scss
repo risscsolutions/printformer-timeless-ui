@@ -1,3 +1,4 @@
+@import "node_modules/bulma/sass/utilities/derived-variables.sass";
 @import "src/styles/range.scss";
 @import "src/styles/switch.scss";
 @import "src/styles/trace.scss";
@@ -350,7 +351,7 @@ button {
 }
 
 .chess-background {
-    background-color: white!important;
+    background-color: white !important;
     background-image: linear-gradient(45deg, #bbbbbb 25%, transparent 25%), linear-gradient(-45deg, #bbbbbb 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #bbbbbb 75%), linear-gradient(-45deg, transparent 75%, #bbbbbb 75%);
     background-size: 6px 6px;
     background-position: 0 0, 0 3px, 3px -3px, -3px 0px;
@@ -423,4 +424,16 @@ button.is-rounded svg {
 #color-assigner {
     min-height: auto !important;
     max-width: 300px;
+}
+
+.ui-dialog-titlebar-close {
+    appearance: none!important;
+    border: 0 none!important;
+    background: none!important;
+    text-indent: initial!important;
+    color: $danger!important;
+
+    span {
+        display: none;
+    }
 }

@@ -48,7 +48,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-show="traceStep > 2" ref="tracePreview" style="height: 100%"></div>
+                <div v-show="traceStep > 2" v-html="tracePreview" style="height: 100%"></div>
             </div>
             <div class="trace-controls column is-narrow sidebar-no-pager border-solid">
                 <div v-show="[1, 2].includes(traceStep)" class="column">
@@ -266,7 +266,8 @@ export default {
             assignedColors: [],
             userColorsFilled: false,
 
-            embossingColor: null
+            embossingColor: null,
+            tracePreview: ''
         }
     },
     computed: {
@@ -473,7 +474,7 @@ export default {
             }
         },
         async updatePreview(editorObject) {
-            this.$refs.tracePreview.innerHTML = (await editorObject.getContent()) || '';
+            this.tracePreview = (await editorObject.getContent()) || '';
         },
         async applyTraceAndCloseOverlay(button) {
             if (button !== this.$refs.applyTrace) {
@@ -663,6 +664,7 @@ export default {
             this.setTraceStep(1);
             this.selectedSimpleColors = [];
             this.previews = [];
+            this.tracePreview = '';
             const managedColors = this.$refs.managedColors;
             if (managedColors) {
                 const colorButtons = managedColors.children;
@@ -683,10 +685,7 @@ export default {
                 this.automationActive = true;
                 this.revertSettings();
 
-                this.startTracing()
-                    .then(() => {
-                        this.setTraceStep(1);
-                    });
+                this.startTracing().then(() => this.setTraceStep(1));
             } else if (this.traceStep === 4) {
                 const activeObject = await this.$editor.getActiveObject();
                 const step = activeObject.containsRasterImages ? 3 : 1;

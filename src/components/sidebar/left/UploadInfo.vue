@@ -43,7 +43,7 @@ export default {
         });
         window.events.on(Events.PREFLIGHT.PROCESSED, (event) => {
             this.upload = 'complete';
-            this.check = 'complete';
+            this.check = event.status === 1 ? 'complete' : 'failed';
             this.preview = 'loading';
         });
         window.events.on('TIMELESS:asset-uploaded', () => {

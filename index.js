@@ -30,6 +30,7 @@ import TraceControls from "./src/components/TraceControls";
 import ColorPicker from "./src/components/sidebar/right/ColorPicker";
 import FullScreenLoader from "./src/components/FullScreenLoader";
 import ColorAssigner from "./src/components/sidebar/right/ColorAssigner";
+import Preflight from "./src/components/preflight/Preflight";
 
 Vue.prototype.$svg = require('./src/svg.js');
 Vue.use(Vuex);
@@ -104,38 +105,45 @@ window.onload = () => {
         Vue.prototype.$editor = editor;
 
         editor.getNotifications().onChange(notifications => store.commit('setNotifications', notifications));
-
         window.events.on(Events.EDITOR_COLOR_SET_CHANGED, ({colorSet}) => {
             store.commit('setManagedColors', colorSet.colors);
             store.commit('setColorSpaces', colorSet.colorSpaces);
         });
 
-        new Vue({
-            store, render: createElement => createElement(Controls)
-        }).$mount("#controls");
+        editor.getTranslations().then(i18n => {
+            Vue.prototype.$i18n = i18n
 
-        new Vue({
-            store, render: createElement => createElement(TopBarControls)
-        }).$mount("#top-bar-controls");
+            new Vue({
+                store, render: createElement => createElement(Controls)
+            }).$mount("#controls");
 
-        new Vue({
-            store, render: createElement => createElement(Showroom)
-        }).$mount("#showroom");
+            new Vue({
+                store, render: createElement => createElement(TopBarControls)
+            }).$mount("#top-bar-controls");
 
-        new Vue({
-            store, render: createElement => createElement(PagePreview)
-        }).$mount("#pages");
+            new Vue({
+                store, render: createElement => createElement(Showroom)
+            }).$mount("#showroom");
 
-        new Vue({
-            store, render: createElement => createElement(TraceControls)
-        }).$mount("#trace-controls");
+            new Vue({
+                store, render: createElement => createElement(PagePreview)
+            }).$mount("#pages");
 
-        new Vue({
-            store, render: createElement => createElement(ColorPicker)
-        }).$mount("#color-picker");
+            new Vue({
+                store, render: createElement => createElement(TraceControls)
+            }).$mount("#trace-controls");
 
-        new Vue({
-            store, render: createElement => createElement(ColorAssigner)
-        }).$mount("#color-assigner");
+            new Vue({
+                store, render: createElement => createElement(ColorPicker)
+            }).$mount("#color-picker");
+
+            new Vue({
+                store, render: createElement => createElement(ColorAssigner)
+            }).$mount("#color-assigner");
+
+            new Vue({
+                store, render: createElement => createElement(Preflight)
+            }).$mount("#preflight");
+        });
     });
 }

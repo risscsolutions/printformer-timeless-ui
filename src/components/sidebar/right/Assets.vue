@@ -273,8 +273,11 @@ export default {
                 : event.dataTransfer.files;
 
             window.events.emit('TIMELESS:asset-uploading');
-            Promise.all(
-                [...files].map(file => this.$catch(this.$editor.addAssetBlockFromFile(file)))
+
+            (this.isAsset
+                    ? this.$catch(this.activeObject.replaceWithFile(files[0]))
+                    : Promise.all(
+                        [...files].map(file => this.$catch(this.$editor.addAssetBlockFromFile(file))))
             ).finally(() => {
                 window.events.emit('TIMELESS:asset-uploaded');
                 this.loadUserMedias();

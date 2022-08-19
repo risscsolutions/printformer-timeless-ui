@@ -45,6 +45,15 @@ export default function makeStore() {
             pageContainsTexts: false,
             pageContainsShapes: false,
             extendedEditSwitchOn: false,
+
+            preflight: {
+                result: {
+                    hits: [],
+                    fixups: [],
+                    errors: [],
+                },
+                report_file_url: null
+            }
         },
         getters: {
             allowAddShapes(state) {
@@ -178,6 +187,9 @@ export default function makeStore() {
             },
             enableExtendedEdit(state) {
                 state.extendedEditSwitchOn = !state.extendedEditSwitchOn;
+            },
+            setPreflightResult(state, result) {
+                state.preflight = result;
             }
         }
     });
