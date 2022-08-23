@@ -4,7 +4,7 @@
             <p>{{ $translate('SIDEBAR_LEFT_VECTORIZER_STEP_1_PARAGRAPH_1') }}</p><br>
             <p>{{ $translate('SIDEBAR_LEFT_VECTORIZER_STEP_1_PARAGRAPH_2') }}</p>
             <p>{{ $translate('SIDEBAR_LEFT_VECTORIZER_STEP_1_PARAGRAPH_3') }}</p><br>
-            <p class="like-h4">{{ $transate('SIDEBAR_LEFT_VECTORIZER_STEP_1_PARAGRAPH_4') }}</p>
+            <p class="like-h4">{{ $translate('SIDEBAR_LEFT_VECTORIZER_STEP_1_PARAGRAPH_4') }}</p>
             <p>{{ $translate('SIDEBAR_LEFT_VECTORIZER_STEP_1_PARAGRAPH_5') }}</p><br>
             <p>{{ $translate('SIDEBAR_LEFT_VECTORIZER_STEP_1_PARAGRAPH_6') }}</p><br>
             <p>{{ $translate('SIDEBAR_LEFT_VECTORIZER_STEP_1_PARAGRAPH_7') }}</p><br>
@@ -48,12 +48,12 @@ export default {
         ...mapState(['traceStep']),
         step4Paragraph2() {
             return this.$translate('SIDEBAR_LEFT_VECTORIZER_STEP_4_PARAGRAPH_2', {
-                symbol: `<button class="button is-rounded color-button-round m-0" v-html="${this.$svg('Plus')}"></button>`
+                symbol: `<button class="button is-rounded color-button-round m-0">${this.$svg('Plus')}</button>`
             })
         },
         step4Paragraph4() {
             return this.$translate('SIDEBAR_LEFT_VECTORIZER_STEP_4_PARAGRAPH_4', {
-                symbol: `<button class="button is-rounded color-button-round m-0" v-html="${this.$svg('Plus')}"></button>`
+                symbol: `<button class="button is-rounded color-button-round m-0">${this.$svg('Plus')}</button>`
             })
         }
     }

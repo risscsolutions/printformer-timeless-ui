@@ -31,7 +31,7 @@ export default {
         },
         p1() {
             return this.$translate('SIDEBAR_LEFT_TEXTS_INFO_PARAGRAPH_1', {
-                symbol: `<span class="svg-15" v-html="${this.$svg('TexteHinweise')}"></span>`
+                symbol: `<span class="svg-15">${this.$svg('TexteHinweise')}</span>`
             })
         },
         tips() {

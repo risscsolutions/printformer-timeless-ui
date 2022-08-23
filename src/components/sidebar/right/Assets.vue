@@ -23,10 +23,7 @@
                     <div class="columns m-0 is-flex-direction-column has-text-centered dark-gray-color">
                         <input ref="uploadFile" type="file" multiple hidden accept=".jpg,.jpeg,.png,.pdf"
                                @change="uploadImage">
-                        <span>vom <span class="blue-under">Computer</span> oder</span>
-                        <span>per Drag and Drop</span>
-                        <span>in die Box ziehen</span>
-                        <span v-html="$translate('SIDEBAR_RIGHT_ASSETS_UPLOAD_CONTENT')"></span>
+                        <span v-html="assetUploadText"></span>
                     </div>
                 </div>
             </div>
@@ -119,7 +116,9 @@
                     <div class="column is-24">
                         <div class="content is-align-content-center has-text-centered">
                             <span
-                                class="dark-gray-color has-text-weight-semibold">{{ $translate('SIDEBAR_RIGHT_ASSETS_USER_MEDIA') }}</span>
+                                class="dark-gray-color has-text-weight-semibold">{{
+                                    $translate('SIDEBAR_RIGHT_ASSETS_USER_MEDIA')
+                                }}</span>
                         </div>
                     </div>
                     <div class="column is-24">
@@ -418,6 +417,11 @@ export default {
             return color;
         },
         ...mapGetters(['allowAddAssets', 'extendedEditSwitchOn']),
+        assetUploadText() {
+            const computer = `<span class="blue-under">${this.$translate('SIDEBAR_RIGHT_ASSETS_UPLOAD_CONTENT_COMPUTER')}</span>`;
+
+            return "<span>" + this.$translate('SIDEBAR_RIGHT_ASSETS_UPLOAD_CONTENT', {computer}) + "</span>";
+        }
     },
     data() {
         return {

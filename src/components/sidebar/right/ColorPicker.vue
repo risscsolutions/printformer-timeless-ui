@@ -32,7 +32,7 @@
                 </ul>
             </div>
         </div>
-        <div class="column">
+        <div class="column pb-0">
             <div v-show="currentColorSpace ==='MANAGED'" class="columns p-3 mb-0 managed-colors-in-picker"
                  id="managed-colors-in-picker">
                 <button v-for="managedColor in managedColors" :title="managedColor.name"
@@ -97,7 +97,7 @@
                 </div>
             </div>
         </div>
-        <div class="has-text-centered content">
+        <div class="has-text-centered content mx-3 pb-2 has-background-white">
             <button class="button is-small is-info" @click="applyColor"
                     :disabled="!currentValueForColorSpace[currentColorSpace]">
                 <span class="is-uppercase">{{ apply }}</span>

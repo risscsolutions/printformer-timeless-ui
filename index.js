@@ -30,7 +30,8 @@ import FullScreenLoader from "./src/components/FullScreenLoader";
 import ColorAssigner from "./src/components/sidebar/right/ColorAssigner";
 import Preflight from "./src/components/preflight/Preflight";
 
-Vue.prototype.$svg = require('./src/svg.js');
+const $svg = require('./src/svg.js');
+Vue.prototype.$svg = (n, a) => $svg(n, a).replaceAll('\n', '');
 Vue.use(Vuex);
 Vue.use(VueAgile);
 Vue.component('variants', Variants);
@@ -117,14 +118,19 @@ window.onload = () => {
                 if (isFormal) {
                     const formalKey = `FORMAL_${key}`;
                     const translated = i18n.translate(formalKey, r);
-                    if (translated && translated !== formalKey) return translated.replace('\n', "<br>");
+                    if (translated && translated !== formalKey) {
+                        return translated.replaceAll('\n', "<br>");
+                    }
                 }
-                return i18n.translate(key, r).replace('\n', "<br>");
+                const translated = i18n.translate(key, r);
+                return i18n.translate(key, r).replaceAll('\n', "<br>");
             }
             Vue.prototype.$translateMultiple = (keys, r) => {
                 for (const key of keys) {
-                    const translated = i18n.translate(key, r).replace('\n', "<br>");
-                    if (translated && translated !== key) return translated;
+                    const translated = i18n.translate(key, r);
+                    if (translated && translated !== key) {
+                        return translated.replaceAll('\n', "<br>");
+                    }
                 }
                 return keys[0];
             }

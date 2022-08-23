@@ -37,12 +37,12 @@ export default {
         },
         p1() {
             return this.$translate('SIDEBAR_LEFT_ASSETS_INFO_PARAGRAPH_1', {
-                symbol: `<span class="svg-15" v-html="${this.$svg('BilderHinweise')}"></span>`
+                symbol: `<span class="svg-15">${this.$svg('BilderHinweise')}</span>`
             })
         },
         p2() {
             return this.$translate('SIDEBAR_LEFT_ASSETS_INFO_PARAGRAPH_2', {
-                symbol: `<span class="svg-15" v-html="${this.$svg('HinzufuegenPlus')}"></span>`
+                symbol: `<span class="svg-15">${this.$svg('HinzufuegenPlus')}</span>`
             })
         },
         tips() {

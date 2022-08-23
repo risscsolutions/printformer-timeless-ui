@@ -67,6 +67,9 @@ msgstr "Gestalte deinen Werbeartikel mit den Tools aus dem Menü rechts: "
 msgid "SIDEBAR_LEFT_DEFAULT_ASSET_TAB"
 msgstr "Für Bilder (z.B. dein Logo) kannst du hier eine Bild-Box hinzufügen, Bilder bearbeiten oder löschen."
 
+msgid "FORMAL_SIDEBAR_LEFT_DEFAULT_ASSET_TAB"
+msgstr "Für Bilder (z.B. ihr Logo) können sie hier eine Bild-Box hinzufügen, Bilder bearbeiten oder löschen."
+
 msgid "SIDEBAR_LEFT_DEFAULT_TEXT_TAB"
 msgstr "Wenn du Text integrieren möchtest, füge zunächst eine Text-Box hinzu. Hier lassen sich Texte auch formatieren oder löschen."
 
@@ -290,7 +293,10 @@ msgid "SIDEBAR_RIGHT_ASSETS_UPLOAD_TITLE"
 msgstr "Bilder hochladen"
 
 msgid "SIDEBAR_RIGHT_ASSETS_UPLOAD_CONTENT"
-msgstr "vom Computer oder per Drag and Drop in die Box ziehen"
+msgstr "vom :computer oder\n per Drag and Drop\n in die Box ziehen"
+
+msgid "SIDEBAR_RIGHT_ASSETS_UPLOAD_CONTENT_COMPUTER"
+msgstr "Computer"
 
 msgid "SIDEBAR_RIGHT_ASSETS_QUALITY"
 msgstr "Bildqualität"
