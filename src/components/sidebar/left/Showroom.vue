@@ -17,7 +17,7 @@
                         </button>
                     </div>
                     <div style="transform-origin: 52px 40px; transform: rotate(270deg);">
-                        <b class="dark-gray-color">HINWEISE</b>
+                        <b class="dark-gray-color is-uppercase">{{ $translate('SIDEBAR_LEFT_NOTIFICATIONS_TITLE') }}</b>
                     </div>
                 </div>
                 <div class="caution-icon">
@@ -27,135 +27,10 @@
             <div v-show="showroomIsOpen" class="column p-4 dark-gray-color border-solid"
                  :class="{'sidebar-with-pager': isMultiPage, 'sidebar-no-pager': !isMultiPage}">
                 <upload-info v-if="uploading"></upload-info>
+                <trace-control-info v-else-if="traceControlsIsOpen"></trace-control-info>
                 <template v-else>
-                    <div v-if="notifications.length && !traceControlsIsOpen">
-                        <div v-for="notification in notifications">
-                            <b v-if="notification.type === 'error'" class="has-text-danger">Fehler</b>
-                            <b v-else-if="notification.type === 'info'" class="has-text-info">Info</b>
-                            <b v-else-if="notification.type === 'warning'" class="has-text-warning">Warnung</b>
-                            <div class="is-flex is-justify-content-space-between is-align-items-center">
-                                <p>{{ notification.message }}</p>
-                                <button v-if="notification.action" class="button is-info is-small"
-                                        @click="doAction(notification.id)">
-                                    <span class="icon is-small" v-html="$svg('Pfeil3', 'stroke-white')"></span>
-                                </button>
-                            </div>
-                            <hr class="divider my-3">
-                        </div>
-                    </div>
-                    <div class="columns is-multiline p-2 is-vcentered" v-if="!openControlTab && !traceControlsIsOpen">
-                        <div class="column is-24 p-2">
-                            <p class="mb-1 like-h4">TIPPS UND HINWEISE</p>
-                            <p>Gestalte deinen Werbeartikel mit den Tools aus dem Menü rechts: </p>
-                        </div>
-                        <div class="columns is-multiline p-2 is-vcentered" v-if="allowAddAssets || pageContainsAssets">
-                            <div class="column is-one-fifth has-text-centered" v-html="$svg('BilderHinweise')"></div>
-                            <div class="column is-four-fifths">
-                                <p>Für Bilder (z.B. dein Logo) kannst du hier eine Bild-Box hinzufügen, Bilder
-                                    bearbeiten
-                                    oder löschen.</p>
-                            </div>
-                        </div>
-                        <div class="columns is-multiline p-2 is-vcentered" v-if="allowAddTexts || pageContainsTexts">
-                            <div class="column is-one-fifth has-text-centered" v-html="$svg('TexteHinweise')"></div>
-                            <div class="column is-four-fifths">
-                                <p>Wenn du Text integrieren möchtest, füge zunächst eine Text-Box hinzu. Hier lassen
-                                    sich
-                                    Texte auch formatieren oder löschen.</p>
-                            </div>
-                        </div>
-                        <div class="columns is-multiline p-2 is-vcentered" v-if="allowAddShapes || pageContainsShapes">
-                            <div class="column is-one-fifth has-text-centered" v-html="$svg('FormenHinweise')"></div>
-                            <div class="column is-four-fifths">
-                                <p>Füge eine Form hinzu, z.B. um diese hinter deinen Text oder dein Logo zu legen.</p>
-                            </div>
-                        </div>
-                        <div class="columns is-multiline p-2 is-vcentered" v-if="hasVariants">
-                            <div class="column is-one-fifth has-text-centered" v-html="$svg('Farbpalette_grau')"></div>
-                            <div class="column is-four-fifths">
-                                <p>Hier kannst du die Farbe deines Werbeartikels ändern. </p>
-                            </div>
-                        </div>
-                    </div>
-                    <template v-if="traceControlsIsOpen">
-                        <template v-if="traceStep === 1">
-                            <p>Willkommen im Vectorizer</p><br>
-                            <p>Das von dir gewählte Druckverfahren erfordert Druckdaten, die nur eine bestimmte Anzahl
-                                von Farben erlauben. Unser Vectorizer hilft dabei, diese Druckdaten zu erstellen.</p>
-                            <p>Folge einfach den Hinweisen. Wir leiten dich Schritt für Schritt durch den Prozess, um
-                                deine optimalen Druckdaten zu erstellen.</p><br>
-                            <p class="like-h4"> Bestimme deine Wunschfarbe(n):</p>
-                            <p>Wähle auf der rechten Seite deine gewünschte Druckfarbe, bzw. Druckfarben aus.
-                            </p><br>
-                            <p> Tipp: Rechts siehst du unsere Farbvorschläge. Falls deine Wunschfarbe nicht dabei ist,
-                                kannst du diese später definieren.
-                            </p><br>
-                            <p> Tipp: Um den Vectorizer zu verlassen und neue Druckdaten auszuwählen, klicke auf
-                                „ABBRECHEN“.
-                            </p><br>
-                            <p> Tipp: Um deine Farbauswahl zu ändern, klicke auf „RÜCKGÄNGIG“.
-                            </p>
-                        </template>
-                        <template v-else-if="traceStep === 2">
-                            <p>Du hast deine Wunschfarbe(n) ausgewählt.
-                                Auf dieser Basis wurden verschiedene
-                                Vorschläge für dich erstellt.</p><br>
-                            <p>Bitte wähle jetzt einen Vorschlag aus,
-                                indem du auf „ÜBERNEHMEN“ klickst.</p><br>
-                            <p>Falls dir keiner der Vorschläge gefällt,
-                                kannst du die Farben auch selbst zuordnen.
-                                Klicke dazu auf „WEITER“.</p><br>
-                            <p>Tipp: Um den Vectorizer zu verlassen und
-                                neue Druckdaten auszuwählen, klicke auf
-                                „ABBRECHEN“.</p><br>
-                            <p> Tipp:
-                                Um deine Farbauswahl zu ändern, klicke
-                                auf „RÜCKGÄNGIG“.</p>
-                        </template>
-                        <template v-else-if="traceStep === 3">
-                            <p>Bevor du deine Druckfarben definierst, kannst du hier optional weitere Einstellungen
-                                vornehmen. Bestätige diese mit „ÜBERNEHMEN“.</p>
-                            <br>
-                            <p>Durch die Schieberegler kannst du Details deines Werbeaufdrucks bestimmen.</p>
-                            <br>
-                            <p>Rauschunterdrückung: Reduzierung von kleinen Bildstörungen, bei dem die Bildpixel
-                                geglättet werden.</p>
-                            <br>
-                            <p>Eckenglättung: Damit kannst du die Kanten deines Werbeaufdrucks glätten.</p>
-                            <br>
-                            <p>Bezierkurven: Optimierung von Krümmungen und Verbesserung von Rundungen rundum deine
-                                Grafik</p>
-                            <br>
-                            <p>Tipp: Um den Vectorizer zu verlassen und neue Druckdaten auszuwählen, klicke auf
-                                „ABBRECHEN“.</p>
-                            <br>
-                            <p>Tipp: Um doch einen Vorschlag von uns auszuwählen, klicke auf „RÜCKGÄNGIG“.</p>
-                        </template>
-                        <template v-else-if="traceStep === 4">
-                            <p>Du möchtest deine Farbzuordnung selbst bearbeiten</p>
-                            <br>
-                            <p>Klicke dafür auf der rechten Seite auf das Symbol
-                                <button class="button is-rounded color-button-round m-0" v-html="$svg('Plus')"></button>
-                            </p>
-                            <br>
-                            <p>Sobald du diese ausgewählt hast, geht es weiter mit Schritt 2: Druckfarben zuweisen</p>
-                            <br>
-                            <p>Klicke dafür auf das Symbol
-                                <button class="button is-rounded color-button-round m-0" v-html="$svg('Plus')"></button>
-                                der in deinem Bild gefundenen Farben und unterhalb ersetzte
-                                sie mit einer deiner Wunschfarben.
-                            </p>
-                            <p>Die Farbanpassungen in deinem Bild kannst du in Echtzeit sehen und ggf. wieder
-                                verändern.</p>
-                            <p>Klicke dann auf „ÜBERNEHMEN“. Du gelangst dann mit den fertigen Druckdaten zurück zum
-                                Editor.</p><br>
-                            <p> Tipp: Um den Vectorizer zu verlassen und neue Druckdaten auszuwählen, klicke auf
-                                „ABBRECHEN“.</p><br>
-                            <p>Tipp: Um zurück zur optionalen Optimierung deines Werbeaufdrucks zu gelangen, klicke auf
-                                „RÜCKGÄNGIG“.</p>
-                        </template>
-                    </template>
-                    <component v-else-if="openControlTab && !traceControlsIsOpen" :is="infoComponent"></component>
+                    <notifications></notifications>
+                    <component :is="infoComponent"></component>
                 </template>
                 <div>
                     <iframe ref="threedeeiframe"
@@ -195,32 +70,39 @@ import VariantsInfo from "./VariantsInfo";
 import {goToStep} from "../../../helpers";
 import {urlQueryObject} from "../../../helper";
 import UploadInfo from "./UploadInfo";
+import Notifications from "./Notifications";
+import DefaultInfo from "./DefaultInfo";
+import TraceControlInfo from "./TraceControlInfo";
 
 export default {
     name: "showroom",
-    components: {AssetsInfo, ShapesInfo, TextsInfo, ViewSettingsInfo, VariantsInfo, UploadInfo},
+    components: {
+        TraceControlInfo,
+        Notifications,
+        AssetsInfo,
+        ShapesInfo,
+        TextsInfo,
+        ViewSettingsInfo,
+        VariantsInfo,
+        UploadInfo,
+        DefaultInfo
+    },
 
     computed: {
         infoComponent() {
-            return `${this.openControlTab}-info`;
+            return `${this.openControlTab ? this.openControlTab : 'Default'}-info`;
         },
         isMultiPage() {
             return this.previewPages.length > 1;
         },
-        ...mapGetters(['allowAddTexts', 'allowAddAssets', 'allowAddShapes', 'hasVariants']),
         ...mapState([
             'editorConfig',
             'is3D',
-            'notifications',
             'openControlTab',
             'previewPages',
             'showroomIsOpen',
             'traceControlsIsOpen',
-            'editorLoaded',
-            'pageContainsAssets',
-            'pageContainsTexts',
-            'pageContainsShapes',
-            'traceStep'
+            'editorLoaded'
         ]),
     },
     mounted() {
@@ -265,16 +147,16 @@ export default {
                     modal: true,
                     buttons: [
                         {
-                            text: "JA",
-                            class: "button no-radius is-info my-0",
+                            text: this.$translateMultiple(['MODAL_LEAVE_EDITOR_WITH_ERRORS_CONFIRM', 'MODAL_CONFIRM']),
+                            class: "button no-radius is-info my-0 is-uppercase",
                             click: () => {
                                 confirm(true);
                                 dialog.dialog("close")
                             }
                         },
                         {
-                            text: "ABBRECHEN",
-                            class: "button no-radius is-dark dark-gray-background-color my-0",
+                            text: this.$translateMultiple(['MODAL_LEAVE_EDITOR_WITH_ERRORS_CANCEL', 'MODAL_CANCEL', 'CANCEL']),
+                            class: "button no-radius is-dark dark-gray-background-color my-0 is-uppercase",
                             click: () => {
                                 confirm(false)
                                 dialog.dialog("close");
@@ -301,16 +183,16 @@ export default {
                     modal: true,
                     buttons: [
                         {
-                            text: "JA",
-                            class: "button no-radius is-info my-0",
+                            text: this.$translateMultiple(['MODAL_ASSETS_ARE_LOADING_CONFIRM', 'MODAL_CONFIRM']),
+                            class: "button no-radius is-info my-0 is-uppercase",
                             click: () => {
                                 confirm(true);
                                 dialog.dialog("close")
                             }
                         },
                         {
-                            text: "ABBRECHEN",
-                            class: "button no-radius is-dark dark-gray-background-color my-0",
+                            text: this.$translateMultiple(['MODAL_ASSETS_ARE_LOADING_CANCEL', 'MODAL_CANCEL', 'CANCEL']),
+                            class: "button no-radius is-dark dark-gray-background-color my-0 is-uppercase",
                             click: () => {
                                 confirm(false)
                                 dialog.dialog("close");
@@ -338,16 +220,16 @@ export default {
                     modal: true,
                     buttons: [
                         {
-                            text: "JA",
-                            class: "button no-radius is-info my-0",
+                            text: this.$translateMultiple(['MODAL_HAS_SEEN_ALL_PAGES_CONFIRM', 'MODAL_CONFIRM']),
+                            class: "button no-radius is-info my-0 is-uppercase",
                             click: () => {
                                 confirm(true);
                                 dialog.dialog("close")
                             }
                         },
                         {
-                            text: "ABBRECHEN",
-                            class: "button no-radius is-dark dark-gray-background-color my-0",
+                            text: this.$translateMultiple(['MODAL_HAS_SEEN_ALL_PAGES_CANCEL', 'MODAL_CANCEL', 'CANCEL']),
+                            class: "button no-radius is-dark dark-gray-background-color my-0 is-uppercase",
                             click: () => {
                                 confirm(false)
                                 dialog.dialog("close");
@@ -364,7 +246,7 @@ export default {
             }
             const dialog = $('#confirm-user-entry-request');
             dialog
-                .text(`${user.name} möchte in den Editor. Den Entwurf speichern und abgeben?`)
+                .text(this.$translate('MODAL_OTHER_USER_REQUESTS_ENTRY_CONTENT', {user: user.name}))
                 .dialog({
                     classes: {
                         "ui-dialog": 'py-4 px-6',
@@ -377,8 +259,8 @@ export default {
                     modal: true,
                     buttons: [
                         {
-                            text: "JA",
-                            class: "button no-radius is-info my-0",
+                            text: this.$translateMultiple(['MODAL_OTHER_USER_REQUESTS_ENTRY_CONFIRM', 'MODAL_CONFIRM']),
+                            class: "button no-radius is-info my-0 is-uppercase",
                             click: () => {
                                 confirm(true);
                                 setTimeout(() => {
@@ -388,8 +270,8 @@ export default {
                             }
                         },
                         {
-                            text: "ABBRECHEN",
-                            class: "button no-radius is-dark dark-gray-background-color my-0",
+                            text: this.$translateMultiple(['MODAL_OTHER_USER_REQUESTS_ENTRY_CANCEL', 'MODAL_CANCEL', 'CANCEL']),
+                            class: "button no-radius is-dark dark-gray-background-color my-0 is-uppercase",
                             click: () => {
                                 confirm(false)
                                 dialog.dialog("close");
@@ -405,9 +287,6 @@ export default {
     methods: {
         icon(name) {
             return this.$svg(name);
-        },
-        doAction(id) {
-            this.$editor.getNotifications().doAction(id);
         },
         load3DModel() {
             if (this.is3D !== this.has3D) {

@@ -3,8 +3,11 @@
         <div class="columns is-multiline is-centered p-3">
             <div class="column is-24 py-0">
                 <div class="content">
-                    <h4 class="dark-gray-color like-h4 mb-1">PDF-Vorschau</h4>
-                    <span class="dark-gray-color ">Bitte überprüfen Sie gründlich das Doku-ment, insbesondere auf Rechtschreibfehler.</span>
+                    <h4 class="dark-gray-color like-h4 mb-1">{{ $translate('PDF-Vorschau') }}</h4>
+                    <span
+                        class="dark-gray-color ">
+                        {{ $translate('Bitte überprüfen Sie gründlich das Doku-ment, insbesondere auf Rechtschreibfehler.') }}
+                    </span>
                 </div>
             </div>
             <div class="column is-24">
@@ -12,8 +15,8 @@
             </div>
             <div class="column is-24 py-0">
                 <div class="columns">
-                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
-                        <span class="dark-gray-color">Vorschau herunterladen</span>
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
+                        <span class="dark-gray-color">{{ $translate('Vorschau herunterladen') }}</span>
                         <a class="icon" :href="previewConfig.downloadUrl" v-html="$svg('Download')"></a>
                     </div>
                 </div>

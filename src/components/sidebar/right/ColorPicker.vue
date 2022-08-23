@@ -5,21 +5,29 @@
                 <ul id="color-space-tabs">
                     <li v-if="managedColors.length"
                         :class="{'is-active': currentColorSpace === 'MANAGED'}">
-                        <a @click="setCurrentColorSpace('MANAGED')">SYSTEM</a>
+                        <a class="is-uppercase"
+                           @click="setCurrentColorSpace('MANAGED')">{{ $translate('COLOR_PICKER_SYSTEM') }}</a>
                     </li>
                     <li v-if="colorSpaces.includes('PANTONE')" :class="{'is-active': currentColorSpace === 'PANTONE'}">
-                        <a @click="setCurrentColorSpace('PANTONE')">PANTONE</a>
+                        <a class="is-uppercase"
+                           @click="setCurrentColorSpace('PANTONE')">{{ $translate('COLOR_PICKER_PANTONE') }}</a>
                     </li>
                     <li v-if="colorSpaces.includes('HKS')" :class="{'is-active': currentColorSpace === 'HKS'}">
-                        <a @click="setCurrentColorSpace('HKS')">HKS</a>
+                        <a class="is-uppercase" @click="setCurrentColorSpace('HKS')">
+                            {{ $translate('COLOR_PICKER_HKS') }}
+                        </a>
                     </li>
                     <li v-if="colorSpaces.includes('CMYK') || colorSpaces.length === 0 && managedColors.length === 0"
                         :class="{'is-active': currentColorSpace === 'CMYK'}">
-                        <a @click="setCurrentColorSpace('CMYK')">CMYK</a>
+                        <a class="is-uppercase" @click="setCurrentColorSpace('CMYK')">
+                            {{ $translate('COLOR_PICKER_CMYK') }}
+                        </a>
                     </li>
                     <li v-if="colorSpaces.includes('RGB')"
                         :class="{'is-active': currentColorSpace === 'RGB'}">
-                        <a @click="setCurrentColorSpace('RGB')">RGB</a>
+                        <a class="is-uppercase" @click="setCurrentColorSpace('RGB')">
+                            {{ $translate('COLOR_PICKER_RGB') }}
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -92,7 +100,7 @@
         <div class="has-text-centered content">
             <button class="button is-small is-info" @click="applyColor"
                     :disabled="!currentValueForColorSpace[currentColorSpace]">
-                <span>ÜBERNEHMEN</span>
+                <span class="is-uppercase">{{ apply }}</span>
             </button>
         </div>
     </div>
@@ -106,6 +114,12 @@ export default {
     name: "color-picker",
     computed: {
         ...mapState(['colorSpaces', 'managedColors', 'colorClosure', 'currentColorSpace', 'currentValueForColorSpace']),
+        apply() {
+            return this.$translateMultiple([
+                'COLOR_PICKER_APPLY',
+                'APPLY'
+            ]);
+        }
     },
     mounted() {
         const dialog = $('#color-picker');

@@ -16,7 +16,7 @@
             <button @click="downloadReportFile" class="button" style="width: 100%; margin-top: 0.25rem;">
                 <span v-html="pdfSvg"></span>
                 <span class="text-description has-text-weight-bold">
-                    {{ $i18n.translate('Report-PDF herunterladen') }}
+                    {{ $translate('PREFLIGHT_DOWNLOAD_REPORT') }}
                 </span>
             </button>
         </div>
@@ -57,7 +57,7 @@ export default {
         const dialog = $('#preflight-modal');
         dialog
             .dialog({
-                title: this.$i18n.translate('Ergebnis der Druckdatenprüfung'),
+                title: this.$translate('PREFLIGHT_MODAL_TITLE'),
                 classes: {
                     "ui-dialog": 'p-0',
                     "ui-dialog-titlebar": 'has-background-white is-size-6 has-text-weight-normal dark-gray-color py-4 px-4'
@@ -74,10 +74,10 @@ export default {
         return {
             pdfSvg: '',//this.$svg('pf_icon_pdf'),
 
-            hitTitle: this.$i18n.translate('Informationen'),
-            warningTitle: this.$i18n.translate('Warnungen'),
-            fixupTitle: this.$i18n.translate('Korrekturen'),
-            errorTitle: this.$i18n.translate('Fehler'),
+            hitTitle: this.$translate('PREFLIGHT_HITS_TITLE'),
+            warningTitle: this.$translate('PREFLIGHT_WARNINGS_TITLE'),
+            fixupTitle: this.$translate('PREFLIGHT_FIXUPS_TITLE'),
+            errorTitle: this.$translate('PREFLIGHT_ERRORS_TITLE'),
         }
     },
     methods: {

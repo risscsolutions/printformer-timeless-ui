@@ -5,7 +5,7 @@
                 <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background p-2"
                      style="cursor: pointer" :class="{'no-interaction': activeObject}" @click="addTextBlock">
                     <span :style="{'opacity': activeObject ? '50%' : '100%'}"
-                          class="dark-gray-color">Neue Textbox</span>
+                          class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_TEXTS_NEW') }}</span>
                     <span :style="{'opacity': activeObject ? '50%' : '100%'}" class="svg-30 is-flex m-1"
                           v-html="icon('HinzufuegenPlus')"></span>
                 </div>
@@ -17,7 +17,8 @@
                  class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
-                        <span class="dark-gray-color" style="line-height: 30px">Schriftart</span>
+                        <span class="dark-gray-color"
+                              style="line-height: 30px">{{ $translate('SIDEBAR_RIGHT_TEXTS_FONT') }}</span>
                         <select name="fonts" id="font-family">
                             <option v-for="font in allFontsFlat" :value="font.postscript_name">
                                 {{ font.postscript_name }}
@@ -32,7 +33,8 @@
             <div v-show="isAllowed('font-size') && allFontSizes" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
-                        <span class="dark-gray-color" style="line-height: 30px">Schriftgröße</span>
+                        <span class="dark-gray-color"
+                              style="line-height: 30px">{{ $translate('SIDEBAR_RIGHT_TEXTS_FONT_SIZE') }}</span>
                         <select class="width-140" name="fontSizes" id="font-size">
                             <option v-for="fontSize in allFontSizes" :value="fontSize">
                                 {{ fontSize }} pt
@@ -48,7 +50,7 @@
                 <div class="content">
                     <div class="columns">
                         <div class="column is-13 is-flex py-2 is-align-items-center">
-                            <span class="dark-gray-color">Schriftschnitt</span>
+                            <span class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_TEXTS_FONT_STYLE') }}</span>
                         </div>
                         <div class="column is-flex is-justify-content-flex-end py-2 is-align-items-center">
                             <button @click="textStyle" value="bold" id="bold-button" title=""
@@ -69,7 +71,7 @@
             <div v-show="isAllowed('color')" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
-                        <span class="dark-gray-color">Schriftfarbe</span>
+                        <span class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_TEXTS_FONT_COLOR') }}</span>
                         <button
                             :style="{'background-color': (activeObject || {}).color ? activeObject.color.displayColor : null}"
                             :class="{'chess-background': (activeObject || {}).color === 'none'}"
@@ -86,22 +88,23 @@
                 <div class="content">
                     <div class="columns">
                         <div class="column is-flex py-2 is-align-items-center">
-                            <span class="dark-gray-color">Ausrichtung Text</span>
+                            <span class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_TEXTS_ALIGN') }}</span>
                         </div>
                         <div class="column is-flex is-justify-content-flex-end py-2 is-align-items-center">
-                            <button @click="textAlign('justify')" title="Blocksatz"
+                            <button @click="textAlign('justify')"
+                                    :title="$translate('SIDEBAR_RIGHT_TEXTS_ALIGN_JUSTIFY')"
                                     class="button is-small muted-button width-30">
                                 <span class="svg-30 no-interaction is-flex" v-html="icon('Blocksatz')"></span>
                             </button>
-                            <button @click="textAlign('left')" title="Linksbündig"
+                            <button @click="textAlign('left')" :title="$translate('SIDEBAR_RIGHT_TEXTS_ALIGN_LEFT')"
                                     class="button is-small ml-1 muted-button width-30">
                                 <span class="svg-30 no-interaction is-flex" v-html="icon('Linksbuendig')"></span>
                             </button>
-                            <button @click="textAlign('center')" title="Zentriert"
+                            <button @click="textAlign('center')" :title="$translate('SIDEBAR_RIGHT_TEXTS_ALIGN_CENTER')"
                                     class="button is-small ml-1 muted-button width-30">
                                 <span class="svg-30 no-interaction is-flex" v-html="icon('zentriert')"></span>
                             </button>
-                            <button @click="textAlign('right')" title="Rechtsbündig"
+                            <button @click="textAlign('right')" :title="$translate('SIDEBAR_RIGHT_TEXTS_ALIGN_RIGHT')"
                                     class="button is-small ml-1 muted-button width-30">
                                 <span class="svg-30 no-interaction is-flex" v-html="icon('rechtsbuendig')"></span>
                             </button>
@@ -116,18 +119,21 @@
                 <div class="content">
                     <div class="columns">
                         <div class="column is-flex py-2 is-align-items-center">
-                            <span class="dark-gray-color">Aufzählung</span>
+                            <span class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_TEXTS_LIST') }}</span>
                         </div>
                         <div class="column is-flex is-justify-content-flex-end py-2 is-align-items-center">
-                            <button @click="textBulletPoints('alphabetic')" title="Alphabetisch"
+                            <button @click="textBulletPoints('alphabetic')"
+                                    :title="$translate('SIDEBAR_RIGHT_TEXTS_LIST_ALPHABETIC')"
                                     class="button is-small muted-button width-30">
                                 <span class="svg-30 no-interaction is-flex" v-html="icon('AufzaehlungPunkte')"></span>
                             </button>
-                            <button @click="textBulletPoints('bullet')" title="Bullet"
+                            <button @click="textBulletPoints('bullet')"
+                                    :title="$translate('SIDEBAR_RIGHT_TEXTS_LIST_BULLET')"
                                     class="button is-small ml-1 muted-button width-30">
                                 <span class="svg-30 no-interaction is-flex" v-html="icon('AufzaehlungEcken')"></span>
                             </button>
-                            <button @click="textBulletPoints('number')" title="Zahlen"
+                            <button @click="textBulletPoints('number')"
+                                    :title="$translate('SIDEBAR_RIGHT_TEXTS_LIST_NUMERIC')"
                                     class="button is-small ml-1 muted-button width-30">
                                 <span class="svg-30 no-interaction is-flex" v-html="icon('AufzaehlungZahlen')"></span>
                             </button>
@@ -141,7 +147,7 @@
             <div v-show="isAllowed('delete')" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
-                        <span class="dark-gray-color">Textbox löschen</span>
+                        <span class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_TEXTS_DELETE') }}</span>
                         <span @click="deleteTextBox" style="cursor: pointer" class="svg-30 is-flex"
                               v-html="icon('Loeschen')"></span>
                     </div>
@@ -155,7 +161,7 @@
                     <div class="columns is-multiline">
                         <div class="column is-flex is-flex-direction-column is-align-items-center py-2">
                             <label class="has-text-weight-medium blue-color mb-2" for="extendedEditSwitch">
-                                Erweiterte Text-Bearbeitung
+                                {{ $translate('SIDEBAR_RIGHT_TEXTS_EXTENDED_EDIT') }}
                             </label>
                             <div class="onoffswitch">
                                 <input type="checkbox" :checked="extendedEditSwitchOn" @click="enableExtendedEdit"
@@ -320,16 +326,16 @@ export default {
                 modal: true,
                 buttons: [
                     {
-                        text: "LÖSCHEN",
-                        class: "button no-radius is-info my-0",
+                        text: this.$translateMultiple(['MODAL_TEXTS_DELETE_CONFIRM', 'MODAL_DELETE_CONFIRM']),
+                        class: "button no-radius is-info my-0 is-uppercase",
                         click: () => {
                             this.$catch(this.activeObject.delete())
                                 .then(() => dialog.dialog("close"));
                         }
                     },
                     {
-                        text: "ABBRECHEN",
-                        class: "button no-radius is-dark dark-gray-background-color my-0",
+                        text: this.$translateMultiple(['MODAL_TEXTS_DELETE_CANCEL', 'MODAL_DELETE_CANCEL', 'CANCEL']),
+                        class: "button no-radius is-dark dark-gray-background-color my-0 is-uppercase",
                         click: () => {
                             dialog.dialog("close");
                         }
@@ -341,7 +347,7 @@ export default {
         addTextBlock() {
             this.$catch(
                 this.$editor.addTextBlock(this.allFontsFlat[0].postscript_name, 16)
-                    .then(textBlock => textBlock.setContent('Hier steht ein Beispieltext :)'))
+                    .then(textBlock => textBlock.setContent(this.$translate('TEXTS_DEFAULT_TEXT_BLOCK_CONTENT')))
             );
         },
         changeFont(postscriptName) {

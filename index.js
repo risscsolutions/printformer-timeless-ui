@@ -14,8 +14,6 @@ import VueAgile from "vue-agile";
 import Connector from "@rissc/printformer-editor-client/dist/Connector";
 
 import PagePreview from "./src/components/PagePreview";
-import FormFields from "./src/components/FormFields";
-import FormField from "./src/components/FormField";
 import Variants from "./src/components/sidebar/right/Variants";
 import Assets from "./src/components/sidebar/right/Assets";
 import Shapes from "./src/components/sidebar/right/Shapes";
@@ -35,8 +33,6 @@ import Preflight from "./src/components/preflight/Preflight";
 Vue.prototype.$svg = require('./src/svg.js');
 Vue.use(Vuex);
 Vue.use(VueAgile);
-Vue.component('form-fields', FormFields);
-Vue.component('form-field', FormField);
 Vue.component('variants', Variants);
 Vue.component('assets', Assets);
 Vue.component('texts', Texts);
@@ -97,6 +93,8 @@ window.onload = () => {
 
     const store = makeStore()
 
+    Vue.prototype.$translate = (k, r) => k;
+
     new Vue({
         store, render: createElement => createElement(FullScreenLoader)
     }).$mount("#full-screen-loader");
@@ -109,9 +107,27 @@ window.onload = () => {
             store.commit('setManagedColors', colorSet.colors);
             store.commit('setColorSpaces', colorSet.colorSpaces);
         });
+        let isFormal = false;
+        window.events.on(Events.EDITOR_LOADED, (config) => {
+            editor.getFormEditor().resolveDataKey('pf-ca-Anrede').then(dkv => isFormal = dkv?.value?.text === 'Sie');
+        });
 
         editor.getTranslations().then(i18n => {
-            Vue.prototype.$i18n = i18n
+            Vue.prototype.$translate = (key, r) => {
+                if (isFormal) {
+                    const formalKey = `FORMAL_${key}`;
+                    const translated = i18n.translate(formalKey, r);
+                    if (translated && translated !== formalKey) return translated.replace('\n', "<br>");
+                }
+                return i18n.translate(key, r).replace('\n', "<br>");
+            }
+            Vue.prototype.$translateMultiple = (keys, r) => {
+                for (const key of keys) {
+                    const translated = i18n.translate(key, r).replace('\n', "<br>");
+                    if (translated && translated !== key) return translated;
+                }
+                return keys[0];
+            }
 
             new Vue({
                 store, render: createElement => createElement(Controls)

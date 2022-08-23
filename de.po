@@ -1,0 +1,581 @@
+msgid "FULLSCREEN_LOADER_TEXT"
+msgstr "Wird geladen..."
+
+msgid "TOP_BAR_BACK"
+msgstr "zurück zum Artikel"
+
+msgid "TOP_BAR_SAVE"
+msgstr "Entwurf speichern"
+
+msgid "TOP_BAR_SAVED"
+msgstr "Dein Entwurf wurde für dich gespeichert"
+
+msgid "EDITOR_LOADER_SAVE_TEXT"
+msgstr "Entwurf wird gespeichert..."
+
+msgid "TOP_BAR_CONTINUE"
+msgstr "Weiter zur Vorschau"
+
+
+msgid "PREFLIGHT_MODAL_TITLE"
+msgstr "Ergebnis der Druckdatenprüfung"
+
+msgid "PREFLIGHT_DOWNLOAD_REPORT"
+msgstr "Report-PDF herunterladen"
+
+msgid "PREFLIGHT_ERRORS_TITLE"
+msgstr "Fehler"
+
+msgid "PREFLIGHT_FIXUPS_TITLE"
+msgstr "Korrekturen"
+
+msgid "PREFLIGHT_WARNINGS_TITLE"
+msgstr "Warnungen"
+
+msgid "PREFLIGHT_HITS_TITLE"
+msgstr "Informationen"
+
+msgid "PREFLIGHT_TABLE_HEADER_NAME"
+msgstr "Name"
+
+msgid "PREFLIGHT_TABLE_HEADER_DESCRIPTION"
+msgstr "Beschreibung"
+
+
+msgid "SIDEBAR_LEFT_NOTIFICATIONS_TITLE"
+msgstr "Hinweise"
+
+msgid "SIDEBAR_LEFT_NOTIFICATIONS_ERROR"
+msgstr "Fehler"
+
+msgid "SIDEBAR_LEFT_NOTIFICATIONS_INFO"
+msgstr "Info"
+
+msgid "SIDEBAR_LEFT_NOTIFICATIONS_WARNING"
+msgstr "Warnung"
+
+msgid "SIDEBAR_LEFT_NOTIFICATIONS_WARNING"
+msgstr "Warnung"
+
+
+msgid "SIDEBAR_LEFT_DEFAULT_TITLE"
+msgstr "Tipps und Hinweise"
+
+msgid "SIDEBAR_LEFT_DEFAULT_CONTENT"
+msgstr "Gestalte deinen Werbeartikel mit den Tools aus dem Menü rechts: "
+
+msgid "SIDEBAR_LEFT_DEFAULT_ASSET_TAB"
+msgstr "Für Bilder (z.B. dein Logo) kannst du hier eine Bild-Box hinzufügen, Bilder bearbeiten oder löschen."
+
+msgid "SIDEBAR_LEFT_DEFAULT_TEXT_TAB"
+msgstr "Wenn du Text integrieren möchtest, füge zunächst eine Text-Box hinzu. Hier lassen sich Texte auch formatieren oder löschen."
+
+msgid "SIDEBAR_LEFT_DEFAULT_SHAPE_TAB"
+msgstr "Füge eine Form hinzu, z.B. um diese hinter deinen Text oder dein Logo zu legen."
+
+msgid "SIDEBAR_LEFT_DEFAULT_VARIANTS_TAB"
+msgstr "Hier kannst du die Farbe deines Werbeartikels ändern. "
+
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_1_PARAGRAPH_1"
+msgstr "Willkommen im Vectorizer"
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_1_PARAGRAPH_2"
+msgstr "Das von dir gewählte Druckverfahren erfordert Druckdaten, die nur eine bestimmte Anzahl von Farben erlauben. Unser Vectorizer hilft dabei, diese Druckdaten zu erstellen."
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_1_PARAGRAPH_3"
+msgstr "Folge einfach den Hinweisen. Wir leiten dich Schritt für Schritt durch den Prozess, um deine optimalen Druckdaten zu erstellen."
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_1_PARAGRAPH_4"
+msgstr "Bestimme deine Wunschfarbe(n):"
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_1_PARAGRAPH_5"
+msgstr "Wähle auf der rechten Seite deine gewünschte Druckfarbe, bzw. Druckfarben aus."
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_1_PARAGRAPH_6"
+msgstr "Tipp: Rechts siehst du unsere Farbvorschläge. Falls deine Wunschfarbe nicht dabei ist, kannst du diese später definieren."
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_1_PARAGRAPH_7"
+msgstr "Tipp: Um den Vectorizer zu verlassen und neue Druckdaten auszuwählen, klicke auf „ABBRECHEN“."
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_1_PARAGRAPH_8"
+msgstr "Tipp: Um deine Farbauswahl zu ändern, klicke auf „RÜCKGÄNGIG“."
+
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_2_PARAGRAPH_1"
+msgstr "Du hast deine Wunschfarbe(n) ausgewählt. Auf dieser Basis wurden verschiedene Vorschläge für dich erstellt."
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_2_PARAGRAPH_2"
+msgstr "Bitte wähle jetzt einen Vorschlag aus, indem du auf „ÜBERNEHMEN“ klickst."
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_2_PARAGRAPH_3"
+msgstr "Falls dir keiner der Vorschläge gefällt, kannst du die Farben auch selbst zuordnen. Klicke dazu auf „WEITER“."
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_2_PARAGRAPH_4"
+msgstr "Tipp: Um den Vectorizer zu verlassen und neue Druckdaten auszuwählen, klicke auf „ABBRECHEN“."
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_2_PARAGRAPH_5"
+msgstr "Tipp: Um deine Farbauswahl zu ändern, klicke auf „RÜCKGÄNGIG“."
+
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_3_PARAGRAPH_1"
+msgstr "Bevor du deine Druckfarben definierst, kannst du hier optional weitere Einstellungen vornehmen. Bestätige diese mit „ÜBERNEHMEN“."
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_3_PARAGRAPH_2"
+msgstr "Durch die Schieberegler kannst du Details deines Werbeaufdrucks bestimmen."
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_3_PARAGRAPH_3"
+msgstr "Rauschunterdrückung: Reduzierung von kleinen Bildstörungen, bei dem die Bildpixel geglättet werden."
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_3_PARAGRAPH_4"
+msgstr "Eckenglättung: Damit kannst du die Kanten deines Werbeaufdrucks glätten."
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_3_PARAGRAPH_5"
+msgstr "Bezierkurven: Optimierung von Krümmungen und Verbesserung von Rundungen rundum deine Grafik"
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_3_PARAGRAPH_6"
+msgstr "Tipp: Um den Vectorizer zu verlassen und neue Druckdaten auszuwählen, klicke auf „ABBRECHEN“."
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_3_PARAGRAPH_7"
+msgstr "Tipp: Um doch einen Vorschlag von uns auszuwählen, klicke auf „RÜCKGÄNGIG“."
+
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_4_PARAGRAPH_1"
+msgstr "Du möchtest deine Farbzuordnung selbst bearbeiten"
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_4_PARAGRAPH_2"
+msgstr "Klicke dafür auf der rechten Seite auf das Symbol :symbol"
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_4_PARAGRAPH_3"
+msgstr "Sobald du diese ausgewählt hast, geht es weiter mit Schritt 2: Druckfarben zuweisen"
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_4_PARAGRAPH_4"
+msgstr "Klicke dafür auf das Symbol :symbol der in deinem Bild gefundenen Farben und unterhalb ersetzte sie mit einer deiner Wunschfarben."
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_4_PARAGRAPH_5"
+msgstr "Die Farbanpassungen in deinem Bild kannst du in Echtzeit sehen und ggf. wieder verändern."
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_4_PARAGRAPH_6"
+msgstr "Klicke dann auf „ÜBERNEHMEN“. Du gelangst dann mit den fertigen Druckdaten zurück zum Editor."
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_4_PARAGRAPH_7"
+msgstr "Tipp: Um den Vectorizer zu verlassen und neue Druckdaten auszuwählen, klicke auf „ABBRECHEN“."
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_4_PARAGRAPH_8"
+msgstr "Tipp: Um zurück zur optionalen Optimierung deines Werbeaufdrucks zu gelangen, klicke auf „RÜCKGÄNGIG“."
+
+
+#msgid "SIDEBAR_LEFT_ASSETS_TITLE"
+#msgstr "Tipps und Hinweise"
+
+msgid "SIDEBAR_LEFT_ASSETS_INFO_PARAGRAPH_1"
+msgstr "Wenn du ein Bild (z.B. dein Logo) auf der Werbefläche abbilden möchtest, klicke im Menü rechts auf das Symbol :symbol"
+
+msgid "SIDEBAR_LEFT_ASSETS_INFO_PARAGRAPH_2"
+msgstr "Klicke zuerst auf dieses Symbol :symbol und wähle dein Bild aus oder du ziehst dein Bild direkt per Drag & Drop in das Feld „Bilder hochladen“ Bitte verwende eins dieser Dateiformate:"
+
+msgid "SIDEBAR_LEFT_ASSETS_TIP_PARAGRAPH_1"
+msgstr "Deine hochgeladenen Bilder werden automatisch geprüft und in „Meine Bilder“ für dich gespeichert. Bitte melde dich dafür zunächst an."
+
+msgid "SIDEBAR_LEFT_ASSETS_TIP_1_TITLE"
+msgstr "Ein Klick auf die Bild-Box"
+
+msgid "SIDEBAR_LEFT_ASSETS_TIP_1_CONTENT"
+msgstr "Ändere die Größe des Rahmens, drehe und verschiebe die Box, wenn die Vorlage es zulässt."
+
+msgid "SIDEBAR_LEFT_ASSETS_TIP_2_TITLE"
+msgstr "Doppelklick auf die Bild-Box"
+
+msgid "SIDEBAR_LEFT_ASSETS_TIP_2_CONTENT"
+msgstr "Verschiebe dein Bild und zoome innerhalb der Bild-Box."
+
+msgid "SIDEBAR_LEFT_ASSETS_TIP_3_TITLE"
+msgstr "Erweiterte Bearbeitung"
+
+msgid "SIDEBAR_LEFT_ASSETS_TIP_3_CONTENT"
+msgstr "Hier kannst du Hilfslinien einzeichnen, die Ausrichtung und die Transparenz deines Bildes anpassen. Lege hier auch ein Raster fest, um die dir Bearbeitung zu erleichtern."
+
+#msgid "SIDEBAR_LEFT_TEXTS_TITLE"
+#msgstr "Tipps und Hinweise"
+
+msgid "SIDEBAR_LEFT_TEXTS_INFO_PARAGRAPH_1"
+msgstr "Wenn du einen Text auf der Werbefläche abbilden möchtest, klicke im Menü rechts auf das Symbol :symbol und füge zuerst eine Text-Box hinzu."
+
+msgid "SIDEBAR_LEFT_TEXTS_INFO_PARAGRAPH_2"
+msgstr "Du kannst sowohl den Text in der Box als auch die Box selbst bearbeiten."
+
+msgid "SIDEBAR_LEFT_TEXTS_TIP_1_TITLE"
+msgstr "Ein Klick auf die Text-Box"
+
+msgid "SIDEBAR_LEFT_TEXTS_TIP_1_CONTENT"
+msgstr "Ändere die Größe des Rahmens, drehe und verschiebe die Box."
+
+msgid "SIDEBAR_LEFT_TEXTS_TIP_2_TITLE"
+msgstr "Doppelklick auf die Text-Box"
+
+msgid "SIDEBAR_LEFT_TEXTS_TIP_2_CONTENT"
+msgstr "Formatiere deinen Text innerhalb der Text-Box, z.B. Schriftart und Schriftgröße."
+
+msgid "SIDEBAR_LEFT_TEXTS_TIP_3_TITLE"
+msgstr "Erweiterte Bearbeitung"
+
+msgid "SIDEBAR_LEFT_TEXTS_TIP_3_CONTENT"
+msgstr "Hier kannst du die Hintergrundfarbe, den Zeilenabstand und die Transparenz deines Textes anpassen. Lege hier auch die Ebenen fest, auf denen deine Texte erscheinen."
+
+#msgid "SIDEBAR_LEFT_SHAPES_TITLE"
+#msgstr "Tipps und Hinweise"
+
+msgid "SIDEBAR_LEFT_SHAPES_INFO_PARAGRAPH_1"
+msgstr "Wenn du eine Form (z.B. ein Rechteck oder einen Kreis) auf der Werbefläche abbilden möchtest, klicke im Menü rechts auf das Symbol :symbol und wähle deine gewünschte Form."
+
+msgid "SIDEBAR_LEFT_SHAPES_INFO_PARAGRAPH_2"
+msgstr "Du kannst die Formen einfach mit der Maus größer oder kleiner ziehen."
+
+msgid "SIDEBAR_LEFT_SHAPES_TIP_PARAGRAPH_1"
+msgstr "Nutze den Bereich „Ebenen“ in der erweiterten Bearbeitung, um eine Form z.B. hinter einen Text zu legen."
+
+msgid "SIDEBAR_LEFT_SHAPES_TIP_PARAGRAPH_2"
+msgstr "Platziere deine Form ganz einfach mit Drag & Drop in deiner Werbefläche."
+
+
+msgid "SIDEBAR_LEFT_UPLOAD_INFO"
+msgstr "Die Verarbeitung deiner Datei läuft.\nDies kann einige Minuten dauern. Bitte habe solange Geduld."
+
+msgid "SIDEBAR_LEFT_UPLOAD_INFO_STEP"
+msgstr "Schritt :step:"
+
+msgid "SIDEBAR_LEFT_UPLOAD_INFO_STEP_1_TEXT"
+msgstr "Deine Datei wird hochgeladen."
+
+msgid "SIDEBAR_LEFT_UPLOAD_INFO_STEP_2_TEXT"
+msgstr "Deine Datei wird geprüft."
+
+msgid "SIDEBAR_LEFT_UPLOAD_INFO_STEP_3_TEXT"
+msgstr "Datei-Vorschau wird generiert."
+
+#msgid "SIDEBAR_LEFT_SETTINGS_TITLE"
+#msgstr "Tipps und Hinweise"
+
+msgid "SIDEBAR_LEFT_SETTINGS_INFO"
+msgstr "Aktiviere das Raster, um die die Ausrichtung der verschiedenen Boxen zu erleichtern."
+
+msgid "SIDEBAR_LEFT_SETTINGS_TIP"
+msgstr "Die Größe und Farbe des Rasters kannst du nach deinen Wünschen umstellen. Das hat für die Druckdaten keine Konsequenz, sondern dient nur der besseren Sichtbarkeit für dich."
+
+msgid "SIDEBAR_RIGHT_SETTINGS"
+msgstr "Ansicht"
+
+msgid "SIDEBAR_RIGHT_SETTINGS_GRID"
+msgstr "Raster"
+
+msgid "SIDEBAR_RIGHT_SETTINGS_GRID_COLOR"
+msgstr "Rasterfarbe"
+
+msgid "SIDEBAR_RIGHT_SETTINGS_GRID_SIZE"
+msgstr "Rastergröße (in :unit)"
+
+msgid "SIDEBAR_RIGHT_VARIANTS"
+msgstr "Produktfarbe ändern"
+
+msgid "SIDEBAR_RIGHT_VARIANTS_TITLE"
+msgstr "Wähle deine Farbe aus"
+
+msgid "SIDEBAR_RIGHT_ASSETS"
+msgstr "Bilder"
+
+msgid "SIDEBAR_RIGHT_ASSETS_NEW"
+msgstr "Neue Bildbox"
+
+msgid "SIDEBAR_RIGHT_ASSETS_UPLOAD_TITLE"
+msgstr "Bilder hochladen"
+
+msgid "SIDEBAR_RIGHT_ASSETS_UPLOAD_CONTENT"
+msgstr "vom Computer oder per Drag and Drop in die Box ziehen"
+
+msgid "SIDEBAR_RIGHT_ASSETS_QUALITY"
+msgstr "Bildqualität"
+
+msgid "SIDEBAR_RIGHT_ASSETS_ZOOM"
+msgstr "Bild zoomen"
+
+msgid "SIDEBAR_RIGHT_ASSETS_ZOOM_IN"
+msgstr "Vergrößern"
+
+msgid "SIDEBAR_RIGHT_ASSETS_ZOOM_OUT"
+msgstr "Verkleinern"
+
+msgid "SIDEBAR_RIGHT_ASSETS_ZOOM_FIT"
+msgstr "Rahmen füllen"
+
+msgid "SIDEBAR_RIGHT_ASSETS_DELETE"
+msgstr "Bildbox löschen"
+
+msgid "SIDEBAR_RIGHT_ASSETS_EXTENDED_EDIT"
+msgstr "Erweiterte Bild-Bearbeitung"
+
+msgid "SIDEBAR_RIGHT_ASSETS_TRACE"
+msgstr "Bild nachzeichnen"
+
+msgid "SIDEBAR_RIGHT_ASSETS_USER_MEDIA"
+msgstr "Deine Bilder"
+
+#msgid "MODAL_ASSETS_DELETE_CONFIRM"
+#msgstr "LÖSCHEN"
+
+#msgid "MODAL_ASSETS_DELETE_CANCEL"
+#msgstr "LÖSCHEN"
+
+msgid "SIDEBAR_RIGHT_SHAPES"
+msgstr "Formen"
+
+msgid "SIDEBAR_RIGHT_SHAPES_TITLE"
+msgstr "Form auswählen"
+
+msgid "SIDEBAR_RIGHT_SHAPES_COLOR"
+msgstr "Formfarbe"
+
+msgid "SIDEBAR_RIGHT_SHAPES_DELETE"
+msgstr "Form löschen"
+
+msgid "SIDEBAR_RIGHT_SHAPES_EXTENDED_EDIT"
+msgstr "Erweiterte Form-Bearbeitung"
+
+#msgid "MODAL_SHAPES_DELETE_CONFIRM"
+#msgstr "LÖSCHEN"
+
+#msgid "MODAL_SHAPES_DELETE_CANCEL"
+#msgstr "LÖSCHEN"
+
+msgid "SIDEBAR_RIGHT_TEXTS"
+msgstr "Texte"
+
+msgid "SIDEBAR_RIGHT_TEXTS_NEW"
+msgstr "Neue Textbox"
+
+msgid "SIDEBAR_RIGHT_TEXTS_FONT"
+msgstr "Schriftart"
+
+msgid "SIDEBAR_RIGHT_TEXTS_FONT_SIZE"
+msgstr "Schriftgröße"
+
+msgid "SIDEBAR_RIGHT_TEXTS_FONT_STYLE"
+msgstr "Schriftschnitt"
+
+msgid "SIDEBAR_RIGHT_TEXTS_FONT_COLOR"
+msgstr "Schriftfarbe"
+
+msgid "SIDEBAR_RIGHT_TEXTS_ALIGN"
+msgstr "Ausrichtung Text"
+
+msgid "SIDEBAR_RIGHT_TEXTS_ALIGN_JUSTIFY"
+msgstr "Blocksatz"
+
+msgid "SIDEBAR_RIGHT_TEXTS_ALIGN_LEFT"
+msgstr "Linksbündig"
+
+msgid "SIDEBAR_RIGHT_TEXTS_ALIGN_CENTER"
+msgstr "Zentriert"
+
+msgid "SIDEBAR_RIGHT_TEXTS_ALIGN_RIGHT"
+msgstr "Rechtsbündig"
+
+msgid "SIDEBAR_RIGHT_TEXTS_LIST"
+msgstr "Aufzählung"
+
+msgid "SIDEBAR_RIGHT_TEXTS_LIST_ALPHABETIC"
+msgstr "Alphabetisch"
+
+msgid "SIDEBAR_RIGHT_TEXTS_LIST_BULLET"
+msgstr "Bullet"
+
+msgid "SIDEBAR_RIGHT_TEXTS_LIST_NUMERIC"
+msgstr "Zahlen"
+
+msgid "SIDEBAR_RIGHT_TEXTS_DELETE"
+msgstr "Textbox löschen"
+
+msgid "SIDEBAR_RIGHT_TEXTS_EXTENDED_EDIT"
+msgstr "Erweiterte Text-Bearbeitung"
+
+msgid "SIDEBAR_RIGHT_TEXTS_LEADING"
+msgstr "Zeilenabstand"
+
+msgid "TEXTS_DEFAULT_TEXT_BLOCK_CONTENT"
+msgstr "Hier steht ein Beispieltext :)"
+
+#msgid "MODAL_TEXTS_DELETE_CONFIRM"
+#msgstr "LÖSCHEN"
+
+#msgid "MODAL_TEXTS_DELETE_CANCEL"
+#msgstr "LÖSCHEN"
+
+msgid "SIDEBAR_RIGHT_EXTENDED_EDIT_FILL_COLOR"
+msgstr "Hintergrundfarbe"
+
+msgid "SIDEBAR_RIGHT_EXTENDED_EDIT_FILL_COLOR_CURRENT"
+msgstr "Farbe :color gewählt"
+
+msgid "SIDEBAR_RIGHT_EXTENDED_EDIT_OPACITY"
+msgstr "Transparenz"
+
+msgid "SIDEBAR_RIGHT_EXTENDED_EDIT_ALIGN"
+msgstr "Ausrichtung"
+
+msgid "SIDEBAR_RIGHT_EXTENDED_EDIT_ALIGN_HORIZONTAL"
+msgstr "Horizontale\nMittelachse"
+
+msgid "SIDEBAR_RIGHT_EXTENDED_EDIT_ALIGN_VERTICAL"
+msgstr "Vertikale\nMittelachse"
+
+msgid "SIDEBAR_RIGHT_EXTENDED_EDIT_Z_INDEX"
+msgstr "Ebenen"
+
+msgid "SIDEBAR_RIGHT_EXTENDED_EDIT_Z_INDEX_UP"
+msgstr "Eine Ebene\nnach vorne"
+
+msgid "SIDEBAR_RIGHT_EXTENDED_EDIT_Z_INDEX_DOWN"
+msgstr "Eine Ebene\nnach hinten"
+
+msgid "SIDEBAR_RIGHT_EXTENDED_EDIT_Z_INDEX_TO_TOP"
+msgstr "In den\nVordergrund"
+
+msgid "SIDEBAR_RIGHT_EXTENDED_EDIT_Z_INDEX_TO_BOTTOM"
+msgstr "In den\nVordergrund"
+
+msgid "SIDEBAR_RIGHT_EXTENDED_EDIT_DUPLICATE"
+msgstr "Duplizieren"
+
+msgid "COLOR_PICKER_SYSTEM"
+msgstr "System"
+
+msgid "COLOR_PICKER_PANTONE"
+msgstr "Pantone"
+
+msgid "COLOR_PICKER_HKS"
+msgstr "HKS"
+
+msgid "COLOR_PICKER_CMYK"
+msgstr "CMYK"
+
+msgid "COLOR_PICKER_RGB"
+msgstr "RGB"
+
+#msgid "COLOR_PICKER_APPLY"
+#msgstr "Übernehmen"
+
+msgid "VECTORIZER_STEP_1_CENTER_INFO"
+msgstr "Nach Farbauswahl erscheint\nhier deine Logovorschau"
+
+msgid "VECTORIZER_STEP_1_TITLE"
+msgstr "Bestimme deine Druckfarben"
+
+msgid "VECTORIZER_STEP_1_INFO_SINGLE_COLOR"
+msgstr "Wähle eine Druckfarbe aus. Klicke dafür auf den entsprechenden Farbkreis. Bestätige dann deine Auswahl mit „übernehmen“."
+
+msgid "VECTORIZER_STEP_1_INFO_MULTIPLE_COLORS"
+msgstr "Wähle max. :colorLimit Druckfarben aus. Klicke dafür auf die entsprechenden Farbkreise. Bestätige dann deine Auswahl mit „übernehmen“."
+
+msgid "VECTORIZER_STEP_1_COLOR_SUGGESTIONS"
+msgstr "Unsere Farbvorschläge für dich:"
+
+#msgid "VECTORIZER_STEP_1_APPLY"
+#msgstr "Übernehmen"
+
+msgid "VECTORIZER_STEP_2_CENTER_INFO"
+msgstr "So könnte dein Werbeaufdruck mit deinen ausgewählten Farben aussehen."
+
+#msgid "VECTORIZER_STEP_2_APPLY"
+#msgstr "Übernehmen"
+
+msgid "VECTORIZER_STEP_2_CONTINUE_INFO"
+msgstr "Gefällt dir noch nicht? Klicke „WEITER“ um deine Druckfarben manuell zu definieren."
+
+msgid "VECTORIZER_STEP_2_CONTINUE"
+msgstr "weiter"
+
+msgid "VECTORIZER_STEP_3_TITLE"
+msgstr "Optional: Optimierung deines Werbeaufdrucks"
+
+msgid "VECTORIZER_STEP_3_DE_SPECKLE"
+msgstr "Rauschunterdrückung"
+
+msgid "VECTORIZER_STEP_3_SMOOTH_CORNERS"
+msgstr "Eckenglättung"
+
+msgid "VECTORIZER_STEP_3_BEZIER"
+msgstr "Bézierkurven"
+
+#msgid "VECTORIZER_STEP_3_APPLY"
+#msgstr "Übernehmen"
+
+msgid "VECTORIZER_STEP_4_TITLE"
+msgstr "Farben bestimmen und zuweisen"
+
+msgid "VECTORIZER_STEP_4_PART_1_TITLE"
+msgstr "Schritt 1: Druckfarben bestimmen"
+
+msgid "VECTORIZER_STEP_4_PART_1_CONTENT"
+msgstr "Wähle deine gewünschten Druckfarben aus"
+
+msgid "VECTORIZER_STEP_4_PART_2_TITLE"
+msgstr "Schritt 2: Druckfarben zuweisen"
+
+msgid "VECTORIZER_STEP_4_PART_2_CONTENT"
+msgstr "Weise die in Schritt 1 bestimmten Druckfarben denen in deinem Bild gefundenen Farben zu."
+
+#msgid "VECTORIZER_STEP_4_APPLY"
+#msgstr "Übernehmen"
+
+msgid "VECTORIZER_SAVE_RESULT"
+msgstr "Vektor in Mediamanager speichern"
+
+#msgid "VECTORIZER_CANCEL"
+#msgstr "abbrechem"
+
+msgid "VECTORIZER_UNDO"
+msgstr "Rückgängig"
+
+#msgid "MODAL_LEAVE_EDITOR_WITH_ERRORS_CONFIRM"
+#msgstr "Ja"
+
+#msgid "MODAL_LEAVE_EDITOR_WITH_ERRORS_CANCEL"
+#msgstr "abbrechen"
+
+#msgid "MODAL_ASSETS_ARE_LOADING_CONFIRM"
+#msgstr "Ja"
+
+#msgid "MODAL_ASSETS_ARE_LOADING_CANCEL"
+#msgstr "abbrechen"
+
+#msgid "MODAL_HAS_SEEN_ALL_PAGES_CONFIRM"
+#msgstr "Ja"
+
+#msgid "MODAL_HAS_SEEN_ALL_PAGES_CANCEL"
+#msgstr "abbrechen"
+
+msgid "MODAL_OTHER_USER_REQUESTS_ENTRY_CONTENT"
+msgstr ":user möchte in den Editor. Den Entwurf speichern und abgeben?"
+
+#msgid "MODAL_OTHER_USER_REQUESTS_ENTRY_CONFIRM"
+#msgstr "Ja"
+
+#msgid "MODAL_OTHER_USER_REQUESTS_ENTRY_CANCEL"
+#msgstr "abbrechen"
+
+msgid "MODAL_DELETE_CONFIRM"
+msgstr "LÖSCHEN"
+
+#msgid "MODAL_DELETE_CANCEL"
+#msgstr "abbrechen"
+
+msgid "MODAL_CONFIRM"
+msgstr "Ja"
+
+#msgid "MODAL_CANCEL"
+#msgstr "abbrechen"
+
+msgid "APPLY"
+msgstr "Übernehmen"
+
+msgid "CANCEL"
+msgstr "abbrechen"

@@ -18,25 +18,33 @@
                             class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
                             @click="toggleSidebarPanel('assets', $event)" id="asset-menu-button">
                         <span class="mb-1" v-html="icon('Bilder')"></span>
-                        <span class="dark-gray-color has-text-weight-medium">Bilder</span>
+                        <span class="dark-gray-color has-text-weight-medium">
+                            {{ $translate('SIDEBAR_RIGHT_ASSETS') }}
+                        </span>
                     </button>
                     <button v-if="allowAddTexts || pageContainsTexts"
                             class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
                             @click="toggleSidebarPanel('texts', $event)" id="text-menu-button">
                         <span class="mb-1" v-html="icon('Text')"></span>
-                        <span class="dark-gray-color has-text-weight-medium">Texte</span>
+                        <span class="dark-gray-color has-text-weight-medium">
+                            {{ $translate("SIDEBAR_RIGHT_TEXTS") }}
+                        </span>
                     </button>
                     <button v-if="allowAddShapes || pageContainsShapes"
                             class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
                             @click="toggleSidebarPanel('shapes', $event)" id="shape-menu-button">
                         <span class="mb-1" v-html="icon('Formen')"></span>
-                        <span class="dark-gray-color has-text-weight-medium">Formen</span>
+                        <span class="dark-gray-color has-text-weight-medium">
+                            {{ $translate("SIDEBAR_RIGHT_SHAPES") }}
+                        </span>
                     </button>
                     <button
                         class="columns py-3 is-gapless is-multiline is-centered is-vcentered is-flex-direction-column"
                         v-if="hasVariants" @click="toggleSidebarPanel('variants', $event)">
                         <span class="mb-1" v-html="icon('Farbpalette')"></span>
-                        <span class="dark-gray-color has-text-weight-medium">Produktfarbe ändern</span>
+                        <span class="dark-gray-color has-text-weight-medium">
+                            {{ $translate('SIDEBAR_RIGHT_VARIANTS') }}
+                        </span>
                     </button>
                     <div class="columns p-0 is-gapless">
                         <button class="column has-text-centered button is-ghost is-small"
@@ -55,7 +63,9 @@
                         style="margin-top: auto;"
                         @click="toggleSidebarPanel('view-settings', $event)">
                         <span class="mb-1" v-html="icon('Raster')"></span>
-                        <span class="dark-gray-color has-text-weight-medium">Ansicht</span>
+                        <span class="dark-gray-color has-text-weight-medium">
+                            {{ $translate('SIDEBAR_RIGHT_SETTINGS') }}
+                        </span>
                     </button>
                 </div>
             </div>

@@ -2,7 +2,7 @@
     <div v-if="hasVariants">
         <div class="column is-24 py-0">
             <div class="content is-small">
-                <h4 class="dark-gray-color mb-0">Wähle deine Farbe aus</h4>
+                <h4 class="dark-gray-color mb-0">{{ $translate('SIDEBAR_RIGHT_VARIANTS_TITLE') }}</h4>
             </div>
         </div>
         <div class="column is-24">
@@ -17,7 +17,8 @@
                         <span style="border-style: none; outline-color: transparent"></span>
                     </figure>
                 </div>
-                <div v-else class="box variant p-0 mb-0 border-solid" :class="{'variant-active': currentId === variant.id}">
+                <div v-else class="box variant p-0 mb-0 border-solid"
+                     :class="{'variant-active': currentId === variant.id}">
                     <figure class="image is-square">
                         <img :src="variant.thumbnail.value" height="70px" width="auto">
                     </figure>

@@ -1,21 +1,17 @@
 <template>
     <info icon="TexteHinweise">
         <template slot="title">
-            <p class="mb-1 like-h4">TIPPS UND HINWEISE</p>
+            <p class="mb-1 like-h4 is-uppercase">{{ title }}</p>
         </template>
         <template slot="info">
-            <p>Wenn du einen Text auf der Werbefläche abbilden möchtest, klicke im Menü rechts auf das Symbol <span class="svg-15" v-html="$svg('TexteHinweise')"></span> und füge zuerst eine Text-Box hinzu. </p>
-            <p class="mt-2">Du kannst sowohl den Text in der Box als auch die Box selbst bearbeiten. </p>
+            <p v-html="p1"></p>
+            <p class="mt-2">{{ $translate('SIDEBAR_LEFT_TEXTS_INFO_PARAGRAPH_2') }}</p>
         </template>
-        <template slot="tipp">
-            <p class="like-h4 mb-2">Ein Klick auf die Text-Box</p>
-            <p>Ändere die Größe des Rahmens, drehe und verschiebe die Box.</p>
-
-            <p class="like-h4 my-2">Doppelklick auf die Text-Box</p>
-            <p>Formatiere deinen Text innerhalb der Text-Box, z.B. Schriftart und Schriftgröße.</p>
-
-            <p class="like-h4 my-2">Erweiterte Bearbeitung</p>
-            <p>Hier kannst du die Hintergrundfarbe, den Zeilenabstand und die Transparenz deines Textes anpassen. Lege hier auch die Ebenen fest, auf denen deine Texte erscheinen.</p>
+        <template slot="tip">
+            <template v-for="(tip, idx) in tips">
+                <p :class="{'like-h4': true, 'my-2': idx > 0, 'mb-2': idx === 0}">{{ tip.title }}</p>
+                <p>{{ tip.content }}</p>
+            </template>
         </template>
     </info>
 </template>
@@ -25,6 +21,35 @@ import Info from "./info";
 
 export default {
     name: "texts-info",
-    components: {Info}
+    components: {Info},
+    computed: {
+        title() {
+            return this.$translateMultiple([
+                'SIDEBAR_LEFT_TEXTS_TITLE',
+                'SIDEBAR_LEFT_DEFAULT_TITLE',
+            ])
+        },
+        p1() {
+            return this.$translate('SIDEBAR_LEFT_TEXTS_INFO_PARAGRAPH_1', {
+                symbol: `<span class="svg-15" v-html="${this.$svg('TexteHinweise')}"></span>`
+            })
+        },
+        tips() {
+            let tips = [];
+            let i = 0;
+            do {
+                i++;
+                const titleKey = `SIDEBAR_LEFT_TEXTS_TIP_${i}_TITLE`;
+                const contentKey = `SIDEBAR_LEFT_TEXTS_TIP_${i}_CONTENT`;
+                const title = this.$translate(titleKey);
+                const content = this.$translate(contentKey);
+                if (!!title && title !== titleKey && !!content && content !== contentKey) {
+                    tips.push({title, content});
+                }
+            } while (tips.length === i);
+
+            return tips;
+        }
+    }
 }
 </script>

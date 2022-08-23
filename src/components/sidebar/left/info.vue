@@ -10,7 +10,7 @@
         <div class="column is-one-fifth has-text-centered" v-html="$svg('Tipp')">
         </div>
         <div class="column is-four-fifths">
-            <slot name="tipp"></slot>
+            <slot name="tip"></slot>
         </div>
     </div>
 </template>

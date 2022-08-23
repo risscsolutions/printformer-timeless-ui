@@ -8,7 +8,7 @@
                         v-html="$svg(icon)"></span>
             </div>
             <div class="column is-four-fifths">
-                <span class="has-text-weight-semibold dark-gray-color">Schritt {{ step }}:</span><br>
+                <span class="has-text-weight-semibold dark-gray-color">{{ $translate('SIDEBAR_LEFT_UPLOAD_INFO_STEP', {step}) }}</span><br>
                 {{ text }}
             </div>
         </div>

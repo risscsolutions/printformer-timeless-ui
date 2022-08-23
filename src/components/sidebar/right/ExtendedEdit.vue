@@ -7,7 +7,7 @@
             <div v-if="activeObject && hasTraceButton" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
-                        <span class="dark-gray-color">Bild nachzeichnen</span>
+                        <span class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_ASSETS_TRACE') }}</span>
                         <span @click="openTraceControls" style="cursor: pointer" class="svg-30 is-flex"
                               v-html="icon('VectorizerVorschau')"></span>
                     </div>
@@ -20,9 +20,9 @@
             <div v-if="activeObject && hasBackgroundColor" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
-                        <span class="dark-gray-color">Hintergrundfarbe</span>
+                        <span class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_EXTENDED_EDIT_FILL_COLOR') }}</span>
                         <input type="color" class="mobile-input-faker" v-model="currentColor"
-                               :name="'Farbe ' + currentColor + ' gewählt'">
+                               :name="$translate('SIDEBAR_RIGHT_EXTENDED_EDIT_FILL_COLOR_CURRENT', {color: currentColor})">
                     </div>
                 </div>
             </div>
@@ -32,7 +32,8 @@
             <div v-show="hasLineHeight" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
-                        <span class="dark-gray-color" style="line-height: 30px">Zeilenabstand</span>
+                        <span class="dark-gray-color"
+                              style="line-height: 30px">{{ $translate('SIDEBAR_RIGHT_TEXTS_LEADING') }}</span>
                         <select name="fonts" id="font-leading">
                             <option v-for="lineHeight in allLineHeights" :value="lineHeight">
                                 {{ lineHeight }}
@@ -48,7 +49,7 @@
                 <div class="content">
                     <div class="columns">
                         <div class="column is-13 is-flex py-2 is-align-items-center">
-                            <span class="dark-gray-color">Transparenz</span>
+                            <span class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_EXTENDED_EDIT_OPACITY') }}</span>
                         </div>
                         <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
                             <input id="sliderWithValue" class="has-output is-fullwidth" v-model="opacity" min="0"
@@ -67,7 +68,7 @@
             <div v-if="hasAlignment" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
-                        <span class="dark-gray-color">Ausrichtung</span>
+                        <span class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_EXTENDED_EDIT_ALIGN') }}</span>
                         <span @click="openAlignment" style="cursor: pointer" class="svg-30 is-flex"
                               v-html="icon('Abstand2')"></span>
                     </div>
@@ -76,13 +77,15 @@
                             <div @click="centerBlockH" style="cursor: pointer"
                                  class="column is-half has-text-centered is-flex is-flex-direction-column pt-0">
                                 <span class="svg-30" v-html="icon('Abstand')"></span>
-                                <span class="dark-gray-color">Horizontale<br>Mittelachse</span>
+                                <span class="dark-gray-color"
+                                      v-html="$translate('SIDEBAR_RIGHT_EXTENDED_EDIT_ALIGN_HORIZONTAL')"></span>
 
                             </div>
                             <div @click="centerBlockV" style="cursor: pointer"
                                  class="column is-half has-text-centered is-flex is-flex-direction-column pt-0">
                                 <span class="svg-30" v-html="icon('Abstand2')"></span>
-                                <span class="dark-gray-color">Vertikale<br>Mittelachse</span>
+                                <span class="dark-gray-color"
+                                      v-html="$translate('SIDEBAR_RIGHT_EXTENDED_EDIT_ALIGN_VERTICAL')"></span>
                             </div>
                         </div>
                     </div>
@@ -94,7 +97,7 @@
             <div v-if="hasLayer" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
-                        <span class="dark-gray-color">Ebenen</span>
+                        <span class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_EXTENDED_EDIT_Z_INDEX') }}</span>
                         <span @click="openLayer" style="cursor: pointer" class="svg-30 is-flex"
                               v-html="icon('Ebenen2')"></span>
                     </div>
@@ -103,24 +106,26 @@
                             <div @click="moveUp(true)" style="cursor: pointer"
                                  class="column is-half has-text-centered is-flex is-flex-direction-column pt-0">
                                 <span class="svg-30" v-html="icon('Vorne')"></span>
-                                <span class="dark-gray-color">In den<br>Vordergrund</span>
-
+                                <span class="dark-gray-color"
+                                      v-html="$translate('SIDEBAR_RIGHT_EXTENDED_EDIT_Z_INDEX_TO_TOP')"></span>
                             </div>
                             <div @click="moveDown(true)" style="cursor: pointer"
                                  class="column is-half has-text-centered is-flex is-flex-direction-column pt-0">
                                 <span class="svg-30" v-html="icon('Hinten')"></span>
-                                <span class="dark-gray-color">In den<br>Hintergrund</span>
-
+                                <span class="dark-gray-color"
+                                      v-html="$translate('SIDEBAR_RIGHT_EXTENDED_EDIT_Z_INDEX_TO_BOTTOM')"></span>
                             </div>
                             <div @click="moveUp(false)" style="cursor: pointer"
                                  class="column is-half has-text-centered is-flex is-flex-direction-column pt-0">
                                 <span class="svg-30" v-html="icon('Vorne2')"></span>
-                                <span class="dark-gray-color">Eine Ebene<br>nach vorne</span>
+                                <span class="dark-gray-color"
+                                      v-html="$translate('SIDEBAR_RIGHT_EXTENDED_EDIT_Z_INDEX_UP')"></span>
                             </div>
                             <div @click="moveDown(false)" style="cursor: pointer"
                                  class="column is-half has-text-centered is-flex is-flex-direction-column pt-0">
                                 <span class="svg-30" v-html="icon('Hinten2')"></span>
-                                <span class="dark-gray-color">Eine Ebene<br>nach hinten</span>
+                                <span class="dark-gray-color"
+                                      v-html="$translate('SIDEBAR_RIGHT_EXTENDED_EDIT_Z_INDEX_DOWN')"></span>
                             </div>
                         </div>
                     </div>
@@ -132,7 +137,7 @@
             <div class="column is-24 py-0" v-if="hasDuplicate">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
-                        <span class="dark-gray-color">Duplizieren</span>
+                        <span class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_EXTENDED_EDIT_DUPLICATE') }}</span>
                         <span @click="duplicateBlock" style="cursor: pointer" class="svg-30 is-flex"
                               v-html="icon('Ebenen')"></span>
                     </div>

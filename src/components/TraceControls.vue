@@ -5,14 +5,15 @@
                 <div v-if="traceStep === 1" class="columns direction-column">
                     <div class="column has-text-centered" v-html="icon('VectorizerVorschau')"></div>
                     <div class="column has-text-centered trace-preview-info content">
-                        <h4 class="mb-0">Nach Farbauswahl erscheint <br>hier deine Logovorschau</h4>
+                        <h4 class="mb-0"
+                            v-html="$translate('VECTORIZER_STEP_1_CENTER_INFO')"></h4>
                     </div>
                 </div>
                 <div v-if="traceStep === 2"
                      class="columns direction-column is-align-self-flex-start">
                     <div class="column content is-small mt-2 mx-5 mb-0">
-                        <p class="dark-gray-color mb-2 dark-gray-color has-text-weight-bold">
-                            So könnte dein Werbeaufdruck mit deinen ausgewählten Farben aussehen.
+                        <p class="dark-gray-color mb-2 dark-gray-color has-text-weight-bold"
+                           v-html="$translate('VECTORIZER_STEP_2_CENTER_INFO') ">
                         </p>
                     </div>
                     <div class="column columns is-multiline is-24 mb-0" style="overflow: auto">
@@ -23,15 +24,15 @@
                                 <div class="column has-text-centered content">
                                     <button class="button is-small is-info" @click="selectPreview(preview.colors)"
                                             :disabled="blockUi">
-                                        <span>ÜBERNEHMEN</span>
+                                        <span>{{ $translateMultiple(['VECTORIZER_STEP_2_APPLY', 'APPLY']) }}</span>
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="column content is-small mx-5 mb-0">
-                        <p class="dark-gray-color dark-gray-color has-text-weight-bold">
-                            Gefällt dir noch nicht? Klicke „WEITER“ um deine Druckfarben manuell zu definieren.
+                        <p class="dark-gray-color dark-gray-color has-text-weight-bold"
+                           v-html="$translate('VECTORIZER_STEP_2_CONTINUE_INFO')">
                         </p>
                     </div>
                     <div class="column columns is-24">
@@ -40,7 +41,7 @@
                                 <div class="column has-text-centered content">
                                     <button class="button is-small is-info" @click="skipSimpleMode" :disabled="blockUi">
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <span>WEITER</span>
+                                        <span class="is-uppercase">{{ $translate("VECTORIZER_STEP_2_CONTINUE") }}</span>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     </button>
                                 </div>
@@ -53,18 +54,20 @@
             <div class="trace-controls column is-narrow sidebar-no-pager border-solid">
                 <div v-show="[1, 2].includes(traceStep)" class="column">
                     <div class="content is-small my-2">
-                        <h1 class="dark-gray-color mb-2 blue-color has-text-weight-bold">Bestimme deine Druckfarben</h1>
+                        <h1 class="dark-gray-color mb-2 blue-color has-text-weight-bold">
+                            {{ $translate("VECTORIZER_STEP_1_TITLE") }}
+                        </h1>
                         <p class="dark-gray-color mb-2 blue-color has-text-weight-bold">
                             <template v-if="colorLimit === 1">
-                                Wähle eine Druckfarbe aus. Klicke dafür auf den entsprechenden Farbkreis. Bestätige dann
-                                deine Auswahl mit „übernehmen“.
+                                {{ $translate("VECTORIZER_STEP_1_INFO_SINGLE_COLOR") }}
                             </template>
                             <template v-else>
-                                Wähle max. {{ colorLimit }} Druckfarben aus. Klicke dafür auf die entsprechenden
-                                Farbkreise. Bestätige dann deine Auswahl mit „übernehmen“.
+                                {{ $translate("VECTORIZER_STEP_1_INFO_MULTIPLE_COLORS", {colorLimit}) }}
                             </template>
                         </p>
-                        <p class="dark-gray-color mb-0 ">Unsere Farbvorschläge für dich:</p>
+                        <p class="dark-gray-color mb-0 ">
+                            {{ $translate("VECTORIZER_STEP_1_COLOR_SUGGESTIONS") }}
+                        </p>
                     </div>
                     <div v-if="blockEffectType === 'vector' && managedColors.length" class="content is-small"
                          ref="managedColors">
@@ -93,19 +96,21 @@
                     <div class="content">
                         <button class="button is-small is-info" @click="applySimpleColors"
                                 :disabled="!selectedSimpleColors.length || selectedSimpleColors.length  > colorLimit || traceStep === 2">
-                            <span>ÜBERNEHMEN</span>
+                            <span v-html="$translateMultiple(['VECTORIZER_STEP_1_APPLY', 'APPLY'])"></span>
                         </button>
                     </div>
                 </div>
                 <div v-show="traceStep === 3" class="column">
                     <div class="content is-small my-2">
-                        <h1 class="dark-gray-color mb-2 blue-color has-text-weight-bold">Optional: Optimierung deines
-                            Werbeaufdrucks</h1>
+                        <h1 class="dark-gray-color mb-2 blue-color has-text-weight-bold">
+                            {{ $translate("VECTORIZER_STEP_3_TITLE") }}</h1>
                         <div ref="traceSettings">
                             <div>
                                 <input ref="deSpeckleRange" id="deSpeckleRange" class="" type="range" value="1"
                                        min="0" max="1000" step="1">
-                                <span class="px-2 dark-gray-color has-text-weight-semibold vertical-align-sub">Rauschunterdrückung</span>
+                                <span class="px-2 dark-gray-color has-text-weight-semibold vertical-align-sub">
+                                    {{ $translate("VECTORIZER_STEP_3_DE_SPECKLE") }}
+                                </span>
                                 <output ref="deSpeckleInfo" for="deSpeckleRange"
                                         class="slider-output dark-gray-color has-text-weight-semibold vertical-align-sub">
                                     1
@@ -114,7 +119,9 @@
                             <div>
                                 <input ref="smoothCornersRange" id="smoothCornersRange" class="" type="range" value="1"
                                        min="0" max="1.334" step="0.001">
-                                <span class="px-2 dark-gray-color has-text-weight-semibold vertical-align-sub">Eckenglättung</span>
+                                <span class="px-2 dark-gray-color has-text-weight-semibold vertical-align-sub">
+                                    {{ $translate("VECTORIZER_STEP_3_SMOOTH_CORNERS") }}
+                                </span>
                                 <output ref="smoothCornersInfo" for="smoothCornersRange"
                                         class="slider-output dark-gray-color has-text-weight-semibold vertical-align-sub">
                                     1
@@ -123,7 +130,10 @@
                             <div>
                                 <input ref="optimizePathsRange" id="optimizePathsRange" class="" type="range" value="1"
                                        min="0" max="5" step="0.1">
-                                <span class="px-2 dark-gray-color has-text-weight-semibold vertical-align-sub">Bézierkurven</span>
+                                <span
+                                    class="px-2 dark-gray-color has-text-weight-semibold vertical-align-sub">
+                                    {{ $translate("VECTORIZER_STEP_3_BEZIER") }}
+                                </span>
                                 <output ref="optimizePathsInfo" for="optimizePathsRange"
                                         class="slider-output dark-gray-color has-text-weight-semibold vertical-align-sub">
                                     1
@@ -133,17 +143,18 @@
                     </div>
                     <div class="content">
                         <button class="button is-small is-info" @click="applyGranululu">
-                            <span>ÜBERNEHMEN</span>
+                            <span v-html="$translateMultiple(['VECTORIZER_STEP_3_APPLY', 'APPLY'])"></span>
                         </button>
                     </div>
                 </div>
                 <div v-show="traceStep === 4" class="column">
                     <div class="content is-small my-2">
-                        <h1 class="dark-gray-color mb-2 blue-color has-text-weight-bold">Farben bestimmen und
-                            zuweisen</h1>
-                        <p class="dark-gray-color mb-2 blue-color has-text-weight-bold">Schritt 1: Druckfarben
-                            bestimmen</p>
-                        <p class="dark-gray-color mb-0 ">Wähle deine gewünschten Druckfarben aus</p>
+                        <h1 class="dark-gray-color mb-2 blue-color has-text-weight-bold">
+                            {{ $translate("VECTORIZER_STEP_4_TITLE") }}
+                        </h1>
+                        <p class="dark-gray-color mb-2 blue-color has-text-weight-bold">
+                            {{ $translate("VECTORIZER_STEP_4_PART_1_TITLE") }}</p>
+                        <p class="dark-gray-color mb-0 ">{{ $translate("VECTORIZER_STEP_4_PART_1_CONTENT") }}</p>
                     </div>
                     <div v-if="blockEffectType === 'vector'" class="content is-small" ref="userColors">
                         <button v-for="(userColor, index) in userColors" v-html="userColor ? null : icon('Plus')"
@@ -158,10 +169,9 @@
                     </div>
                     <hr class="sidebar-divider" v-if="userColorsFilled">
                     <div class="content is-small my-2" v-if="userColorsFilled">
-                        <p class="dark-gray-color mb-2 blue-color has-text-weight-bold">Schritt 2: Druckfarben
-                            zuweisen</p>
-                        <p class="dark-gray-color mb-0 ">Weise die in Schritt 1 bestimmten Druckfarben denen in deinem
-                            Bild gefundenen Farben zu.</p>
+                        <p class="dark-gray-color mb-2 blue-color has-text-weight-bold">
+                            {{ $translate("VECTORIZER_STEP_4_PART_2_TITLE") }}</p>
+                        <p class="dark-gray-color mb-0 ">{{ $translate("VECTORIZER_STEP_4_PART_2_CONTENT") }}</p>
                     </div>
                     <div class="content is-small my-0" v-if="userColorsFilled">
                         <button v-for="color in colorMap"
@@ -184,14 +194,13 @@
                     </div>
                     <div class="content" v-show="userColorsFilled">
                         <button class="button is-small is-info" ref="applyTrace" :disabled="!replacedEqualsLimit">
-                            <span>ÜBERNEHMEN</span>
+                            <span v-html="$translateMultiple(['VECTORIZER_STEP_4_APPLY', 'APPLY'])"></span>
                         </button>
                     </div>
                 </div>
                 <div style="display:none;">
                     <div ref="resultAsUserMedia">
-                        <p class="text-headline">Vektor in Mediamanager speichern</p>
-
+                        <p class="text-headline">{{ $translate("VECTORIZER_SAVE_RESULT") }}</p>
                         <label class="switch">
                             <input ref="resultAsUserMediaSwitch" type="checkbox">
                             <span class="slider round"></span>
@@ -201,7 +210,7 @@
                 </div>
                 <div class="content">
                     <button ref="cancelTrace" class="button is-small is-dark dark-gray-background-color">
-                        <span>ABBRECHEN</span>
+                        <span class="is-uppercase">{{ $translateMultiple(['VECTORIZER_CANCEL', 'CANCEL']) }}</span>
                     </button>
                     <!--                    <button v-html="icon('VectorizerPfeilLinks')" @click="backward"-->
                     <!--                            v-if="(traceStep === 2 || traceStep === 3 || traceStep === 4)"-->
@@ -211,7 +220,7 @@
                     <button @click="backward" class="button is-small is-info"
                             v-if="(traceStep === 2 || traceStep === 3 || traceStep === 4)"
                             :disabled="blockUi">
-                        <span>RÜCKGÄNGIG</span>
+                        <span class="is-uppercase">{{ $translate("VECTORIZER_UNDO") }}</span>
                     </button>
                 </div>
             </div>

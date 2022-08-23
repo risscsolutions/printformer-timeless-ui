@@ -1,15 +1,15 @@
 <template>
     <info icon="FormenHinweise">
         <template slot="title">
-            <p class="mb-1 like-h4">TIPPS UND HINWEISE</p>
+            <p class="mb-1 like-h4 is-uppercase">{{ title }}</p>
         </template>
         <template slot="info">
-            <p>Wenn du eine Form (z.B. ein Rechteck oder einen Kreis) auf der Werbefläche abbilden möchtest, klicke im Menü rechts auf das Symbol <span class="svg-15" v-html="$svg('FormenHinweise')"></span> und wähle deine gewünschte Form.</p>
-            <p class="mt-2">Du kannst die Formen einfach mit der Maus größer oder kleiner ziehen.</p>
+            <p v-html="p1"></p>
+            <p class="mt-2">{{ $translate('SIDEBAR_LEFT_SHAPES_INFO_PARAGRAPH_2') }}</p>
         </template>
-        <template slot="tipp">
-            <p>Nutze den Bereich „Ebenen“ in der erweiterten Bearbeitung, um eine Form z.B. hinter einen Text zu legen.</p>
-            <p class="mt-2">Platziere deine Form ganz einfach mit Drag & Drop in deiner Werbefläche.</p>
+        <template slot="tip">
+            <p>{{ $translate('SIDEBAR_LEFT_SHAPES_TIP_PARAGRAPH_1') }}</p>
+            <p class="mt-2">{{ $translate('SIDEBAR_LEFT_SHAPES_TIP_PARAGRAPH_2') }}</p>
         </template>
     </info>
 </template>
@@ -19,6 +19,19 @@ import Info from "./info";
 
 export default {
     name: "shapes-info",
-    components: {Info}
+    components: {Info},
+    computed: {
+        title() {
+            return this.$translateMultiple([
+                'SIDEBAR_LEFT_SHAPES_TITLE',
+                'SIDEBAR_LEFT_DEFAULT_TITLE',
+            ])
+        },
+        p1() {
+            return this.$translate('SIDEBAR_LEFT_SHAPES_INFO_PARAGRAPH_1', {
+                symbol: `<span class="svg-15" v-html="${this.$svg('FormenHinweise')}"></span>`
+            })
+        },
+    }
 }
 </script>

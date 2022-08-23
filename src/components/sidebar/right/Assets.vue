@@ -5,7 +5,7 @@
                 <div class="box columns is-flex-direction-column is-centered is-vcentered gray-background p-2"
                      style="cursor: pointer" :class="{'no-interaction': activeObject}" @click="uploadMediaAsset">
                     <span :style="{'opacity': activeObject ? '50%' : '100%'}"
-                          class="dark-gray-color">Neue Bildbox</span>
+                          class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_ASSETS_NEW') }}</span>
                     <span :style="{'opacity': activeObject ? '50%' : '100%'}" class="svg-30 is-flex m-1"
                           v-html="icon('HinzufuegenPlus')"></span>
                 </div>
@@ -18,7 +18,7 @@
                      @dragover="dragover"
                      @dragleave="dragleave" @drop="drop"
                      style="cursor: pointer" @click="uploadMediaAsset">
-                    <span class="dark-gray-color">Bilder hochladen</span>
+                    <span class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_ASSETS_UPLOAD_TITLE') }}</span>
                     <span class="svg-30 is-flex m-1" v-html="icon('Bilder_hochladen')"></span>
                     <div class="columns m-0 is-flex-direction-column has-text-centered dark-gray-color">
                         <input ref="uploadFile" type="file" multiple hidden accept=".jpg,.jpeg,.png,.pdf"
@@ -26,6 +26,7 @@
                         <span>vom <span class="blue-under">Computer</span> oder</span>
                         <span>per Drag and Drop</span>
                         <span>in die Box ziehen</span>
+                        <span v-html="$translate('SIDEBAR_RIGHT_ASSETS_UPLOAD_CONTENT')"></span>
                     </div>
                 </div>
             </div>
@@ -35,7 +36,7 @@
             <div v-if="isFilled && !isGraphic" class="column is-24 py-0">
                 <div class="columns">
                     <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
-                        <span class="dark-gray-color">Bildqualität</span>
+                        <span class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_ASSETS_QUALITY') }}</span>
                         <span class="dark-gray-color dpi-circle border-solid"
                               :style="{'background-color': qualityColor}"></span>
                     </div>
@@ -48,18 +49,18 @@
                 <div class="content">
                     <div class="columns">
                         <div class="column is-flex py-2 is-align-items-center">
-                            <span class="dark-gray-color">Bild zoomen</span>
+                            <span class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_ASSETS_ZOOM') }}</span>
                         </div>
                         <div class="column is-flex is-justify-content-flex-end py-2 is-align-items-center">
-                            <button @click="assetZoomIn" title="Vergrößern"
+                            <button @click="assetZoomIn" :title="$translate('SIDEBAR_RIGHT_ASSETS_ZOOM_IN')"
                                     class="button is-small muted-button width-30">
                                 <span class="svg-30 no-interaction is-flex" v-html="icon('HinzufuegenPlus')"></span>
                             </button>
-                            <button @click="assetZoomOut" title="Verkleinern"
+                            <button @click="assetZoomOut" :title="$translate('SIDEBAR_RIGHT_ASSETS_ZOOM_OUT')"
                                     class="button is-small ml-2 muted-button width-30">
                                 <span class="svg-30 no-interaction is-flex" v-html="icon('HinzufuegenMinus')"></span>
                             </button>
-                            <button @click="assetFit" title="Rahmen füllen"
+                            <button @click="assetFit" :title="$translate('SIDEBAR_RIGHT_ASSETS_ZOOM_FIT')"
                                     class="button is-small ml-2 muted-button width-30">
                                 <span class="svg-30 no-interaction is-flex" v-html="icon('vergroessern')"></span>
                             </button>
@@ -73,7 +74,7 @@
             <div v-if="isAllowed('delete') || isAllowed('asset-replace')" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
-                        <span class="dark-gray-color">Bildbox löschen</span>
+                        <span class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_ASSETS_DELETE') }}</span>
                         <span @click="deleteAssetBox" style="cursor: pointer" class="svg-30 is-flex"
                               v-html="icon('Loeschen')"></span>
                     </div>
@@ -87,7 +88,7 @@
                     <div class="columns is-multiline">
                         <div class="column is-flex is-flex-direction-column is-align-items-center py-2">
                             <label class="has-text-weight-medium blue-color mb-2" for="extendedEditSwitch">
-                                Erweiterte Bild-Bearbeitung
+                                {{ $translate('SIDEBAR_RIGHT_ASSETS_EXTENDED_EDIT') }}
                             </label>
                             <div class="onoffswitch">
                                 <input type="checkbox" :checked="extendedEditSwitchOn" @click="toggleExtendedEdit"
@@ -117,7 +118,8 @@
                 <div class="columns is-multiline is-centered">
                     <div class="column is-24">
                         <div class="content is-align-content-center has-text-centered">
-                            <span class="dark-gray-color has-text-weight-semibold">Deine Bilder</span>
+                            <span
+                                class="dark-gray-color has-text-weight-semibold">{{ $translate('SIDEBAR_RIGHT_ASSETS_USER_MEDIA') }}</span>
                         </div>
                     </div>
                     <div class="column is-24">
@@ -229,8 +231,8 @@ export default {
                 modal: true,
                 buttons: [
                     {
-                        text: "LÖSCHEN",
-                        class: "button no-radius is-info my-0",
+                        text: this.$translateMultiple(['MODAL_ASSETS_DELETE_CONFIRM', 'MODAL_DELETE_CONFIRM']),
+                        class: "button no-radius is-info my-0 is-uppercase",
                         click: () => {
                             const prohibitedActions = this.activeObject.prohibitedActions;
 
@@ -246,8 +248,8 @@ export default {
                         }
                     },
                     {
-                        text: "ABBRECHEN",
-                        class: "button no-radius is-dark dark-gray-background-color my-0",
+                        text: this.$translateMultiple(['MODAL_ASSETS_DELETE_CANCEL', 'MODAL_DELETE_CANCEL', 'CANCEL']),
+                        class: "button no-radius is-dark dark-gray-background-color my-0 is-uppercase",
                         click: () => {
                             dialog.dialog("close");
                         }

@@ -1,13 +1,13 @@
 <template>
     <info icon="Raster_klein">
         <template slot="title">
-            <p class="mb-1 like-h4">TIPPS UND HINWEISE</p>
+            <p class="mb-1 like-h4 is-uppercase">{{ title }}</p>
         </template>
         <template slot="info">
-            <p>Aktiviere das Raster, um die die Ausrichtung der verschiedenen Boxen zu erleichtern.</p>
+            <p>{{ $translate('SIDEBAR_LEFT_SETTINGS_INFO') }}</p>
         </template>
-        <template slot="tipp">
-            <p>Die Größe und Farbe des Rasters kannst du nach deinen Wünschen umstellen. Das hat für die Druckdaten keine Konsequenz, sondern dient nur der besseren Sichtbarkeit für dich.</p>
+        <template slot="tip">
+            <p>{{ $translate('SIDEBAR_LEFT_SETTINGS_TIP') }}</p>
         </template>
     </info>
 </template>
@@ -20,7 +20,13 @@ export default {
     name: "view-settings-info",
     components: {Info},
     computed: {
-        ...mapState(['editorConfig',])
+        ...mapState(['editorConfig',]),
+        title() {
+            return this.$translateMultiple([
+                'SIDEBAR_LEFT_SETTINGS_TITLE',
+                'SIDEBAR_LEFT_DEFAULT_TITLE',
+            ])
+        },
     }
 }
 </script>

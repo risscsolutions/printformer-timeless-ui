@@ -5,8 +5,8 @@
             <thead>
             <tr class="has-text-left">
                 <th class="has-text-weight-semibold dark-gray-color" style="width: 2rem;">&nbsp;</th>
-                <th class="has-text-weight-semibold dark-gray-color" style="width: 33%;">{{ $i18n.translate('Name') }}</th>
-                <th class="has-text-weight-semibold dark-gray-color">{{ $i18n.translate('Beschreibung') }}</th>
+                <th class="has-text-weight-semibold dark-gray-color" style="width: 33%;">{{ $translate('PREFLIGHT_TABLE_HEADER_NAME') }}</th>
+                <th class="has-text-weight-semibold dark-gray-color">{{ $translate('PREFLIGHT_TABLE_HEADER_DESCRIPTION') }}</th>
             </tr>
             </thead>
             <tbody>

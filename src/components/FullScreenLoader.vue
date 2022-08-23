@@ -9,9 +9,10 @@
                  style="background: white;display: flex;flex-direction: column;align-content: center;justify-content: center;flex-wrap: wrap;align-items: center;">
                 <span class="spinning"
                       v-html="$svg('Ladebalken','svg-150')"></span>
-                <p>Wird geladen...</p>
+                <p>{{ $translate('Wird geladen...') }}</p>
             </div>
-            <div v-if="editorLoaded && !traceControlsIsOpen" class="column px-0 is-1 width-105" style="background: white; opacity:.5;"></div>
+            <div v-if="editorLoaded && !traceControlsIsOpen" class="column px-0 is-1 width-105"
+                 style="background: white; opacity:.5;"></div>
         </div>
     </div>
 </template>
@@ -22,7 +23,7 @@ import {mapState} from "vuex";
 export default {
     name: "FullScreenLoader",
     computed: {
-        ...mapState(['fullScreenLoaderVisible', 'showroomIsOpen', 'editorLoaded','traceControlsIsOpen']),
+        ...mapState(['fullScreenLoaderVisible', 'showroomIsOpen', 'editorLoaded', 'traceControlsIsOpen']),
     }
 }
 </script>

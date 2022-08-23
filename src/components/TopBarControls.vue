@@ -11,21 +11,24 @@
             </span>
         </div>
         <div class="column buttons has-text-right mb-0">
-            <button v-if="hasWarnings" @click="openShowroomAndSetZoom" class="button no-radius mb-0" style="background: #AC5D7A">
+            <button v-if="hasWarnings" @click="openShowroomAndSetZoom" class="button no-radius mb-0"
+                    style="background: #AC5D7A">
                 <span class="icon is-small" v-html="icon('Warnung')"></span>
             </button>
             <button @click="goBack" class="button no-radius is-dark dark-gray-background-color mb-0">
                 <span class="icon is-small" v-html="icon('Zueueck')"></span>
-                <span class="has-text-weight-light">ZURÜCK ZUM ARTIKEL</span>
+                <span class="has-text-weight-light is-uppercase">{{ $translate("TOP_BAR_BACK") }}</span>
             </button>
             <button @click="editorSave" class="button no-radius is-info mb-0">
                 <span class="icon is-small" v-html="icon('Soeichern')"></span>
-                <span class="has-text-weight-light"
-                      title="Dein Entwurf wurde für dich gespeichert">ENTWURF SPEICHERN</span>
+                <span class="has-text-weight-light is-uppercase"
+                      :title="$translate('TOP_BAR_SAVED')">
+                    {{ $translate("TOP_BAR_SAVE") }}
+                </span>
             </button>
             <button @click="pagePreview" class="button no-radius is-info mb-0">
                 <span class="icon is-small" v-html="icon('Auge')"></span>
-                <span class="has-text-weight-light">WEITER ZUR VORSCHAU</span>
+                <span class="has-text-weight-light is-uppercase">{{ $translate("TOP_BAR_CONTINUE") }}</span>
             </button>
         </div>
         <div class="column is-2 is-hidden-touch"></div>
@@ -75,7 +78,7 @@ export default {
             goToStep(this.editorConfig.editorSteps.previous, urlQueryObject().query.draft)
         },
         editorSave(e) {
-            this.$editor.getLoader().show('Entwurf wird gespeichert...')
+            this.$editor.getLoader().show(this.$translate('EDITOR_LOADER_SAVE_TEXT'))
             this.showFullScreenLoader();
             this.$catch(this.$editor.save())
                 .then(() => {

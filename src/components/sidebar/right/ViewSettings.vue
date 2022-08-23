@@ -16,9 +16,9 @@
             <!--            </div>-->
             <div class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
                         <label class="dark-gray-color" for="extendedEditSwitch" style="line-height: 30px">
-                            Raster
+                            {{ $translate('SIDEBAR_RIGHT_SETTINGS_GRID') }}
                         </label>
                         <div class="onoffswitch">
                             <input type="checkbox" v-model="gridSwitchOn"
@@ -36,9 +36,10 @@
             </div>
             <div v-if="gridSwitchOn" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
-                        <span class="dark-gray-color">Rasterfarbe</span>
-                        <input type="color" id="grid-color" style="opacity: 0" v-model="currentColor" class="button is-rounded color-button-round m-0">
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
+                        <span class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_SETTINGS_GRID_COLOR') }}</span>
+                        <input type="color" id="grid-color" style="opacity: 0" v-model="currentColor"
+                               class="button is-rounded color-button-round m-0">
                         <button
                             :style="{'background-color': initialColor}"
                             @click="openColorPicker"
@@ -52,8 +53,9 @@
             </div>
             <div v-if="gridSwitchOn" class="column is-24 py-0">
                 <div class="columns is-multiline">
-                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center" >
-                        <span class="dark-gray-color" style="line-height: 30px">Rastergröße (in mm)</span>
+                    <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
+                        <span class="dark-gray-color"
+                              style="line-height: 30px">{{ $translate('SIDEBAR_RIGHT_SETTINGS_GRID_SIZE', {unit: 'mm'})}}</span>
                         <input type="number" v-model="gridSize" style="width: 90px">
                     </div>
                 </div>

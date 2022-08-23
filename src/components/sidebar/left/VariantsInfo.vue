@@ -3,7 +3,7 @@
         <template slot="info">
             <p>Farbvariante hier wählen</p>
         </template>
-        <template slot="tipp">
+        <template slot="tip">
             <p>Hier texte bitte</p>
         </template>
     </info>

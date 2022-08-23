@@ -4,7 +4,7 @@
             <template v-if="allowAddShapes">
                 <div class="column is-24 py-0">
                     <div class="content is-small">
-                        <h4 class="dark-gray-color mb-0">Form auswählen</h4>
+                        <h4 class="dark-gray-color mb-0">{{ $translate('SIDEBAR_RIGHT_SHAPES_TITLE') }}</h4>
                     </div>
                 </div>
                 <div class="column is-24">
@@ -27,7 +27,7 @@
             <div v-show="isAllowed('color')" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
-                        <span class="dark-gray-color">Formfarbe</span>
+                        <span class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_SHAPES_COLOR') }}</span>
                         <button
                             :style="{'background-color': (activeObject || {}).fill ? activeObject.fill.displayColor : null}"
                             :class="{'chess-background': (activeObject || {}).fill === 'none'}"
@@ -44,7 +44,7 @@
             <div v-show="isAllowed('delete')" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
-                        <span class="dark-gray-color">Form löschen</span>
+                        <span class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_SHAPES_DELETE') }}</span>
                         <span @click="deleteForm" style="cursor: pointer" class="svg-30 is-flex"
                               v-html="icon('Loeschen')"></span>
                     </div>
@@ -58,7 +58,7 @@
                     <div class="columns is-multiline">
                         <div class="column is-flex is-flex-direction-column is-align-items-center py-2">
                             <label class="has-text-weight-medium blue-color mb-2" for="extendedEditSwitch">
-                                Erweiterte Form-Bearbeitung
+                                {{ $translate('SIDEBAR_RIGHT_SHAPES_EXTENDED_EDIT') }}
                             </label>
                             <div class="onoffswitch">
                                 <input type="checkbox" :checked="extendedEditSwitchOn" @click="enableExtendedEdit"
@@ -163,16 +163,16 @@ export default {
                 modal: true,
                 buttons: [
                     {
-                        text: "LÖSCHEN",
-                        class: "button no-radius is-info my-0",
+                        text: this.$translateMultiple(['MODAL_SHAPES_DELETE_CONFIRM', 'MODAL_DELETE_CONFIRM']),
+                        class: "button no-radius is-info my-0 is-uppercase",
                         click: () => {
                             this.$catch(this.activeObject.delete())
                                 .then(() => dialog.dialog("close"));
                         }
                     },
                     {
-                        text: "ABBRECHEN",
-                        class: "button no-radius is-dark dark-gray-background-color my-0",
+                        text: this.$translateMultiple(['MODAL_SHAPES_DELETE_CANCEL', 'MODAL_DELETE_CANCEL', 'CANCEL']),
+                        class: "button no-radius is-dark dark-gray-background-color my-0 is-uppercase",
                         click: () => {
                             dialog.dialog("close");
                         }

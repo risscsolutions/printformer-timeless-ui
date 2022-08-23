@@ -1,14 +1,11 @@
 <template>
     <div class="columns is-multiline p-2 is-vcentered">
         <div class="column is-24 p-2">
-            <p class="mb-1">
-                Die Verarbeitung deiner Datei läuft.<br>
-                Dies kann einige Minuten dauern. Bitte habe solange Geduld.
-            </p>
+            <p class="mb-1" v-html="$translate('SIDEBAR_LEFT_UPLOAD_INFO')"></p>
         </div>
-        <step step="1" text="Deine Datei wird hochgeladen." :state="upload"></step>
-        <step step="2" text="Deine Datei wird geprüft." :state="check"></step>
-        <step step="3" text="Datei-Vorschau wird generiert." :state="preview"></step>
+        <step step="1" :text="$translate('SIDEBAR_LEFT_UPLOAD_INFO_STEP_1_TEXT')" :state="upload"></step>
+        <step step="2" :text="$translate('SIDEBAR_LEFT_UPLOAD_INFO_STEP_2_TEXT')" :state="check"></step>
+        <step step="3" :text="$translate('SIDEBAR_LEFT_UPLOAD_INFO_STEP_3_TEXT')" :state="preview"></step>
     </div>
 </template>
 
