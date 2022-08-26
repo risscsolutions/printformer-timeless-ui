@@ -94,7 +94,7 @@
                     </div>
 
                     <div class="content">
-                        <button class="button is-small is-info" @click="applySimpleColors"
+                        <button class="button is-small is-info is-uppercase" @click="applySimpleColors"
                                 :disabled="!selectedSimpleColors.length || selectedSimpleColors.length  > colorLimit || traceStep === 2">
                             <span v-html="$translateMultiple(['VECTORIZER_STEP_1_APPLY', 'APPLY'])"></span>
                         </button>
@@ -142,7 +142,7 @@
                         </div>
                     </div>
                     <div class="content">
-                        <button class="button is-small is-info" @click="applyGranululu">
+                        <button class="button is-small is-info is-uppercase" @click="applyGranululu">
                             <span v-html="$translateMultiple(['VECTORIZER_STEP_3_APPLY', 'APPLY'])"></span>
                         </button>
                     </div>
@@ -193,7 +193,7 @@
                         </button>
                     </div>
                     <div class="content" v-show="userColorsFilled">
-                        <button class="button is-small is-info" ref="applyTrace" :disabled="!replacedEqualsLimit">
+                        <button class="button is-small is-info is-uppercase" ref="applyTrace" :disabled="!replacedEqualsLimit">
                             <span v-html="$translateMultiple(['VECTORIZER_STEP_4_APPLY', 'APPLY'])"></span>
                         </button>
                     </div>
