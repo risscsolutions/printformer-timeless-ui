@@ -33,8 +33,9 @@
                     <component :is="infoComponent"></component>
                 </template>
                 <div>
-                    <iframe ref="threedeeiframe"
-                            style="min-height: 400px; width: 100%; height: 100%; display: none"></iframe>
+                    <iframe v-show="show3DPreview"
+                            ref="threedeeiframe"
+                            style="min-height: 400px; width: 100%; height: 100%;"></iframe>
                 </div>
             </div>
         </div>
@@ -97,29 +98,36 @@ export default {
         },
         ...mapState([
             'editorConfig',
-            'is3D',
             'openControlTab',
             'previewPages',
             'showroomIsOpen',
             'traceControlsIsOpen',
             'editorLoaded'
         ]),
+        show3DPreview() {
+            return this.editorConfig?.configuration?.show3DPreview;
+        }
     },
     mounted() {
-        window.events.on(Events.EDITOR_LOADED, () => {
-            this.currentPage = 1;
-            this.has3D = this.editorConfig.configuration.show3DPreview;
-        });
-
         window.events.on(Events.EDITOR_PAGES_PAGED, (pageInfo) => {
             this.currentPage = pageInfo.pageNumber;
         });
 
         window.events.on(Events.EDITOR_LOADED, async (config) => {
+            this.currentPage = 1;
             if (config.configuration.show3DPreview) {
                 const editorIframe = document.getElementById('editor-iframe');
-                this.$refs.threedeeiframe.src = editorIframe.src.replace(new RegExp(/\/embed/), '/3d');
-                this.$editor.setThreeDeeElement(this.$refs.threedeeiframe);
+                const waitForIt = setInterval(() => {
+                    if (this.$refs.threedeeiframe) {
+                        clearInterval(waitForIt);
+                        this.$refs.threedeeiframe.src = editorIframe.src.replace(new RegExp(/\/embed/), '/3d');
+                        this.$editor.setThreeDeeElement(this.$refs.threedeeiframe);
+                        setTimeout(() => {
+                            this.$editor.getPager().showPage(this.currentPage);
+                            this.$editor.getPager().getPagePreview(this.currentPage);
+                        }, 10);
+                    }
+                }, 100);
             }
         });
 
@@ -166,7 +174,6 @@ export default {
                 })
                 .dialog('open');
         });
-
         this.$editor.registerConfirmCallback('ASSETS_ARE_LOADING', (confirm) => {
             const dialog = $('#confirm-assets-are-loading');
             dialog
@@ -203,7 +210,6 @@ export default {
                 .dialog('open');
 
         });
-
         this.$editor.registerConfirmCallback('HAS_SEEN_ALL_PAGES', (confirm) => {
             const dialog = $('#confirm-has-seen-all-pages');
             dialog
@@ -288,36 +294,20 @@ export default {
         icon(name) {
             return this.$svg(name);
         },
-        load3DModel() {
-            if (this.is3D !== this.has3D) {
-                this.$store.commit('setIs3D', true);
-                this.has3D = true;
-                this.currentPage = '3D';
-                this.$refs.threedeeiframe.style.display = 'block';
-            }
-        },
         closeSidebarPanel() {
             this.closeShowroom();
             setTimeout(() => this.$editor.getZoom().get().then(zoom => this.setZoom(parseInt(zoom * 100))), 100);
-            if (!this.has3D) return;
-
-            this.load3DModel();
-            this.$refs.threedeeiframe.style.display = 'block';
         },
         openSidebarPanel() {
             this.openShowroom();
             setTimeout(() => this.$editor.getZoom().get().then(zoom => this.setZoom(parseInt(zoom * 100))), 100);
-
-            this.$refs.threedeeiframe.style.display = 'none';
 
         },
         ...mapMutations(['openShowroom', 'closeShowroom', 'setZoom']),
     },
     data() {
         return {
-            currentPage: null,
             uploading: false,
-            has3D: false,
         }
     }
 }

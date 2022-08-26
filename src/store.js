@@ -6,7 +6,6 @@ export default function makeStore() {
             editorLoaded: false,
             editorConfig: {},
             previewConfig: {},
-            is3D: false,
             previewPages: [],
             notifications: [],
             fontSizes: null,
@@ -82,9 +81,6 @@ export default function makeStore() {
             },
             setPreviewConfig(state, previewConfig) {
                 state.previewConfig = previewConfig;
-            },
-            setIs3D(state, is3D) {
-                state.is3D = is3D;
             },
             setPreviewPages(state, previewPages) {
                 state.previewPages = previewPages;
