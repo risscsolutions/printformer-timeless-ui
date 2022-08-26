@@ -134,7 +134,7 @@ msgid "SIDEBAR_LEFT_VECTORIZER_STEP_3_PARAGRAPH_4"
 msgstr "Eckenglättung: Damit kannst du die Kanten deines Werbeaufdrucks glätten."
 
 msgid "SIDEBAR_LEFT_VECTORIZER_STEP_3_PARAGRAPH_5"
-msgstr "Bezierkurven: Optimierung von Krümmungen und Verbesserung von Rundungen rundum deine Grafik"
+msgstr "Bezierkurven: Optimierung von Krümmungen und Verbesserung von Rundungen rundum deine Grafik."
 
 msgid "SIDEBAR_LEFT_VECTORIZER_STEP_3_PARAGRAPH_6"
 msgstr "Tipp: Um den Vectorizer zu verlassen und neue Druckdaten auszuwählen, klicke auf „ABBRECHEN“."
@@ -144,27 +144,30 @@ msgstr "Tipp: Um doch einen Vorschlag von uns auszuwählen, klicke auf „RÜCKG
 
 
 msgid "SIDEBAR_LEFT_VECTORIZER_STEP_4_PARAGRAPH_1"
-msgstr "Du möchtest deine Farbzuordnung selbst bearbeiten"
+msgstr "Du möchtest deine Farbzuordnung selbst bearbeiten."
 
 msgid "SIDEBAR_LEFT_VECTORIZER_STEP_4_PARAGRAPH_2"
-msgstr "Klicke dafür auf der rechten Seite auf das Symbol :symbol"
+msgstr "Bitte bestimme in Schirtt 1 die Druckfarben, die du für deine Grafik verwenden möchtest."
 
 msgid "SIDEBAR_LEFT_VECTORIZER_STEP_4_PARAGRAPH_3"
-msgstr "Sobald du diese ausgewählt hast, geht es weiter mit Schritt 2: Druckfarben zuweisen"
+msgstr "Klicke dafür auf der rechten Seite auf das Symbol :symbol"
 
 msgid "SIDEBAR_LEFT_VECTORIZER_STEP_4_PARAGRAPH_4"
-msgstr "Klicke dafür auf das Symbol :symbol der in deinem Bild gefundenen Farben und unterhalb ersetzte sie mit einer deiner Wunschfarben."
+msgstr "Sobald du diese ausgewählt hast, geht es weiter mit Schritt 2: Druckfarben zuweisen"
 
 msgid "SIDEBAR_LEFT_VECTORIZER_STEP_4_PARAGRAPH_5"
-msgstr "Die Farbanpassungen in deinem Bild kannst du in Echtzeit sehen und ggf. wieder verändern."
+msgstr "Klicke dafür auf das Symbol :symbol unterhalb der in deinem Bild gefundenen Farben und ersetzte sie mit einer deiner Wunschfarben."
 
 msgid "SIDEBAR_LEFT_VECTORIZER_STEP_4_PARAGRAPH_6"
-msgstr "Klicke dann auf „ÜBERNEHMEN“. Du gelangst dann mit den fertigen Druckdaten zurück zum Editor."
+msgstr "Die Farbanpassungen in deinem Bild kannst du in Echtzeit sehen und ggf. wieder verändern."
 
 msgid "SIDEBAR_LEFT_VECTORIZER_STEP_4_PARAGRAPH_7"
-msgstr "Tipp: Um den Vectorizer zu verlassen und neue Druckdaten auszuwählen, klicke auf „ABBRECHEN“."
+msgstr "Klicke dann auf „ÜBERNEHMEN“. Du gelangst dann mit den fertigen Druckdaten zurück zum Editor."
 
 msgid "SIDEBAR_LEFT_VECTORIZER_STEP_4_PARAGRAPH_8"
+msgstr "Tipp: Um den Vectorizer zu verlassen und neue Druckdaten auszuwählen, klicke auf „ABBRECHEN“."
+
+msgid "SIDEBAR_LEFT_VECTORIZER_STEP_4_PARAGRAPH_9"
 msgstr "Tipp: Um zurück zur optionalen Optimierung deines Werbeaufdrucks zu gelangen, klicke auf „RÜCKGÄNGIG“."
 
 
