@@ -193,7 +193,8 @@
                         </button>
                     </div>
                     <div class="content" v-show="userColorsFilled">
-                        <button class="button is-small is-info is-uppercase" ref="applyTrace" :disabled="!replacedEqualsLimit">
+                        <button class="button is-small is-info is-uppercase" ref="applyTrace"
+                                :disabled="!replacedEqualsLimit">
                             <span v-html="$translateMultiple(['VECTORIZER_STEP_4_APPLY', 'APPLY'])"></span>
                         </button>
                     </div>
@@ -405,18 +406,25 @@ export default {
             if (activeObject.colorMap.length > this.colorLimit) {
                 this.automationActive = false;
                 this.setSettings();
-                this.updatePreview(activeObject).then(() => {
-                    window.events.on(Events.EDITOR_OBJECT_UPDATED, this.updatePreview, this);
-                    this.showOverlay(activeObject);
-                    this.hideFullScreenLoader();
-                });
+                this.updatePreview(activeObject)
+                    .then(() => {
+                        window.events.on(Events.EDITOR_OBJECT_UPDATED, this.updatePreview, this);
+                        this.showOverlay(activeObject);
+                        this.hideFullScreenLoader();
+                    }, () => {
+                        this.startTracing()
+                            .then((editorObject) => {
+                                window.events.on(Events.EDITOR_OBJECT_UPDATED, this.updatePreview, this);
+                                this.showOverlay(editorObject);
+                                this.hideFullScreenLoader();
+                            });
+                    });
                 return;
             }
 
             if (activeObject.colorMap.length < this.colorLimit && activeObject.colorMap.length === 1) {
                 this.automationActive = false;
             }
-
 
             this.startTracing()
                 .then((editorObject) => {
@@ -483,7 +491,13 @@ export default {
             }
         },
         async updatePreview(editorObject) {
-            this.tracePreview = (await editorObject.getContent()) || '';
+            return new Promise((resolve, reject) => {
+                editorObject.getContent()
+                    .then(svg => {
+                        this.tracePreview = svg || '';
+                        return svg ? resolve() : reject();
+                    });
+            })
         },
         async applyTraceAndCloseOverlay(button) {
             if (button !== this.$refs.applyTrace) {
@@ -525,7 +539,7 @@ export default {
         },
         showOverlay(activeObject) {
             const colorMap = activeObject.colorMap;
-            if (colorMap.length > this.colorLimit) {
+            if (colorMap.length > this.colorLimit && this.colorLimit > 1) {
                 this.setTraceStep(4); //color picker
             } else if (colorMap.length < this.colorLimit && colorMap.length === 1 && activeObject.containsRasterImages) {
                 this.setTraceStep(3); //granululu
