@@ -22,7 +22,8 @@
                             <div class="columns direction-column">
                                 <div class="column has-text-centered" v-html="preview.svg" style="height: 200px;"></div>
                                 <div class="column has-text-centered content">
-                                    <button class="button is-small is-info" @click="selectPreview(preview.colors)"
+                                    <button class="button is-small is-info is-uppercase"
+                                            @click="selectPreview(preview.colors)"
                                             :disabled="blockUi">
                                         <span>{{ $translateMultiple(['VECTORIZER_STEP_2_APPLY', 'APPLY']) }}</span>
                                     </button>
@@ -509,11 +510,7 @@ export default {
                     if (Asset.isAsset(activeObject) && !prohibitedActions.includes('asset-replace')) {
                         return activeObject.clear()
                             .then(() => {
-                                const listener = (newTarget) => {
-                                    if (activeObject.is(newTarget)) this.showOverlayIfCurrentlySelectedBlockIsVectorized(newTarget);
-                                };
-                                this.updateListener.set(activeObject, listener);
-                                window.events.on(Events.EDITOR_OBJECT_UPDATED, listener, this);
+                                activeObject.discard().then(() => activeObject.setActive())
                                 this.$editor.getUndoRedo().clear();
                             })
                             .then(() => {
