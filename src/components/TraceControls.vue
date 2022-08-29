@@ -509,6 +509,11 @@ export default {
                     if (Asset.isAsset(activeObject) && !prohibitedActions.includes('asset-replace')) {
                         return activeObject.clear()
                             .then(() => {
+                                const listener = (newTarget) => {
+                                    if (activeObject.is(newTarget)) this.showOverlayIfCurrentlySelectedBlockIsVectorized(newTarget);
+                                };
+                                this.updateListener.set(activeObject, listener);
+                                window.events.on(Events.EDITOR_OBJECT_UPDATED, listener, this);
                                 this.$editor.getUndoRedo().clear();
                             })
                             .then(() => {
