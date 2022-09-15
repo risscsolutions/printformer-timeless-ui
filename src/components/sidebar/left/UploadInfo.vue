@@ -1,5 +1,5 @@
 <template>
-    <div class="columns is-multiline p-2 is-vcentered">
+    <div class="columns is-multiline p-2 is-align-items-flex-start">
         <div class="column is-24 p-2">
             <p class="mb-1" v-html="$translate('SIDEBAR_LEFT_UPLOAD_INFO')"></p>
         </div>

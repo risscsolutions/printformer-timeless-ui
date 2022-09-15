@@ -1,15 +1,15 @@
 <template>
-    <div class="columns is-multiline p-2 is-vcentered">
+    <div class="columns is-multiline p-2 is-align-items-flex-start">
         <div class="column is-24 p-2">
             <slot name="title"></slot>
         </div>
-        <div class="column is-one-fifth has-text-centered" v-html="$svg(icon)"></div>
-        <div class="column is-four-fifths">
+        <div class="column is-2 has-text-centered" v-html="$svg(icon)"></div>
+        <div class="column is-22">
             <slot name="info"></slot>
         </div>
-        <div class="column is-one-fifth has-text-centered" v-html="$svg('Tipp')">
+        <div class="column is-2 has-text-centered" v-html="$svg('Tipp')">
         </div>
-        <div class="column is-four-fifths">
+        <div class="column is-22">
             <slot name="tip"></slot>
         </div>
     </div>
