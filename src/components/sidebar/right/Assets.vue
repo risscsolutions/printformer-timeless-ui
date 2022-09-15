@@ -42,7 +42,7 @@
             <div v-if="isFilled && !isGraphic" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="isAllowed('asset-cut-out')" class="column is-24 py-0">
+            <div v-if="isFilled && isAllowed('asset-cut-out')" class="column is-24 py-0">
                 <div class="content">
                     <div class="columns">
                         <div class="column is-flex py-2 is-align-items-center">
@@ -65,10 +65,10 @@
                     </div>
                 </div>
             </div>
-            <div v-if="isAllowed('asset-cut-out')" class="column is-24">
+            <div v-if="isFilled && isAllowed('asset-cut-out')" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="isAllowed('delete') || isAllowed('asset-replace')" class="column is-24 py-0">
+            <div v-if="isAllowed('delete') || isFilled && isAllowed('asset-replace')" class="column is-24 py-0">
                 <div class="columns is-multiline">
                     <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
                         <span class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_ASSETS_DELETE') }}</span>
@@ -77,7 +77,7 @@
                     </div>
                 </div>
             </div>
-            <div v-if="isAllowed('delete') || isAllowed('asset-replace')" class="column is-24">
+            <div v-if="isAllowed('delete') || isFilled && isAllowed('asset-replace')" class="column is-24">
                 <hr class="divider">
             </div>
             <template v-if="showExtendedSwitch">
