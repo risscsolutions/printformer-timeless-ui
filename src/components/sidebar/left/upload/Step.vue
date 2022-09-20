@@ -1,14 +1,16 @@
 <template>
     <div class="column is-24 p-2">
         <div class="columns">
-            <div class="column is-2 has-text-centered"
+            <div class="column is-2 has-text-centered icon-left-special-position"
                  style="align-content: center;justify-content: center;align-items: center;">
-                  <span v-if="icon"
-                        :class="{'svg-50': true, 'spinning': state === 'loading'}"
-                        v-html="$svg(icon)"></span>
+                  <span v-if="icon.length"
+                        class="svg-30"
+                        v-html="$svg(...icon)"></span>
             </div>
             <div class="column is-22">
-                <span class="has-text-weight-semibold dark-gray-color">{{ $translate('SIDEBAR_LEFT_UPLOAD_INFO_STEP', {step}) }}</span><br>
+                <span class="has-text-weight-semibold dark-gray-color">{{
+                        $translate('SIDEBAR_LEFT_UPLOAD_INFO_STEP', {step})
+                    }}</span><br>
                 {{ text }}
             </div>
         </div>
@@ -27,13 +29,13 @@ export default {
         icon() {
             switch (this.state) {
                 case 'loading':
-                    return 'Ladebalken';
+                    return ['Ladebalken', 'spinning'];
                 case 'complete':
-                    return 'Herunter';
+                    return ['Haken'];
                 case 'failed':
-                    return 'PfeilFormen'
+                    return ['Warnung-Filled'];
             }
-            return null;
+            return [];
         }
     }
 }
