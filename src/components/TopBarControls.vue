@@ -75,7 +75,7 @@ export default {
             return this.$svg(name);
         },
         goBack() {
-            goToStep(this.editorConfig.editorSteps.previous, urlQueryObject().query.draft)
+            goToStep(this.editorConfig.editorSteps.cancel, urlQueryObject().query.draft)
         },
         editorSave(e) {
             this.$editor.getLoader().show(this.$translate('EDITOR_LOADER_SAVE_TEXT'))

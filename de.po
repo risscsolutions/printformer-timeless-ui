@@ -243,6 +243,14 @@ msgstr "Nutze den Bereich „Ebenen“ in der erweiterten Bearbeitung, um eine F
 msgid "SIDEBAR_LEFT_SHAPES_TIP_PARAGRAPH_2"
 msgstr "Platziere deine Form ganz einfach mit Drag & Drop in deiner Werbefläche."
 
+#msgid "SIDEBAR_LEFT_VARIANTS_TITLE"
+#msgstr "HINWEISE UND TIPPS"
+
+msgid "SIDEBAR_LEFT_VARIANTS_INFO_PARAGRAPH_1"
+msgstr "Dein ausgewählter Artikel ist in verschiedenen Farben erhältlich. Wechsel diese mit einem Klick auf deine Wunschfarbe auf der rechten Seite."
+
+msgid "SIDEBAR_LEFT_VARIANTS_TIP_PARAGRAPH_1"
+msgstr "Farbvarianten, die in deiner gewünschten Menge nicht vorhanden sind, werden dir auch nicht angezeigt."
 
 msgid "SIDEBAR_LEFT_UPLOAD_INFO"
 msgstr "Die Verarbeitung deiner Datei läuft.\nDies kann einige Minuten dauern. Bitte habe solange Geduld."
