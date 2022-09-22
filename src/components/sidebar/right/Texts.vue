@@ -190,8 +190,7 @@
 
 <script>
 import {BulmaAccordion} from 'vue-bulma-accordion';
-import {mapGetters, mapMutations, mapState} from "vuex";
-import convert from "color-convert";
+import {mapGetters, mapMutations} from "vuex";
 import {Text} from "@rissc/printformer-editor-client/dist/Objects/Blocks"
 import EditorObject from "@rissc/printformer-editor-client/dist/Objects";
 import ExtendedEdit from "./ExtendedEdit";
@@ -227,7 +226,7 @@ export default {
                     this.italicDisabled = font.styles.includes('italic') || !family.some(f => f.styles.includes('italic'))
                 });
 
-            $('#font-family').val(this.activeObject.font).selectmenu('refresh');
+            $('#font-family').val(this.activeObject.font).fontSelectMenu('refresh');
             $('#font-size').val(this.activeObject.size).selectmenu('refresh');
 
             const leadingVal = this.activeObject.leading ? this.activeObject.leading : 'Auto';
@@ -236,7 +235,7 @@ export default {
     },
     mounted() {
         const $fontSelect = $('#font-family');
-        $fontSelect.selectmenu({
+        $fontSelect.fontSelectMenu({
             icons: {button: "broken-arrow"},
             width: 140,
             change: (event, ui) => {
@@ -244,7 +243,7 @@ export default {
             }
         });
 
-        $fontSelect.selectmenu("menuWidget").addClass(['height-200', 'width-140'])
+        $fontSelect.fontSelectMenu("menuWidget").addClass(['height-200', 'width-140'])
 
         const $fontSize = $('#font-size');
         $fontSize.selectmenu({
@@ -290,7 +289,7 @@ export default {
             }
 
             this.allFontsFlat = flatFonts;
-            this.$nextTick(() => $fontSelect.selectmenu('refresh'));
+            this.$nextTick(() => $fontSelect.fontSelectMenu('refresh'));
         });
         $(this.$el).tooltip({
             classes: {

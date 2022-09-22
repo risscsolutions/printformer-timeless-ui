@@ -1,9 +1,4 @@
 import Events from "@rissc/printformer-editor-client/dist/Events";
-
-window.jQuery = window.$ = require('./src/vendor/jquery-ui-1.13.1.custom/external/jquery/jquery');
-require('./src/vendor/jquery-ui-1.13.1.custom/jquery-ui');
-require('./src/vendor/spectrum/spectrum');
-
 import Vue from 'vue';
 import Vuex from 'vuex';
 import EventEmitter from 'eventemitter3';
@@ -29,6 +24,11 @@ import ColorPicker from "./src/components/sidebar/right/ColorPicker";
 import FullScreenLoader from "./src/components/FullScreenLoader";
 import ColorAssigner from "./src/components/sidebar/right/ColorAssigner";
 import Preflight from "./src/components/preflight/Preflight";
+
+window.jQuery = window.$ = require('./src/vendor/jquery-ui-1.13.1.custom/external/jquery/jquery');
+require('./src/vendor/jquery-ui-1.13.1.custom/jquery-ui');
+require('./src/vendor/spectrum/spectrum');
+require('./src/widgets');
 
 const $svg = require('./src/svg.js');
 Vue.prototype.$svg = (n, a) => $svg(n, a).replaceAll('\n', '');
