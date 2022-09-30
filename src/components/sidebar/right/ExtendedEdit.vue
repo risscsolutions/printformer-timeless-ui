@@ -164,7 +164,6 @@
 }
 </style>
 <script>
-import Events from "@rissc/printformer-editor-client/dist/Events";
 import EditorObject from "@rissc/printformer-editor-client/dist/Objects";
 import {Text} from "@rissc/printformer-editor-client/dist/Objects/Blocks";
 import convert from "color-convert";
@@ -241,13 +240,22 @@ export default {
             }
 
             this.$nextTick(() => {
-                const leadingVal = this.activeObject.leading ? this.activeObject.leading : 'Auto';
-                $fontLeading.val(leadingVal).selectmenu('refresh');
+
+                let leading = this.getValueFromRangeOrBlock(this.activeObject,'leading');
+                if (leading == null) {
+                    leading = 'Auto';
+                }
+                $fontLeading.val(leading).selectmenu('refresh');
             });
         });
 
     },
     methods: {
+        getValueFromRangeOrBlock(block, key){
+            return block.range
+                ? block.range[key]
+                : block[key];
+        },
         icon(name) {
             return this.$svg(name);
         },

@@ -73,8 +73,8 @@
                     <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
                         <span class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_TEXTS_FONT_COLOR') }}</span>
                         <button
-                            :style="{'background-color': (activeObject || {}).color ? activeObject.color.displayColor : null}"
-                            :class="{'chess-background': (activeObject || {}).color === 'none'}"
+                            :style="{'background-color': (activeObject ? getValueFromRangeOrBlock(activeObject,'color').displayColor : null)}"
+                            :class="{'chess-background': (activeObject ? getValueFromRangeOrBlock(activeObject,'color') === 'none' : false)}"
                             @click="openColorPicker(activeObject.color, $event)"
                             class="button is-rounded color-button-round m-0 border-solid">
                         </button>
@@ -218,7 +218,7 @@ export default {
     },
     updated() {
         if (this.activeObject && Text.isText(this.activeObject)) {
-            this.currentFont = this.activeObject.font;
+            this.currentFont = this.getValueFromRangeOrBlock(this.activeObject,'font');
             Promise.all([this.$editor.getFontService().getFontByPostScriptName(this.currentFont),
                 this.$editor.getFontService().getOtherFontFamilyMembers(this.currentFont)])
                 .then(([font, family]) => {
@@ -226,11 +226,15 @@ export default {
                     this.italicDisabled = font.styles.includes('italic') || !family.some(f => f.styles.includes('italic'))
                 });
 
-            $('#font-family').val(this.activeObject.font).fontSelectMenu('refresh');
-            $('#font-size').val(this.activeObject.size).selectmenu('refresh');
+            $('#font-family').val(this.getValueFromRangeOrBlock(this.activeObject,'font')).fontSelectMenu('refresh');
+            $('#font-size').val(this.getValueFromRangeOrBlock(this.activeObject,'size')).selectmenu('refresh');
 
-            const leadingVal = this.activeObject.leading ? this.activeObject.leading : 'Auto';
-            $('#font-leading').val(leadingVal).selectmenu('refresh');
+            let leading = this.getValueFromRangeOrBlock(this.activeObject,'leading');
+            if (leading == null) {
+                leading = 'Auto';
+            }
+
+            $('#font-leading').val(leading).selectmenu('refresh');
         }
     },
     mounted() {
@@ -258,10 +262,10 @@ export default {
 
         // load default texblock values
         if (this.activeObject) {
-            $fontSelect.val(this.activeObject.font);
-            this.currentFont = this.activeObject.font;
+            $fontSelect.val(this.getValueFromRangeOrBlock(this.activeObject,'font'));
+            this.currentFont = this.getValueFromRangeOrBlock(this.activeObject,'font');
 
-            $fontSize.val(this.activeObject.size);
+            $fontSize.val(this.getValueFromRangeOrBlock(this.activeObject,'size'));
 
         }
 
@@ -343,6 +347,11 @@ export default {
             });
     },
     methods: {
+        getValueFromRangeOrBlock(block, key) {
+            return block.range
+                ? block.range[key]
+                : block[key];
+        },
         addTextBlock() {
             this.$catch(
                 this.$editor.addTextBlock(this.allFontsFlat[0].postscript_name, 16)
