@@ -1,6 +1,6 @@
 {
   "name": "printformer-timeless-ui",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Printformer Timeless-UI for Editor Client",
   "main": "index.js",
   "author": "Hannes Stefani",
