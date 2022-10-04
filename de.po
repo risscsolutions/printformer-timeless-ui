@@ -499,7 +499,10 @@ msgstr "Unsere Farbvorschläge für dich:"
 #msgstr "Übernehmen"
 
 msgid "VECTORIZER_STEP_2_CENTER_INFO"
-msgstr "So könnte dein Werbeaufdruck mit deinen ausgewählten Farben aussehen."
+msgstr "SO KÖNNTE DEIN WERBEAUFDRUCK MIT DEINEN FARBEN AUSSEHEN:"
+
+msgid "VECTORIZER_STEP_2_CENTER_INFO_TEXT"
+msgstr "Hier siehst du mögliche Kombinationsmöglichkeiten"
 
 #msgid "VECTORIZER_STEP_2_APPLY"
 #msgstr "Übernehmen"

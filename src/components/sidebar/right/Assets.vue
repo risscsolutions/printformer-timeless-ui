@@ -21,7 +21,7 @@
                     <span class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_ASSETS_UPLOAD_TITLE') }}</span>
                     <span class="svg-30 is-flex m-1" v-html="icon('Bilder_hochladen')"></span>
                     <div class="columns m-0 is-flex-direction-column has-text-centered dark-gray-color">
-                        <input ref="uploadFile" type="file" multiple hidden accept=".jpg,.jpeg,.png,.pdf"
+                        <input ref="uploadFile" type="file" multiple hidden :accept="'.'+editorConfig.configuration.upload.acceptedFileExtensions.join(',.')"
                                @change="uploadImage">
                         <span v-html="assetUploadText"></span>
                     </div>
@@ -170,7 +170,7 @@ import Events from "@rissc/printformer-editor-client/dist/Events";
 import EditorObject, {Asset, BlockEffects} from "@rissc/printformer-editor-client/dist/Objects";
 import bulmaSlider from "bulma-slider/src/js";
 import ExtendedEdit from "./ExtendedEdit";
-import {mapGetters, mapMutations} from "vuex";
+import {mapGetters, mapMutations, mapState} from "vuex";
 import BlockActions from "../../../BlockActions";
 
 export default {
@@ -373,6 +373,7 @@ export default {
         ...mapMutations(['enableExtendedEdit'])
     },
     computed: {
+        ...mapState(['editorConfig']),
         showExtendedSwitch() {
             return (this.showTraceButton
                 || this.isAllowed(BlockActions.OPACITY)

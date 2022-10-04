@@ -11,9 +11,12 @@
                 </div>
                 <div v-if="traceStep === 2"
                      class="columns direction-column is-align-self-flex-start">
-                    <div class="column content is-small mt-2 mx-5 mb-0">
-                        <p class="dark-gray-color mb-2 dark-gray-color has-text-weight-bold"
+                    <div class="column content mt-2 mx-5 mb-0">
+                        <h6 class="dark-gray-color mb-5 has-text-weight-bold"
                            v-html="$translate('VECTORIZER_STEP_2_CENTER_INFO') ">
+                        </h6>
+                        <p class="dark-gray-color mb-2"
+                           v-html="$translate('VECTORIZER_STEP_2_CENTER_INFO_TEXT') ">
                         </p>
                     </div>
                     <div class="column columns is-multiline is-24 mb-0" style="overflow: auto">
@@ -31,10 +34,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="column content is-small mx-5 mb-0">
-                        <p class="dark-gray-color dark-gray-color has-text-weight-bold"
+                    <div class="column content mx-5 mb-0">
+                        <h6 class="dark-gray-color has-text-weight-bold"
                            v-html="$translate('VECTORIZER_STEP_2_CONTINUE_INFO')">
-                        </p>
+                        </h6>
                     </div>
                     <div class="column columns is-24">
                         <div class="column is-8">
@@ -233,7 +236,7 @@
 <script>
 import Events from "@rissc/printformer-editor-client/dist/Events";
 import {Asset, BlockEffects} from "@rissc/printformer-editor-client/dist/Objects";
-import {isEmpty, isEqual, uniqWith, shuffle} from "lodash";
+import {isEmpty, isEqual, shuffle, uniqWith} from "lodash";
 import {mapMutations, mapState} from "vuex";
 
 const BLOCK_EFFECTS = {

@@ -125,7 +125,7 @@
                             <button @click="textBulletPoints('alphabetic')"
                                     :title="$translate('SIDEBAR_RIGHT_TEXTS_LIST_ALPHABETIC')"
                                     class="button is-small muted-button width-30">
-                                <span class="svg-30 no-interaction is-flex" v-html="icon('AufzaehlungPunkte')"></span>
+                                <span class="svg-30 no-interaction is-flex" v-html="icon('Texte_Aufzaehlung_Alphabetisch')"></span>
                             </button>
                             <button @click="textBulletPoints('bullet')"
                                     :title="$translate('SIDEBAR_RIGHT_TEXTS_LIST_BULLET')"
