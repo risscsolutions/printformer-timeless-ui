@@ -323,7 +323,20 @@ button {
 }
 
 .border-purple {
-    border: 1px solid #AC5D7A;
+    border: 1px solid #AC5D7A !important;
+}
+
+.border-purple:active, .border-purple:focus {
+    border-color: #AC5D7A !important;
+    box-shadow: none !important;
+}
+
+#italic-button, #bold-button {
+    box-shadow: none !important;
+    border-color: #B2B2B2;
+    &:focus {
+        border-color: #B2B2B2;
+    }
 }
 
 .color-button-round {
@@ -427,16 +440,17 @@ button.is-rounded svg {
 }
 
 .ui-dialog-titlebar-close {
-    appearance: none!important;
-    border: 0 none!important;
-    background: none!important;
-    text-indent: initial!important;
-    color: $danger!important;
+    appearance: none !important;
+    border: 0 none !important;
+    background: none !important;
+    text-indent: initial !important;
+    color: $danger !important;
 
     span {
         display: none;
     }
 }
+
 .icon-left-special-position {
     position: relative;
     left: -10px;

@@ -54,11 +54,13 @@
                         </div>
                         <div class="column is-flex is-justify-content-flex-end py-2 is-align-items-center">
                             <button @click="textStyle" value="bold" id="bold-button" title=""
-                                    class="button is-small width-30" :disabled="boldDisabled">
+                                    class="button is-small width-30"
+                                    :class="{'border-purple': boldActive}" :disabled="boldDisabled">
                                 <b class="no-interaction">B</b>
                             </button>
                             <button @click="textStyle" value="italic" id="italic-button" title=""
-                                    class="button is-small width-30 ml-2" :disabled="italicDisabled">
+                                    class="button is-small width-30 ml-2"
+                                    :class="{'border-purple': italicActive}" :disabled="italicDisabled">
                                 <i class="no-interaction">I</i>
                             </button>
                         </div>
@@ -94,19 +96,28 @@
                             <button @click="textAlign('justify')"
                                     :title="$translate('SIDEBAR_RIGHT_TEXTS_ALIGN_JUSTIFY')"
                                     class="button is-small muted-button width-30">
-                                <span class="svg-30 no-interaction is-flex" v-html="icon('Blocksatz')"></span>
+                                <span v-if="activeAlignment === 'justify'" class="svg-30 no-interaction is-flex"
+                                      v-html="icon('rosa_Texte_Textformatierung_Blocksatz')"></span>
+                                <span v-else class="svg-30 no-interaction is-flex" v-html="icon('Blocksatz')"></span>
                             </button>
                             <button @click="textAlign('left')" :title="$translate('SIDEBAR_RIGHT_TEXTS_ALIGN_LEFT')"
                                     class="button is-small ml-1 muted-button width-30">
-                                <span class="svg-30 no-interaction is-flex" v-html="icon('Linksbuendig')"></span>
+                                <span v-if="activeAlignment === 'left'" class="svg-30 no-interaction is-flex"
+                                      v-html="icon('rosa_Texte_Textformatierung_Linksbuendig')"></span>
+                                <span v-else class="svg-30 no-interaction is-flex" v-html="icon('Linksbuendig')"></span>
                             </button>
                             <button @click="textAlign('center')" :title="$translate('SIDEBAR_RIGHT_TEXTS_ALIGN_CENTER')"
                                     class="button is-small ml-1 muted-button width-30">
-                                <span class="svg-30 no-interaction is-flex" v-html="icon('zentriert')"></span>
+                                <span v-if="activeAlignment === 'center'" class="svg-30 no-interaction is-flex"
+                                      v-html="icon('rosa_Texte_Textformatierung_zentriert')"></span>
+                                <span v-else class="svg-30 no-interaction is-flex" v-html="icon('zentriert')"></span>
                             </button>
                             <button @click="textAlign('right')" :title="$translate('SIDEBAR_RIGHT_TEXTS_ALIGN_RIGHT')"
                                     class="button is-small ml-1 muted-button width-30">
-                                <span class="svg-30 no-interaction is-flex" v-html="icon('rechtsbuendig')"></span>
+                                <span v-if="activeAlignment === 'right'" class="svg-30 no-interaction is-flex"
+                                      v-html="icon('rosa_Texte_Textformatierung_Rechtsbuendig')"></span>
+                                <span v-else class="svg-30 no-interaction is-flex"
+                                      v-html="icon('rechtsbuendig')"></span>
                             </button>
                         </div>
                     </div>
@@ -125,17 +136,26 @@
                             <button @click="textBulletPoints('alphabetic')"
                                     :title="$translate('SIDEBAR_RIGHT_TEXTS_LIST_ALPHABETIC')"
                                     class="button is-small muted-button width-30">
-                                <span class="svg-30 no-interaction is-flex" v-html="icon('Texte_Aufzaehlung_Alphabetisch')"></span>
+                                <span v-if="activeList === 'alphabetic'" class="svg-30 no-interaction is-flex"
+                                      v-html="icon('rosa_Texte_Aufzaehlung_Alphabetisch')"></span>
+                                <span v-else class="svg-30 no-interaction is-flex"
+                                      v-html="icon('Texte_Aufzaehlung_Alphabetisch')"></span>
                             </button>
                             <button @click="textBulletPoints('bullet')"
                                     :title="$translate('SIDEBAR_RIGHT_TEXTS_LIST_BULLET')"
                                     class="button is-small ml-1 muted-button width-30">
-                                <span class="svg-30 no-interaction is-flex" v-html="icon('AufzaehlungEcken')"></span>
+                                <span v-if="activeList === 'bullet'" class="svg-30 no-interaction is-flex"
+                                      v-html="icon('rosa_Texte_Aufzaehlung_Eckig')"></span>
+                                <span v-else class="svg-30 no-interaction is-flex"
+                                      v-html="icon('AufzaehlungEcken')"></span>
                             </button>
                             <button @click="textBulletPoints('number')"
                                     :title="$translate('SIDEBAR_RIGHT_TEXTS_LIST_NUMERIC')"
                                     class="button is-small ml-1 muted-button width-30">
-                                <span class="svg-30 no-interaction is-flex" v-html="icon('AufzaehlungZahlen')"></span>
+                                <span v-if="activeList === 'number'" class="svg-30 no-interaction is-flex"
+                                      v-html="icon('rosa_Texte_Aufzaehlung_Zahlen')"></span>
+                                <span v-else class="svg-30 no-interaction is-flex"
+                                      v-html="icon('AufzaehlungZahlen')"></span>
                             </button>
                         </div>
                     </div>
@@ -218,23 +238,27 @@ export default {
     },
     updated() {
         if (this.activeObject && Text.isText(this.activeObject)) {
-            this.currentFont = this.getValueFromRangeOrBlock(this.activeObject,'font');
+            this.currentFont = this.getValueFromRangeOrBlock(this.activeObject, 'font');
             Promise.all([this.$editor.getFontService().getFontByPostScriptName(this.currentFont),
                 this.$editor.getFontService().getOtherFontFamilyMembers(this.currentFont)])
                 .then(([font, family]) => {
-                    this.boldDisabled = font.styles.includes('bold') || !family.some(f => f.styles.includes('bold'))
-                    this.italicDisabled = font.styles.includes('italic') || !family.some(f => f.styles.includes('italic'))
+                    this.boldDisabled = !family.some(f => f.styles.includes('bold'));
+                    this.italicDisabled = !family.some(f => f.styles.includes('italic'));
+                    this.boldActive = font.styles.includes('bold');
+                    this.italicActive = font.styles.includes('italic');
                 });
 
-            $('#font-family').val(this.getValueFromRangeOrBlock(this.activeObject,'font')).fontSelectMenu('refresh');
-            $('#font-size').val(this.getValueFromRangeOrBlock(this.activeObject,'size')).selectmenu('refresh');
+            $('#font-family').val(this.getValueFromRangeOrBlock(this.activeObject, 'font')).fontSelectMenu('refresh');
+            $('#font-size').val(this.getValueFromRangeOrBlock(this.activeObject, 'size')).selectmenu('refresh');
 
-            let leading = this.getValueFromRangeOrBlock(this.activeObject,'leading');
+            let leading = this.getValueFromRangeOrBlock(this.activeObject, 'leading');
             if (leading == null) {
                 leading = 'Auto';
             }
 
             $('#font-leading').val(leading).selectmenu('refresh');
+
+            this.activeAlignment = this.getValueFromRangeOrBlock(this.activeObject, 'align') || 'left';
         }
     },
     mounted() {
@@ -262,10 +286,10 @@ export default {
 
         // load default texblock values
         if (this.activeObject) {
-            $fontSelect.val(this.getValueFromRangeOrBlock(this.activeObject,'font'));
-            this.currentFont = this.getValueFromRangeOrBlock(this.activeObject,'font');
+            $fontSelect.val(this.getValueFromRangeOrBlock(this.activeObject, 'font'));
+            this.currentFont = this.getValueFromRangeOrBlock(this.activeObject, 'font');
 
-            $fontSize.val(this.getValueFromRangeOrBlock(this.activeObject,'size'));
+            $fontSize.val(this.getValueFromRangeOrBlock(this.activeObject, 'size'));
 
         }
 
@@ -396,13 +420,51 @@ export default {
         textAlign(position) {
             this.$catch(this.activeObject.setFontAlign(position));
         },
+        setBoldStyle(familyMembers) {
+            const boldStyles = this.boldActive
+                ? familyMembers.filter(member => !member.styles.includes('bold'))
+                : familyMembers.filter(member => member.styles.includes('bold'))
+            if (boldStyles.length < 1) return;
+
+            const maybeItalic = this.italicActive
+                ? boldStyles.filter(member => member.styles.includes('italic'))
+                : boldStyles.filter(member => !member.styles.includes('italic'))
+            if (maybeItalic.length < 1) {
+                this.activeObject.setFont(boldStyles[0].postscript_name);
+                return;
+            }
+            this.activeObject.setFont(maybeItalic[0].postscript_name);
+        },
+        setItalicStyle(familyMembers) {
+            const italicStyles = this.italicActive
+                ? familyMembers.filter(member => !member.styles.includes('italic'))
+                : familyMembers.filter(member => member.styles.includes('italic'))
+            if (italicStyles.length < 1) return;
+
+            const maybeBold = this.boldActive
+                ? italicStyles.filter(member => member.styles.includes('bold'))
+                : italicStyles.filter(member => !member.styles.includes('bold'))
+            if (maybeBold.length < 1) {
+                this.activeObject.setFont(italicStyles[0].postscript_name);
+                return;
+            }
+            this.activeObject.setFont(maybeBold[0].postscript_name);
+        },
+
         textStyle(event) {
+            //bold || italic
+            const style = event.target.value;
             this.$editor.getFontService().getOtherFontFamilyMembers(this.currentFont)
                 .then(familyMembers => {
-                    const fontStyle = familyMembers.filter(member => member.styles.includes(event.target.value))
-                    if (fontStyle.length < 1) return;
-
-                    this.activeObject.setFont(fontStyle[0].postscript_name);
+                    if (style === 'bold') {
+                        this.setBoldStyle(familyMembers);
+                    } else if (style === 'italic') {
+                        this.setItalicStyle(familyMembers);
+                    } else {
+                        const fontStyles = familyMembers.filter(member => member.styles.includes(style))
+                        if (fontStyles.length < 1) return;
+                        this.activeObject.setFont(fontStyles[0].postscript_name);
+                    }
                 });
 
             $(event.target).tooltip('close');
@@ -411,6 +473,7 @@ export default {
             return this.$svg(name, 'text-and-icons-dark');
         },
         textBulletPoints(type) {
+            this.activeList = type;
             // bullet, number, alphabetic
             this.$catch(this.activeObject.addBulletPoint(type));
         },
@@ -427,6 +490,11 @@ export default {
             currentFontSize: null,
             boldDisabled: false,
             italicDisabled: false,
+            boldActive: false,
+            italicActive: false,
+            activeAlignment: 'left',
+            activeList: null
+
         }
     }
 }
