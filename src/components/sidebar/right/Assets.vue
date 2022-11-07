@@ -30,7 +30,7 @@
             <div v-if="allowAddAssets || isAllowed('asset-replace')" class="column is-24">
                 <hr class="divider">
             </div>
-            <div v-if="isFilled && !isGraphic" class="column is-24 py-0">
+            <div v-if="isFilled && isImage" class="column is-24 py-0">
                 <div class="columns">
                     <div class="column is-flex is-justify-content-space-between py-2 is-align-items-center">
                         <span class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_ASSETS_QUALITY') }}</span>
@@ -39,7 +39,7 @@
                     </div>
                 </div>
             </div>
-            <div v-if="isFilled && !isGraphic" class="column is-24">
+            <div v-if="isFilled && isImage" class="column is-24">
                 <hr class="divider">
             </div>
             <div v-if="isFilled && isAllowed('asset-cut-out')" class="column is-24 py-0">
@@ -49,13 +49,13 @@
                             <span class="dark-gray-color">{{ $translate('SIDEBAR_RIGHT_ASSETS_ZOOM') }}</span>
                         </div>
                         <div class="column is-flex is-justify-content-flex-end py-2 is-align-items-center">
-                            <button @click="assetZoomIn" :title="$translate('SIDEBAR_RIGHT_ASSETS_ZOOM_IN')"
-                                    class="button is-small muted-button width-30">
-                                <span class="svg-30 no-interaction is-flex" v-html="icon('HinzufuegenPlus')"></span>
-                            </button>
                             <button @click="assetZoomOut" :title="$translate('SIDEBAR_RIGHT_ASSETS_ZOOM_OUT')"
-                                    class="button is-small ml-2 muted-button width-30">
+                                    class="button is-small muted-button width-30">
                                 <span class="svg-30 no-interaction is-flex" v-html="icon('HinzufuegenMinus')"></span>
+                            </button>
+                            <button @click="assetZoomIn" :title="$translate('SIDEBAR_RIGHT_ASSETS_ZOOM_IN')"
+                                    class="button is-small ml-2 muted-button width-30">
+                                <span class="svg-30 no-interaction is-flex" v-html="icon('HinzufuegenPlus')"></span>
                             </button>
                             <button @click="assetFit" :title="$translate('SIDEBAR_RIGHT_ASSETS_ZOOM_FIT')"
                                     class="button is-small ml-2 muted-button width-30">
@@ -394,8 +394,8 @@ export default {
         isFilled() {
             return this.isAsset && this.activeObject.isFilled;
         },
-        isGraphic() {
-            return this.isAsset && this.activeObject.assetType === AssetTypes.GRAPHIC;
+        isImage() {
+            return this.isAsset && this.activeObject.assetType === AssetTypes.IMAGE;
         },
         qualityColor() {
             if (!this.activeObject) return;

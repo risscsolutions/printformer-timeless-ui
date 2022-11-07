@@ -185,7 +185,7 @@ export default function makeStore() {
             },
             setPreflightResult(state, {result, status, report_file_url}) {
                 state.preflightResultInfos = result.hits ? result.hits.info || [] : [];
-                state.preflightResultWarnings = result.warning ? result.hits.warning || [] : [];
+                state.preflightResultWarnings = result.hits ? result.hits.warning && result.hits.warning.length ? result.hits.warning : [] : [];
                 state.preflightResultFixups.splice(0, state.preflightResultFixups.length, ...result.fixups);
                 state.preflightResultErrors = [...result.errors, ...(result.hits && result.hits.error ? result.hits.error : [])];
                 state.preflightStatus = status;
