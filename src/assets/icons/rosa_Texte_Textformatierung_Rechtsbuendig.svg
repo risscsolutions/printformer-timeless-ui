@@ -9,10 +9,22 @@
     <path style="fill:none;stroke:#B2B1B1;stroke-width:0.3;stroke-miterlimit:10;" d="M20.9,17.8"/>
     <polygon style="fill:none;stroke:#AD5E7A;stroke-width:0.5;stroke-miterlimit:10;" points="0.2,0.5 0.2,26.5 0.2,26.7 0.5,26.7
 	26.5,26.7 26.7,26.7 26.7,26.5 26.7,0.5 26.7,0.2 26.5,0.2 0.5,0.2 0.2,0.2 "/>
-    <line style="fill:none;stroke:#B2B1B1;stroke-miterlimit:10;" x1="8.3" y1="21.1" x2="23.1" y2="21.1"/>
-    <line style="fill:none;stroke:#B2B1B1;stroke-miterlimit:10;" x1="3.8" y1="17.9" x2="23.3" y2="17.9"/>
-    <line style="fill:none;stroke:#B2B1B1;stroke-miterlimit:10;" x1="8.4" y1="14.9" x2="23.2" y2="14.9"/>
-    <line style="fill:none;stroke:#B2B1B1;stroke-miterlimit:10;" x1="3.7" y1="12.1" x2="23.2" y2="12.1"/>
-    <line style="fill:none;stroke:#B2B1B1;stroke-miterlimit:10;" x1="8.4" y1="8.9" x2="23.2" y2="8.9"/>
-    <line style="fill:none;stroke:#B2B1B1;stroke-miterlimit:10;" x1="3.8" y1="5.9" x2="23.3" y2="5.9"/>
+    <g>
+	<rect x="8.336" y="20.6" style="fill:#B2B1B1;" width="14.8" height="1"/>
+</g>
+    <g>
+	<rect x="3.8" y="17.4" style="fill:#B2B1B1;" width="19.5" height="1"/>
+</g>
+    <g>
+	<rect x="8.436" y="14.4" style="fill:#B2B1B1;" width="14.8" height="1"/>
+</g>
+    <g>
+	<rect x="3.7" y="11.6" style="fill:#B2B1B1;" width="19.5" height="1"/>
+</g>
+    <g>
+	<rect x="8.436" y="8.4" style="fill:#B2B1B1;" width="14.8" height="1"/>
+</g>
+    <g>
+	<rect x="3.8" y="5.4" style="fill:#B2B1B1;" width="19.5" height="1"/>
+</g>
 </svg>

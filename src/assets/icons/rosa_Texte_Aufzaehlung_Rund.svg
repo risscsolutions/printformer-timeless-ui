@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 26.5.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!-- Generator: Adobe Illustrator 27.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
      width="27px" height="27px" viewBox="0 0 27 27" style="enable-background:new 0 0 27 27;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:none;stroke:#AD5E7A;stroke-width:0.5;stroke-miterlimit:10;}
-	.st1{fill:#B2B1B1;}
-</style>
-    <polygon class="st0" points="0.2,0.5 0.2,26.5 0.2,26.8 0.5,26.8 26.5,26.8 26.8,26.8 26.8,26.5 26.8,0.5 26.8,0.3 26.5,0.3
-	0.5,0.3 0.2,0.3 "/>
-    <g>
-	<rect x="8.5" y="19.1" class="st1" width="15.3" height="0.8"/>
-        <rect x="8.5" y="13.4" class="st1" width="15.3" height="0.8"/>
-</g>
-    <rect x="8.5" y="7.7" class="st1" width="15.3" height="0.8"/>
-    <circle class="st1" cx="5.3" cy="8.1" r="1.7"/>
-    <circle class="st1" cx="5.3" cy="13.8" r="1.7"/>
-    <circle class="st1" cx="5.3" cy="19.5" r="1.7"/>
+<polyline style="fill:none;stroke:#C5C5C5;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;" points="1785.3,908.4
+	1779,899.4 1772.3,908.4 "/>
+    <polygon style="fill:none;stroke:#AD5E7A;stroke-width:0.5;stroke-miterlimit:10;" points="0.2,0.5 0.2,26.5 0.2,26.8 0.5,26.8
+	26.5,26.8 26.8,26.8 26.8,26.5 26.8,0.5 26.8,0.3 26.5,0.3 0.5,0.3 0.2,0.3 "/>
+    <path style="fill:none;stroke:#B2B1B1;stroke-width:0.3;stroke-miterlimit:10;" d="M21.8,18.6h-13 M21.8,13.5h-13 M21.8,8.4h-13"/>
+    <circle style="fill:#B2B1B1;" cx="6.113" cy="8.507" r="0.85"/>
+    <circle style="fill:#B2B1B1;" cx="6.113" cy="13.435" r="0.85"/>
+    <circle style="fill:#B2B1B1;" cx="6.113" cy="18.457" r="0.85"/>
 </svg>
