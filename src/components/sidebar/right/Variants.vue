@@ -40,7 +40,7 @@
 }
 
 .variant-active {
-    border: 2px solid #0E689A !important;
+    border: 4px solid #0E689A !important;
 }
 
 .variant {
