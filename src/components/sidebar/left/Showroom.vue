@@ -180,7 +180,7 @@ export default {
                 .text(this.editorConfig.configuration.labels.assetsAreLoading)
                 .dialog({
                     classes: {
-                        "ui-dialog": 'py-4 px-6',
+                        "ui-dialog": 'py-4 px-6 z-index-2000',
                         "ui-dialog-titlebar": "is-hidden",
                     },
                     autoOpen: false,
@@ -216,7 +216,7 @@ export default {
                 .text(this.editorConfig.configuration.labels.hasSeenAllPages)
                 .dialog({
                     classes: {
-                        "ui-dialog": 'py-4 px-6',
+                        "ui-dialog": 'py-4 px-6 z-index-2000',
                         "ui-dialog-titlebar": "is-hidden",
                     },
                     autoOpen: false,
@@ -255,7 +255,7 @@ export default {
                 .text(this.$translate('MODAL_OTHER_USER_REQUESTS_ENTRY_CONTENT', {user: user.name}))
                 .dialog({
                     classes: {
-                        "ui-dialog": 'py-4 px-6',
+                        "ui-dialog": 'py-4 px-6 z-index-2000',
                         "ui-dialog-titlebar": "is-hidden",
                     },
                     autoOpen: false,
