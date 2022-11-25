@@ -9,7 +9,8 @@
             <hr class="divider">
         </div>
         <div class="columns is-multiline is-mobile mb-2">
-            <div v-for="variant in variants" @click="loadVariant(variant, variant.id)" class="column is-one-third">
+            <div v-for="variant in variants" @click="loadVariant(variant, variant.id)"
+                 class="column is-one-third variant-padding">
                 <div v-if="variant.thumbnail.type === 'color'" class="box variant mb-0 border-solid"
                      :class="{'variant-active': currentId === variant.id}"
                      :style="{'background-color': variant.thumbnail.value}">
@@ -40,7 +41,13 @@
 }
 
 .variant-active {
-    border: 4px solid #0E689A !important;
+    border: 3px solid #AC5D7A !important;
+    outline: 2px solid #AC5D7A;
+    outline-offset: -6px;
+}
+
+.variant-padding {
+    padding: 15px 6px 5px 6px;
 }
 
 .variant {
@@ -88,7 +95,7 @@ export default {
     },
     data() {
         return {
-            currentId: 0
+            currentId: 2
         }
     }
 }
